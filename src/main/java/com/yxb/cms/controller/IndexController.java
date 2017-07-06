@@ -25,4 +25,8 @@ public class IndexController {
     }
 
 
+    @RequestMapping("/main")
+    public String toMainPage() {
+        return "main";
+    }
 }
