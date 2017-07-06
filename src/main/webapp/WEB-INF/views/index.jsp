@@ -1,14 +1,10 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: YXB
-  Date: 2017/6/29
-  Time: 23:07
-  To change this template use File | Settings | File Templates.
---%>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%@include file="/comm/mytags.jsp" %>
+<!DOCTYPE html>
 <html>
 <head>
-    <title>Title</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title></title>
 </head>
 <body>
 
