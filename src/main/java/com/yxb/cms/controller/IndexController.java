@@ -29,4 +29,10 @@ public class IndexController {
     public String toMainPage() {
         return "main";
     }
+
+    @RequestMapping("/home")
+    public String toHomePage() {
+        return "home";
+    }
+
 }

@@ -26,9 +26,36 @@
     <div class="layui-layout layui-layout-admin">
         <!-- 顶部-->
         <div class="layui-header header">
+            <div class="layui-main">
+                <a href="#" class="logo">CMS后台管理系统</a>
+                <!-- 顶部右侧菜单 -->
+                <ul class="layui-nav top_menu">
+                    <li class="layui-nav-item showNotice" id="showNotice" pc>
+                        <a href="javascript:;"><i class="iconfont icon-gonggao"></i><cite>系统公告</cite></a>
+                    </li>
+                    <li class="layui-nav-item lockcms" pc>
+                        <a href="javascript:;"><i class="iconfont icon-lock1"></i><cite>锁屏</cite></a>
+                    </li>
+                    <li class="layui-nav-item" pc>
+                        <a href="javascript:;">
+                            <img src="${ctx}/static/img/face.jpg" class="layui-circle" width="35" height="35">
+                            <cite>系统管理员</cite>
+                        </a>
+                        <dl class="layui-nav-child">
+                            <dd><a href="javascript:;" data-url=""><i class="iconfont icon-zhanghu" data-icon="icon-zhanghu"></i><cite>个人资料</cite></a></dd>
+                            <dd><a href="javascript:;" data-url=""><i class="iconfont icon-shezhi1" data-icon="icon-shezhi1"></i><cite>修改密码</cite></a></dd>
+                            <dd><a href="javascript:;"><i class="iconfont icon-loginout"></i><cite>退出</cite></a></dd>
+                        </dl>
+                    </li>
+                </ul>
+            </div>
         </div>
         <!-- 左侧导航-->
         <div class="layui-side layui-bg-black">
+            <div class="user-photo">
+                <a class="img" title="我的头像" ><img src="${ctx}/static/img/face.jpg"></a>
+                <p>你好！<span class="userName">系统管理员</span>, 欢迎登录</p>
+            </div>
             <div class="navBar layui-side-scroll"></div>
         </div>
         <!--中间内容 -->
@@ -39,16 +66,25 @@
                 </ul>
                 <div class="layui-tab-content clildFrame">
                     <div class="layui-tab-item layui-show">
-                        <iframe src="page/main.html"></iframe>
+                        <iframe src="${ctx}/home"></iframe>
                     </div>
                 </div>
             </div>
         </div>
         <!-- 底部-->
         <div class="layui-footer footer">
-            <p>copyright @2017 请叫我马哥　　<a onclick="donation()" class="layui-btn layui-btn-danger l·ayui-btn-small">捐赠作者</a></p>
+            <p>copyright @2017 技术支持：873559947@qq.com</p>
         </div>
     </div>
-
+    <!-- 锁屏 -->
+    <div class="admin-header-lock" id="lock-box" style="display: none;">
+        <div class="admin-header-lock-img"><img src="${ctx}/static/img/face.jpg"/></div>
+        <div class="admin-header-lock-name" id="lockUserName">系统管理员</div>
+        <div class="input_btn">
+            <input type="password" class="admin-header-lock-input layui-input" placeholder="请输入密码解锁.." name="lockPwd" id="lockPwd" />
+            <button class="layui-btn" id="unlock">解锁</button>
+        </div>
+        <p>请输入“123456”，否则不会解锁成功哦！！！</p>
+    </div>
 </body>
 </html>
