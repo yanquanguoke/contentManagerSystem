@@ -10,19 +10,19 @@
     <link rel="stylesheet" href="${ctx}/static/layui/css/layui.css">
     <link rel="stylesheet" href="${ctx}/static/css/global.min.css">
     <link rel="stylesheet" href="${ctx}/static/css/login.css">
-    <script src="${ctx}/static/layui/layui.js"></script>
-    <script src="${ctx}/static/js/login.min.js"></script>
+    <script  type="text/javascript" src="${ctx}/static/layui/layui.js"></script>
+    <script  type="text/javascript" src="${ctx}/static/js/login.min.js"></script>
 </head>
 <body>
     <div id="login-wrap">
         <div class="logo">
-            <p>CMS 后台管理系统</p>
+            <p>CMS 后台管理系统2</p>
         </div>
-
-        <form class="layui-form login-form" action="index.html" method="post" id="login-form">
+        ${code}
+        <form class="layui-form login-form" action="${ctx}/loginCheck" method="post" id="login-form">
             <div class="layui-form-item">
                 <div class="layui-input-block">
-                    <input type="text" name="account"  lay-verify="required" placeholder="管理员账号" autocomplete="off" class="layui-input radius-5">
+                    <input type="text" name="username"  lay-verify="required" placeholder="管理员账号" autocomplete="off" class="layui-input radius-5">
                 </div>
             </div>
             <div class="layui-form-item">
