@@ -1,7 +1,9 @@
 package com.yxb.cms.controller;
 
-import com.sun.org.apache.xpath.internal.operations.Mod;
-import com.yxb.cms.architect.utils.BussinessCodeUtil;
+import com.yxb.cms.architect.enums.BussinessCode;
+import com.yxb.cms.architect.utils.BussinessMsgUtil;
+import com.yxb.cms.domain.bo.BussinessMsg;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.shiro.SecurityUtils;
@@ -9,8 +11,8 @@ import org.apache.shiro.authc.IncorrectCredentialsException;
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.subject.Subject;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 
 /**
@@ -41,29 +43,41 @@ public class IndexController {
      * @return
      */
     @RequestMapping("/loginCheck")
-    public String loginCheck(String username,String password,Model model){
-        log.info("------"+username+"---"+password);
-        String code = null;
-        UsernamePasswordToken token = new UsernamePasswordToken(username, password);
-        token.setRememberMe(true);
-        Subject currentUser = SecurityUtils.getSubject();
+    @ResponseBody
+    public BussinessMsg loginCheck(String username, String password){
+        log.info("登陆验证处理开始");
+        long start = System.currentTimeMillis();
         try {
+            //1.用户名不能为空
+            if (StringUtils.isEmpty(username)) {
+                log.error("登陆验证失败,原因:用户名不能为空");
+                return BussinessMsgUtil.returnCodeMessage(BussinessCode.GLOBAL_LOGIN_NAME_NULL);
+            }
+            //2.密码不能为空
+            if (StringUtils.isEmpty(password)) {
+                log.error("登陆验证失败,原因:密码不能为空");
+                return BussinessMsgUtil.returnCodeMessage(BussinessCode.GLOBAL_LOGIN_PASS_NULL);
+            }
+            UsernamePasswordToken token = new UsernamePasswordToken(username, password);
+            token.setRememberMe(true);
+            Subject currentUser = SecurityUtils.getSubject();
+
             currentUser.login(token);
             if (currentUser.isAuthenticated()) {
-                log.info(">>>用户登录状态" + BussinessCodeUtil.GLOBAL_SUCCESS.getMsg());
-                //request.getSession().setAttribute(Constants.SESSION_KEY_LOGIN_NAME,getCurrentUser());
-                code = BussinessCodeUtil.GLOBAL_SUCCESS.getCode();
-                return "redirect:/main";
+                log.info("登陆验证通过，用户名：" + username);
+                return BussinessMsgUtil.returnCodeMessage(BussinessCode.GLOBAL_SUCCESS);
             }
-        }catch(IncorrectCredentialsException ice ){
-            log.error(BussinessCodeUtil.GLOBAL_LOGIN_FAIL.getMsg());
-            code = BussinessCodeUtil.GLOBAL_LOGIN_FAIL.getCode();
+            return BussinessMsgUtil.returnCodeMessage(BussinessCode.GLOBAL_LOGIN_FAIL);
+        } catch (IncorrectCredentialsException ice) {
+            log.error("登陆验证失败,原因:用户名或密码不匹配");
+            return BussinessMsgUtil.returnCodeMessage(BussinessCode.GLOBAL_LOGIN_FAIL);
         } catch (Exception e) {
-            log.error(BussinessCodeUtil.GLOBAL_LOGIN_ERROR.getMsg(),e);
-            code = BussinessCodeUtil.GLOBAL_ERROR.getCode();
+            log.error("登陆验证失败,原因:系统登陆异常", e);
+            return BussinessMsgUtil.returnCodeMessage(BussinessCode.GLOBAL_LOGIN_ERROR);
+        } finally {
+            log.info("登陆验证处理结束,用时" + (System.currentTimeMillis() - start) + "毫秒");
         }
-        model.addAttribute("code",BussinessCodeUtil.getByCode(code).toJson());
-        return "login";
+
     }
 
     @RequestMapping("/main")

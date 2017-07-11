@@ -13,7 +13,6 @@
         <commons-beanutils.version>1.8.3</commons-beanutils.version>
         <commons-logging.version>1.2</commons-logging.version>
         <commons-lang3.version>3.3.2</commons-lang3.version>
-        <net-sf-json-lib.version>2.3</net-sf-json-lib.version>
 
     </properties>
     <!-- spring-boot-starter-parent包含了大量配置好的依赖管理，在自己项目添加这些依赖的时候不需要写<version>版本号 -->
@@ -102,9 +101,9 @@
 
         <!-- json -->
         <dependency>
-            <groupId>net.sf.json-lib</groupId>
-            <artifactId>json-lib</artifactId>
-            <version>${net-sf-json-lib.version}</version>
+            <groupId>org.nutz</groupId>
+            <artifactId>nutz</artifactId>
+            <version>1.b.51</version>
         </dependency>
 
         <!-- apache shiro -->
@@ -179,6 +178,13 @@
                     </webResources>
                     <warName>${name}-${version}</warName>
                     <outputDirectory>${outPath}</outputDirectory>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+                <configuration>
+                    <jvmArguments>-Dfile.encoding=UTF-8</jvmArguments>
                 </configuration>
             </plugin>
             <plugin>
