@@ -122,6 +122,26 @@
             <artifactId>shiro-ehcache</artifactId>
             <version>1.2.2</version>
         </dependency>
+
+        <!-- Spring Boot Mybatis 依赖 -->
+        <dependency>
+            <groupId>org.mybatis.spring.boot</groupId>
+            <artifactId>mybatis-spring-boot-starter</artifactId>
+            <version>1.2.0</version>
+        </dependency>
+        <!-- Druid 数据连接池依赖 -->
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>druid</artifactId>
+            <version>1.0.18</version>
+        </dependency>
+        <!-- 添加mysql驱动包 -->
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+            <version>5.1.34</version>
+        </dependency>
+
         <!--
            包含支持UI模版（Velocity，FreeMarker，JasperReports），
            邮件服务，
@@ -133,13 +153,13 @@
             <groupId>org.springframework</groupId>
             <artifactId>spring-context-support</artifactId>
         </dependency>
-
+        <!-- SpringBoot 热部署-->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-devtools</artifactId>
             <optional>true</optional>
-            <!-- optional=true,依赖不会传递，-->
         </dependency>
+
 
     </dependencies>
     <build>
@@ -176,8 +196,8 @@
                             <filtering>true</filtering>
                         </resource>
                     </webResources>
-                    <warName>${name}-${version}</warName>
-                    <outputDirectory>${outPath}</outputDirectory>
+                    <warName>${name}</warName>
+                    <!--<outputDirectory>${outPath}</outputDirectory>-->
                 </configuration>
             </plugin>
             <plugin>
