@@ -7,6 +7,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.authc.AccountException;
 import org.apache.shiro.authc.IncorrectCredentialsException;
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.subject.Subject;
@@ -64,14 +65,16 @@ public class IndexController {
 
             currentUser.login(token);
             if (currentUser.isAuthenticated()) {
-                log.info("登陆验证通过，用户名：" + username);
                 return BussinessMsgUtil.returnCodeMessage(BussinessCode.GLOBAL_SUCCESS);
             }
             return BussinessMsgUtil.returnCodeMessage(BussinessCode.GLOBAL_LOGIN_FAIL);
         } catch (IncorrectCredentialsException ice) {
             log.error("登陆验证失败,原因:用户名或密码不匹配");
             return BussinessMsgUtil.returnCodeMessage(BussinessCode.GLOBAL_LOGIN_FAIL);
-        } catch (Exception e) {
+        }catch (AccountException e){
+            log.error("登陆验证失败,原因:用户名或密码不匹配");
+            return BussinessMsgUtil.returnCodeMessage(BussinessCode.GLOBAL_LOGIN_FAIL);
+        }catch (Exception e) {
             log.error("登陆验证失败,原因:系统登陆异常", e);
             return BussinessMsgUtil.returnCodeMessage(BussinessCode.GLOBAL_LOGIN_ERROR);
         } finally {

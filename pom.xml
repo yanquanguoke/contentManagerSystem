@@ -197,7 +197,7 @@
                         </resource>
                     </webResources>
                     <warName>${name}</warName>
-                    <!--<outputDirectory>${outPath}</outputDirectory>-->
+                    <outputDirectory>${outPath}</outputDirectory>
                 </configuration>
             </plugin>
             <plugin>
