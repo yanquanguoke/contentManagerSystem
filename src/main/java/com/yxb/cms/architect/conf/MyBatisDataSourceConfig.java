@@ -1,10 +1,6 @@
 package com.yxb.cms.architect.conf;
 
-import java.sql.SQLException;
-import java.util.Properties;
-
-import javax.sql.DataSource;
-
+import com.alibaba.druid.pool.DruidDataSource;
 import com.yxb.cms.architect.properties.AppCommonMyBatisProperties;
 import com.yxb.cms.architect.properties.JdbcProperties;
 import org.apache.ibatis.session.SqlSessionFactory;
@@ -22,7 +18,9 @@ import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.transaction.interceptor.TransactionInterceptor;
 
-import com.alibaba.druid.pool.DruidDataSource;
+import javax.sql.DataSource;
+import java.sql.SQLException;
+import java.util.Properties;
 
 
 /**
@@ -50,7 +48,7 @@ public class MyBatisDataSourceConfig {
      * 注册DataSource
      * @return
      */
-	@Bean(name="myBatisDataSource", destroyMethod = "close", initMethod="init")
+	@Bean(destroyMethod = "close", initMethod="init")
     @Primary
     public DataSource myBatisDataSource() throws SQLException {
 
