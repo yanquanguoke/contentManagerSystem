@@ -1,6 +1,6 @@
 package com.yxb.cms.service;
 
-import com.yxb.cms.architect.enums.BusinessConstants;
+import com.yxb.cms.architect.constant.BusinessConstants;
 import com.yxb.cms.dao.UserMapper;
 import com.yxb.cms.domain.vo.User;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -1,6 +1,6 @@
 package com.yxb.cms.controller;
 
-import com.yxb.cms.architect.enums.BussinessCode;
+import com.yxb.cms.architect.constant.BussinessCode;
 import com.yxb.cms.architect.utils.BussinessMsgUtil;
 import com.yxb.cms.domain.bo.BussinessMsg;
 import org.apache.commons.lang3.StringUtils;

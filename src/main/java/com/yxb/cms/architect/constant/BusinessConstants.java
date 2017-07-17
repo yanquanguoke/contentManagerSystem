@@ -1,7 +1,7 @@
 /**
  * 
  */
-package com.yxb.cms.architect.enums;
+package com.yxb.cms.architect.constant;
 
 
 /**

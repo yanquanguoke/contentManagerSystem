@@ -1,6 +1,6 @@
 package com.yxb.cms.architect.utils;
 
-import com.yxb.cms.architect.enums.BussinessCode;
+import com.yxb.cms.architect.constant.BussinessCode;
 import com.yxb.cms.domain.bo.BussinessMsg;
 
 /**

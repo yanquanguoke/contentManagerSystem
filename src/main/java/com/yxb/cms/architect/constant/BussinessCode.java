@@ -1,7 +1,7 @@
 /**
  * 
  */
-package com.yxb.cms.architect.enums;
+package com.yxb.cms.architect.constant;
 
 /**
  * 后台管理系统平台业返回状态码和状态描述<br>
