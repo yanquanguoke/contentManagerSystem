@@ -1,4 +1,4 @@
-package com.yxb.cms.controller;
+package com.yxb.cms.controller.main;
 
 import com.yxb.cms.architect.constant.BussinessCode;
 import com.yxb.cms.architect.utils.BussinessMsgUtil;

@@ -68,6 +68,7 @@ layui.define(["element","jquery"],function(exports){
 			if(_this.find("i.iconfont,i.layui-icon").attr("data-icon") != undefined){
 				var title = '';
 				if(that.hasTab(_this.find("cite").text()) == -1 && _this.siblings("dl.layui-nav-child").length == 0){
+                    alert(1)
 					if($(".layui-tab-title.top_tab li").length == openTabNum){
 						layer.msg('只能同时打开'+openTabNum+'个选项卡哦。不然系统会卡的！');
 						return;
@@ -93,11 +94,13 @@ layui.define(["element","jquery"],function(exports){
 						"href" : _this.attr("data-url"),
 						"layId" : new Date().getTime()
 					}
+                    alert(_this.find("cite").text());
 					menu.push(curmenu);
 					window.sessionStorage.setItem("menu",JSON.stringify(menu)); //打开的窗口
 					window.sessionStorage.setItem("curmenu",JSON.stringify(curmenu));  //当前的窗口
 					element.tabChange(tabFilter, that.getLayId(_this.find("cite").text()));
 				}else{
+                    alert(2)
 					//当前窗口内容
 					var curmenu = {
 						"icon" : _this.find("i.iconfont").attr("data-icon")!=undefined ? _this.find("i.iconfont").attr("data-icon") : _this.find("i.layui-icon").attr("data-icon"),
@@ -105,6 +108,7 @@ layui.define(["element","jquery"],function(exports){
 						"href" : _this.attr("data-url"),
 						"layId" : new Date().getTime()
 					}
+
 					window.sessionStorage.setItem("curmenu",JSON.stringify(curmenu));  //当前的窗口
 					element.tabChange(tabFilter, that.getLayId(_this.find("cite").text()));
 				}
