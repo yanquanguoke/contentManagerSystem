@@ -14,20 +14,25 @@
     <meta name="format-detection" content="telephone=no">
     <link rel="shortcut icon" href="${ctx}/static/img/favicon.ico">
     <link rel="stylesheet" href="${ctx}/static/layui/css/layui.css">
+    <link rel="stylesheet" type="text/css" href="http://at.alicdn.com/t/font_9h680jcse4620529.css">
     <link rel="stylesheet" href="${ctx}/static/css/main.css">
+    <link rel="stylesheet" href="${ctx}/static/css/backstage.css">
+
     <script src="${ctx}/static/layui/layui.js"></script>
 
-    <script type="text/javascript" src="${ctx}/static/js/nav.js"></script>
-    <script type="text/javascript" src="${ctx}/static/js/leftNav.js"></script>
-    <script type="text/javascript" src="${ctx}/static/js/index.js"></script>
+    <%--<script type="text/javascript" src="${ctx}/static/js/nav.js"></script>--%>
+    <%--<script type="text/javascript" src="${ctx}/static/js/leftNav.js"></script>--%>
+    <%--<script type="text/javascript" src="${ctx}/static/js/index.js"></script>--%>
 
 </head>
 <body class="main_body">
     <div class="layui-layout layui-layout-admin">
         <!-- 顶部-->
-        <div class="layui-header header">
+        <div class="layui-header header header-menu">
             <div class="layui-main">
                 <a href="#" class="logo">CMS后台管理系统</a>
+                <!-- 左侧导航收缩开关 -->
+                <div class="side-menu-switch posb" id="toggle"><span class="switch" ara-hidden="true"></span></div>
                 <!-- 顶部右侧菜单 -->
                 <ul class="layui-nav top_menu">
                     <li class="layui-nav-item showNotice" id="showNotice" pc>
