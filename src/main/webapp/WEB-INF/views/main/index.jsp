@@ -23,9 +23,10 @@
 
     <script src="${ctx}/static/layui/layui.js"></script>
 
+
     <%--<script type="text/javascript" src="${ctx}/static/js/nav.js"></script>--%>
     <%--<script type="text/javascript" src="${ctx}/static/js/leftNav.js"></script>--%>
-    <%--<script type="text/javascript" src="${ctx}/static/js/index.js"></script>--%>
+    <%--<script type="text/javascript" src="${ctx}/static/js/indexBack.js"></script>--%>
 
 
 </head>
@@ -56,10 +57,6 @@
                 </div>
                 <!-- 右侧常用菜单导航 -->
                 <div class="larry-right-menu posb">
-                    <button class="layui-btn layui-btn-small" id="dianzhan">
-                        <i class="larry-icon larry-dianzan"></i>
-                        打赏作者
-                    </button>
                     <ul class="layui-nav clearfix">
                         <li style="" class="layui-nav-item">
                             <a class="onFullScreen" id="FullScreen"><i class="larry-icon larry-quanping"></i>全屏</a>
@@ -85,7 +82,7 @@
                             </dl>
                         </li>
                         <li class="layui-nav-item exit">
-                            <a id="logout"><i class="larry-icon larry-exit"></i><cite>退出</cite></a>
+                            <a id="logout" onclick="logout();"><i class="larry-icon larry-exit"></i><cite>退出</cite></a>
                         </li>
                         <span style="left: 176.2px; top: 65px; width: 0px; opacity: 0;" class="layui-nav-bar"></span></ul>
                 </div>
@@ -143,9 +140,22 @@
             </div>
         </div>
         <!-- 底部-->
-        <div class="layui-footer footer">
-            <p>copyright @2017 技术支持：873559947@qq.com</p>
+        <div class="layui-footer footer layui-larry-foot">
+            <div class="layui-main">
+                <p>copyright @2017 技术支持：873559947@qq.com</p>
+            </div>
         </div>
     </div>
 </body>
 </html>
+<script>
+    function logout() {
+        layui.config({base: '/static/js/'});
+        layui.use(['jquery', 'common'], function () {
+            var $ = layui.jquery, common = layui.common;
+            var url = '${ctx}/logout';
+            common.logOut('退出登陆提示！', '你真的确定要退出系统吗？', url)
+
+        });
+    }
+</script>

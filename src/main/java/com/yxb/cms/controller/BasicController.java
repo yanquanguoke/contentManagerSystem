@@ -1,5 +1,7 @@
 package com.yxb.cms.controller;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 
@@ -12,4 +14,7 @@ import org.springframework.stereotype.Controller;
 @Controller
 @Scope("prototype")
 public class BasicController {
+
+    protected Log log = LogFactory.getLog(getClass());
+
 }

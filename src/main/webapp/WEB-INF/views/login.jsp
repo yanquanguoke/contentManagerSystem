@@ -16,7 +16,7 @@
         <div class="logo">
             <p>CMS 后台管理系统</p>
         </div>
-        <form class="layui-form login-form" action="${ctx}/main" method="post" id="login-form">
+        <form class="layui-form login-form" action="${ctx}/main/index" method="post" id="login-form">
             <div class="layui-form-item">
                 <div class="layui-input-block">
                     <input type="text" name="username"  lay-verify="required" placeholder="请输入账号" autocomplete="off" class="layui-input">
