@@ -1,265 +1,163 @@
-var navtab;
-layui.config({base: '/static/js/'}).extend({
-    larry: 'larry',
-    navtab: 'navtab',
-    elemnts: 'elements',
-    common: 'common'
-});
-layui.use(['elements', 'jquery', 'layer', 'larry', 'navtab', 'form', 'common'], function () {
-    var $ = layui.jquery, layer = layui.layer, device = layui.device(), elements = layui.elements(), larry = layui.larry(), form = layui.form(), common = layui.common;
-    navtab = layui.navtab({elem: '#larry-tab'});
-    $('body').bind("selectstart", function () {
-        return false
-    });
-    $(document).ready(function () {
-        if (device.ie && device.ie < 9) {
-            layer.alert('最低支持ie9，您当前使用的是古老的 IE' + device.ie + '！')
+/** layui-v1.0.9_rls MIT License By http://www.layui.com 对ul.layui-tab-title查找方式进行了细微修改*/
+;
+layui.define("jquery", function (i) {
+    "use strict";
+    var a = layui.jquery, t = (layui.hint(), layui.device()), l = "elements", e = "layui-this", n = "layui-show", s = function () {
+        this.config = {}
+    };
+    s.prototype.set = function (i) {
+        var t = this;
+        return a.extend(!0, t.config, i), t
+    }, s.prototype.on = function (i, a) {
+        return layui.onevent(l, i, a)
+    }, s.prototype.tabAdd = function (i, t) {
+        var l = ".layui-tab-title", e = a(".layui-tab[lay-filter=" + i + "]"), n = e.find('.larry-title-box').children(l), s = e.children(".layui-tab-content");
+        return n.append('<li lay-id="' + (t.id || "") + '">' + (t.title || "unnaming") + "</li>"), s.append('<div class="layui-tab-item">' + (t.content || "") + "</div>"), f.hideTabMore(!0), f.tabAuto(), this
+    }, s.prototype.tabDelete = function (i, t) {
+        var l = ".layui-tab-title", e = a(".layui-tab[lay-filter=" + i + "]"), n = e.find('.larry-title-box').children(l), s = n.find('>li[lay-id="' + t + '"]');
+        return f.tabDelete(null, s), this
+    }, s.prototype.tabChange = function (i, t) {
+        var l = ".layui-tab-title", e = a(".layui-tab[lay-filter=" + i + "]"), n = e.find('.larry-title-box').children(l), s = n.find('>li[lay-id="' + t + '"]');
+        return f.tabClick(null, null, s), this
+    }, s.prototype.progress = function (i, t) {
+        var l = "layui-progress", e = a("." + l + "[lay-filter=" + i + "]"), n = e.find("." + l + "-bar"), s = n.find("." + l + "-text");
+        return n.css("width", t), s.text(t), this
+    };
+    var o = ".layui-nav", c = "layui-nav-item", r = "layui-nav-bar", u = "layui-nav-tree", d = "layui-nav-child", h = "layui-nav-more", y = "layui-anim layui-anim-upbit", f = {
+        tabClick: function (i, t, s) {
+            var o = s || a(this), t = t || o.parent().children("li").index(o), c = o.parents(".layui-tab").eq(0), r = c.children(".layui-tab-content").children(".layui-tab-item"), u = c.attr("lay-filter");
+            o.addClass(e).siblings().removeClass(e), r.eq(t).addClass(n).siblings().removeClass(n), layui.event.call(this, l, "tab(" + u + ")", {
+                elem: c,
+                index: t
+            })
+        }, tabDelete: function (i, t) {
+            var l = t || a(this).parent(), n = l.index(), s = l.parents(".layui-tab").eq(0), o = s.children(".layui-tab-content").children(".layui-tab-item");
+            l.hasClass(e) && (l.next()[0] ? f.tabClick.call(l.next()[0], null, n + 1) : l.prev()[0] && f.tabClick.call(l.prev()[0], null, n - 1)), l.remove(), o.eq(n).remove(), setTimeout(function () {
+                f.tabAuto()
+            }, 50)
+        }, tabAuto: function () {
+            var i = "layui-tab-more", l = "layui-tab-bar", e = "layui-tab-close", n = this;
+            a(".layui-tab").each(function () {
+                var s = a(this), o = s.find('.larry-title-box').children(".layui-tab-title"), c = (s.children(".layui-tab-content").children(".layui-tab-item"), 'lay-stope="tabmore"'), r = a('<span class="layui-unselect layui-tab-bar" ' + c + "><i " + c + ' class="layui-icon"></i></span>');
+                if (n === window && 8 != t.ie && f.hideTabMore(!0), s.attr("lay-allowClose") && o.find("li").each(function () {
+                        var i = a(this);
+                        if (!i.find("." + e)[0]) {
+                            var t = a('<i class="layui-icon layui-unselect ' + e + '">ဆ</i>');
+                            t.on("click", f.tabDelete), i.append(t)
+                        }
+                    }), o.prop("scrollWidth") > o.outerWidth() + 1) {
+                    if (o.find("." + l)[0])return;
+                    o.append(r), s.attr("overflow", ""), r.on("click", function (a) {
+                        o[this.title ? "removeClass" : "addClass"](i), this.title = this.title ? "" : "收缩"
+                    })
+                } else o.find("." + l).remove(), s.removeAttr("overflow")
+            })
+        }, hideTabMore: function (i) {
+            var t = a(".layui-tab-title");
+            i !== !0 && "tabmore" === a(i.target).attr("lay-stope") || (t.removeClass("layui-tab-more"), t.find(".layui-tab-bar").attr("title", ""))
+        }, clickThis: function () {
+            var i = a(this), t = i.parents(o), n = t.attr("lay-filter");
+            i.find("." + d)[0] || (t.find("." + e).removeClass(e), i.addClass(e), layui.event.call(this, l, "nav(" + n + ")", i))
+        }, clickChild: function () {
+            var i = a(this), t = i.parents(o), n = t.attr("lay-filter");
+            t.find("." + e).removeClass(e), i.addClass(e), layui.event.call(this, l, "nav(" + n + ")", i)
+        }, showChild: function () {
+            var i = a(this), t = i.parents(o), l = i.parent(), e = i.siblings("." + d);
+            t.hasClass(u) && (e.removeClass(y), l["none" === e.css("display") ? "addClass" : "removeClass"](c + "ed"))
+        }, collapse: function () {
+            var i = a(this), t = i.find(".layui-colla-icon"), e = i.siblings(".layui-colla-content"), s = i.parents(".layui-collapse").eq(0), o = s.attr("lay-filter"), c = "none" === e.css("display");
+            if ("string" == typeof s.attr("lay-accordion")) {
+                var r = s.children(".layui-colla-item").children("." + n);
+                r.siblings(".layui-colla-title").children(".layui-colla-icon").html(""), r.removeClass(n)
+            }
+            e[c ? "addClass" : "removeClass"](n), t.html(c ? "" : ""), layui.event.call(this, l, "collapse(" + o + ")", {
+                title: i,
+                content: e,
+                show: c
+            })
         }
-        AdminInit();
-        $.ajaxSettings.async = false;
-        $.getJSON('/backstage/datas/menu.php?t=' + new Date(), {Param: 'index_menu'}, function (result) {
-            larry.set({elem: '#menu', data: result, cached: false});
-            larry.render()
-        });
-        var m = $('#menu');
-        m.find('li.layui-nav-item').each(function () {
-            var t = $(this);
-            t.on('click', function () {
-                var id = t.data('pid');
-                $.ajaxSettings.async = false;
-                $.getJSON('/backstage/datas/menu.php?t=' + new Date(), {
-                    pid: id,
-                    Param: 'index_menu'
-                }, function (result) {
-                    larry.set({elem: '#larrySideNav', data: result, spreadOne: true});
-                    larry.render();
-                    larry.on('click(side)', function (data) {
-                        navtab.tabAdd(data.field)
+    };
+    s.prototype.init = function (i) {
+        var l = {
+            tab: function () {
+                f.tabAuto.call({})
+            }, nav: function () {
+                var i, l, e, s = 200, p = function (o, c) {
+                    var r = a(this), f = r.find("." + d);
+                    c.hasClass(u) ? o.css({
+                        top: r.position().top,
+                        height: r.children("a").height(),
+                        opacity: 1
+                    }) : (f.addClass(y), o.css({
+                        left: r.position().left + parseFloat(r.css("marginLeft")),
+                        top: r.position().top + r.height() - 5
+                    }), i = setTimeout(function () {
+                        o.css({width: r.width(), opacity: 1})
+                    }, t.ie && t.ie < 10 ? 0 : s), clearTimeout(e), "block" === f.css("display") && clearTimeout(l), l = setTimeout(function () {
+                        f.addClass(n), r.find("." + h).addClass(h + "d")
+                    }, 300))
+                };
+                a(o).each(function () {
+                    var t = a(this), o = a('<span class="' + r + '"></span>'), y = t.find("." + c);
+                    t.find("." + r)[0] || (t.append(o), y.on("mouseenter", function () {
+                        p.call(this, o, t)
+                    }).on("mouseleave", function () {
+                        t.hasClass(u) || (clearTimeout(l), l = setTimeout(function () {
+                            t.find("." + d).removeClass(n), t.find("." + h).removeClass(h + "d")
+                        }, 300))
+                    }), t.on("mouseleave", function () {
+                        clearTimeout(i), e = setTimeout(function () {
+                            t.hasClass(u) ? o.css({
+                                height: 0,
+                                top: o.position().top + o.height() / 2,
+                                opacity: 0
+                            }) : o.css({width: 0, left: o.position().left + o.width() / 2, opacity: 0})
+                        }, s)
+                    })), y.each(function () {
+                        var i = a(this), t = i.find("." + d);
+                        if (t[0] && !i.find("." + h)[0]) {
+                            var l = i.children("a");
+                            l.append('<span class="' + h + '"></span>')
+                        }
+                        i.off("click", f.clickThis).on("click", f.clickThis), i.children("a").off("click", f.showChild).on("click", f.showChild), t.children("dd").off("click", f.clickChild).on("click", f.clickChild)
                     })
                 })
-            })
-        });
-        m.find('li[data-pid=0]').click();
-        $("#larrySideNav").find("li").eq(0).addClass('layui-this');
-        $.ajaxSettings.async = true
-    });
-    $('#larry-tab').bind("contextmenu", function () {
-        return false
-    });
-    $('#buttonRCtrl').find('dd').each(function () {
-        $(this).on('click', function () {
-            var eName = $(this).children('a').attr('data-eName');
-            navtab.tabCtrl(eName)
-        })
-    });
-    $(window).on('resize', function () {
-        AdminInit();
-        var c = $('#larry-tab .layui-tab-content');
-        c.height($(this).height() - 153);
-        c.find('iframe').each(function () {
-            $(this).height(c.height())
-        })
-    }).resize();
-    $("#refresh_iframe").click(function () {
-        $(".layui-tab-content .layui-tab-item").each(function () {
-            if ($(this).hasClass('layui-show')) {
-                $(this).children('iframe')[0].contentWindow.location.reload(true)
+            }, breadcrumb: function () {
+                var i = ".layui-breadcrumb";
+                a(i).each(function () {
+                    var i = a(this), t = i.attr("lay-separator") || ">", l = i.find("a");
+                    l.find(".layui-box")[0] || (l.each(function (i) {
+                        i !== l.length - 1 && a(this).append('<span class="layui-box">' + t + "</span>")
+                    }), i.css("visibility", "visible"))
+                })
+            }, progress: function () {
+                var i = "layui-progress";
+                a("." + i).each(function () {
+                    var t = a(this), l = t.find(".layui-progress-bar"), e = l.attr("lay-percent");
+                    l.css("width", e), t.attr("lay-showPercent") && setTimeout(function () {
+                        var a = Math.round(l.width() / t.width() * 100);
+                        a > 100 && (a = 100), l.html('<span class="' + i + '-text">' + a + "%</span>")
+                    }, 350)
+                })
+            }, collapse: function () {
+                var i = "layui-collapse";
+                a("." + i).each(function () {
+                    var i = a(this).find(".layui-colla-item");
+                    i.each(function () {
+                        var i = a(this), t = i.find(".layui-colla-title"), l = i.find(".layui-colla-content"), e = "none" === l.css("display");
+                        t.find(".layui-colla-icon").remove(), t.append('<i class="layui-icon layui-colla-icon">' + (e ? "" : "") + "</i>"), t.off("click", f.collapse).on("click", f.collapse)
+                    })
+                })
             }
+        };
+        return layui.each(l, function (i, a) {
+            a()
         })
-    });
-    function AdminInit() {
-        $('.layui-layout-admin').height($(window).height());
-        $('body').height($(window).height());
-        $('#larry-body').width($('.layui-layout-admin').width() - $('#larry-side').width());
-        $('#larry-footer').width($('.layui-layout-admin').width() - $('#larry-side').width())
-    }
-
-    $('#clearCached').on('click', function () {
-        larry.cleanCached();
-        layer.alert('缓存清除完成!本地存储数据也清理成功！', {icon: 1, title: '系统提示'}, function () {
-            location.reload()
-        })
-    });
-    var fScreen = localStorage.getItem("fullscreen_info");
-    var themeName = localStorage.getItem('themeName');
-    if (themeName) {
-        $("body").attr("class", "");
-        $("body").addClass("larryTheme-" + themeName)
-    }
-    if (fScreen && fScreen != 'false') {
-        var fScreenIndex = layer.alert('按ESC退出全屏', {
-            title: '进入全屏提示信息',
-            skin: 'layui-layer-lan',
-            closeBtn: 0,
-            anim: 4,
-            offset: '100px'
-        }, function () {
-            entryFullScreen();
-            $('#FullScreen').html('<i class="larry-icon larry-quanping"></i>退出全屏');
-            layer.close(fScreenIndex)
-        })
-    }
-    $('#larryTheme').on('click', function () {
-        var fScreen = localStorage.getItem('fullscreen_info');
-        var themeName = localStorage.getItem('themeName');
-        layer.open({
-            type: 1,
-            title: false,
-            closeBtn: true,
-            shadeClose: false,
-            shade: 0.35,
-            area: ['450px', '300px'],
-            isOutAnim: true,
-            resize: false,
-            anim: Math.ceil(Math.random() * 6),
-            content: $('#LarryThemeSet').html(),
-            success: function (layero, index) {
-                if (fScreen && fScreen != 'false') {
-                    $("input[lay-filter='fullscreen']").attr("checked", "checked")
-                }
-                if (themeName) {
-                    $("#themeName option[value='" + themeName + "']").attr("selected", "selected")
-                }
-                form.render()
-            }
-        });
-        form.on('switch(fullscreen)', function (data) {
-            var fValue = data.elem.checked;
-            localStorage.setItem('fullscreen_info', fValue)
-        });
-        form.on('select(larryTheme)', function (data) {
-            var themeValue = data.value;
-            localStorage.setItem('themeName', themeValue);
-            if (themeName) {
-                $("body").attr("class", "");
-                $("body").addClass("larryTheme-" + themeName)
-            }
-            form.render('select')
-        })
-    });
-    $('#FullScreen').bind('click', function () {
-        var fullscreenElement = document.fullscreenElement || document.mozFullScreenElement || document.webkitFullscreenElement;
-        if (fullscreenElement == null) {
-            entryFullScreen();
-            $(this).html('<i class="larry-icon larry-quanping"></i>退出全屏')
-        } else {
-            exitFullScreen();
-            $(this).html('<i class="larry-icon larry-quanping"></i>全屏')
-        }
-    });
-    function entryFullScreen() {
-        var docE = document.documentElement;
-        if (docE.requestFullScreen) {
-            docE.requestFullScreen()
-        } else if (docE.mozRequestFullScreen) {
-            docE.mozRequestFullScreen()
-        } else if (docE.webkitRequestFullScreen) {
-            docE.webkitRequestFullScreen()
-        }
-    }
-
-    function exitFullScreen() {
-        var docE = document;
-        if (docE.exitFullscreen) {
-            docE.exitFullscreen()
-        } else if (docE.mozCancelFullScreen) {
-            docE.mozCancelFullScreen()
-        } else if (docE.webkitCancelFullScreen) {
-            docE.webkitCancelFullScreen()
-        }
-    }
-
-    $('#toggle').click(function () {
-        var sideWidth = $('#larry-side').width();
-        var bodyW = $('#larry-body').width();
-        if (sideWidth === 200) {
-            bodyW += 203;
-            $('#larry-body').animate({left: '0', width: bodyW});
-            $('#larry-footer').animate({left: '0', width: bodyW});
-            $('#larry-side').animate({width: '0'})
-        } else {
-            bodyW -= 203;
-            $('#larry-body').animate({left: '203px', width: bodyW});
-            $('#larry-footer').animate({left: '203px', width: bodyW});
-            $('#larry-side').animate({width: '200px'})
-        }
-    });
-    $('#lock').mouseover(function () {
-        layer.tips('请按Alt+L快速锁屏！', '#lock', {tips: [1, '#FF5722'], time: 2000})
-    });
-    $(document).keydown(function (e) {
-        if (e.altKey && e.which == 76) {
-            lockSystem()
-        }
-    });
-    checkLockStatus('0');
-    function lockSystem() {
-        var url = '/backstage/datas/lock.php';
-        $.post(url, function (data) {
-            if (data == '1') {
-                checkLockStatus(1)
-            } else {
-                layer.alert('锁屏失败，请稍后再试！')
-            }
-        });
-        startTimer()
-    }
-
-    function unlockSystem() {
-        checkLockStatus(0)
-    }
-
-    $('#lock').click(function () {
-        lockSystem()
-    });
-    $('#unlock').click(function () {
-        unlockSystem()
-    });
-    $('#lock_password').keypress(function (e) {
-        var key = e.which;
-        if (key == 13) {
-            unlockSystem()
-        }
-    });
-    function startTimer() {
-        var today = new Date();
-        var h = today.getHours();
-        var m = today.getMinutes();
-        var s = today.getSeconds();
-        m = m < 10 ? '0' + m : m;
-        s = s < 10 ? '0' + s : s;
-        $('#time').html(h + ":" + m + ":" + s);
-        t = setTimeout(function () {
-            startTimer()
-        }, 500)
-    }
-
-    function checkLockStatus(locked) {
-        if (locked == 1) {
-            $('.lock-screen').show();
-            $('#locker').show();
-            $('#layui_layout').hide();
-            $('#lock_password').val('')
-        } else {
-            $('.lock-screen').hide();
-            $('#locker').hide();
-            $('#layui_layout').show()
-        }
-    }
-
-    $('#dianzhan').click(function (event) {
-        layer.open({
-            type: 1,
-            title: false,
-            closeBtn: true,
-            shadeClose: false,
-            shade: 0.15,
-            area: ['505px', '288px'],
-            content: '<img src="images/dianzhan.jpg"/>'
-        })
-    });
-    $('#logout').on('click', function () {
-        var url = 'login.php';
-        common.logOut('退出登陆提示！', '你真的确定要退出系统吗？', url)
+    };
+    var p = new s, v = a(document);
+    p.init();
+    var b = ".layui-tab-title li";
+    v.on("click", b, f.tabClick), v.on("click", f.hideTabMore), a(window).on("resize", f.tabAuto), i(l, function (i) {
+        return p.set(i)
     })
-})
+});

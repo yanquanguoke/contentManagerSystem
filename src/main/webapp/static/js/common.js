@@ -1,10 +1,7 @@
 /**
- * larryCMS 自定义公共基础信息提示模块
- * Autor: Larry
- * Date: 17-04-25
+ *  自定义扩转模块
  */
 layui.define(['layer'], function (exports) {
-    "use strict";
     var $ = layui.jquery, layer = layui.layer;
     var CmsCommon = {
         cmsError: function (msg, title) {

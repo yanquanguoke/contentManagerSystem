@@ -22,6 +22,7 @@
     <link rel="stylesheet" href="${ctx}/static/css/backstage.css">
 
     <script src="${ctx}/static/layui/layui.js"></script>
+    <script src="${ctx}/static/js/index.js"></script>
 
 
     <%--<script type="text/javascript" src="${ctx}/static/js/nav.js"></script>--%>
@@ -31,10 +32,11 @@
 
 </head>
 <body class="main_body">
+
     <div class="layui-layout layui-layout-admin">
         <!-- 顶部-->
         <div class="layui-header header header-menu">
-            <div class="layui-main">
+            <div class="layui-main ">
                 <a href="#" class="logo">CMS后台管理系统</a>
                 <!-- 左侧导航收缩开关 -->
                 <div class="side-menu-switch" id="toggle"><span class="switch" ara-hidden="true"></span></div>
@@ -53,11 +55,12 @@
                         <li style="" class="layui-nav-item" data-pid="46" "="">
                             <a><i class="larry-icon larry-ht_expand" data-icon="larry-ht_expand" aria-hidden="true"></i><cite>扩展模块</cite></a>
                         </li>
-                            <span style="left: 205.5px; top: 65px; width: 0px; opacity: 0;" class="layui-nav-bar"></span></ul>
+
+                    </ul>
                 </div>
                 <!-- 右侧常用菜单导航 -->
-                <div class="larry-right-menu posb">
-                    <ul class="layui-nav clearfix">
+                <div class="larry-right-menu posb" >
+                    <ul class="layui-nav clearfix ">
                         <li style="" class="layui-nav-item">
                             <a class="onFullScreen" id="FullScreen"><i class="larry-icon larry-quanping"></i>全屏</a>
                         </li>
@@ -70,7 +73,7 @@
                         <li style="" class="layui-nav-item">
                             <a id="larryTheme"><i class="larry-icon larry-theme1"></i>设置主题</a>
                         </li>
-                        <li class="layui-nav-item kjfs">
+                        <li class="layui-nav-item kjfs posb" >
                             <a class="kuaijiefangshi"><i class="larry-icon larry-kuaijie"></i><cite>快捷方式</cite><span class="layui-nav-more"></span></a>
                             <dl class="layui-nav-child">
                                 <dd>
@@ -82,19 +85,24 @@
                             </dl>
                         </li>
                         <li class="layui-nav-item exit">
-                            <a id="logout" onclick="logout();"><i class="larry-icon larry-exit"></i><cite>退出</cite></a>
+                            <a id="logout"><i class="larry-icon larry-exit"></i><cite>退出</cite></a>
                         </li>
-                        <span style="left: 176.2px; top: 65px; width: 0px; opacity: 0;" class="layui-nav-bar"></span></ul>
+                    </ul>
+
                 </div>
             </div>
         </div>
+
         <!-- 左侧导航-->
         <div class="layui-side layui-bg-black">
             <div class="user-photo">
                 <a class="img" title="我的头像" ><img src="${ctx}/static/img/face.jpg"></a>
                 <p>你好！<span class="userName">系统管理员</span>, 欢迎登录</p>
             </div>
-            <div class="navBar layui-side-scroll"></div>
+            <div class="navBar layui-side-scroll">
+
+
+            </div>
         </div>
         <!--中间内容 -->
         <div class="layui-body layui-form" id="larry-body">
@@ -108,6 +116,7 @@
                     <div class="title-right" id="titleRbox">
                         <div class="go-right key-press pressKey" id="titleRight" title="滚动至最左侧"><i class="larry-icon larry-right"></i></div>
                         <div class="refresh key-press" id="refresh_iframe"><i class="larry-icon larry-shuaxin2"></i><cite>刷新</cite></div>
+
                         <div class="often key-press" lay-filter="larryOperate" id="buttonRCtrl">
                             <ul class="layui-nav posr">
                                 <li class="layui-nav-item posb">
@@ -127,11 +136,12 @@
                                         </dd>
                                     </dl>
                                 </li>
-                                <span class="layui-nav-bar"></span></ul>
+                            </ul>
                         </div>
 
                     </div>
                 </div>
+
                 <div class="layui-tab-content clildFrame" style="height: 793px;">
                     <div class="layui-tab-item layui-show">
                         <iframe src=""></iframe>
@@ -141,21 +151,13 @@
         </div>
         <!-- 底部-->
         <div class="layui-footer footer layui-larry-foot">
+
             <div class="layui-main">
                 <p>copyright @2017 技术支持：873559947@qq.com</p>
             </div>
         </div>
     </div>
+
+
 </body>
 </html>
-<script>
-    function logout() {
-        layui.config({base: '/static/js/'});
-        layui.use(['jquery', 'common'], function () {
-            var $ = layui.jquery, common = layui.common;
-            var url = '${ctx}/logout';
-            common.logOut('退出登陆提示！', '你真的确定要退出系统吗？', url)
-
-        });
-    }
-</script>
