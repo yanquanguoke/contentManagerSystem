@@ -86,6 +86,7 @@ public class LoginController extends BasicController {
         Subject currentUser = SecurityUtils.getSubject();
         currentUser.logout();
         return "login";
+
     }
 
 
