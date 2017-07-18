@@ -9,9 +9,9 @@
  *+----------------------------------------------------------------------
  */
 /* initialize css */
-*html{padding:0px}
+html{padding:0px}
 html{background-color: #ffffff; }
-html,body{overflow-x: hidden; overflow-y: auto;}
+/*html,body{overflow-x: hidden; overflow-y: hidden;}*/
 body,div,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,pre,code,form,fieldset,legend,input,button,textarea,select,p,blockquote,th,td,span,a{margin:0;padding:0;}
 body{font-size:12px;font-family: "微软雅黑","Microsoft YaHei","Microsoft YaHei UI", "Segoe UI", Arial, Verdana, Sans-Serif, sans-serif;}
 em{font-style:normal}
