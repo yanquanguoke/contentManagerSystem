@@ -22,12 +22,11 @@
     <link rel="stylesheet" href="${ctx}/static/css/backstage.css">
 
     <script src="${ctx}/static/layui/layui.js"></script>
-    <script src="${ctx}/static/js/index.js"></script>
+    <%--<script src="${ctx}/static/js/index.js"></script>--%>
 
-
-    <%--<script type="text/javascript" src="${ctx}/static/js/nav.js"></script>--%>
-    <%--<script type="text/javascript" src="${ctx}/static/js/leftNav.js"></script>--%>
-    <%--<script type="text/javascript" src="${ctx}/static/js/indexBack.js"></script>--%>
+    <script type="text/javascript" src="${ctx}/static/js/nav.js"></script>
+    <script type="text/javascript" src="${ctx}/static/js/leftNav.js"></script>
+    <script type="text/javascript" src="${ctx}/static/js/index.js"></script>
 
 
 </head>
@@ -99,20 +98,34 @@
                 <a class="img" title="我的头像" ><img src="${ctx}/static/img/face.jpg"></a>
                 <p>你好！<span class="userName">系统管理员</span>, 欢迎登录</p>
             </div>
-            <div class="navBar layui-side-scroll">
+            <!-- 左侧菜单-->
+            <div class="navBar layui-side-scroll" id="navBarId">
+                <%--<ul class="layui-nav layui-nav-tree" lay-filter="demo">--%>
+                    <%--<li class="layui-nav-item ">--%>
+                        <%--<a href="javascript:;">用户管理</a>--%>
 
+                    <%--</li>--%>
+                    <%--<li class="layui-nav-item ">--%>
+                        <%--<a href="javascript:;">角色管理</a>--%>
 
+                    <%--</li>--%>
+                    <%--<li class="layui-nav-item ">--%>
+                        <%--<a href="javascript:;">菜单管理</a>--%>
+
+                    <%--</li>--%>
+                <%--</ul>--%>
             </div>
+
         </div>
         <!--中间内容 -->
         <div class="layui-body layui-form" id="larry-body">
-            <div class="layui-tab marg0" lay-filter="bodyTab">
-
-                <div class="larry-title-box">
+            <div class="layui-tab marg0" id="larry-tab" lay-filter="bodyTab">
+                <! -- 选项卡-->
+                <ul class="layui-tab-title top_tab">
+                    <li class="layui-this" lay-id=""><i class="larry-icon larry-gerenxinxi1"></i> <cite>后台首页</cite><i class="layui-icon layui-unselect layui-tab-close" data-id="1"> </i></li>
+                </ul>
+                <div class="larry-title-box" style="height: 41px;" >
                     <div class="go-left key-press pressKey" id="titleLeft" title="滚动至最右侧"><i class="larry-icon larry-weibiaoti6-copy"></i> </div>
-                    <ul class="layui-tab-title top_tab">
-                        <li class="layui-this" lay-id=""><i class="iconfont icon-computer "></i> <cite>后台首页</cite></li>
-                    </ul>
                     <div class="title-right" id="titleRbox">
                         <div class="go-right key-press pressKey" id="titleRight" title="滚动至最左侧"><i class="larry-icon larry-right"></i></div>
                         <div class="refresh key-press" id="refresh_iframe"><i class="larry-icon larry-shuaxin2"></i><cite>刷新</cite></div>
@@ -138,11 +151,9 @@
                                 </li>
                             </ul>
                         </div>
-
                     </div>
                 </div>
-
-                <div class="layui-tab-content clildFrame" style="height: 793px;">
+                <div class="layui-tab-content clildFrame" style="height:793px;">
                     <div class="layui-tab-item layui-show">
                         <iframe src=""></iframe>
                     </div>

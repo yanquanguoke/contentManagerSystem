@@ -331,7 +331,7 @@ body {
 }
 
 .layui-side-scroll ul.layui-nav li.layui-nav-item dl.layui-nav-child dd a {
-    display: inline-block;
+    /*display: inline-block;*/
     vertical-align: top;
     padding-left: 40px !important;
     padding-right: 0px;
