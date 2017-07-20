@@ -16,16 +16,30 @@ layui.define(["element","jquery"],function(exports){
 				tabFilter : "bodyTab"
 			}
 		};
-	//显示左侧菜单
+
+    //显示左侧菜单
     var contextB = $.trim($("#navBarId").html());
 	 if(contextB == null || contextB.length == 0 ){
-		var _this = this;
+
+         var _this = this;
 		$(".navBar").html(navBar(navs)).height($(window).height()-230);
 		element.init();  //初始化页面元素
 		$(window).resize(function(){
 			$(".navBar").height($(window).height()-230);
 		})
 	 }
+
+    // 显示上部菜单
+    var topMenuContext = $.trim($("#topMenu").html());
+
+    if(topMenuContext == null || topMenuContext.length == 0 ){
+        $(".topMenu").html(topNavBar(topNavs));
+        element.init();  //初始化页面元素
+
+    }
+
+
+
 
 	//参数设置
 	Tab.prototype.set = function(option) {

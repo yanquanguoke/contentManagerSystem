@@ -47,3 +47,21 @@ function navBar(data){
 	ulHtml += '</ul>';
 	return ulHtml;
 }
+
+
+function topNavBar(data){
+    var ulHtml = '<ul class="layui-nav clearfix">';
+    for(var i=0;i<data.length;i++){
+        if(data[i].spread){
+            ulHtml += '<li class="layui-nav-item layui-this" data-pid="'+data[i].pid+'">';
+        }else{
+            ulHtml += '<li class="layui-nav-item" data-pid="'+data[i].pid+'">';
+        }
+            ulHtml += '<a><i class="larry-icon '+data[i].icon+'"></i>';
+            ulHtml += '<cite>'+data[i].title+'</cite></a>';
+
+        ulHtml += '</li>'
+    }
+    ulHtml += '</ul>';
+    return ulHtml;
+}

@@ -30,7 +30,7 @@
 
 
 </head>
-<body class="main_body">
+<body class="main_body larryTheme-A">
 
     <div class="layui-layout layui-layout-admin">
         <!-- 顶部-->
@@ -40,22 +40,22 @@
                 <!-- 左侧导航收缩开关 -->
                 <div class="side-menu-switch" id="toggle"><span class="switch" ara-hidden="true"></span></div>
                 <!-- 顶级菜单 -->
-                <div class="larry-top-menu posb">
-                    <ul class="layui-nav clearfix" id="menu">
-                        <li class="layui-nav-item layui-this" data-pid="0" "="">
-                            <a><i class="larry-icon larry-xitongshezhi1" data-icon="larry-xitongshezhi1" aria-hidden="true"></i><cite>系统管理</cite></a>
-                        </li>
-                        <li style="" class="layui-nav-item" data-pid="35" "="">
-                            <a><i class="larry-icon larry-neirongguanli" data-icon="larry-neirongguanli" aria-hidden="true"></i><cite>内容管理</cite></a>
-                        </li>
-                        <li style="" class="layui-nav-item" data-pid="40" "="">
-                            <a><i class="larry-icon larry-weixingongzhongpingtai" data-icon="larry-weixingongzhongpingtai" aria-hidden="true"></i><cite>微信公众</cite></a>
-                        </li>
-                        <li style="" class="layui-nav-item" data-pid="46" "="">
-                            <a><i class="larry-icon larry-ht_expand" data-icon="larry-ht_expand" aria-hidden="true"></i><cite>扩展模块</cite></a>
-                        </li>
+                <div class="larry-top-menu posb topMenu" id="topMenu">
+                    <%--<ul class="layui-nav clearfix topMenu" id="topMenu">--%>
+                        <%--<li class="layui-nav-item layui-this" data-pid="0">--%>
+                            <%--<a><i class="larry-icon larry-xitongshezhi1"></i><cite>系统管理</cite></a>--%>
+                        <%--</li>--%>
+                        <%--<li style="" class="layui-nav-item" data-pid="35">--%>
+                            <%--<a><i class="larry-icon larry-neirongguanli"></i><cite>内容管理</cite></a>--%>
+                        <%--</li>--%>
+                        <%--<li style="" class="layui-nav-item" data-pid="40">--%>
+                            <%--<a><i class="larry-icon larry-weixingongzhongpingtai"></i><cite>微信公众</cite></a>--%>
+                        <%--</li>--%>
+                        <%--<li style="" class="layui-nav-item" data-pid="46">--%>
+                            <%--<a><i class="larry-icon larry-ht_expand"></i><cite>扩展模块</cite></a>--%>
+                        <%--</li>--%>
 
-                    </ul>
+                    <%--</ul>--%>
                 </div>
                 <!-- 右侧常用菜单导航 -->
                 <div class="larry-right-menu posb" >
