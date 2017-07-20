@@ -1,60 +1,29 @@
-var navs = [{
-	"title" : "404页面",
-	"icon" : "&#xe61c;",
-	"href" : "page/404.html",
-	"spread" : false,
-    "children" : [
-        {
-            "title" : "二级菜单1",
-            "icon" : "&#xe631;",
-            "href" : "",
-            "spread" : false
-        },
-        {
-            "title" : "二级菜单2",
-            "icon" : "&#xe631;",
-            "href" : "",
-            "spread" : false
-        }
-    ]
-},{
-	"title" : "系统基本参数",
-	"icon" : "&#xe631;",
-	"href" : "page/systemParameter/systemParameter.html",
-	"spread" : false,
-    "children" : [
-        {
-            "title" : "二级菜单1",
-            "icon" : "&#xe631;",
-            "href" : "",
-            "spread" : false
-        },
-        {
-            "title" : "二级菜单2",
-            "icon" : "&#xe631;",
-            "href" : "",
-            "spread" : false
-        }
-    ]
-},{
-	"title" : "二级菜单演示",
-	"icon" : "&#xe61c;",
+var navs = [
+   {
+	"title" : "系统设置",
+	"icon" : "larry-xitongshezhi1",
 	"href" : "",
 	"spread" : false,
-	"children" : [
-		{
-			"title" : "二级菜单1",
-			"icon" : "&#xe631;",
-			"href" : "",
-			"spread" : false
-		},
-		{
-			"title" : "二级菜单2",
-			"icon" : "&#xe631;",
-			"href" : "",
-			"spread" : false
-		}
-	]
+    "children" : [
+        {
+            "title" : "用户管理",
+            "icon" : "larry-10103",
+            "href" : "2222",
+            "spread" : false
+        },
+        {
+            "title" : "角色管理",
+            "icon" : "larry-jiaoseguanli1",
+            "href" : "",
+            "spread" : false
+        },
+        {
+            "title" : "菜单管理",
+            "icon" : "larry-caidanguanli",
+            "href" : "",
+            "spread" : false
+        }
+    ]
 }]
 
 

@@ -31,7 +31,7 @@ public class IndexController extends BasicController {
      */
     @RequestMapping("/home")
     public String toHomePage() {
-        return "mian/home";
+        return "main/home";
     }
 
 }

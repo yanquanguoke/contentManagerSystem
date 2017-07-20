@@ -18,11 +18,21 @@
     <link rel="stylesheet" href="${ctx}/static/css/main.css">
 
     <script src="${ctx}/static/layui/layui.js"></script>
-    <script src="${ctx}/static/js/main.js"></script>
 
 </head>
 <body class="childrenBody">
     <div class="panel_box row">
+        <div class="panel col">
+            <a href="javascript:;" data-url="page/message/message.html">
+                <div class="panel_icon">
+                    <i class="layui-icon" data-icon="&#xe63a;">&#xe63a;</i>
+                </div>
+                <div class="panel_word newMessage">
+                    <span></span>
+                    <cite>新消息</cite>
+                </div>
+            </a>
+        </div>
         <div class="panel col">
             <a href="javascript:;" data-url="page/message/message.html">
                 <div class="panel_icon">

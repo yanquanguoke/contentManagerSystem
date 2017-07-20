@@ -122,7 +122,7 @@
             <div class="layui-tab marg0" id="larry-tab" lay-filter="bodyTab">
                 <! -- 选项卡-->
                 <ul class="layui-tab-title top_tab">
-                    <li class="layui-this" lay-id=""><i class="larry-icon larry-gerenxinxi1"></i> <cite>后台首页</cite><i class="layui-icon layui-unselect layui-tab-close" data-id="1"> </i></li>
+                    <li class="layui-this" lay-id=""><i class="larry-icon larry-houtaishouye"></i> <cite>后台首页</cite><i class="layui-icon layui-unselect layui-tab-close" data-id="1"> </i></li>
                 </ul>
                 <div class="larry-title-box" style="height: 41px;" >
                     <div class="go-left key-press pressKey" id="titleLeft" title="滚动至最右侧"><i class="larry-icon larry-weibiaoti6-copy"></i> </div>
@@ -155,7 +155,7 @@
                 </div>
                 <div class="layui-tab-content clildFrame" style="height:793px;">
                     <div class="layui-tab-item layui-show">
-                        <iframe src=""></iframe>
+                        <iframe src="${ctx}/main/home"></iframe>
                     </div>
                 </div>
             </div>
