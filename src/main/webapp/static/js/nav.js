@@ -20,7 +20,7 @@ var navs = [
         {
             "title" : "菜单管理",
             "icon" : "larry-caidanguanli",
-            "href" : "",
+            "href" : "/system/res_list",
             "spread" : false
         }
     ]

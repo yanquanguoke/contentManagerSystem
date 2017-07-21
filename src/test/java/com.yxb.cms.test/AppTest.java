@@ -2,6 +2,8 @@ package com.yxb.cms.test;
 
 import com.yxb.cms.Application;
 import com.yxb.cms.architect.properties.JdbcProperties;
+import com.yxb.cms.domain.vo.Resource;
+import com.yxb.cms.service.ResourceService;
 import com.yxb.cms.service.UserService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -24,13 +26,23 @@ public class AppTest {
 
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private ResourceService resourceService;
     @Test
     public void test() {}
 
-    @Test
+   // @Test
     public void test2() throws Exception{
 
+        Resource res = new Resource();
 
+        res.setPage(2);
+        res.setRows(3);
+
+        String result = resourceService.selectResourceResultPageList(res);
+
+        System.out.println(result);
 
 
     }
