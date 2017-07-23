@@ -37,7 +37,7 @@
             <div class="larry-separate"></div>
             <!-- 操作日志 -->
             <div class="layui-tab-item layui-field-box layui-show">
-                <div class="layui-form">
+                <div class="layui-form" style="height: 300px;">
                     <table class="layui-table" lay-even="" lay-skin="row">
                         <colgroup>
                             <col width="50">
@@ -45,15 +45,15 @@
                             <col width="150">
                             <col width="150">
                         </colgroup>
-                        <thead>
+                        <thead >
                             <tr>
-                                <th><input name="" lay-skin="primary" lay-filter="allChoose" type="checkbox"></th>
+                                <th style="height: 20px;"><input name="" lay-skin="primary" lay-filter="allChoose" type="checkbox"></th>
                                 <th>昵称</th>
                                 <th>加入时间</th>
                                 <th>签名</th>
                             </tr>
                         </thead>
-                        <tbody id="resTbody">
+                        <tbody style="height: 50px;" id="resTbody">
                             <%--<tr>--%>
                                 <%--<td><input name="" lay-skin="primary" type="checkbox"></td>--%>
                                 <%--<td>贤心</td>--%>
@@ -107,12 +107,13 @@
         })
 
         function paging(curr){
+            var loginLoading = top.layer.msg('数据加载中，请稍候',{icon: 16,time:false,shade:0.8});
             $.ajax({
                 url : '${ctx}/system/ajax_res_list',
                 type : 'post',
                 data :{
                     page: curr || 1 ,   //当前页
-                    rows: 1            //每页显示四条数据
+                    rows: 3            //每页显示四条数据
                 },
                 success : function(data) {
                     var pdata = $.parseJSON(data);
@@ -142,7 +143,7 @@
                             }
                         }
                     });
-
+                    top.layer.close(loginLoading);
 
                 }
 
