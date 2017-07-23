@@ -5,6 +5,8 @@ import com.yxb.cms.domain.vo.User;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
+import java.util.List;
+
 
 /**
  * 用户信息DAO
@@ -71,6 +73,19 @@ public interface UserMapper {
      */
     User selectUserByloginNameAndStatus(@Param("userLoginName") String userLoginName,@Param("userStatus") Long userStatus);
 
+
+    /**
+     * 查询用户总记录数
+     * @param user 用户实体
+     * @return
+     */
+    Long selectCountUser(User user);
+    /**
+     * 用户信息分页列表显示
+     * @param user 用户实体
+     * @return
+     */
+    List<User> selectUserListByPage(User user);
     
     
     

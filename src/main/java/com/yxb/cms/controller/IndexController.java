@@ -1,6 +1,5 @@
-package com.yxb.cms.controller.main;
+package com.yxb.cms.controller;
 
-import com.yxb.cms.controller.BasicController;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 

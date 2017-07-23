@@ -186,7 +186,20 @@
       where user_login_name =  #{userLoginName,jdbcType=VARCHAR}
         and user_status = #{userStatus,jdbcType=BIGINT}
   </select>
-  
-  
-  
+
+    <!-- 查询用户总记录数 -->
+    <select id="selectCountUser" parameterType="com.yxb.cms.domain.vo.User" resultType="Long">
+        select count(*)
+        from cc_user
+    </select>
+    <!-- 用户列表信息分页显示 -->
+    <select id="selectUserListByPage" parameterType="com.yxb.cms.domain.vo.User" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from cc_user
+        order by create_time DESC
+        LIMIT #{start},#{rows}
+    </select>
+
+
 </mapper>

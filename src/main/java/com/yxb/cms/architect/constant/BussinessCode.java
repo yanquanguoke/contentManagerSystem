@@ -33,13 +33,13 @@ public enum BussinessCode {
 
 
 
-	RES_SAVE_ERROR("1601","资源信息保存失败"),
-	ROLE_SAVE_ERROR("1602","角色信息保存失败"),
-	USER_SAVE_ERROR("1603","用户信息保存失败"),
-	USER_ROLE_SAVE_ERROR("1604","用户分配角色信息失败"),
-	USER_FAIL_ERROR("1605","失效用户失败,程序异常"),
-	ROLE_FAILK_ERROR("1606","失效角色失败,程序异常"),
-	RES_FAILK_ERROR("1607","失效资源失败,程序异常")
+	RES_SAVE_ERROR("1501","资源信息保存失败"),
+	ROLE_SAVE_ERROR("1502","角色信息保存失败"),
+	USER_SAVE_ERROR("1503","用户信息保存失败"),
+	USER_ROLE_SAVE_ERROR("1504","用户分配角色信息失败"),
+	USER_FAIL_ERROR("1505","失效用户失败,程序异常"),
+	ROLE_FAILK_ERROR("1506","失效角色失败,程序异常"),
+	RES_FAILK_ERROR("1507","失效资源失败,程序异常")
 	;
 
 	BussinessCode(String code, String msg) {

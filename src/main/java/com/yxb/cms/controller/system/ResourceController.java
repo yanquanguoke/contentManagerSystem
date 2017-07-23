@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
  * @date 2017/7/6
  */
 @Controller
-@RequestMapping("system")
+@RequestMapping("res")
 public class ResourceController extends BasicController {
 
     @Autowired
@@ -51,6 +51,7 @@ public class ResourceController extends BasicController {
 
 
     /**
+     * 资源添加页面
      * @return
      */
     @RequestMapping("/res_edit")

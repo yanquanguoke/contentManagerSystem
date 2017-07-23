@@ -8,7 +8,7 @@ var navs = [
         {
             "title" : "用户管理",
             "icon" : "larry-10103",
-            "href" : "2222",
+            "href" : "/user/user_list",
             "spread" : false
         },
         {
@@ -20,7 +20,7 @@ var navs = [
         {
             "title" : "菜单管理",
             "icon" : "larry-caidanguanli",
-            "href" : "/system/res_list",
+            "href" : "/res/res_list",
             "spread" : false
         }
     ]

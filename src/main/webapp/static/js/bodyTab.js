@@ -96,7 +96,7 @@ layui.define(["element","jquery"],function(exports){
 					title += '<i class="layui-icon layui-unselect layui-tab-close" data-id="'+tabIdIndex+'">&#x1006;</i>';
 					element.tabAdd(tabFilter, {
 				        title : title,
-				        content :"<iframe src='"+_this.attr("data-url")+"' data-id='"+tabIdIndex+"'></frame>",
+				        content :"<iframe src='"+_this.attr("data-url")+"' data-id='"+tabIdIndex+"' name='ifr_"+tabIdIndex+"' id='ifr_"+tabIdIndex+"' ></frame>",
 				        id : new Date().getTime()
 				    })
 

@@ -154,6 +154,10 @@ header.larry-personal-tit span {
     text-align: center;
 }
 
+.layui-field-box .layui-table tbody tr td {
+    text-align: center;
+    font-size: 12px;
+}
 .layui-field-box .layui-table tr th:first-child, .layui-field-box .layui-table tr td:first-child {
     width: 40px;
     padding: 0px;

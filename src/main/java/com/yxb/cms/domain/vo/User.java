@@ -1,6 +1,9 @@
 package com.yxb.cms.domain.vo;
 
 
+import com.yxb.cms.architect.utils.DateUtil;
+import com.yxb.cms.domain.dto.PageDto;
+
 import java.io.Serializable;
 import java.util.Date;
 
@@ -10,7 +13,7 @@ import java.util.Date;
  * @author yangxiaobing
  * @date 2017/7/10
  */
-public class User implements Serializable {
+public class User extends PageDto implements Serializable {
     /**
      *
      */
@@ -334,4 +337,34 @@ public class User implements Serializable {
     }
 
 
+    /**
+     * 创建日期格式化
+     * @return
+     */
+    public String getCreateTime_Lable(){
+        if(this.getCreateTime() != null){
+            return DateUtil.Date2Stirng2Second(createTime);
+        }
+        return "";
+    }
+    /**
+     * 修改日期格式化
+     * @return
+     */
+    public String getUpdateTime_Lable(){
+        if(this.getUpdateTime() != null){
+            return DateUtil.Date2Stirng2Second(updateTime);
+        }
+        return "";
+    }
+    public String getUserStatus_Lable(){
+        if(this.getUserStatus() != null && this.getUserStatus().intValue() == 0){
+            return "0-有效";
+        }else if(this.getUserStatus() != null && this.getUserStatus().intValue() == 1){
+            return "1-失效";
+        }else{
+            return "";
+        }
+
+    }
 }

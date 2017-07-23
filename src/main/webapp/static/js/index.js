@@ -29,5 +29,16 @@ layui.config({
         //$(this).parent("li").siblings().removeClass("layui-nav-itemed");
     })
 
+    $('#refresh_iframe').on('click', function () {
+
+        $(".layui-tab-content .layui-tab-item").each(function () {
+            if ($(this).hasClass('layui-show')) {
+                $(this).children('iframe')[0].contentWindow.location.reload(true)
+            }
+        })
+
+    });
+
+
 
 });

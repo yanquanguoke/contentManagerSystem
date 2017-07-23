@@ -1,5 +1,5 @@
 html,body{
-	height: 100%;
+	/*height: 100%;*/
 	background: #F1F2F7;
 	font-size: 14px;
 	padding-right: 3px;
@@ -11,7 +11,7 @@ html,body{
 	width: -webkit-calc(100%- 30px);
     height: auto;
     margin: 0 auto;
-    padding: 15px;
+    /*padding: 15px;*/
     background: #F1F2F7;
     border-radius: 5px;
 }
@@ -80,4 +80,65 @@ html,body{
     100% {
         -moz-transform: translateX(0)
     }
+}
+
+
+.label {
+    border-radius: 0.25em;
+    color: #fff;
+    display: inline;
+    font-size: 75%;
+    font-weight: 700;
+    line-height: 1;
+    padding: 0.2em 0.6em 0.3em;
+    text-align: center;
+    vertical-align: baseline;
+    white-space: nowrap;
+}
+
+.label-default {
+    background-color: #777
+}
+
+.label-default[href]:focus, .label-default[href]:hover {
+    background-color: #5e5e5e
+}
+.label-primary {
+    background-color: #337ab7
+}
+
+.label-primary[href]:focus, .label-primary[href]:hover {
+    background-color: #286090
+}
+
+.label-success {
+    background-color: #5cb85c
+}
+
+.label-success[href]:focus, .label-success[href]:hover {
+    background-color: #449d44
+}
+
+.label-info {
+    background-color: #5bc0de
+}
+
+.label-info[href]:focus, .label-info[href]:hover {
+    background-color: #31b0d5
+}
+
+.label-warning {
+    background-color: #f0ad4e
+}
+
+.label-warning[href]:focus, .label-warning[href]:hover {
+    background-color: #ec971f
+}
+
+.label-danger {
+    background-color: #d9534f
+}
+
+.label-danger[href]:focus, .label-danger[href]:hover {
+    background-color: #c9302c
 }
