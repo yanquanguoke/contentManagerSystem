@@ -20,9 +20,9 @@
 
     <script src="${ctx}/static/layui/layui.js"></script>
 
-
-<body class="childrenBody">
-<form class="layui-form">
+</head>
+<body class="childrenBody" style="font-size: 12px;">
+<form class="layui-form layui-form-pane">
     <input id="userId" name="userId" type="hidden" value="${user.userId}">
 
     <div class="layui-form-item">
@@ -42,7 +42,7 @@
             <input type="text" class="layui-input" name="userName" lay-verify="required" value="${user.userName}" placeholder="请输入用户姓名">
         </div>
     </div>
-    <div class="layui-form-item">
+    <div class="layui-form-item" pane>
         <label class="layui-form-label">单选框</label>
         <div class="layui-input-block">
             <c:if test="${pageFlag == 'addPage' }">

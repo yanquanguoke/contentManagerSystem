@@ -19,115 +19,119 @@
 
 
     <script src="${ctx}/static/layui/layui.js"></script>
+</head>
+<body class="childrenBody" style="font-size: 12px;">
+<form class="layui-form layui-form-pane">
+    <div class="layui-form-item">
+        <label class="layui-form-label">菜单名称</label>
+        <div class="layui-input-block">
+            <input type="text" class="layui-input newsName" lay-verify="required" placeholder="请输入菜单名称">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">菜单名称</label>
+        <div class="layui-input-block">
+            <select name="city" lay-verify="required">
+                <option value=""></option>
+                <option value="0">0-菜单</option>
+                <option value="1">1-按钮</option>
+            </select>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">父级菜单</label>
+        <div class="layui-input-block">
+            <select name="city" lay-verify="required">
+                <option value=""></option>
 
+            </select>
+        </div>
+    </div>
 
-<body class="childrenBody">
-<form class="layui-form">
     <div class="layui-form-item">
-        <label class="layui-form-label">文章标题</label>
+        <label class="layui-form-label">菜单路径</label>
         <div class="layui-input-block">
-            <input type="text" class="layui-input newsName" lay-verify="required" placeholder="请输入文章标题">
+            <input type="text" class="layui-input newsName" lay-verify="required" placeholder="请输入菜单名称">
         </div>
     </div>
     <div class="layui-form-item">
-        <div class="layui-inline">
-            <label class="layui-form-label">自定义属性</label>
-            <div class="layui-input-block">
-                <input type="checkbox" name="tuijian" class="tuijian" title="推荐">
-                <input type="checkbox" name="shenhe" class="newsStatus" title="审核">
-                <input type="checkbox" name="show" class="isShow" title="展示">
-            </div>
+        <label class="layui-form-label">菜单图标</label>
+        <div class="layui-input-block">
+            <input type="text" class="layui-input newsName" lay-verify="required" placeholder="请输入菜单名称">
         </div>
-        <div class="layui-inline">
-            <label class="layui-form-label">文章作者</label>
-            <div class="layui-input-inline">
-                <input type="text" class="layui-input newsAuthor" lay-verify="required" placeholder="请输入文章作者">
-            </div>
-        </div>
-        <div class="layui-inline">
-            <label class="layui-form-label">发布时间</label>
-            <div class="layui-input-inline">
-                <input type="text" class="layui-input newsTime" lay-verify="date" onclick="layui.laydate({elem:this})">
-            </div>
-        </div>
-        <div class="layui-inline">
-            <label class="layui-form-label">浏览权限</label>
-            <div class="layui-input-inline">
-                <select name="browseLook" class="newsLook" lay-filter="browseLook">
-                    <option value="0">开放浏览</option>
-                    <option value="1">会员浏览</option>
-                </select>
-            </div>
+
+    </div>
+
+    <div class="layui-form-item">
+        <label class="layui-form-label">排序</label>
+        <div class="layui-input-block">
+            <input type="text" class="layui-input newsName" lay-verify="required" placeholder="请输入菜单名称">
         </div>
     </div>
-    <div class="layui-form-item">
-        <label class="layui-form-label">关键字</label>
+    <div class="layui-form-item" pane>
+        <label class="layui-form-label">资源状态</label>
         <div class="layui-input-block">
-            <input type="text" class="layui-input" placeholder="请输入文章关键字">
+
+            <input type="radio" name="userStatus" value="0" title="有效" checked>
+            <input type="radio" name="userStatus" value="1" title="失效" >
+        </div>
         </div>
     </div>
-    <div class="layui-form-item">
-        <label class="layui-form-label">内容摘要</label>
+    <div class="layui-form-item layui-form-text">
+        <label class="layui-form-label">备注</label>
         <div class="layui-input-block">
-            <textarea placeholder="请输入内容摘要" class="layui-textarea"></textarea>
+            <textarea name="desc" placeholder="请输入内容" class="layui-textarea" maxlength="50" style="resize:none;min-height:40px;"></textarea>
         </div>
     </div>
-    <div class="layui-form-item">
-        <label class="layui-form-label">文章内容</label>
-        <div class="layui-input-block">
-            <textarea class="layui-textarea layui-hide" name="content" lay-verify="content" id="news_content"></textarea>
-        </div>
     </div>
-    <div class="layui-form-item">
-        <div class="layui-input-block">
-            <button class="layui-btn" lay-submit="" lay-filter="addNews">立即提交</button>
-            <button type="reset" class="layui-btn layui-btn-primary">重置</button>
-        </div>
+
+    <div class="layui-form-item" style="text-align: center;">
+        <button class="layui-btn" lay-submit="" lay-filter="saveRes">保存</button>
+        <button type="layui-btn" id="cancle" class="layui-btn layui-btn-primary">取消</button>
+
     </div>
 </form>
 <script type="text/javascript">
-    layui.use(['form','layer','jquery','layedit','laydate'],function(){
-        var form = layui.form(),
-                layer = parent.layer === undefined ? layui.layer : parent.layer,
-                laypage = layui.laypage,
-                layedit = layui.layedit,
-                laydate = layui.laydate,
-                $ = layui.jquery;
+    layui.use(['form','layer','jquery'],function(){
+        var $ = layui.jquery,
+                form = layui.form(),
+                layer = parent.layer === undefined ? layui.layer : parent.layer;
 
-        //创建一个编辑器
-        var editIndex = layedit.build('news_content');
-        var addNewsArray = [],addNews;
-        form.on("submit(addNews)",function(data){
-            //是否添加过信息
-            if(window.sessionStorage.getItem("addNews")){
-                addNewsArray = JSON.parse(window.sessionStorage.getItem("addNews"));
-            }
-            //显示、审核状态
-            var isShow = data.field.show=="on" ? "checked" : "",
-                    newsStatus = data.field.shenhe=="on" ? "审核通过" : "待审核";
 
-            addNews = '{"newsName":"'+$(".newsName").val()+'",';  //文章名称
-            addNews += '"newsId":"'+new Date().getTime()+'",';	 //文章id
-            addNews += '"newsLook":"'+$(".newsLook option").eq($(".newsLook").val()).text()+'",'; //开放浏览
-            addNews += '"newsTime":"'+$(".newsTime").val()+'",'; //发布时间
-            addNews += '"newsAuthor":"'+$(".newsAuthor").val()+'",'; //文章作者
-            addNews += '"isShow":"'+ isShow +'",';  //是否展示
-            addNews += '"newsStatus":"'+ newsStatus +'"}'; //审核状态
-            addNewsArray.unshift(JSON.parse(addNews));
-            window.sessionStorage.setItem("addNews",JSON.stringify(addNewsArray));
-            //弹出loading
-            var index = top.layer.msg('数据提交中，请稍候',{icon: 16,time:false,shade:0.8});
-            setTimeout(function(){
-                top.layer.close(index);
-                top.layer.msg("文章添加成功！");
-                layer.closeAll("iframe");
-                //刷新父页面
-                parent.location.reload();
-            },2000);
+        //保存
+        form.on("submit(saveRes)",function(data){
+            var userSaveLoading = top.layer.msg('数据提交中，请稍候',{icon: 16,time:false,shade:0.8});
+            //登陆验证
+            $.ajax({
+                url : '${ctx}/user/ajax_save_user',
+                type : 'post',
+                async: false,
+                data : data.field,
+                success : function(data) {
+                    if(data.returnCode == 0000){
+                        top.layer.close(userSaveLoading);
+                        top.layer.msg("用户信息保存成功！");
+                        var index = parent.layer.getFrameIndex(window.name); //先得到当前iframe层的索引
+                        parent.layer.close(index); //再执行关闭                        //刷新父页面
+                        parent.location.reload();
+                    }else{
+                        top.layer.close(userSaveLoading);
+                        top.layer.msg(data.returnMessage);
+                    }
+                },error:function(data){
+                    top.layer.close(index);
+
+                }
+            });
             return false;
-        })
+        });
 
-
+        //取消
+        $("#cancle").click(function(){
+            var index = parent.layer.getFrameIndex(window.name); //先得到当前iframe层的索引
+            parent.layer.close(index); //再执行关闭
+            // layer.closeAll("iframe");
+        });
 
     });
 

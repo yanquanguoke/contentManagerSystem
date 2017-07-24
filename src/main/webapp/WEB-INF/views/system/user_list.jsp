@@ -20,7 +20,7 @@
 
     <link rel="stylesheet" type="text/css" href="${ctx}/static/css/common.css" media="all">
     <link rel="stylesheet" type="text/css" href="${ctx}/static/css/personal.css" media="all">
-
+    <link rel="stylesheet" type="text/css" href="http://at.alicdn.com/t/font_9h680jcse4620529.css">
 
     <script src="${ctx}/static/layui/layui.js"></script>
     <%--<script type="text/javascript" src="${ctx}/static/js/index.js"></script>--%>
@@ -32,19 +32,19 @@
         <div class="layui-tab">
             <blockquote class="layui-elem-quote mylog-info-tit">
                 <div class="layui-inline">
-                    <a class="layui-btn  userAdd_btn"> <i class="layui-icon">&#xe608;</i>新增用户</a>
+                    <a class="layui-btn  userAdd_btn"> <i class="layui-icon larry-icon larry-xinzeng1"></i>新增用户</a>
                 </div>
             </blockquote>
             <div class="larry-separate"></div>
             <!-- 操作日志 -->
             <div class="layui-tab-item layui-field-box layui-show">
-                <div class="layui-form" style="height: 385px;">
+                <div class="layui-form" style="height: 385px;width: 1270px;">
                     <table class="layui-table" lay-even="" lay-skin="row">
                         <colgroup>
                             <col width="50">
                             <col width="150">
                             <col width="150">
-                            <col width="120">
+                            <col width="100">
                             <col width="150">
                             <col width="150">
                             <col width="120">
@@ -124,7 +124,7 @@
         });
         function paging(curr){
            // var loginLoading = layer.msg('数据加载中，请稍候',{icon: 16,time:false,shade:0.8});
-            var loginLoading = layer.load(2);
+            var pageLoading = layer.load(2);
             $.ajax({
                 url : '${ctx}/user/ajax_user_list',
                 type : 'post',
@@ -147,9 +147,9 @@
                         }
 
                         var opt ='<div class="layui-btn-group">';
-                        opt+=  '<a class="layui-btn layui-btn-mini user_edit" data-id="'+item.userId+'"><i class="layui-icon">&#xe640;</i> 编辑</a>';
-                        opt+=  '<a class="layui-btn layui-btn-mini layui-btn-warm  links_del2" data-id=""><i class="layui-icon">&#xe613;</i>角色</a>';
-                        opt+=  '<a class="layui-btn layui-btn-mini layui-btn-danger  links_del" data-id=""><i class="layui-icon">&#x1007;</i>失效</a>';
+                        opt+=  '<a class="layui-btn layui-btn-mini user_edit" data-id="'+item.userId+'"><i class="layui-icon larry-icon larry-bianji2"></i> 编辑</a>';
+                        opt+=  '<a class="layui-btn layui-btn-mini layui-btn-warm  links_del2" data-id=""><i class="layui-icon larry-icon larry-jiaoseguanli3"></i>角色</a>';
+                        opt+=  '<a class="layui-btn layui-btn-mini layui-btn-danger  links_del" data-id=""><i class="layui-icon larry-icon larry-ttpodicon"></i>失效</a>';
                         opt+= '</div>';
                         $("#userTbody").append(
                              '<tr>'+
@@ -181,7 +181,7 @@
                             }
                         }
                     });
-                    layer.close(loginLoading);
+                    layer.close(pageLoading);
 
                 }
 

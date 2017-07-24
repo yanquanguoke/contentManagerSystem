@@ -20,27 +20,34 @@
 
     <link rel="stylesheet" type="text/css" href="${ctx}/static/css/common.css" media="all">
     <link rel="stylesheet" type="text/css" href="${ctx}/static/css/personal.css" media="all">
+    <link rel="stylesheet" type="text/css" href="http://at.alicdn.com/t/font_9h680jcse4620529.css">
 
     <script src="${ctx}/static/layui/layui.js"></script>
-    <%--<script type="text/javascript" src="${ctx}/static/js/index.js"></script>--%>
 
 
 <body>
-<div class="larry-grid">
-    <div class="larry-personal">
-        <div class="layui-tab">
+<div class="larry-grid" >
+    <div class="larry-personal" >
+        <div class="layui-tab" >
             <blockquote class="layui-elem-quote mylog-info-tit">
                 <div class="layui-inline">
-                    <a class="layui-btn  newsAdd_btn"> <i class="layui-icon">&#xe608;</i>添加文章</a>
+                    <a class="layui-btn  resAdd_btn"> <i class="layui-icon larry-icon larry-xinzeng1"></i>新增菜单</a>
                 </div>
             </blockquote>
             <div class="larry-separate"></div>
             <!-- 操作日志 -->
-            <div class="layui-tab-item layui-field-box layui-show">
-                <div class="layui-form" style="height: 385px;">
+            <div class="layui-tab-item layui-field-box layui-show" >
+                <div class="layui-form" style="height: 385px; width: 1270px;">
                     <table class="layui-table" lay-even="" lay-skin="row">
                         <colgroup>
                             <col width="50">
+                            <col width="100">
+                            <col width="110">
+                            <col width="100">
+                            <col width="150">
+                            <col width="100">
+                            <col width="100">
+                            <col width="100">
                             <col width="150">
                             <col width="150">
                             <col width="150">
@@ -48,19 +55,19 @@
                         <thead >
                             <tr>
                                 <th><input name="" lay-skin="primary" lay-filter="allChoose" type="checkbox"></th>
-                                <th>昵称</th>
-                                <th>加入时间</th>
-                                <th>签名</th>
-
+                                <th>菜单名称</th>
+                                <th>菜单编码</th>
+                                <th>菜单状态</th>
+                                <th>菜单路径</th>
+                                <th>菜单类型</th>
+                                <th>上级菜单</th>
+                                <th>备注</th>
+                                <th>创建时间</th>
+                                <th>修改时间</th>
+                                <th>操作</th>
                             </tr>
                         </thead>
                         <tbody id="resTbody">
-                            <%--<tr>--%>
-                                <%--<td><input name="" lay-skin="primary" type="checkbox"></td>--%>
-                                <%--<td>贤心</td>--%>
-                                <%--<td>2016-11-29</td>--%>
-                                <%--<td>人生就像是一场修行</td>--%>
-                            <%--</tr>--%>
 
                         </tbody>
                     </table>
@@ -88,43 +95,86 @@
         });
 
 
-
-
-
-
-        //添加文章
-        $(".newsAdd_btn").click(function(){
+        //新增菜单
+        $(".resAdd_btn").click(function(){
             var index = layui.layer.open({
-                title : "添加文章",
+                title : "新增菜单",
                 type : 2,
                 content : "${ctx}/res/res_edit",
-                area: ['100%', '100%    '],
+                area: ['950px', '550px '],
                 success : function(layero, index){
-                    layui.layer.tips('点击此处返回文章列表', '.layui-layer-setwin .layui-layer-close', {
-                        tips: 3
-                    });
+
                 }
             })
         })
 
         function paging(curr){
-            var loginLoading = top.layer.msg('数据加载中，请稍候',{icon: 16,time:false,shade:0.8});
+            var pageLoading = layer.load(2);
             $.ajax({
                 url : '${ctx}/res/ajax_res_list',
                 type : 'post',
                 data :{
                     page: curr || 1 ,   //当前页
-                    rows: 7           //每页显示四条数据
+                    rows: 7          //每页显示四条数据
                 },
                 success : function(data) {
                     var pdata = $.parseJSON(data);
                     $(pdata.rows).each(function(index,item){
+
+                        //菜单状态
+                        var resStatusLable;
+                        switch (item.resStatus){
+                            case 0:
+                                resStatusLable = '<span class="label label-success ">0-有效</span>';
+                                break;
+                            case 1:
+                                resStatusLable = '<span class="label label-danger ">1-失效</span>'
+                                break;
+                        }
+                        //菜单类型
+                        var menuTypeLable;
+                        switch (item.resType){
+                            case 0:
+                                menuTypeLable = '<span class="label label-info ">0-菜单</span>';
+                                break;
+                            case 1:
+                                menuTypeLable = '<span class="label label-info ">1-菜单</span>'
+                                break;
+                        }
+                        //备注
+                        var resRemarkLable;
+                        if(item.resRemark.length > 5){
+                            resRemarkLable = item.resRemark.substring(0,5) +"...";
+
+                        }else{
+                            resRemarkLable = item.resRemark;
+                        }
+                        var resLinkAddressLable;
+                        if(objNull(item.resLinkAddress) != "" && item.resLinkAddress.length > 18){
+                            resLinkAddressLable = item.resLinkAddress.substring(0,18) +"...";
+
+                        }else{
+                            resLinkAddressLable = item.resLinkAddress;
+                        }
+                        //操作
+                        var opt ='<div class="layui-btn-group">';
+                        opt+=  '<a class="layui-btn layui-btn-mini res_edit" data-id="'+item.resId+'"><i class="layui-icon larry-icon larry-bianji2"></i> 编辑</a>';
+                        opt+=  '<a class="layui-btn layui-btn-mini layui-btn-danger  links_del" data-id=""><i class="layui-icon larry-icon larry-ttpodicon"></i>失效</a>';
+                        opt+= '</div>';
+
                         $("#resTbody").append(
                              '<tr>'+
-                                 '<td><input name="" lay-skin="primary" type="checkbox"></td>'+
-                                '<td>'+item.resName+'</td>'+
+                                '<td><input name="" lay-skin="primary" type="checkbox"></td>'+
+                                '<td >'+item.resName+'</td>'+
                                 '<td>'+item.resModelCode+'</td>'+
-                                '<td>'+item.resRemark+'</td>'+
+                                '<td>'+resStatusLable+'</td>'+
+                                '<td style="text-align: left;" title="'+objNull(item.resLinkAddress)+'">'+objNull(resLinkAddressLable)+'</td>'+
+                                '<td>'+menuTypeLable+'</td>'+
+                                '<td>'+objNull(item.parentname)+'</td>'+
+                                '<td style="text-align: left;" title="'+item.resRemark+'">'+objNull(resRemarkLable)+'</td>'+
+                                '<td>'+item.createTime+'</td>'+
+                                '<td>'+objNull(item.upateTime)+'</td>'+
+                                '<td>'+opt+'</td>'+
                              '</tr>'
                         );
                         form.render();
@@ -144,21 +194,14 @@
                             }
                         }
                     });
-                    top.layer.close(loginLoading);
+                    layer.close(pageLoading);
 
                 }
 
             });
         }
 
-
         paging(1);
-
-
-
-
-
-
 
     });
 

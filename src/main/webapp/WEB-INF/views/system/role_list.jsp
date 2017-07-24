@@ -33,18 +33,18 @@
         <div class="layui-tab">
             <blockquote class="layui-elem-quote mylog-info-tit">
                 <div class="layui-inline">
-                    <a class="layui-btn  roleAdd_btn"> <i class="layui-icon larry-icon larry-jiaoseguanli2"></i>新增角色</a>
+                    <a class="layui-btn  roleAdd_btn"> <i class="layui-icon larry-icon larry-xinzeng1"></i>新增角色</a>
                 </div>
             </blockquote>
             <div class="larry-separate"></div>
             <!-- 操作日志 -->
             <div class="layui-tab-item layui-field-box layui-show">
-                <div class="layui-form" style="height: 385px;">
+                <div class="layui-form" style="height: 385px;width: 1270px;">
                     <table class="layui-table" lay-even="" lay-skin="row">
                         <colgroup>
                             <col width="50">
                             <col width="150">
-                            <col width="120">
+                            <col width="100">
                             <col width="150">
                             <col width="150">
                             <col width="150">
@@ -125,7 +125,7 @@
         });
         function paging(curr){
            // var loginLoading = layer.msg('数据加载中，请稍候',{icon: 16,time:false,shade:0.8});
-            var loginLoading = layer.load(2);
+            var pageLoading = layer.load(2);
             $.ajax({
                 url : '${ctx}/role/ajax_role_list',
                 type : 'post',
@@ -155,7 +155,7 @@
                         $("#roleTbody").append(
                              '<tr>'+
                                 '<td><input name="" lay-skin="primary" type="checkbox"></td>'+
-                                '<td>'+item.roleName+'</td>'+
+                                '<td style="text-align: left;">'+item.roleName+'</td>'+
                                 '<td>'+roleStatusLable+'</td>'+
                                 '<td>'+item.roleRemark+'</td>'+
                                 '<td>'+item.creator+'</td>'+
@@ -182,7 +182,7 @@
                             }
                         }
                     });
-                    layer.close(loginLoading);
+                    layer.close(pageLoading);
 
                 }
 

@@ -242,10 +242,26 @@
         from cc_resource
     </select>
     <!-- 资源列表信息分页显示 -->
-    <select id="selectResourceListByPage" parameterType="com.yxb.cms.domain.vo.Resource" resultMap="BaseResultMap">
-        select
-        <include refid="Base_Column_List"/>
-        from cc_resource
+    <select id="selectResourceListByPage" resultType="com.yxb.cms.domain.vo.Resource" parameterType="com.yxb.cms.domain.vo.Resource" resultMap="BaseResultMap">
+          SELECT
+            T1.res_id 			 			AS resId,
+            T1.res_name  		 			AS resName,
+            T1.res_model_code     			AS resModelCode,
+            T1.res_link_address   			AS resLinkAddress,
+            T1.res_type  					AS resType,
+            T1.res_status  					AS resStatus,
+            T1.res_display_order  			AS resDisplayOrder,
+            T1.res_parentId 	   			AS resParentid,
+            T2.res_name  					AS parentname,
+            T1.res_image 					AS iconCls,
+            T1.creator 						AS creator,
+            T1.create_time 					AS createTime,
+            T1.modifier 					AS modifier,
+            T1.modify_time 					AS modifyTime,
+            T1.res_remark 		   			AS resRemark
+        FROM cc_resource T1
+        LEFT JOIN cc_resource T2 ON T1.res_parentId = T2.res_id
+        ORDER BY T1.res_display_order,T1.create_time
         LIMIT #{start},#{rows}
     </select>
  
