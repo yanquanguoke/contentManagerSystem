@@ -23,6 +23,16 @@ import org.springframework.web.bind.annotation.ResponseBody;
 public class LoginController extends BasicController {
 
     /**
+     * 登陆代理，跳转到顶级父窗口
+     **/
+    @RequestMapping("/loginProxy")
+    public String toLoginProxy() {
+        return "main/loginProxy";
+    }
+
+
+
+    /**
      * 跳转到登录页面
      *
      * @return
