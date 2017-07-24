@@ -18,8 +18,9 @@ import java.util.Map;
 import static org.nutz.dao.util.Pojos.log;
 
 /**
- * @author yangxiaobing@ule.com
- * @date 2017/7/14 16:26
+ * 用户信息服务类
+ * @author yangxiaobing
+ * @date 2017/7/14
  */
 
 @Service

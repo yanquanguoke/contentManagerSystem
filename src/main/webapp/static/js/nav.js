@@ -14,7 +14,7 @@ var navs = [
         {
             "title" : "角色管理",
             "icon" : "larry-jiaoseguanli1",
-            "href" : "",
+            "href" : "/role/role_list",
             "spread" : false
         },
         {

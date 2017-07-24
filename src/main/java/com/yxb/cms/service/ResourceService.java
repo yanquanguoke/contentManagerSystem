@@ -14,9 +14,9 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * 菜单资源Service
- * @author yangxiaobing@tomstaff.com
- * @date   2016年8月11日 下午5:20:08
+ * 菜单资源服务类
+ * @author yangxiaobing
+ * @date 2017/7/14
  *
  */
 @Service

@@ -166,4 +166,21 @@
     where role_id = #{roleId,jdbcType=INTEGER}
   </update>
 
+
+    <!-- 查询角色总记录数 -->
+    <select id="selectCountRole" parameterType="com.yxb.cms.domain.vo.Role" resultType="Long">
+        select count(*)
+        from cc_role
+    </select>
+    <!-- 角色列表信息分页显示 -->
+    <select id="selectRoleListByPage" parameterType="com.yxb.cms.domain.vo.Role" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from cc_role
+        order by create_time DESC
+        LIMIT #{start},#{rows}
+    </select>
+
+
+
 </mapper>

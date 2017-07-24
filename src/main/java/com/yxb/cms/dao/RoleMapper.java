@@ -3,6 +3,8 @@ package com.yxb.cms.dao;
 import com.yxb.cms.domain.vo.Role;
 import org.apache.ibatis.annotations.Mapper;
 
+import java.util.List;
+
 
 /**
  * 角色DAO
@@ -60,5 +62,18 @@ public interface RoleMapper {
      */
     int updateByPrimaryKey(Role record);
 
+
+    /**
+     * 查询角色总记录数
+     * @param role 角色实体
+     * @return
+     */
+    Long selectCountRole(Role role);
+    /**
+     * 角色信息分页列表显示
+     * @param role 角色实体
+     * @return
+     */
+    List<Role> selectRoleListByPage(Role role);
 
 }
