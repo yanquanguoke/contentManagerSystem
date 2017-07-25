@@ -37,7 +37,7 @@
             <div class="larry-separate"></div>
             <!-- 操作日志 -->
             <div class="layui-tab-item layui-field-box layui-show" >
-                <div class="layui-form" style="height: 385px; width: 1270px;">
+                <div class="layui-form" style="height:385px;">
                     <table class="layui-table" lay-even="" lay-skin="row">
                         <colgroup>
                             <col width="50">
@@ -94,14 +94,16 @@
             form.render('checkbox');
         });
 
-
         //新增菜单
         $(".resAdd_btn").click(function(){
-            var index = layui.layer.open({
-                title : "新增菜单",
+            var index = top.layui.layer.open({
+                title : '<i class="larry-icon larry-caidanguanli"></i>新增菜单',
                 type : 2,
+                skin : 'layui-layer-molv',
                 content : "${ctx}/res/res_edit",
-                area: ['950px', '550px '],
+                area: ['750px', '470px '],
+                resize:false,
+                anim:1,
                 success : function(layero, index){
 
                 }

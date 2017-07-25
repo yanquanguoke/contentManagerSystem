@@ -39,7 +39,7 @@
             <div class="larry-separate"></div>
             <!-- 操作日志 -->
             <div class="layui-tab-item layui-field-box layui-show">
-                <div class="layui-form" style="height: 385px;width: 1270px;">
+                <div class="layui-form" style="height:385px;">
                     <table class="layui-table" lay-even="" lay-skin="row">
                         <colgroup>
                             <col width="50">

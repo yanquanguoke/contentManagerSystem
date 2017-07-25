@@ -44,12 +44,14 @@ public class ResourceController extends BasicController {
         return resourceService.selectResourceResultPageList(resource);
     }
 
-
-
-
-
-
-
+    /**
+     * 选择图标
+     * @return
+     */
+    @RequestMapping("/res_img")
+    public String toResImgPage() {
+        return "system/res_img";
+    }
     /**
      * 资源添加页面
      * @return
