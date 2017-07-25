@@ -46,5 +46,8 @@ public class ResourceService {
         return Json.toJson(map);
     }
 
+    public  Resource selectByPrimaryKey(Integer resId){
+        return resourceMapper.selectByPrimaryKey(resId);
+    }
 
 }

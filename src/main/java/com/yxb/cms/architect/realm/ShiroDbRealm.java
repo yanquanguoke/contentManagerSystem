@@ -1,17 +1,21 @@
 package com.yxb.cms.architect.realm;
 
+import com.yxb.cms.domain.vo.Resource;
 import com.yxb.cms.domain.vo.User;
+import com.yxb.cms.service.ResourceService;
 import com.yxb.cms.service.UserService;
-import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.apache.shiro.authc.*;
+import org.apache.shiro.authc.AuthenticationException;
+import org.apache.shiro.authc.AuthenticationInfo;
+import org.apache.shiro.authc.AuthenticationToken;
+import org.apache.shiro.authz.AuthorizationException;
 import org.apache.shiro.authz.AuthorizationInfo;
+import org.apache.shiro.authz.SimpleAuthorizationInfo;
 import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
-import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
 
 /**
@@ -29,6 +33,9 @@ public class ShiroDbRealm extends AuthorizingRealm{
      @Autowired
      @Lazy
     private UserService userService;
+    @Autowired
+    @Lazy
+    private ResourceService resourceService;
 
     /**
      * 获取认证信息
@@ -37,22 +44,22 @@ public class ShiroDbRealm extends AuthorizingRealm{
      */
     @Override
     protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken token) throws AuthenticationException {
-        UsernamePasswordToken userToken = (UsernamePasswordToken) token;
-        String username = userToken.getUsername();
-        if(StringUtils.isEmpty(username)){
-            log.error("获取认证信息失败，原因:用户名为空");
-            throw new AccountException("用户名为空");
-        }
-        // 根据登陆用户名查询用户信息
-        User user = userService.selectUserByloginName(username);
-        if(user == null){
-            throw new AccountException("用户信息为空");
-        }
-        SimpleAuthenticationInfo info = new SimpleAuthenticationInfo(user,user.getUserPassword(),getName());
-        if(null != info){
-            log.info("用户认证通过:登陆用户名:"+user.getUserLoginName());
-            return info;
-        }
+//        UsernamePasswordToken userToken = (UsernamePasswordToken) token;
+//        String username = userToken.getUsername();
+//        if(StringUtils.isEmpty(username)){
+//            log.error("获取认证信息失败，原因:用户名为空");
+//            throw new AccountException("用户名为空");
+//        }
+//        // 根据登陆用户名查询用户信息
+//        User user = userService.selectUserByloginName(username);
+//        if(user == null){
+//            throw new AccountException("用户信息为空");
+//        }
+//        SimpleAuthenticationInfo info = new SimpleAuthenticationInfo(user,user.getUserPassword(),getName());
+//        if(null != info){
+//            log.info("用户认证通过:登陆用户名:"+user.getUserLoginName());
+//            return info;
+//        }
         return null;
     }
 
@@ -61,11 +68,28 @@ public class ShiroDbRealm extends AuthorizingRealm{
 
     /**
      * 获取授权信息
-     * @param principalCollection
+     * @param principals
      * @return
      */
     @Override
-    protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principalCollection) {
-        return null;
+    protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principals) {
+        if (principals == null) {
+            throw new AuthorizationException(
+                    "PrincipalCollection method argument cannot be null.");
+        }
+
+        log.info("------授权");
+        User user = (User) getAvailablePrincipal(principals);
+        log.info("------授权"+user.getUserLoginName());
+        SimpleAuthorizationInfo info = new SimpleAuthorizationInfo();
+        if(user != null) {
+           Resource res =  resourceService.selectByPrimaryKey(9999);
+            if(null != res){
+                info.addStringPermission(res.getResModelCode());
+            }
+            return info;
+
+        }
+            return null;
     }
 }

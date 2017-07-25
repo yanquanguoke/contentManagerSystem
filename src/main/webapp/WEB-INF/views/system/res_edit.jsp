@@ -110,7 +110,7 @@
                 type : 2,
                 skin : 'layui-layer-molv',
                 content : "${ctx}/res/res_img",
-                area: ['475px', '370px '],
+                area: ['485px', '370px '],
                 resize:false,
                 anim:1,
                 success : function(layero, index){
