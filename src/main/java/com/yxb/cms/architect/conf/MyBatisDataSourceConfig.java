@@ -51,7 +51,7 @@ public class MyBatisDataSourceConfig {
 	@Bean(destroyMethod = "close", initMethod="init")
     @Primary
     public DataSource myBatisDataSource() throws SQLException {
-
+        System.out.println("====数据库"+jdbcProperties.getUsername());
         DruidDataSource dataSource = new DruidDataSource();
         dataSource.setDriverClassName("com.mysql.jdbc.Driver");
         dataSource.setUrl(jdbcProperties.getUrl());
