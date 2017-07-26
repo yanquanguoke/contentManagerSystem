@@ -1,7 +1,6 @@
 package com.yxb.cms.architect.realm;
 
 import com.yxb.cms.domain.vo.User;
-import com.yxb.cms.service.ResourceService;
 import com.yxb.cms.service.UserService;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.logging.Log;
@@ -11,8 +10,6 @@ import org.apache.shiro.authz.AuthorizationInfo;
 import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Lazy;
-import org.springframework.stereotype.Component;
 
 
 /**
@@ -22,17 +19,16 @@ import org.springframework.stereotype.Component;
  * @author yangxiaobing
  * @date 2017/7/10
  */
-@Component
 public class ShiroDbRealm extends AuthorizingRealm{
 
     private Log log = LogFactory.getLog(ShiroDbRealm.class);
 
      @Autowired
-     @Lazy
+    // @Lazy
     private UserService userService;
-    @Autowired
-    @Lazy
-    private ResourceService resourceService;
+//    @Autowired
+//    @Lazy
+//    private ResourceService resourceService;
 
     /**
      * 获取认证信息

@@ -12,7 +12,6 @@ import org.springframework.stereotype.Component;
  * @date 2017/7/26 17:57
  */
 
-@Component
 public class ChainDefinitionMetaSource implements FactoryBean<Ini.Section> {
 
     private String filterChainDefinitions = "/ = authc\n"

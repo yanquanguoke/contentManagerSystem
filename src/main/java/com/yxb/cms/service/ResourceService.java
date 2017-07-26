@@ -50,4 +50,5 @@ public class ResourceService {
         return resourceMapper.selectByPrimaryKey(resId);
     }
 
+
 }

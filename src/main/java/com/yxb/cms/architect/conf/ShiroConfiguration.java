@@ -1,9 +1,7 @@
 package com.yxb.cms.architect.conf;
 
 import com.yxb.cms.architect.realm.ShiroDbRealm;
-import com.yxb.cms.architect.utils.SpringUtils;
-import com.yxb.cms.service.ChainDefinitionMetaSource;
-import com.yxb.cms.service.ResourceService;
+import com.yxb.cms.service.UserService;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.shiro.cache.ehcache.EhCacheManager;
@@ -13,14 +11,16 @@ import org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSource
 import org.apache.shiro.spring.web.ShiroFilterFactoryBean;
 import org.apache.shiro.web.mgt.DefaultWebSecurityManager;
 import org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
-import org.springframework.context.annotation.*;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.DependsOn;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.web.filter.DelegatingFilterProxy;
 
-import java.util.LinkedHashMap;
-import java.util.Map;
+import javax.annotation.Resource;
+import java.util.*;
 
 /**
  * Shiro配置类
@@ -28,16 +28,31 @@ import java.util.Map;
  * @date 2017/7/10
  */
 @Configuration
-@Lazy
 public class ShiroConfiguration {
 
     private Log log = LogFactory.getLog(ShiroConfiguration.class);
 
 
 
-//    @Autowired
-//    ResourceService resourceService;
+    @Resource
+    @Lazy
+    private UserService userService;
 
+    @Bean
+    public FilterRegistrationBean filterProxy(){
+        System.out.println("-----------------ddddddd");
+        FilterRegistrationBean registrationBean = new FilterRegistrationBean();
+        DelegatingFilterProxy httpBasicFilter = new DelegatingFilterProxy();
+        registrationBean.setFilter(httpBasicFilter);
+        Map<String,String> m = new HashMap<String,String>();
+        m.put("targetBeanName","shiroFilter");
+        m.put("targetFilterLifecycle","true");
+        registrationBean.setInitParameters(m);
+        List<String> urlPatterns = new ArrayList<String>();
+        urlPatterns.add("/*");
+        registrationBean.setUrlPatterns(urlPatterns);
+        return registrationBean;
+    }
 
     /**
      * Shiro Web过滤器Factory
@@ -45,7 +60,7 @@ public class ShiroConfiguration {
      * @return
      */
     @Bean(name = "shiroFilter")
-    public ShiroFilterFactoryBean shiroFilterFactoryBean(@Qualifier("securityManager") SecurityManager securityManager,ChainDefinitionMetaSource source) {
+    public ShiroFilterFactoryBean shiroFilterFactoryBean(@Qualifier("securityManager") SecurityManager securityManager) {
         log.info("注入Shiro的Web过滤器-->shiroFilter");
         ShiroFilterFactoryBean shiroFilterFactoryBean = new ShiroFilterFactoryBean();
         //Shiro的核心安全接口,这个属性是必须的
@@ -78,8 +93,8 @@ public class ShiroConfiguration {
         filterChainDefinitionMap.put("/*.*", "authc");
 
 
-//       ResourceService resourceService =  SpringUtils.getApplicationContext().getBean(ResourceService.class);
-//        log.info("----"+resourceService.selectByPrimaryKey(2));
+      //  ShiroSourceSerivce resourceService = (ShiroSourceSerivce) SpringUtils.getBean("shiroSourceSerivce");
+        log.info("----"+userService.selectUserByloginName("admin"));
 
         //  filterChainDefinitionMap.put(res.getResLinkAddress(), res.getResModelCode());
 
