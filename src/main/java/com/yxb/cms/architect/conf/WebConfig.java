@@ -2,7 +2,6 @@ package com.yxb.cms.architect.conf;
 
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.web.filter.DelegatingFilterProxy;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
@@ -14,7 +13,7 @@ import java.util.Map;
 /**
  * Created by YXB on 2017/7/26.
  */
-@Configuration
+//@Configuration
 public class WebConfig extends WebMvcConfigurerAdapter {
     @Bean
     public FilterRegistrationBean getDemoFilter(){

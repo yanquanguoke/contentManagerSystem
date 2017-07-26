@@ -12,15 +12,12 @@ import org.apache.shiro.spring.web.ShiroFilterFactoryBean;
 import org.apache.shiro.web.mgt.DefaultWebSecurityManager;
 import org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.DependsOn;
-import org.springframework.context.annotation.Lazy;
-import org.springframework.web.filter.DelegatingFilterProxy;
 
-import javax.annotation.Resource;
-import java.util.*;
+import java.util.LinkedHashMap;
+import java.util.Map;
 
 /**
  * Shiro配置类
@@ -33,34 +30,13 @@ public class ShiroConfiguration {
     private Log log = LogFactory.getLog(ShiroConfiguration.class);
 
 
-
-    @Resource
-    @Lazy
-    private UserService userService;
-
-    @Bean
-    public FilterRegistrationBean filterProxy(){
-        System.out.println("-----------------ddddddd");
-        FilterRegistrationBean registrationBean = new FilterRegistrationBean();
-        DelegatingFilterProxy httpBasicFilter = new DelegatingFilterProxy();
-        registrationBean.setFilter(httpBasicFilter);
-        Map<String,String> m = new HashMap<String,String>();
-        m.put("targetBeanName","shiroFilter");
-        m.put("targetFilterLifecycle","true");
-        registrationBean.setInitParameters(m);
-        List<String> urlPatterns = new ArrayList<String>();
-        urlPatterns.add("/*");
-        registrationBean.setUrlPatterns(urlPatterns);
-        return registrationBean;
-    }
-
     /**
      * Shiro Web过滤器Factory
      * @param securityManager 安全管理Bean
      * @return
      */
     @Bean(name = "shiroFilter")
-    public ShiroFilterFactoryBean shiroFilterFactoryBean(@Qualifier("securityManager") SecurityManager securityManager) {
+    public ShiroFilterFactoryBean shiroFilterFactoryBean(@Qualifier("securityManager") SecurityManager securityManager,UserService userService) {
         log.info("注入Shiro的Web过滤器-->shiroFilter");
         ShiroFilterFactoryBean shiroFilterFactoryBean = new ShiroFilterFactoryBean();
         //Shiro的核心安全接口,这个属性是必须的

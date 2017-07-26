@@ -9,6 +9,7 @@ import com.yxb.cms.domain.vo.User;
 import org.nutz.json.Json;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Date;
 import java.util.HashMap;
@@ -74,6 +75,7 @@ public class UserService {
      * @return
      * @throws Exception
      */
+    @Transactional
     public BussinessMsg saveOrUpdateUser(User user, String loginName) throws Exception{
         log.info("保存用户信息开始");
         long start = System.currentTimeMillis();
