@@ -33,4 +33,14 @@ public class IndexController extends BasicController {
         return "main/home";
     }
 
+    /**
+     * 跳转到权限不足页面
+     * @return
+     */
+    @RequestMapping("/unauthorized")
+    public String toUnauthorizedPage() {
+        return "error/unauthorized";
+    }
+
+
 }

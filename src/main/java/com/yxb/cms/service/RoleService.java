@@ -1,23 +1,14 @@
 package com.yxb.cms.service;
 
-import com.yxb.cms.architect.constant.BusinessConstants;
-import com.yxb.cms.architect.constant.BussinessCode;
-import com.yxb.cms.architect.utils.BussinessMsgUtil;
 import com.yxb.cms.dao.RoleMapper;
-import com.yxb.cms.dao.UserMapper;
-import com.yxb.cms.domain.bo.BussinessMsg;
 import com.yxb.cms.domain.vo.Role;
-import com.yxb.cms.domain.vo.User;
 import org.nutz.json.Json;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import static org.nutz.dao.util.Pojos.log;
 
 /**
  * 角色信息服务类

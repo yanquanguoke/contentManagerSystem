@@ -9,9 +9,8 @@ import org.springframework.boot.web.support.SpringBootServletInitializer;
  * Spring boot 主类入口测试
  *
  * @author yangxiaobing
- * @date 2017年4月5日
+ * @date 2017/7/27
  */
-//@ServletComponentScan
 @SpringBootApplication
 public class Application extends SpringBootServletInitializer{
 	

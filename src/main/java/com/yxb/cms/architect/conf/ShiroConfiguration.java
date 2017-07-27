@@ -1,6 +1,8 @@
 package com.yxb.cms.architect.conf;
 
 import com.yxb.cms.architect.realm.ShiroDbRealm;
+import com.yxb.cms.domain.vo.Resource;
+import com.yxb.cms.service.ResourceService;
 import com.yxb.cms.service.UserService;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -36,7 +38,7 @@ public class ShiroConfiguration {
      * @return
      */
     @Bean(name = "shiroFilter")
-    public ShiroFilterFactoryBean shiroFilterFactoryBean(@Qualifier("securityManager") SecurityManager securityManager,UserService userService) {
+    public ShiroFilterFactoryBean shiroFilterFactoryBean(@Qualifier("securityManager") SecurityManager securityManager,ResourceService resourceService) {
         log.info("注入Shiro的Web过滤器-->shiroFilter");
         ShiroFilterFactoryBean shiroFilterFactoryBean = new ShiroFilterFactoryBean();
         //Shiro的核心安全接口,这个属性是必须的
@@ -46,9 +48,9 @@ public class ShiroConfiguration {
         //登录成功后要跳转的连接,逻辑也可以自定义，例如返回上次请求的页面
         shiroFilterFactoryBean.setSuccessUrl("/main");
         //用户访问未对其授权的资源时,所显示的连接
-        shiroFilterFactoryBean.setUnauthorizedUrl("/403");
+        shiroFilterFactoryBean.setUnauthorizedUrl("/main/unauthorized");
          /*定义shiro过滤链 Map结构 * Map中key(xml中是指value值)的第一个'/'代表的路径是相对于HttpServletRequest.getContextPath()的值来的 *
-         anon：它对应的过滤器里面是空的,什么都没做,这里.do和.jsp后面的*表示参数,比方说login.jsp?main这种 *
+         anon：它对应的过滤器里面是空的,什么都没做,这里 .do和.jsp后面的*表示参数,比方说login.jsp?main这种 *
          authc：该过滤器下的页面必须验证后才能访问,它是Shiro内置的一个拦截器org.apache.shiro.web.filter.authc.FormAuthenticationFilter */
         Map<String, String> filterChainDefinitionMap = new LinkedHashMap<String, String>();
         // 配置退出过滤器,其中的具体的退出代码Shiro已经替我们实现了
@@ -64,15 +66,12 @@ public class ShiroConfiguration {
         filterChainDefinitionMap.put("/comm/**", "anon");//anon 可以理解为不拦截
         filterChainDefinitionMap.put("/static/**", "anon");//anon 可以理解为不拦截
 
-        filterChainDefinitionMap.put("/*", "authc");//表示需要认证才可以访问
+        //动态URL过滤
+        Resource res = resourceService.selectByPrimaryKey(2);
+        filterChainDefinitionMap.put(res.getResLinkAddress(), "perms["+res.getResModelCode()+"]");
+
+
         filterChainDefinitionMap.put("/**", "authc");//表示需要认证才可以访问
-        filterChainDefinitionMap.put("/*.*", "authc");
-
-
-      //  ShiroSourceSerivce resourceService = (ShiroSourceSerivce) SpringUtils.getBean("shiroSourceSerivce");
-        log.info("----"+userService.selectUserByloginName("admin"));
-
-        //  filterChainDefinitionMap.put(res.getResLinkAddress(), res.getResModelCode());
 
         shiroFilterFactoryBean.setFilterChainDefinitionMap(filterChainDefinitionMap);
 
