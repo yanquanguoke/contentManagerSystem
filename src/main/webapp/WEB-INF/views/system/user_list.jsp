@@ -40,18 +40,18 @@
             <div class="layui-tab-item layui-field-box layui-show">
                 <div class="layui-form">
                     <table class="layui-table" lay-even="" lay-skin="row">
-                        <colgroup>
-                            <col width="50">
-                            <col width="150">
-                            <col width="150">
-                            <col width="100">
-                            <col width="150">
-                            <col width="150">
-                            <col width="120">
-                            <col width="150">
-                            <col width="202">
+                        <%--<colgroup>--%>
+                            <%--<col width="50">--%>
+                            <%--<col width="150">--%>
+                            <%--<col width="150">--%>
+                            <%--<col width="100">--%>
+                            <%--<col width="150">--%>
+                            <%--<col width="150">--%>
+                            <%--<col width="120">--%>
+                            <%--<col width="150">--%>
+                            <%--<col width="202">--%>
 
-                        </colgroup>
+                        <%--</colgroup>--%>
                         <thead >
                             <tr>
                                 <th><input name="" lay-skin="primary" lay-filter="allChoose" type="checkbox"></th>

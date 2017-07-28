@@ -99,14 +99,8 @@ layui.define(["element","jquery"],function(exports){
                             ulHtml += '</li>'
                         });
                         ulHtml += '</ul>';
-                        $(".navBar").html(ulHtml).height($(window).height()-230);
+                        $(".navBar").html(ulHtml);
                         element.init();  //初始化页面元素
-                        $(window).resize(function(){
-                            $(".navBar").height($(window).height()-230);
-                        });
-
-
-
                      }
                 }else{
                     $("#navBarId").empty();

@@ -39,19 +39,18 @@
             <div class="layui-tab-item layui-field-box layui-show" >
                 <div class="layui-form">
                     <table class="layui-table" lay-even="" lay-skin="row">
-                        <colgroup>
-                            <col width="50">
-                            <col width="100">
-                            <col width="110">
-                            <col width="100">
-                            <col width="150">
-                            <col width="100">
-                            <col width="100">
-                            <col width="100">
-                            <col width="150">
-                            <col width="150">
-                            <col width="150">
-                        </colgroup>
+                        <%--<colgroup>--%>
+                            <%--<col width="49">--%>
+                            <%--<col width="100">--%>
+                            <%--<col width="90">--%>
+                            <%--<col width="90">--%>
+                            <%--<col width="150">--%>
+                            <%--<col width="90">--%>
+                            <%--<col width="100">--%>
+                            <%--<col width="150">--%>
+                            <%--<col width="150">--%>
+                            <%--<col width="150">--%>
+                        <%--</colgroup>--%>
                         <thead >
                             <tr>
                                 <th><input name="" lay-skin="primary" lay-filter="allChoose" type="checkbox"></th>
@@ -61,7 +60,6 @@
                                 <th>菜单路径</th>
                                 <th>菜单类型</th>
                                 <th>上级菜单</th>
-                                <th>备注</th>
                                 <th>创建时间</th>
                                 <th>修改时间</th>
                                 <th>操作</th>
@@ -143,14 +141,7 @@
                                 menuTypeLable = '<span class="label label-info ">1-菜单</span>'
                                 break;
                         }
-                        //备注
-                        var resRemarkLable;
-                        if(item.resRemark.length > 5){
-                            resRemarkLable = item.resRemark.substring(0,5) +"...";
 
-                        }else{
-                            resRemarkLable = item.resRemark;
-                        }
                         var resLinkAddressLable;
                         if(objNull(item.resLinkAddress) != "" && item.resLinkAddress.length > 18){
                             resLinkAddressLable = item.resLinkAddress.substring(0,18) +"...";
@@ -173,9 +164,8 @@
                                 '<td style="text-align: left;" title="'+objNull(item.resLinkAddress)+'">'+objNull(resLinkAddressLable)+'</td>'+
                                 '<td>'+menuTypeLable+'</td>'+
                                 '<td>'+objNull(item.parentname)+'</td>'+
-                                '<td style="text-align: left;" title="'+item.resRemark+'">'+objNull(resRemarkLable)+'</td>'+
                                 '<td>'+item.createTime+'</td>'+
-                                '<td>'+objNull(item.upateTime)+'</td>'+
+                                '<td>'+objNull(item.modifyTime)+'</td>'+
                                 '<td>'+opt+'</td>'+
                              '</tr>'
                         );
