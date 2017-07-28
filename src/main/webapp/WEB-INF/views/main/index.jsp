@@ -24,8 +24,8 @@
     <script src="${ctx}/static/layui/layui.js"></script>
     <%--<script src="${ctx}/static/js/index.js"></script>--%>
 
-    <script type="text/javascript" src="${ctx}/static/js/nav.js"></script>
-    <script type="text/javascript" src="${ctx}/static/js/leftNav.js"></script>
+    <%--<script type="text/javascript" src="${ctx}/static/js/nav.js"></script>--%>
+    <%--<script type="text/javascript" src="${ctx}/static/js/leftNav.js"></script>--%>
     <script type="text/javascript" src="${ctx}/static/js/index.js"></script>
 
 

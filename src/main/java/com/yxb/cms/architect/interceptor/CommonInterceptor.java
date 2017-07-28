@@ -40,7 +40,7 @@ public class CommonInterceptor implements HandlerInterceptor {
     public void postHandle(HttpServletRequest httpServletRequest, HttpServletResponse response, Object o, ModelAndView model) throws Exception {
         // 如果view是MappingJacksonJsonView，则model中不添加currentUser；
         // 因为JACKSON会转换model中的数据为JSON，这两个对象没有JACKSON注解，无法转换
-        if (model != null && !(model.getView() instanceof MappingJackson2JsonView)) {
+        if (model != null && response.getStatus()==200 &&  !(model.getView() instanceof MappingJackson2JsonView)) {
 
             model.addObject("currentUser", new PermissionSubject(SecurityUtils.getSubject()));
 

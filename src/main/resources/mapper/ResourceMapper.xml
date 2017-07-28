@@ -8,7 +8,7 @@
       This element was generated on Mon Aug 15 17:19:21 CST 2016.
     -->
     <id column="res_id" property="resId" jdbcType="INTEGER" />
-    <result column="res_parentId" property="resParentid" jdbcType="VARCHAR" />
+    <result column="res_parentId" property="resParentid" jdbcType="INTEGER" />
     <result column="res_name" property="resName" jdbcType="VARCHAR" />
     <result column="res_model_code" property="resModelCode" jdbcType="VARCHAR" />
     <result column="res_link_address" property="resLinkAddress" jdbcType="VARCHAR" />
@@ -62,7 +62,7 @@
       res_type, res_status, res_display_order, res_remark, 
       creator, create_time, modifier, 
       modify_time)
-    values (#{resId,jdbcType=INTEGER}, #{resParentid,jdbcType=VARCHAR}, #{resName,jdbcType=VARCHAR}, 
+    values (#{resId,jdbcType=INTEGER}, #{resParentid,jdbcType=INTEGER}, #{resName,jdbcType=VARCHAR},
       #{resModelCode,jdbcType=VARCHAR}, #{resLinkAddress,jdbcType=VARCHAR}, #{resImage,jdbcType=VARCHAR}, 
       #{resType,jdbcType=INTEGER}, #{resStatus,jdbcType=INTEGER}, #{resDisplayOrder,jdbcType=INTEGER}, #{resRemark,jdbcType=VARCHAR}, 
       #{creator,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{modifier,jdbcType=VARCHAR}, 
@@ -124,7 +124,7 @@
         #{resId,jdbcType=INTEGER},
       </if>
       <if test="resParentid != null" >
-        #{resParentid,jdbcType=VARCHAR},
+        #{resParentid,jdbcType=INTEGER},
       </if>
       <if test="resName != null" >
         #{resName,jdbcType=VARCHAR},
@@ -173,7 +173,7 @@
     update cc_resource
     <set >
       <if test="resParentid != null" >
-        res_parentId = #{resParentid,jdbcType=VARCHAR},
+        res_parentId = #{resParentid,jdbcType=INTEGER},
       </if>
       <if test="resName != null" >
         res_name = #{resName,jdbcType=VARCHAR},
@@ -221,7 +221,7 @@
       This element was generated on Mon Aug 15 17:19:21 CST 2016.
     -->
     update cc_resource
-    set res_parentId = #{resParentid,jdbcType=VARCHAR},
+    set res_parentId = #{resParentid,jdbcType=INTEGER},
       res_name = #{resName,jdbcType=VARCHAR},
       res_model_code = #{resModelCode,jdbcType=VARCHAR},
       res_link_address = #{resLinkAddress,jdbcType=VARCHAR},
@@ -242,7 +242,7 @@
         from cc_resource
     </select>
     <!-- 资源列表信息分页显示 -->
-    <select id="selectResourceListByPage" resultType="com.yxb.cms.domain.vo.Resource" parameterType="com.yxb.cms.domain.vo.Resource" resultMap="BaseResultMap">
+    <select id="selectResourceListByPage" resultType="com.yxb.cms.domain.vo.Resource" parameterType="com.yxb.cms.domain.vo.Resource">
           SELECT
             T1.res_id 			 			AS resId,
             T1.res_name  		 			AS resName,
@@ -264,6 +264,28 @@
         ORDER BY T1.res_display_order,T1.create_time
         LIMIT #{start},#{rows}
     </select>
- 
+    <!-- 查询资源父级菜单-->
+    <select id="selectParentIdResList" resultType="com.yxb.cms.domain.dto.ResourceMenuDto">
+      SELECT
+        c.res_id                AS pid,
+        c.res_name              AS title,
+        c.res_link_address      AS href,
+        c.res_image             AS icon
+      FROM cc_resource c
+        WHERE res_type = 0
+	      AND res_status = 0
+	      AND ISNULL(res_parentId)
+    </select>
+
+    <!-- 查询资源父级菜单-->
+    <select id="selectResLevelListByParentid" resultMap="BaseResultMap">
+        SELECT *
+        FROM cc_resource c
+        WHERE res_type = 0
+        AND res_status = 0
+        AND res_parentId = #{resParentid,jdbcType=INTEGER}
+    </select>
+
+
  
 </mapper>

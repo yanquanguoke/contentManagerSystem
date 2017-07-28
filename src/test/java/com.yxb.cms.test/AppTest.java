@@ -32,15 +32,11 @@ public class AppTest {
     @Test
     public void test() {}
 
-   // @Test
+    @Test
     public void test2() throws Exception{
 
-        Resource res = new Resource();
 
-        res.setPage(2);
-        res.setRows(3);
-
-        String result = resourceService.selectResourceResultPageList(res);
+        String result = resourceService.selectResLevelListByParentid(7);
 
         System.out.println(result);
 

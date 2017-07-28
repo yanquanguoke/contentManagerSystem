@@ -30,10 +30,11 @@ public class MyWebAppConfigurer extends WebMvcConfigurerAdapter {
 
         // 多个拦截器组成一个拦截器链依次加载
 
-        //通用错误页面拦截器
-        registry.addInterceptor(new CommonInterceptor()).addPathPatterns("/**");
+
         //通用错误页面拦截器
         registry.addInterceptor(new ErrorInterceptor()).addPathPatterns("/**");
+        //通用错误页面拦截器
+        registry.addInterceptor(new CommonInterceptor()).addPathPatterns("/**");
         super.addInterceptors(registry);
     }
 }

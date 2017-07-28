@@ -17,30 +17,110 @@ layui.define(["element","jquery"],function(exports){
 			}
 		};
 
-    //显示左侧菜单
-    var contextB = $.trim($("#navBarId").html());
-	 if(contextB == null || contextB.length == 0 ){
+    $.ajax({
+        url : '/res/ajax_res_menu_top',
+        type : 'post',
+        async: false,
+        success : function(data) {
+            if(data != ""){
+               topNavBar(data);
+            }else{
+                $(".topMenu").empty();
+            }
 
-         var _this = this;
-		$(".navBar").html(navBar(navs)).height($(window).height()-230);
-		element.init();  //初始化页面元素
-		$(window).resize(function(){
-			$(".navBar").height($(window).height()-230);
-		})
-	 }
+        }
+    });
+    function topNavBar(data){
+        var pdata = $.parseJSON(data);
+        // 显示上部菜单
+        var topMenuContext = $.trim($("#topMenu").html());
+        if(topMenuContext == null || topMenuContext.length == 0 ){
+            var ulHtml = '<ul class="layui-nav clearfix layui-top-nav">';
+            $.each(pdata,function(index,item){
 
-    // 显示上部菜单
-    var topMenuContext = $.trim($("#topMenu").html());
+                if(index == 0){
+                    ulHtml += '<li class="layui-nav-item layui-this" data-pid="'+item.pid+'">';
+                    leftNavBar(item.pid);
+                }else{
+                    ulHtml += '<li class="layui-nav-item" data-pid="'+item.pid+'">';
+                }
+                ulHtml += '<a><i class="larry-icon '+item.icon+'"></i>';
+                ulHtml += '<cite>'+item.title+'</cite></a>';
+                ulHtml += '</li>'
+            });
+            ulHtml += '</ul>';
+            $(".topMenu").html(ulHtml);
+            element.init();  //初始化页面元素
 
-    if(topMenuContext == null || topMenuContext.length == 0 ){
-        $(".topMenu").html(topNavBar(topNavs));
-        element.init();  //初始化页面元素
+        }
+    };
+    function leftNavBar(pid) {
+        $.ajax({
+            url : '/res/ajax_res_menu_left',
+            type : 'post',
+            async: false,
+            data:{
+                resParentid:pid
+            },
+            success : function(data) {
+                if(data != "" ){
+                    var pdata = $.parseJSON(data);
+                    //显示左边菜单
+                    var contextB = $.trim($("#navBarId").html());
+                    if(contextB == null || contextB.length == 0 ){
+                        var ulHtml = '<ul class="layui-nav layui-nav-tree layui-left-nav">';
+                        $.each(pdata,function(index,item){
+                            if(index == 0){
+                                ulHtml += '<li class="layui-nav-item layui-nav-itemed">';
+                            }else{
+                                ulHtml += '<li class="layui-nav-item">';
+                            }
 
-    }
+                            if(item.children != null ){
+                                ulHtml += '<a href="javascript:;">';
+                                ulHtml += '<i class="layui-icon larry-icon '+item.icon+' " data-icon="'+item.icon+'"></i>';
+                                ulHtml += '<cite>'+item.title+'</cite>';
+                                ulHtml += '<span class="layui-nav-more"></span>';
+                                ulHtml += '</a>'
+                                ulHtml += '<dl class="layui-nav-child">';
+                                $.each(item.children,function(index,child){
+                                    ulHtml += '<dd><a href="javascript:;" data-url="'+child.href+'">';
+                                    if(child.icon != null){
+                                        ulHtml += '<i class="layui-icon larry-icon '+child.icon+'" data-icon="'+child.icon+'"></i>';
+                                    }
+                                    ulHtml += '<cite>'+child.title+'</cite></a></dd>';
+                                });
+                                ulHtml += "</dl>"
+                            }else{
+                                ulHtml += '<a href="javascript:;" data-url="'+item.href+'">';
+                                ulHtml += '<i class="layui-icon larry-icon '+item.icon+'" data-icon="'+item.icon+'"></i>';
+                                ulHtml += '<cite>'+item.title+'</cite></a>';
+                            }
+                            ulHtml += '</li>'
+                        });
+                        ulHtml += '</ul>';
+                        $(".navBar").html(ulHtml).height($(window).height()-230);
+                        element.init();  //初始化页面元素
+                        $(window).resize(function(){
+                            $(".navBar").height($(window).height()-230);
+                        });
 
 
 
+                     }
+                }else{
+                    $("#navBarId").empty();
+                }
 
+            }
+        });
+        
+    };
+
+    $(".layui-top-nav .layui-nav-item a").on("click",function(){
+        var pid = $(this).parent("li").attr("data-pid");
+        leftNavBar(pid);
+    });
 	//参数设置
 	Tab.prototype.set = function(option) {
 		var _this = this;

@@ -1,8 +1,10 @@
 package com.yxb.cms.dao;
 
 
+import com.yxb.cms.domain.dto.ResourceMenuDto;
 import com.yxb.cms.domain.vo.Resource;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -76,5 +78,15 @@ public interface ResourceMapper {
      * @return
      */
     List<Resource> selectResourceListByPage(Resource resource);
+
+    /**
+     * 查询资源父级菜单
+     * @return
+     */
+    List<ResourceMenuDto>selectParentIdResList();
+
+    List<Resource> selectResLevelListByParentid(@Param("resParentid") Integer resParentid);
+
+
     
 }

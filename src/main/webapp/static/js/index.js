@@ -15,9 +15,8 @@ layui.config({
         var url = '/logout';
         common.logOut('退出登陆提示！', '你真的确定要退出系统吗？', url)
     })
-
     // 添加新窗口
-    $(".layui-nav .layui-nav-item a").on("click",function(){
+    $("body").on("click",".layui-left-nav .layui-nav-item a",function(){
         // element.tabAdd('bodyTab', {
         //     title: '选项卡的标题'
         //     ,content: '选项卡的内容' //支持传入html
@@ -27,7 +26,11 @@ layui.config({
         $(this).parent("li").siblings().removeClass("layui-nav-itemed");
 
         //$(this).parent("li").siblings().removeClass("layui-nav-itemed");
-    })
+    });
+
+
+
+
 
     $('#refresh_iframe').on('click', function () {
 

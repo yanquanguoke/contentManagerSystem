@@ -33,10 +33,13 @@ function navBar(data){
 }
 
 
-function topNavBar(data){
+function topNavBar(pdata){
+    $.each(pdata,function(index,item){
+        alert(item.title)
+    })
     var ulHtml = '<ul class="layui-nav clearfix">';
     for(var i=0;i<data.length;i++){
-        if(data[i].spread){
+        if(data[i] = 0){
             ulHtml += '<li class="layui-nav-item layui-this" data-pid="'+data[i].pid+'">';
         }else{
             ulHtml += '<li class="layui-nav-item" data-pid="'+data[i].pid+'">';

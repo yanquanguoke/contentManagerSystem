@@ -61,6 +61,19 @@ public class ResourceController extends BasicController {
         return "system/res_edit";
     }
 
+    @RequestMapping("/ajax_res_menu_top")
+    @ResponseBody
+    public String ajaxResMenuTop(){
+        return resourceService.selectResMenuTop();
+    }
+
+    @RequestMapping("/ajax_res_menu_left")
+    @ResponseBody
+    public String ajaxResMenuLeft(Integer resParentid){
+        return resourceService.selectResLevelListByParentid(resParentid);
+    }
+
+
 
 
 }
