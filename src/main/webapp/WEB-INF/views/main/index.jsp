@@ -22,10 +22,6 @@
     <link rel="stylesheet" href="${ctx}/static/css/backstage.css">
 
     <script src="${ctx}/static/layui/layui.js"></script>
-    <%--<script src="${ctx}/static/js/index.js"></script>--%>
-
-    <%--<script type="text/javascript" src="${ctx}/static/js/nav.js"></script>--%>
-    <%--<script type="text/javascript" src="${ctx}/static/js/leftNav.js"></script>--%>
     <script type="text/javascript" src="${ctx}/static/js/index.js"></script>
 
 
@@ -40,49 +36,33 @@
                 <!-- 左侧导航收缩开关 -->
                 <div class="side-menu-switch" id="toggle"><span class="switch" ara-hidden="true"></span></div>
                 <!-- 顶级菜单 -->
-                <div class="larry-top-menu posb topMenu" id="topMenu">
-                    <%--<ul class="layui-nav clearfix topMenu" id="topMenu">--%>
-                        <%--<li class="layui-nav-item layui-this" data-pid="0">--%>
-                            <%--<a><i class="larry-icon larry-xitongshezhi1"></i><cite>系统管理</cite></a>--%>
-                        <%--</li>--%>
-                        <%--<li style="" class="layui-nav-item" data-pid="35">--%>
-                            <%--<a><i class="larry-icon larry-neirongguanli"></i><cite>内容管理</cite></a>--%>
-                        <%--</li>--%>
-                        <%--<li style="" class="layui-nav-item" data-pid="40">--%>
-                            <%--<a><i class="larry-icon larry-weixingongzhongpingtai"></i><cite>微信公众</cite></a>--%>
-                        <%--</li>--%>
-                        <%--<li style="" class="layui-nav-item" data-pid="46">--%>
-                            <%--<a><i class="larry-icon larry-ht_expand"></i><cite>扩展模块</cite></a>--%>
-                        <%--</li>--%>
-
-                    <%--</ul>--%>
-                </div>
+                <div class="larry-top-menu posb topMenu" id="topMenu"></div>
                 <!-- 右侧常用菜单导航 -->
                 <div class="larry-right-menu posb" >
                     <ul class="layui-nav clearfix ">
-                        <li style="" class="layui-nav-item">
-                            <a class="onFullScreen" id="FullScreen"><i class="larry-icon larry-quanping"></i>全屏</a>
-                        </li>
+                        <%--<li style="" class="layui-nav-item">--%>
+                            <%--<a class="onFullScreen" id="FullScreen"><i class="larry-icon larry-quanping"></i>全屏</a>--%>
+                        <%--</li>--%>
                         <li style="" class="layui-nav-item">
                             <a id="lock"><i class="larry-icon larry-diannao5"></i>锁屏</a>
                         </li>
-                        <li style="" class="layui-nav-item">
-                            <a id="clearCached"><i class="larry-icon larry-qingchuhuancun"></i>清除缓存</a>
-                        </li>
-                        <li style="" class="layui-nav-item">
-                            <a id="larryTheme"><i class="larry-icon larry-theme1"></i>设置主题</a>
-                        </li>
-                        <li class="layui-nav-item kjfs posb" >
-                            <a class="kuaijiefangshi"><i class="larry-icon larry-kuaijie"></i><cite>快捷方式</cite><span class="layui-nav-more"></span></a>
-                            <dl class="layui-nav-child">
-                                <dd>
-                                    <a href="http://www.larrycms.com/" target="_blank">网站主页</a>
-                                </dd>
-                                <dd>
-                                    <a href="http://blog.larrycms.com/" target="_blank">我的博客</a>
-                                </dd>
-                            </dl>
-                        </li>
+                        <%--<li style="" class="layui-nav-item">--%>
+                            <%--<a id="clearCached"><i class="larry-icon larry-qingchuhuancun"></i>清除缓存</a>--%>
+                        <%--</li>--%>
+                        <%--<li style="" class="layui-nav-item">--%>
+                            <%--<a id="larryTheme"><i class="larry-icon larry-theme1"></i>设置主题</a>--%>
+                        <%--</li>--%>
+                        <%--<li class="layui-nav-item kjfs posb" >--%>
+                            <%--<a class="kuaijiefangshi"><i class="larry-icon larry-kuaijie"></i><cite>快捷方式</cite><span class="layui-nav-more"></span></a>--%>
+                            <%--<dl class="layui-nav-child">--%>
+                                <%--<dd>--%>
+                                    <%--<a href="http://www.larrycms.com/" target="_blank">网站主页</a>--%>
+                                <%--</dd>--%>
+                                <%--<dd>--%>
+                                    <%--<a href="http://blog.larrycms.com/" target="_blank">我的博客</a>--%>
+                                <%--</dd>--%>
+                            <%--</dl>--%>
+                        <%--</li>--%>
                         <li class="layui-nav-item exit">
                             <a id="logout"><i class="larry-icon larry-exit"></i><cite>退出</cite></a>
                         </li>
@@ -99,22 +79,7 @@
                 <p>你好！<span class="userName">系统管理员</span>, 欢迎登录</p>
             </div>
             <!-- 左侧菜单-->
-            <div class="navBar layui-side-scroll" id="navBarId">
-                <%--<ul class="layui-nav layui-nav-tree" lay-filter="demo">--%>
-                    <%--<li class="layui-nav-item ">--%>
-                        <%--<a href="javascript:;">用户管理</a>--%>
-
-                    <%--</li>--%>
-                    <%--<li class="layui-nav-item ">--%>
-                        <%--<a href="javascript:;">角色管理</a>--%>
-
-                    <%--</li>--%>
-                    <%--<li class="layui-nav-item ">--%>
-                        <%--<a href="javascript:;">菜单管理</a>--%>
-
-                    <%--</li>--%>
-                <%--</ul>--%>
-            </div>
+            <div class="navBar layui-side-scroll" id="navBarId"></div>
 
         </div>
         <!--中间内容 -->
@@ -126,31 +91,31 @@
                 </ul>
                 <div class="larry-title-box" style="height: 41px;" >
                     <div class="go-left key-press pressKey" id="titleLeft" title="滚动至最右侧"><i class="larry-icon larry-weibiaoti6-copy"></i> </div>
-                    <div class="title-right" id="titleRbox">
+                    <div class="title-right" id="titleRbox" style="width: 110px;">
                         <div class="go-right key-press pressKey" id="titleRight" title="滚动至最左侧"><i class="larry-icon larry-right"></i></div>
                         <div class="refresh key-press" id="refresh_iframe"><i class="larry-icon larry-shuaxin2"></i><cite>刷新</cite></div>
 
-                        <div class="often key-press" lay-filter="larryOperate" id="buttonRCtrl">
-                            <ul class="layui-nav posr">
-                                <li class="layui-nav-item posb">
-                                    <a class="top"><i class="larry-icon larry-caozuo"></i><cite>常用操作</cite><span class="layui-nav-more"></span></a>
-                                    <dl class="layui-nav-child">
-                                        <dd>
-                                            <a data-ename="closeCurrent"><i class="larry-icon larry-guanbidangqianye"></i>关闭当前选项卡</a>
-                                        </dd>
-                                        <dd>
-                                            <a data-ename="closeOther"><i class="larry-icon larry-guanbiqita"></i>关闭其他选项卡</a>
-                                        </dd>
-                                        <dd>
-                                            <a data-ename="closeAll"><i class="larry-icon larry-guanbiquanbufenzu"></i>关闭全部选项卡</a>
-                                        </dd>
-                                        <dd>
-                                            <a data-ename="refreshAdmin"><i class="larry-icon larry-kuangjia_daohang_shuaxin"></i>刷新最外层框架</a>
-                                        </dd>
-                                    </dl>
-                                </li>
-                            </ul>
-                        </div>
+                        <%--<div class="often key-press" lay-filter="larryOperate" id="buttonRCtrl">--%>
+                            <%--<ul class="layui-nav posr">--%>
+                                <%--<li class="layui-nav-item posb">--%>
+                                    <%--<a class="top"><i class="larry-icon larry-caozuo"></i><cite>常用操作</cite><span class="layui-nav-more"></span></a>--%>
+                                    <%--<dl class="layui-nav-child">--%>
+                                        <%--<dd>--%>
+                                            <%--<a data-ename="closeCurrent"><i class="larry-icon larry-guanbidangqianye"></i>关闭当前选项卡</a>--%>
+                                        <%--</dd>--%>
+                                        <%--<dd>--%>
+                                            <%--<a data-ename="closeOther"><i class="larry-icon larry-guanbiqita"></i>关闭其他选项卡</a>--%>
+                                        <%--</dd>--%>
+                                        <%--<dd>--%>
+                                            <%--<a data-ename="closeAll"><i class="larry-icon larry-guanbiquanbufenzu"></i>关闭全部选项卡</a>--%>
+                                        <%--</dd>--%>
+                                        <%--<dd>--%>
+                                            <%--<a data-ename="refreshAdmin"><i class="larry-icon larry-kuangjia_daohang_shuaxin"></i>刷新最外层框架</a>--%>
+                                        <%--</dd>--%>
+                                    <%--</dl>--%>
+                                <%--</li>--%>
+                            <%--</ul>--%>
+                        <%--</div>--%>
                     </div>
                 </div>
                 <div class="layui-tab-content clildFrame" style="height:793px;">
