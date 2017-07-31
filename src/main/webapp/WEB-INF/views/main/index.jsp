@@ -20,7 +20,9 @@
     <link rel="stylesheet" type="text/css" href="http://at.alicdn.com/t/font_9h680jcse4620529.css">
     <link rel="stylesheet" href="${ctx}/static/css/main.css">
     <link rel="stylesheet" href="${ctx}/static/css/backstage.css">
-
+    <script type="text/javascript">
+        var ctx = "${pageContext.request.contextPath}";
+    </script>
     <script src="${ctx}/static/layui/layui.js"></script>
     <script type="text/javascript" src="${ctx}/static/js/index.js"></script>
 
