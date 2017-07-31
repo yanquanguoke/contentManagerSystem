@@ -16,6 +16,8 @@ layui.define(["element","jquery"],function(exports){
 				tabFilter : "bodyTab"
 			}
 		};
+//弹出loading
+    var loginLoading = top.layer.msg('加载中，请稍候',{icon: 16,time:false,shade:0.8});
 
     $.ajax({
         url : '/res/ajax_res_menu_top',
@@ -101,10 +103,14 @@ layui.define(["element","jquery"],function(exports){
                         ulHtml += '</ul>';
                         $(".navBar").html(ulHtml);
                         element.init();  //初始化页面元素
+
+
                      }
                 }else{
                     $("#navBarId").empty();
                 }
+
+                top.layer.close(loginLoading);
 
             }
         });

@@ -60,7 +60,6 @@
             //登陆成功
             if(ajaxReturnData.returnCode == 0000){
                 top.layer.close(loginLoading);
-                top.layer.msg("登陆成功");
                 return true;
             }else{
                 top.layer.close(loginLoading);
