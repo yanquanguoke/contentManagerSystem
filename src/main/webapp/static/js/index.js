@@ -1,6 +1,6 @@
 
 layui.config({
-    base : ctx+"/static/js/"
+    base : "/static/js/"
 }).use(['jquery', 'common','layer','element','bodyTab'], function () {
     var $ = layui.jquery,
         layer = layui.layer,
@@ -13,7 +13,7 @@ layui.config({
 
     //退出
     $('#logout').on('click', function () {
-        var url = ctx+'/logout';
+        var url = '/logout';
         common.logOut('退出登陆提示！', '你真的确定要退出系统吗？', url)
     })
     // 添加新窗口
@@ -38,7 +38,7 @@ layui.config({
             shadeClose: false,
             shade: 0.15,
             area: ['500px', '357px'],
-            content: '<img src="'+ctx+'/static/img/dianzhan.jpg"/>'
+            content: '<img src="/static/img/dianzhan.jpg"/>'
         })
     });
 

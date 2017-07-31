@@ -19,12 +19,12 @@
         <form class="layui-form login-form" action="${ctx}/main/index" method="post" id="login-form">
             <div class="layui-form-item">
                 <div class="layui-input-block">
-                    <input type="text" name="username"  lay-verify="required" placeholder="请输入账号" autocomplete="off" class="layui-input">
+                    <input type="text" name="username"  lay-verify="required" placeholder="请输入账号" autocomplete="off" value="admin" class="layui-input">
                 </div>
             </div>
             <div class="layui-form-item">
                 <div class="layui-input-block">
-                    <input type="password" name="password"  lay-verify="required" placeholder="请输入密码" autocomplete="off" class="layui-input">
+                    <input type="password" name="password"  lay-verify="required" placeholder="请输入密码" autocomplete="off" value="123456" class="layui-input">
                 </div>
             </div>
             <div class="layui-form-item">
