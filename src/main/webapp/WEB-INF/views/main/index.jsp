@@ -40,6 +40,10 @@
                 <!-- 右侧常用菜单导航 -->
                 <div class="larry-right-menu posb" >
                     <ul class="layui-nav clearfix ">
+                        <button class="layui-btn layui-btn-small" id="dianzhan">
+                            <i class="larry-icon larry-dianzan"></i>
+                            打赏作者
+                        </button>
                         <%--<li style="" class="layui-nav-item">--%>
                             <%--<a class="onFullScreen" id="FullScreen"><i class="larry-icon larry-quanping"></i>全屏</a>--%>
                         <%--</li>--%>

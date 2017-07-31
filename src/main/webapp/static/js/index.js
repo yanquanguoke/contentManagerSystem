@@ -29,7 +29,17 @@ layui.config({
     });
 
 
-
+    $('#dianzhan').click(function (event) {
+        layer.open({
+            type: 1,
+            title: false,
+            closeBtn: true,
+            shadeClose: false,
+            shade: 0.15,
+            area: ['500px', '357px'],
+            content: '<img src="/static/img/dianzhan.jpg"/>'
+        })
+    });
 
 
     $('#refresh_iframe').on('click', function () {
