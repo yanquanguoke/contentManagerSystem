@@ -61,6 +61,10 @@
                 <td class="homePage">yangxiaobing</td>
             </tr>
             <tr>
+                <td>项目下载：</td>
+                <td class="homePage"><a class="layui-btn layui-btn-mini layui-btn-danger" target="_blank" href="http://fly.layui.com/case/u/5849928">我要点赞</a></td>
+            </tr>
+            <tr>
                 <td>官网地址</td>
                 <td class="server"><a href="http://www.yangxiaobing.org" class="official" target="_blank">http://www.yangxiaobing.org</a>
                 </td>
