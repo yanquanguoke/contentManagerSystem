@@ -15,7 +15,6 @@
 
     <link rel="shortcut icon" href="${ctx}/static/img/favicon.ico">
     <link rel="stylesheet" href="${ctx}/static/layui/css/layui.css">
-    <link rel="stylesheet" href="${ctx}/static/css/main.css">
 
     <script src="${ctx}/static/layui/layui.js"></script>
 

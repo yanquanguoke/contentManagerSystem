@@ -104,6 +104,21 @@ public class UserController extends BasicController {
         return "system/user_edit";
     }
 
+
+    /**
+     * 跳转到用户角色分配页面
+     * @param userId 用户Id
+     * @return
+     */
+    @RequestMapping("/user_grant")
+    public String userGrantPage(Model model,Integer userId){
+//        User user = userService.selectUserRolesByUserId(userId);
+//        model.addAttribute("user", user);
+        return "system/user_grant";
+    }
+
+
+
     /**
      * 保存用户信息
      * @param user 用户实体

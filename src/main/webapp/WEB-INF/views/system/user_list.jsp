@@ -122,6 +122,19 @@
                  }
              });
         });
+        //分配角色
+        $("body").on("click",".user_grant",function(){
+            var userId = $(this).attr("data-id");
+            var index = layui.layer.open({
+                title : "分配角色",
+                type : 2,
+                content : "${ctx}/user/user_grant?userId="+userId,
+                area: ['550px', '265px'],
+                success : function(layero, index){
+
+                }
+            });
+        });
         function paging(curr){
            // var loginLoading = layer.msg('数据加载中，请稍候',{icon: 16,time:false,shade:0.8});
             var pageLoading = layer.load(2);
@@ -148,7 +161,7 @@
 
                         var opt ='<div class="layui-btn-group">';
                         opt+=  '<a class="layui-btn layui-btn-mini user_edit" data-id="'+item.userId+'"><i class="layui-icon larry-icon larry-bianji2"></i> 编辑</a>';
-                        opt+=  '<a class="layui-btn layui-btn-mini layui-btn-warm  links_del2" data-id=""><i class="layui-icon larry-icon larry-jiaoseguanli3"></i>角色</a>';
+                        opt+=  '<a class="layui-btn layui-btn-mini layui-btn-warm  user_grant" data-id="'+item.userId+'"><i class="layui-icon larry-icon larry-jiaoseguanli3"></i>角色</a>';
                         opt+=  '<a class="layui-btn layui-btn-mini layui-btn-danger  links_del" data-id=""><i class="layui-icon larry-icon larry-ttpodicon"></i>失效</a>';
                         opt+= '</div>';
                         $("#userTbody").append(
