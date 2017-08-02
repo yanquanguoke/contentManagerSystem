@@ -23,41 +23,81 @@
 
 </head>
 <body class="childrenBody" style="font-size: 12px;">
-<div class="row" >
-    <div class="sysNotice col" style="width: 50%;height: 100%;">
-        <blockquote class="layui-elem-quote title">项目信息</blockquote>
-        <table class="layui-table" >
-            <tbody>
-            <tr>
-                <td>系统名称:</td>
+<div class="row" style="height:330px;overflow: auto;">
+    <div class="sysNotice col" style="width: 49%;">
+        <blockquote class="layui-elem-quote title">待分配的角色</blockquote>
+        <div class="layui-form" style="height: 270px;  border: 1px solid #e2e2e2;">
+            <table class="layui-table" style="border: 0px;" >
+                <colgroup>
+                    <col width="10">
+                </colgroup>
+                <tbody>
+                    <tr>
+                        <td><input name="" lay-skin="primary" type="checkbox"></td>
+                        <td>系统名称:</td>
+                    </tr>
+                    <tr>
+                        <td><input name="" lay-skin="primary" type="checkbox"></td>
+                        <td>系统名称:</td>
+                    </tr>
+                    <tr>
+                        <td><input name="" lay-skin="primary" type="checkbox"></td>
+                        <td>系统名称:</td>
+                    </tr>
+                    <tr>
+                        <td><input name="" lay-skin="primary" type="checkbox"></td>
+                        <td>系统名称:</td>
+                    </tr>
+                    <tr>
+                        <td><input name="" lay-skin="primary" type="checkbox"></td>
+                        <td>系统名称:</td>
+                    </tr>
 
-            </tr>
-            <tr>
-                <td>系统名称:</td>
 
-            </tr>
-            <tr>
-                <td>系统名称:</td>
+                </tbody>
+            </table>
+        </div>
 
-            </tr>
-            <tr>
-                <td>系统名称:</td>
-
-            </tr>
-
-            </tbody>
-        </table>
     </div>
-    <div class="sysNotice col" style="width: 50%">
-        <blockquote class="layui-elem-quote title">项目信息</blockquote>
-        <table class="layui-table">
-            <tbody>
-            <tr>
-                <td>系统名称:</td>
+    <div style="width:20px;  position: absolute; top: 138px; left:240px;">
+        <%--<img alt="右移" onclick="selectRoleRight();" src="${ctx}/static/img/right.gif"><br>--%>
+        <%--<img alt="左移" onclick="selectRoleLeft();" id="left_option" src="${ctx}/static/img/left.gif">--%>
+        <a title="右移" style="cursor: pointer"><i class="layui-icon" style="color: #009688;">&#xe602;</i></a>
+        <a title="左移" style="cursor: pointer"><i class="layui-icon" style="color: #009688;">&#xe603;</i></a>
+    </div>
+    <div class="sysNotice col" style="width: 49%;margin-left: 8px;">
+        <blockquote class="layui-elem-quote title">已分配的角色</blockquote>
+        <div class="layui-form" style="height: 270px;  border: 1px solid #e2e2e2;">
+            <table class="layui-table" style="border: 0px;" >
+                <colgroup>
+                    <col width="10">
+                </colgroup>
+                <tbody>
+                <tr>
+                    <td><input name="" lay-skin="primary" type="checkbox"></td>
+                    <td>系统名称:</td>
+                </tr>
+                <tr>
+                    <td><input name="" lay-skin="primary" type="checkbox"></td>
+                    <td>系统名称:</td>
+                </tr>
+                <tr>
+                    <td><input name="" lay-skin="primary" type="checkbox"></td>
+                    <td>系统名称:</td>
+                </tr>
+                <tr>
+                    <td><input name="" lay-skin="primary" type="checkbox"></td>
+                    <td>系统名称:</td>
+                </tr>
+                <tr>
+                    <td><input name="" lay-skin="primary" type="checkbox"></td>
+                    <td>系统名称:</td>
+                </tr>
 
-            </tr>
-            </tbody>
-        </table>
+
+                </tbody>
+            </table>
+        </div>
     </div>
 </div>
     <div class="layui-form-item" style="text-align: center;">

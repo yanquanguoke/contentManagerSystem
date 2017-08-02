@@ -129,7 +129,7 @@
                 title : "分配角色",
                 type : 2,
                 content : "${ctx}/user/user_grant?userId="+userId,
-                area: ['550px', '265px'],
+                area: ['500px', '440px'],
                 success : function(layero, index){
 
                 }
