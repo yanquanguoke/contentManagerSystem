@@ -37,6 +37,7 @@ import com.yxb.cms.architect.utils.BussinessMsgUtil;
 import com.yxb.cms.controller.BasicController;
 import com.yxb.cms.domain.bo.BussinessMsg;
 import com.yxb.cms.domain.vo.User;
+import com.yxb.cms.service.RoleService;
 import com.yxb.cms.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -58,7 +59,8 @@ public class UserController extends BasicController {
 
     @Autowired
     private UserService userService;
-
+    @Autowired
+    private RoleService roleService;
 
     /**
      *跳转到用户列表页面
@@ -103,22 +105,6 @@ public class UserController extends BasicController {
         model.addAttribute("user", user);
         return "system/user_edit";
     }
-
-
-    /**
-     * 跳转到用户角色分配页面
-     * @param userId 用户Id
-     * @return
-     */
-    @RequestMapping("/user_grant")
-    public String userGrantPage(Model model,Integer userId){
-//        User user = userService.selectUserRolesByUserId(userId);
-//        model.addAttribute("user", user);
-        return "system/user_grant";
-    }
-
-
-
     /**
      * 保存用户信息
      * @param user 用户实体
@@ -136,8 +122,55 @@ public class UserController extends BasicController {
     }
 
 
+    /**
+     * 跳转到用户角色分配页面
+     * @param userId 用户Id
+     * @return
+     */
+    @RequestMapping("/user_grant")
+    public String userGrantPage(Model model,Integer userId){
+        User user = userService.selectUserRolesByUserId(userId);
+        model.addAttribute("user", user);
+        return "system/user_grant";
+    }
 
 
+
+    /**
+     * 查询待分配的角色信息(用以给用户分配角色时显示)
+     * @param 已分配角色Id
+     */
+    @RequestMapping("/ajax_undistributed_role_list")
+    @ResponseBody
+    public String ajaxUndistributedRoleList(String roleIds){
+        return roleService.selectUserRoleByRoleIdList(roleIds);
+    }
+    /**
+     * 查询状态为有效,已分配的角色信息(用已用户分配角色显示)
+     * @param 已分配角色Id
+     */
+    @RequestMapping("/ajax_deceased_role_list")
+    @ResponseBody
+    public String ajaxDeceasedRoleList(String roleIds){
+        return roleService.selectDeceasedUserRoleByRoleIdList(roleIds);
+    }
+
+    /**
+     * 保存用户分配角色信息
+     * @param userId 用户Id
+     * @param roleIds 分配的角色信息
+     * @return
+     */
+    @RequestMapping("/ajax_save_user_role")
+    @ResponseBody
+    public BussinessMsg ajaxSaveUserRole(Integer userId,String roleIds){
+        try {
+           return  userService.saveUserRole(userId,roleIds, this.getCurrentLoginName());
+        } catch (Exception e) {
+            log.error("用户分配角色信息方法内部错误",e);
+            return BussinessMsgUtil.returnCodeMessage(BussinessCode.USER_ROLE_SAVE_ERROR);
+
+        }}
 
 
 }

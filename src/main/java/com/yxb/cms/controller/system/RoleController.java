@@ -32,7 +32,10 @@
  */
 package com.yxb.cms.controller.system;
 
+import com.yxb.cms.architect.constant.BussinessCode;
+import com.yxb.cms.architect.utils.BussinessMsgUtil;
 import com.yxb.cms.controller.BasicController;
+import com.yxb.cms.domain.bo.BussinessMsg;
 import com.yxb.cms.domain.vo.Role;
 import com.yxb.cms.service.RoleService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -89,7 +92,7 @@ public class RoleController extends BasicController {
 
     /**
      * 跳转到角色修改页面
-     * @param userId 用户Id
+     * @param roleId 角色Id
      * @return
      */
     @RequestMapping("/role_update")
@@ -99,6 +102,22 @@ public class RoleController extends BasicController {
         model.addAttribute("pageFlag", "updatePage");
         model.addAttribute("role", role);
         return "system/role_edit";
+    }
+
+    /**
+     * 保存角色信息
+     * @param role 角色实体
+     * @return
+     */
+    @RequestMapping("/ajax_save_role")
+    @ResponseBody
+    public BussinessMsg ajaxSaveRole(Role role){
+        try {
+            return roleService.saveOrUpdateRole(role, this.getCurrentLoginName());
+        } catch (Exception e) {
+            log.error("保存角色信息方法内部错误",e);
+            return BussinessMsgUtil.returnCodeMessage(BussinessCode.ROLE_SAVE_ERROR);
+        }
     }
 
 }

@@ -155,4 +155,12 @@
     where user_role_id = #{userRoleId,jdbcType=INTEGER}
   </update>
 
+
+    <!-- 根据用户Id,查询用户角色信息 -->
+    <select id="selectUserRolesListByUserId" resultMap="BaseResultMap" >
+        select
+        <include refid="Base_Column_List" />
+        from cc_user_role
+        where user_id = #{userId,jdbcType=INTEGER}
+    </select>
 </mapper>

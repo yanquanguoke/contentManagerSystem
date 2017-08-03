@@ -181,6 +181,45 @@
         LIMIT #{start},#{rows}
     </select>
 
+    <!-- 根据用户Id查询用户所对应的角色信息 -->
+    <select id="selectUserRolesByUserId" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List" />
+        FROM cc_role c
+        WHERE EXISTS(SELECT 1 FROM cc_user_role r WHERE c.role_id = r.role_id AND r.user_id = #{userId,jdbcType=INTEGER})
+    </select>
+
+
+    <!-- 查询状态为有效的所有角色信息 -->
+    <select id="selectRoleList" resultMap="BaseResultMap" >
+        select
+        <include refid="Base_Column_List" />
+        from cc_role
+        where role_status = 0
+    </select>
+
+
+    <!--  查询状态为有效的待分配角色信息(已分配的角色信息除外) -->
+    <select id="selectUserRoleByRoleIdList" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from cc_role
+        where role_status = 0 and role_id not in
+        <foreach item="item" index="index" collection="array" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+    </select>
+
+    <!--  查询状态为有效的已分配角色信息 -->
+    <select id="selectDeceasedUserRoleByRoleIdList" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from cc_role
+        where role_status = 0 and role_id in
+        <foreach item="item" index="index" collection="array" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+    </select>
 
 
 </mapper>

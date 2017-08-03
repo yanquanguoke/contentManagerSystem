@@ -43,7 +43,7 @@
         </div>
     </div>
     <div class="layui-form-item" pane>
-        <label class="layui-form-label">单选框</label>
+        <label class="layui-form-label">角色状态</label>
         <div class="layui-input-block">
             <c:if test="${pageFlag == 'addPage' }">
                 <input type="radio" name="userStatus" value="0" title="有效" checked>

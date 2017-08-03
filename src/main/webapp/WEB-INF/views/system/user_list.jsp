@@ -126,7 +126,7 @@
         $("body").on("click",".user_grant",function(){
             var userId = $(this).attr("data-id");
             var index = layui.layer.open({
-                title : "分配角色",
+                title : '<i class="larry-icon larry-jiaoseguanli1"></i>分配角色',
                 type : 2,
                 content : "${ctx}/user/user_grant?userId="+userId,
                 area: ['500px', '440px'],
@@ -146,55 +146,58 @@
                     rows: 7           //每页显示四条数据
                 },
                 success : function(data) {
-                    var pdata = $.parseJSON(data);
-                    $(pdata.rows).each(function(index,item){
+                    if(data != "" ){
+                        var pdata = $.parseJSON(data);
+                        $(pdata.rows).each(function(index,item){
 
-                        var userStatusLable;
-                        switch (item.userStatus){
-                            case 0:
-                                userStatusLable = '<span class="label label-success ">0-有效</span>';
-                                break;
-                            case 1:
-                                userStatusLable = '<span class="label label-danger ">1-失效</span>'
-                                break;
-                        }
-
-                        var opt ='<div class="layui-btn-group">';
-                        opt+=  '<a class="layui-btn layui-btn-mini user_edit" data-id="'+item.userId+'"><i class="layui-icon larry-icon larry-bianji2"></i> 编辑</a>';
-                        opt+=  '<a class="layui-btn layui-btn-mini layui-btn-warm  user_grant" data-id="'+item.userId+'"><i class="layui-icon larry-icon larry-jiaoseguanli3"></i>角色</a>';
-                        opt+=  '<a class="layui-btn layui-btn-mini layui-btn-danger  links_del" data-id=""><i class="layui-icon larry-icon larry-ttpodicon"></i>失效</a>';
-                        opt+= '</div>';
-                        $("#userTbody").append(
-                             '<tr>'+
-                                '<td><input name="" lay-skin="primary" type="checkbox"></td>'+
-                                '<td>'+item.userLoginName+'</td>'+
-                                '<td>'+item.userName+'</td>'+
-                                '<td>'+userStatusLable+'</td>'+
-                                '<td>'+item.creator+'</td>'+
-                                '<td>'+item.createTime+'</td>'+
-                                '<td>'+objNull(item.modifier)+'</td>'+
-                                '<td>'+objNull(item.updateTime)+'</td>'+
-                                '<td>'+opt+'</td>'+
-                             '</tr>'
-                        );
-                        form.render();
-
-                    });
-                    laypage({
-                        cont: 'userPage',
-                        pages:  pdata.totalSize,
-                        curr: curr || 1, //当前页
-                        skip: true,
-                        jump: function(obj, first){ //触发分页后的回调
-                            if(!first){ //点击跳页触发函数自身，并传递当前页：obj.curr
-                                $("#userTbody").text('');//先清空原先内容
-                                paging(obj.curr);
-
-
+                            var userStatusLable;
+                            switch (item.userStatus){
+                                case 0:
+                                    userStatusLable = '<span class="label label-success ">0-有效</span>';
+                                    break;
+                                case 1:
+                                    userStatusLable = '<span class="label label-danger ">1-失效</span>'
+                                    break;
                             }
-                        }
-                    });
-                    layer.close(pageLoading);
+
+                            var opt ='<div class="layui-btn-group">';
+                            opt+=  '<a class="layui-btn layui-btn-mini user_edit" data-id="'+item.userId+'"><i class="layui-icon larry-icon larry-bianji2"></i> 编辑</a>';
+                            opt+=  '<a class="layui-btn layui-btn-mini layui-btn-warm  user_grant" data-id="'+item.userId+'"><i class="layui-icon larry-icon larry-jiaoseguanli3"></i>角色</a>';
+                            opt+=  '<a class="layui-btn layui-btn-mini layui-btn-danger  links_del" data-id=""><i class="layui-icon larry-icon larry-ttpodicon"></i>失效</a>';
+                            opt+= '</div>';
+                            $("#userTbody").append(
+                                    '<tr>'+
+                                    '<td><input name="" lay-skin="primary" type="checkbox"></td>'+
+                                    '<td>'+item.userLoginName+'</td>'+
+                                    '<td>'+item.userName+'</td>'+
+                                    '<td>'+userStatusLable+'</td>'+
+                                    '<td>'+item.creator+'</td>'+
+                                    '<td>'+item.createTime+'</td>'+
+                                    '<td>'+objNull(item.modifier)+'</td>'+
+                                    '<td>'+objNull(item.updateTime)+'</td>'+
+                                    '<td>'+opt+'</td>'+
+                                    '</tr>'
+                            );
+                            form.render();
+
+                        });
+                        laypage({
+                            cont: 'userPage',
+                            pages:  pdata.totalSize,
+                            curr: curr || 1, //当前页
+                            skip: true,
+                            jump: function(obj, first){ //触发分页后的回调
+                                if(!first){ //点击跳页触发函数自身，并传递当前页：obj.curr
+                                    $("#userTbody").text('');//先清空原先内容
+                                    paging(obj.curr);
+
+
+                                }
+                            }
+                        });
+                        layer.close(pageLoading);
+                    }
+
 
                 }
 

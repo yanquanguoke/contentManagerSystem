@@ -34,7 +34,9 @@ package com.yxb.cms.dao;
 
 import com.yxb.cms.domain.vo.UserRole;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
+import java.util.List;
 
 
 /**
@@ -93,4 +95,11 @@ public interface UserRoleMapper {
      * @mbggenerated Wed Nov 30 15:15:03 CST 2016
      */
     int updateByPrimaryKey(UserRole record);
+
+    /**
+     * 根据用户Id,查询用户角色信息
+     * @param userId 用户Id
+     * @return
+     */
+    List<UserRole> selectUserRolesListByUserId(@Param("userId") Integer userId);
 }

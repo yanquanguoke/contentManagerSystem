@@ -139,6 +139,7 @@ public class MyBatisDataSourceConfig {
         Properties transactionAttributes = new Properties();
         transactionAttributes.setProperty("create*","PROPAGATION_REQUIRED,-Throwable");
         transactionAttributes.setProperty("insert*","PROPAGATION_REQUIRED,-Throwable");
+        transactionAttributes.setProperty("save*","PROPAGATION_REQUIRED,-Throwable");
         transactionAttributes.setProperty("update*","PROPAGATION_REQUIRED,-Throwable");
         transactionAttributes.setProperty("delete*","PROPAGATION_REQUIRED,-Throwable");
         transactionAttributes.setProperty("select*","PROPAGATION_REQUIRED,-Throwable,readOnly");

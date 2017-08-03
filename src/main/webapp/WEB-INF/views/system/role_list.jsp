@@ -104,7 +104,7 @@
                 title : "新增角色",
                 type : 2,
                 content : "${ctx}/role/role_add",
-                area: ['550px', '265px'],
+                area: ['550px', '340px'],
                 success : function(layero, index){
 
                 }
@@ -117,14 +117,13 @@
                  title : "编辑角色",
                  type : 2,
                  content : "${ctx}/role/role_update?roleId="+roleId,
-                 area: ['550px', '265px'],
+                 area: ['550px', '340px'],
                  success : function(layero, index){
 
                  }
              });
         });
         function paging(curr){
-           // var loginLoading = layer.msg('数据加载中，请稍候',{icon: 16,time:false,shade:0.8});
             var pageLoading = layer.load(2);
             $.ajax({
                 url : '${ctx}/role/ajax_role_list',
@@ -140,10 +139,10 @@
                         var roleStatusLable;
                         switch (item.roleStatus){
                             case 0:
-                                roleStatusLable = '<span class="label label-success ">0-有效</span>';
+                                roleStatusLable = '<span class="label label-success">0-有效</span>';
                                 break;
                             case 1:
-                                roleStatusLable = '<span class="label label-danger ">1-失效</span>'
+                                roleStatusLable = '<span class="label label-danger">1-失效</span>'
                                 break;
                         }
 

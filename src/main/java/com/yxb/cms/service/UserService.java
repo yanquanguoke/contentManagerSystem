@@ -35,9 +35,16 @@ package com.yxb.cms.service;
 import com.yxb.cms.architect.constant.BusinessConstants;
 import com.yxb.cms.architect.constant.BussinessCode;
 import com.yxb.cms.architect.utils.BussinessMsgUtil;
+import com.yxb.cms.dao.RoleMapper;
 import com.yxb.cms.dao.UserMapper;
+import com.yxb.cms.dao.UserRoleMapper;
 import com.yxb.cms.domain.bo.BussinessMsg;
+import com.yxb.cms.domain.vo.Role;
 import com.yxb.cms.domain.vo.User;
+import com.yxb.cms.domain.vo.UserRole;
+import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.nutz.json.Json;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -48,7 +55,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import static org.nutz.dao.util.Pojos.log;
 
 /**
  * 用户信息服务类
@@ -59,9 +65,15 @@ import static org.nutz.dao.util.Pojos.log;
 @Service
 public class UserService {
 
+    private Log log = LogFactory.getLog(UserService.class);
+
     @Autowired
     private UserMapper userMapper;
 
+    @Autowired
+    private RoleMapper roleMapper;
+    @Autowired
+    private UserRoleMapper userRoleMapper;
     /**
      * 根据用户Id查询用户信息
      * @param userLoginName 登陆用户名
@@ -132,4 +144,88 @@ public class UserService {
         }
         return BussinessMsgUtil.returnCodeMessage(BussinessCode.GLOBAL_SUCCESS);
     }
+
+
+    /**
+     * 根据用户Id查询用户角色信息
+     * @param userId 用户id
+     * @return
+     */
+    public User selectUserRolesByUserId(Integer userId){
+        if(userId != null){
+            User user = userMapper.selectByPrimaryKey(userId);
+            StringBuilder sb = new StringBuilder();
+            StringBuilder sb2 = new StringBuilder();
+            //用户所对应的角色信息
+            List<Role> roles = roleMapper.selectUserRolesByUserId(userId);
+            if(null != roles && !roles.isEmpty()){
+                for (Role role : roles) {
+                    sb.append(role.getRoleId()).append(",");
+                    sb2.append(role.getRoleName()).append(",");
+                }
+                if(sb.length()>0){
+                    sb.deleteCharAt(sb.length()-1);
+                    user.setRoleIds(sb.toString());
+                }
+                if(sb2.length()>0){
+                    sb2.deleteCharAt(sb2.length()-1);
+                    user.setRoleNames(sb2.toString());
+                }
+
+            }
+            return user;
+
+        }
+        return null;
+    }
+
+
+    /**
+     * 保存用户分配角色信息
+     * @param userId 用户id
+     * @param roleIds 分配的角色信息
+     * @param longinName 当前登录用户名称
+     * @return
+     * @throws Exception
+     */
+    @Transactional
+    public BussinessMsg saveUserRole(Integer userId,String roleIds,String longinName) throws Exception{
+        log.info("保存用户分配角色信息开始");
+        long start = System.currentTimeMillis();
+        try {
+            List<UserRole> userRoles = userRoleMapper.selectUserRolesListByUserId(userId);
+            //如果角色Id不为空插入用户角色信息，否则删除用户下所有分配的角色
+            if (StringUtils.isNotEmpty(roleIds)) {
+                if (null != userRoles && !userRoles.isEmpty()) {
+                    for (UserRole userRole : userRoles) {
+                        userRoleMapper.deleteByPrimaryKey(userRole.getUserRoleId());
+                    }
+                }
+
+                for (String roleId : roleIds.split(",")) {
+                    UserRole ur = new UserRole();
+                    ur.setUserId(userId);
+                    ur.setRoleId(Integer.valueOf(roleId));
+                    ur.setCreateTime(new Date());
+                    ur.setCreator(longinName);
+                    userRoleMapper.insertSelective(ur);
+                }
+
+            } else {
+                if (null != userRoles && !userRoles.isEmpty()) {
+                    for (UserRole userRole : userRoles) {
+                        userRoleMapper.deleteByPrimaryKey(userRole.getUserRoleId());
+                    }
+                }
+            }
+        } catch (Exception e) {
+            log.error("用户分配角色信息方法内部错误",e);
+            throw e;
+        }finally {
+            log.info("保存用户分配角色信息结束,用时" + (System.currentTimeMillis() - start) + "毫秒");
+        }
+        return BussinessMsgUtil.returnCodeMessage(BussinessCode.GLOBAL_SUCCESS);
+    }
+
+
 }
