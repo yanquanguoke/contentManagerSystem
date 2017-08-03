@@ -3,7 +3,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.yxb.cms</groupId>
     <artifactId>contentManagerSystem</artifactId>
-    <version>${env}-1.0.0.${scmVersion}</version>
+    <version>${env}-1.0.1.${scmVersion}</version>
         <name>contentManagerSystem</name>
     <packaging>war</packaging>
     <properties>

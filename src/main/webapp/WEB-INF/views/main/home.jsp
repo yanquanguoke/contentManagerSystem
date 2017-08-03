@@ -54,7 +54,7 @@
             </tr>
             <tr>
                 <td>版本信息:</td>
-                <td class="author">beta-1.0.0</td>
+                <td class="author"><span style="color:#f00;">beta-1.0.1</span></td>
             </tr>
             <tr>
                 <td>开发作者</td>
@@ -102,7 +102,7 @@
     <div class="sysNotice col">
         <blockquote class="layui-elem-quote title">更新日志</blockquote>
         <div class="layui-elem-quote layui-quote-nm">
-            <h3># beta-1.0.0 (测试版) - 2017-07-31</h3>
+            <h3><span style="color:#f00;"># beta-1.0.0 (测试版) - 2017-07-31</span></h3>
             <p>*SpringBoot项目构建</p>
             <p>*加入 mybatis+druid数据持久化功能</p>
             <p>*加入apacheShiro权限验证</p>
@@ -110,6 +110,10 @@
             <p>*页面列表基于后台数据库交互实现table列表展示-分页、form表单提交.</p>
             <p>*动态菜单导航,选项卡功能、弹层实现编辑保存功能</p>
 
+            <h3><span style="color:#f00;"># beta-1.0.1 (测试版) - 2017-08-03</span></h3>
+            <p>*登陆页优化，加入H5视频效果，视频来源腾讯，仅供交流学习使用</p>
+            <p>*实现角色新增修改功能</p>
+            <p>*实现用户分配角色功能</p>
         </div>
     </div>
     <div class="sysNotice col">
