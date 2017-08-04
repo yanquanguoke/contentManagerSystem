@@ -32,28 +32,37 @@
  */
 package com.yxb.cms.architect.filter;
 
-import com.yxb.cms.service.ResourceService;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+import org.springframework.stereotype.Component;
 
 import javax.servlet.*;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 /**
- * Created by YXB on 2017/7/26.
+ * 自定义拦截器
+ * @author yangxiaobing
+ * @date 2017/7/26.
  */
 //@Component
-public class DemoFilter implements Filter {
-    @Autowired
-    ResourceService resourceService;
+public class MyWebFilter implements Filter {
+    private Log log = LogFactory.getLog(MyWebFilter.class);
+
+
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
-        resourceService.selectByPrimaryKey(2);
-        System.out.println("demoFilter初始化"+resourceService.selectByPrimaryKey(2).getResLinkAddress());
+
     }
 
     @Override
-    public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
-
+    public void doFilter(ServletRequest req, ServletResponse res, FilterChain chain) throws IOException, ServletException {
+        HttpServletResponse response = (HttpServletResponse) res;
+        HttpServletRequest request = (HttpServletRequest) req;
+        log.info("==>拦截请求"+response.getStatus());
+log.info(((HttpServletRequest) req).getRequestURL());
+        chain.doFilter(req, res);
     }
 
     @Override
