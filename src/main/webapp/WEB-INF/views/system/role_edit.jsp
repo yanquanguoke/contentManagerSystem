@@ -67,7 +67,7 @@
         form.on("submit(saveRole)",function(data){
             var roleSaveLoading = top.layer.msg('数据提交中，请稍候',{icon: 16,time:false,shade:0.8});
             $.ajax({
-                url : '${ctx}/role/ajax_save_role',
+                url : '${ctx}/role/ajax_save_role.do',
                 type : 'post',
                 async: false,
                 data : data.field,

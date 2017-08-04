@@ -64,7 +64,7 @@ public class RoleController extends BasicController {
      *跳转到角色列表页面
      * @return
      */
-    @RequestMapping("/role_list")
+    @RequestMapping("/role_list.do")
     public String toRoleListPage() {
         return "system/role_list";
     }
@@ -73,7 +73,7 @@ public class RoleController extends BasicController {
      * @param role 角色实体
      * @return
      */
-    @RequestMapping("/ajax_role_list")
+    @RequestMapping("/ajax_role_list.do")
     @ResponseBody
     public String ajaxRoleList(Role role){
         return roleService.selectRoleResultPageList(role);
@@ -83,7 +83,7 @@ public class RoleController extends BasicController {
      * 跳转到角色新增页面
      * @return
      */
-    @RequestMapping("/role_add")
+    @RequestMapping("/role_add.do")
     public String toRoleAddPage(Model model) {
         //新增页面标识
         model.addAttribute("pageFlag", "addPage");
@@ -95,7 +95,7 @@ public class RoleController extends BasicController {
      * @param roleId 角色Id
      * @return
      */
-    @RequestMapping("/role_update")
+    @RequestMapping("/role_update.do")
     public String roleUpdatePage(Model model,Integer roleId){
         Role role = roleService.selectRoleById(roleId);
         //修改页面标识
@@ -109,7 +109,7 @@ public class RoleController extends BasicController {
      * @param role 角色实体
      * @return
      */
-    @RequestMapping("/ajax_save_role")
+    @RequestMapping("/ajax_save_role.do")
     @ResponseBody
     public BussinessMsg ajaxSaveRole(Role role){
         try {

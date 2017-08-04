@@ -109,7 +109,7 @@
                 title : '<i class="larry-icon larry-tupianguanli"></i>选择图标',
                 type : 2,
                 skin : 'layui-layer-molv',
-                content : "${ctx}/res/res_img",
+                content : "${ctx}/res/res_img.do",
                 area: ['485px', '370px '],
                 resize:false,
                 anim:1,

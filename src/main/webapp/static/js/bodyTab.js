@@ -14,7 +14,7 @@ layui.define(["element","jquery"],function(exports){
     var loginLoading = top.layer.msg('加载中，请稍候',{icon: 16,time:false,shade:0.8});
 
     $.ajax({
-        url : '/res/ajax_res_menu_top',
+        url : '/res/ajax_res_menu_top.do',
         type : 'post',
         async: false,
         success : function(data) {
@@ -52,7 +52,7 @@ layui.define(["element","jquery"],function(exports){
     };
     function leftNavBar(pid) {
         $.ajax({
-            url : '/res/ajax_res_menu_left',
+            url : '/res/ajax_res_menu_left.do',
             type : 'post',
             async: false,
             data:{

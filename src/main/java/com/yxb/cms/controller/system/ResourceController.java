@@ -59,7 +59,7 @@ public class ResourceController extends BasicController {
      *跳转到资源列表页面
      * @return
      */
-    @RequestMapping("/res_list")
+    @RequestMapping("/res_list.do")
     public String toResListPage() {
         return "system/res_list";
     }
@@ -70,7 +70,7 @@ public class ResourceController extends BasicController {
      * @param resource
      * @return
      */
-    @RequestMapping("/ajax_res_list")
+    @RequestMapping("/ajax_res_list.do")
     @ResponseBody
     public String ajaxResourceList(Resource resource){
         return resourceService.selectResourceResultPageList(resource);
@@ -80,7 +80,7 @@ public class ResourceController extends BasicController {
      * 选择图标
      * @return
      */
-    @RequestMapping("/res_img")
+    @RequestMapping("/res_img.do")
     public String toResImgPage() {
         return "system/res_img";
     }
@@ -88,18 +88,18 @@ public class ResourceController extends BasicController {
      * 资源添加页面
      * @return
      */
-    @RequestMapping("/res_edit")
+    @RequestMapping("/res_edit.do")
     public String toResEditPage() {
         return "system/res_edit";
     }
 
-    @RequestMapping("/ajax_res_menu_top")
+    @RequestMapping("/ajax_res_menu_top.do")
     @ResponseBody
     public String ajaxResMenuTop(){
         return resourceService.selectResMenuTop();
     }
 
-    @RequestMapping("/ajax_res_menu_left")
+    @RequestMapping("/ajax_res_menu_left.do")
     @ResponseBody
     public String ajaxResMenuLeft(Integer resParentid){
         return resourceService.selectResLevelListByParentid(resParentid);

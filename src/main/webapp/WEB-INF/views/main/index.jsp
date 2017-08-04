@@ -123,7 +123,7 @@
                 </div>
                 <div class="layui-tab-content clildFrame" style="height:793px;">
                     <div class="layui-tab-item layui-show">
-                        <iframe src="${ctx}/main/home" data-id="0" name="ifr_0" id="ifr0"></iframe>
+                        <iframe src="${ctx}/main/home.do" data-id="0" name="ifr_0" id="ifr0"></iframe>
                     </div>
                 </div>
             </div>

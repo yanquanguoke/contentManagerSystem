@@ -98,7 +98,7 @@
                 title : '<i class="larry-icon larry-caidanguanli"></i>新增菜单',
                 type : 2,
                 skin : 'layui-layer-molv',
-                content : "${ctx}/res/res_edit",
+                content : "${ctx}/res/res_edit.do",
                 area: ['750px', '470px '],
                 resize:false,
                 anim:1,
@@ -111,7 +111,7 @@
         function paging(curr){
             var pageLoading = layer.load(2);
             $.ajax({
-                url : '${ctx}/res/ajax_res_list',
+                url : '${ctx}/res/ajax_res_list.do',
                 type : 'post',
                 data :{
                     page: curr || 1 ,   //当前页

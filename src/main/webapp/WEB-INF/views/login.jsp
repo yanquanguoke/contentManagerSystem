@@ -19,7 +19,7 @@
 <div class="video_mask"></div>
 <div class="login">
      <h1>CMS 后台管理系统</h1></p>
-    <form class="layui-form" action="${ctx}/main/index" method="post">
+    <form class="layui-form" action="${ctx}/main/index.do" method="post">
         <div class="layui-form-item">
             <input type="text" name="username" lay-verify="required" placeholder="请输入账号" autocomplete="off"  value="admin" class="layui-input">
         </div>
@@ -44,7 +44,7 @@
 
             //登陆验证
             $.ajax({
-                url: '${ctx}/loginCheck',
+                url: '${ctx}/loginCheck.do',
                 type: 'post',
                 async: false,
                 data: data.field,

@@ -5,7 +5,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <script type="text/javascript">
-	window.top.location.href= "${ctx}/login";
+	window.top.location.href= "${ctx}/login.do";
 </script>
 </head>
 <body>

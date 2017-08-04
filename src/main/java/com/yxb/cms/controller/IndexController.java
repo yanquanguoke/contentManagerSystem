@@ -51,7 +51,7 @@ public class IndexController extends BasicController {
      *跳转到主页
      * @return
      */
-    @RequestMapping("/index")
+    @RequestMapping("/index.do")
     public String toIndexPage() {
         return "main/index";
     }
@@ -60,7 +60,7 @@ public class IndexController extends BasicController {
      * 跳转到欢迎页
      * @return
      */
-    @RequestMapping("/home")
+    @RequestMapping("/home.do")
     public String toHomePage() {
         return "main/home";
     }
@@ -69,7 +69,7 @@ public class IndexController extends BasicController {
      * 跳转到权限不足页面
      * @return
      */
-    @RequestMapping("/unauthorized")
+    @RequestMapping("/unauthorized.do")
     public String toUnauthorizedPage() {
         return "error/unauthorized";
     }

@@ -57,7 +57,7 @@ public class LoginController extends BasicController {
     /**
      * 登陆代理，跳转到顶级父窗口
      **/
-    @RequestMapping("/loginProxy")
+    @RequestMapping("/loginProxy.do")
     public String toLoginProxy() {
         return "main/loginProxy";
     }
@@ -69,7 +69,7 @@ public class LoginController extends BasicController {
      *
      * @return
      */
-    @RequestMapping("/login")
+    @RequestMapping("/login.do")
     public String toLoginPage() {
         return "login";
     }
@@ -80,7 +80,7 @@ public class LoginController extends BasicController {
      * @param password 密码
      * @return
      */
-    @RequestMapping("/loginCheck")
+    @RequestMapping("/loginCheck.do")
     @ResponseBody
     public BussinessMsg loginCheck(String username, String password){
         log.info("登陆验证处理开始");
@@ -123,7 +123,7 @@ public class LoginController extends BasicController {
     /**
      * 用户退出
      */
-    @RequestMapping("/logout")
+    @RequestMapping("/logout.do")
     public String logout(){
         Subject currentUser = SecurityUtils.getSubject();
         currentUser.logout();

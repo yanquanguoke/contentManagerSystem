@@ -103,7 +103,7 @@
             var index = layui.layer.open({
                 title : "新增角色",
                 type : 2,
-                content : "${ctx}/role/role_add",
+                content : "${ctx}/role/role_add.do",
                 area: ['550px', '340px'],
                 success : function(layero, index){
 
@@ -116,7 +116,7 @@
              var index = layui.layer.open({
                  title : "编辑角色",
                  type : 2,
-                 content : "${ctx}/role/role_update?roleId="+roleId,
+                 content : "${ctx}/role/role_update.do?roleId="+roleId,
                  area: ['550px', '340px'],
                  success : function(layero, index){
 
@@ -126,7 +126,7 @@
         function paging(curr){
             var pageLoading = layer.load(2);
             $.ajax({
-                url : '${ctx}/role/ajax_role_list',
+                url : '${ctx}/role/ajax_role_list.do',
                 type : 'post',
                 data :{
                     page: curr || 1 ,   //当前页
@@ -174,7 +174,7 @@
                         skip: true,
                         jump: function(obj, first){ //触发分页后的回调
                             if(!first){ //点击跳页触发函数自身，并传递当前页：obj.curr
-                                $("#userTbody").text('');//先清空原先内容
+                                $("#roleTbody").text('');//先清空原先内容
                                 paging(obj.curr);
 
 

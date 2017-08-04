@@ -13,7 +13,7 @@ layui.config({
 
     //退出
     $('#logout').on('click', function () {
-        var url = '/logout';
+        var url = '/logout.do';
         common.logOut('退出登陆提示！', '你真的确定要退出系统吗？', url)
     })
     // 添加新窗口

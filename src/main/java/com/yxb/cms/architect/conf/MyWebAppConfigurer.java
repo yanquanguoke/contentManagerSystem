@@ -32,7 +32,6 @@
  */
 package com.yxb.cms.architect.conf;
 
-import com.yxb.cms.architect.filter.MyWebFilter;
 import com.yxb.cms.architect.interceptor.CommonInterceptor;
 import com.yxb.cms.architect.interceptor.ErrorInterceptor;
 import org.apache.commons.logging.Log;

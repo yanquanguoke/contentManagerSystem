@@ -102,7 +102,7 @@
             var index = layui.layer.open({
                 title : "新增用户",
                 type : 2,
-                content : "${ctx}/user/user_add",
+                content : "${ctx}/user/user_add.do",
                 area: ['550px', '265px'],
                 success : function(layero, index){
 
@@ -115,7 +115,7 @@
              var index = layui.layer.open({
                  title : "编辑用户",
                  type : 2,
-                 content : "${ctx}/user/user_update?userId="+userId,
+                 content : "${ctx}/user/user_update.do?userId="+userId,
                  area: ['550px', '265px'],
                  success : function(layero, index){
 
@@ -128,7 +128,7 @@
             var index = layui.layer.open({
                 title : '<i class="larry-icon larry-jiaoseguanli1"></i>分配角色',
                 type : 2,
-                content : "${ctx}/user/user_grant?userId="+userId,
+                content : "${ctx}/user/user_grant.do?userId="+userId,
                 area: ['500px', '440px'],
                 success : function(layero, index){
 
@@ -139,7 +139,7 @@
            // var loginLoading = layer.msg('数据加载中，请稍候',{icon: 16,time:false,shade:0.8});
             var pageLoading = layer.load(2);
             $.ajax({
-                url : '${ctx}/user/ajax_user_list',
+                url : '${ctx}/user/ajax_user_list.do',
                 type : 'post',
                 data :{
                     page: curr || 1 ,   //当前页
