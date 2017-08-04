@@ -12,11 +12,11 @@
     <script type="text/javascript" src="${ctx}/static/layui/layui.js"></script>
 </head>
 <body>
-<video class="video-player" preload="auto" autoplay="autoplay"  muted = "true" loop="loop" data-height="1080" data-width="1920" height="1080" width="1920">
-    <source src="${ctx}/static/video/video1.mp4" type="video/mp4">
-    <!-- 此视频文件为腾讯所有，在此仅供样式参考，如用到商业用途，请自行更换为其他视频或图片，否则造成的任何问题使用者本人承担，谢谢 -->
-</video>
-<div class="video_mask"></div>
+<%--<video class="video-player" preload="auto" autoplay="autoplay"  muted = "true" loop="loop" data-height="1080" data-width="1920" height="1080" width="1920">--%>
+    <%--<source src="${ctx}/static/video/video1.mp4" type="video/mp4">--%>
+    <%--<!-- 此视频文件为腾讯所有，在此仅供样式参考，如用到商业用途，请自行更换为其他视频或图片，否则造成的任何问题使用者本人承担，谢谢 -->--%>
+<%--</video>--%>
+<%--<div class="video_mask"></div>--%>
 <div class="login">
      <h1>CMS 后台管理系统</h1></p>
     <form class="layui-form" action="${ctx}/main/index" method="post">

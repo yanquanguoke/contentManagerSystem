@@ -1,6 +1,10 @@
-body {
-    overflow: hidden;
+
+html, body{
+    background: url(../img/login-bg1.jpg) fixed center center;
 }
+/*body {*/
+    /*overflow: hidden;*/
+/*}*/
 
 .video-player {
     background-color: transparent;
