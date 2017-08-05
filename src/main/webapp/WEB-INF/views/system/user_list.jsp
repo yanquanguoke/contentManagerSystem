@@ -32,7 +32,28 @@
         <div class="layui-tab">
             <blockquote class="layui-elem-quote mylog-info-tit">
                 <div class="layui-inline">
-                    <a class="layui-btn  userAdd_btn"> <i class="layui-icon larry-icon larry-xinzeng1"></i>新增用户</a>
+                    <form class="layui-form">
+
+
+                    <div class="layui-input-inline">
+                            <select name="city" >
+                                <option value="0">登陆账号</option>
+                                <option value="1">用户姓名</option>
+                            </select>
+                        </div>
+                        <div class="layui-input-inline">
+                    <input type="text" value="" placeholder="请输入关键字" class="layui-input search_input">
+                            </div>
+                        <a class="layui-btn search_btn"><i class="layui-icon larry-icon larry-chaxun7"></i>查询</a>
+
+
+                    </form>
+                </div>
+                <div class="layui-inline">
+                    <a class="layui-btn layui-btn-normal userAdd_btn"> <i class="layui-icon larry-icon larry-xinzeng1"></i>新增用户</a>
+                </div>
+                <div class="layui-inline">
+                    <a class="layui-btn layui-btn-normal userAdd_btn"  style="background-color:#5FB878"> <i class="layui-icon larry-icon larry-danye"></i>导出</a>
                 </div>
             </blockquote>
             <div class="larry-separate"></div>
