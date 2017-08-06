@@ -62,4 +62,13 @@ public class BasicController {
         return user.getUserLoginName();
     }
 
+    /**
+     * 登录用户对象
+     */
+    public User getCurrentUser() {
+        Subject currentUser = SecurityUtils.getSubject();
+        User user = currentUser.getPrincipals().oneByType(User.class);
+        return user;
+    }
+
 }

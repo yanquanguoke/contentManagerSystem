@@ -68,8 +68,10 @@ public enum BussinessCode {
 	USER_ROLE_SAVE_ERROR("1504","用户分配角色信息失败"),
 	USER_FAIL_ERROR("1505","失效用户失败,程序异常"),
 	ROLE_FAILK_ERROR("1506","失效角色失败,程序异常"),
-	RES_FAILK_ERROR("1507","失效资源失败,程序异常")
-	;
+	RES_FAILK_ERROR("1507","失效资源失败,程序异常"),
+    USER_LOGIN_NAME_EXIST("1508","用户账号已存在，请重新输入"),
+
+    ;
 
 	BussinessCode(String code, String msg) {
 		this.code = code;

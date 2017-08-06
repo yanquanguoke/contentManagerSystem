@@ -25,33 +25,34 @@
 <form class="layui-form layui-form-pane">
     <input id="userId" name="userId" type="hidden" value="${user.userId}">
 
+    <input id="pageFlag"  type="hidden" value="${pageFlag}">
+
     <div class="layui-form-item">
         <label class="layui-form-label">登陆账号</label>
         <div class="layui-input-block">
-            <c:if test="${pageFlag == 'addPage' }">
-                <input type="text" class="layui-input" name="userLoginName" lay-verify="required" placeholder="请输入登陆账号">
-            </c:if>
-            <c:if test="${pageFlag == 'updatePage' }">
-                <input type="text" class="layui-input" name="userLoginName" lay-verify="required" value="${user.userLoginName}" placeholder="请输入登陆账号">
-            </c:if>
+            <input type="text" class="layui-input" name="userLoginName" lay-verify="required|userLoginName" maxlength="10" value="${user.userLoginName}" placeholder="请输入登陆账号">
         </div>
     </div>
     <div class="layui-form-item">
         <label class="layui-form-label">用户姓名</label>
         <div class="layui-input-block">
-            <input type="text" class="layui-input" name="userName" lay-verify="required" value="${user.userName}" placeholder="请输入用户姓名">
+            <input type="text" class="layui-input" name="userName" lay-verify="required|userName" maxlength="25" value="${user.userName}" placeholder="请输入用户姓名">
         </div>
     </div>
     <div class="layui-form-item" pane>
         <label class="layui-form-label">角色状态</label>
         <div class="layui-input-block">
             <c:if test="${pageFlag == 'addPage' }">
-                <input type="radio" name="userStatus" value="0" title="有效" checked>
-                <input type="radio" name="userStatus" value="1" title="失效" >
+                <input type="radio" name="userStatus" value="0" title="有效" checked disabled>
+                <input type="radio" name="userStatus" value="1" title="失效" disabled>
             </c:if>
-            <c:if test="${pageFlag == 'updatePage' }">
-                <input type="radio" name="userStatus" value="0" title="有效"  <c:if test="${user.userStatus ==0 }">checked</c:if>/>
-                <input type="radio" name="userStatus" value="1" title="失效"  <c:if test="${user.userStatus ==1 }">checked</c:if>/>
+            <c:if test="${pageFlag == 'updatePage' and  user.userStatus == '0' }">
+                <input type="radio" name="userStatus" value="0" title="有效"  disabled <c:if test="${user.userStatus ==0 }">checked</c:if>/>
+                <input type="radio" name="userStatus" value="1" title="失效" disabled  <c:if test="${user.userStatus ==1 }">checked</c:if>/>
+            </c:if>
+            <c:if test="${pageFlag == 'updatePage' and  user.userStatus == '1' }">
+                <input type="radio" name="userStatus" value="0" title="有效"   <c:if test="${user.userStatus ==0 }">checked</c:if>/>
+                <input type="radio" name="userStatus" value="1" title="失效"   <c:if test="${user.userStatus ==1 }">checked</c:if>/>
             </c:if>
         </div>
     </div>
@@ -67,9 +68,28 @@
                 form = layui.form(),
                 layer = parent.layer === undefined ? layui.layer : parent.layer;
 
+        form.verify({
+            userLoginName: function(value, item){
+                //验证登陆账号
+                if(!new RegExp("^[0-9A-Za-z_]{2,15}$").test(value)){
+                    return '登陆账号只能为英文、数字、下划线，长度2-7位';
+                }
+                //验证登陆账号是否存在
+
+            },
+            userName: function(value, item){
+                //验证用户名
+                if(!new RegExp("^([\u4e00-\u9fa5]){2,10}$").test(value)){
+                    return '用户姓名只能为中文，长度2-7位';
+                }
+            }
+        });
+
+
 
         //保存
         form.on("submit(saveUser)",function(data){
+            var pageFlag = $("#pageFlag").val();
             var userSaveLoading = top.layer.msg('数据提交中，请稍候',{icon: 16,time:false,shade:0.8});
             //登陆验证
             $.ajax({
@@ -80,7 +100,11 @@
                 success : function(data) {
                     if(data.returnCode == 0000){
                         top.layer.close(userSaveLoading);
-                        top.layer.msg("用户信息保存成功！");
+                        if(pageFlag == 'addPage'){
+                            top.layer.msg("用户信息保存成功,默认密码123456,请及时修改");
+                        }else {
+                            top.layer.msg("用户信息保存成功");
+                        }
                         var index = parent.layer.getFrameIndex(window.name); //先得到当前iframe层的索引
                         parent.layer.close(index); //再执行关闭                        //刷新父页面
                         parent.location.reload();

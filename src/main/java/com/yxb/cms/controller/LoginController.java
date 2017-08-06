@@ -33,6 +33,7 @@
 package com.yxb.cms.controller;
 
 import com.yxb.cms.architect.constant.BussinessCode;
+import com.yxb.cms.architect.constant.Constants;
 import com.yxb.cms.architect.utils.BussinessMsgUtil;
 import com.yxb.cms.domain.bo.BussinessMsg;
 import org.apache.commons.lang3.StringUtils;
@@ -44,6 +45,8 @@ import org.apache.shiro.subject.Subject;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * 登陆Controller
@@ -82,7 +85,7 @@ public class LoginController extends BasicController {
      */
     @RequestMapping("/loginCheck.do")
     @ResponseBody
-    public BussinessMsg loginCheck(String username, String password){
+    public BussinessMsg loginCheck(String username, String password,HttpServletRequest request){
         log.info("登陆验证处理开始");
         long start = System.currentTimeMillis();
         try {
@@ -102,6 +105,8 @@ public class LoginController extends BasicController {
 
             currentUser.login(token);
             if (currentUser.isAuthenticated()) {
+                request.getSession().setAttribute(Constants.SESSION_KEY_LOGIN_NAME,getCurrentUser());
+
                 return BussinessMsgUtil.returnCodeMessage(BussinessCode.GLOBAL_SUCCESS);
             }
             return BussinessMsgUtil.returnCodeMessage(BussinessCode.GLOBAL_LOGIN_FAIL);

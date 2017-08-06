@@ -38,6 +38,7 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
+import java.util.Map;
 
 
 /**
@@ -98,6 +99,12 @@ public interface UserMapper {
     int updateByPrimaryKey(User record);
 
     /**
+     * 更改用户状态
+     * @param params 参数
+     */
+    void updateUserByStatus(Map<String, Object> params);
+
+    /**
      * 根据登陆用户名和状态查询用户信息
      * @param userLoginName
      * @param userStatus
@@ -118,6 +125,21 @@ public interface UserMapper {
      * @return
      */
     List<User> selectUserListByPage(User user);
+
+    /**
+     * 用户信息列表信息List
+     * @param user 用户实体
+     * @return
+     */
+    List<User>selectUserList(User user);
+
+    /**
+     * 验证用户账号唯一性
+     * @param userLoginName 登陆账号
+     * @param userId  用户Id
+     * @return
+     */
+    Long selectUserLoginNameCheck(@Param("userLoginName") String userLoginName,@Param("userId") Integer userId);
     
     
     

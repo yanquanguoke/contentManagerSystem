@@ -30,24 +30,53 @@
  * - License: GNU Lesser General Public License (GPL)
  * - source code availability: http://git.oschina.net/yangxiaobing_175/contentManagerSystem
  */
-package com.yxb.cms.domain.bo;
+package com.yxb.cms.architect.utils;
 
-import org.apache.shiro.subject.Subject;
+import com.yxb.cms.architect.view.ExcelView;
+import com.yxb.cms.domain.bo.ExcelExport;
+import org.springframework.web.servlet.ModelAndView;
+
+import java.util.HashMap;
+import java.util.Map;
+
 
 
 /**
- * 权限验证BO，支持el表达式,调用方式<br>
- * ${currentUser.isPermitted('resModelCode')} true:false
+ * 公共帮助类
+ *
  * @author yangxiaobing
- * @date 2017/7/11
+ * @date 2017/8/5
+ *
  */
-public class PermissionSubject {
-	private Subject subject;
+public class CommonHelper{
+	
+	
+	/**
+	 * 获得excel model and view
+	 * 
+	 * @param excelExportBean
+	 * @return excel model and view
+	 */
+	public static ModelAndView getExcelModelAndView(Object excelExportBean){
+		return getExcelModelAndView(excelExportBean, null);
+	}
+	
+	/**
+	 * 获得excel model and view
+	 * 
+	 * @param excelExportBean
+	 * @return excel model and view
+	 */
+	public static ModelAndView getExcelModelAndView(Object excelExportBean, String excelName){
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put(ExcelView.EXCEL_EXPORT_BEAN, excelExportBean);
+		map.put(ExcelView.EXCEL_EXPORT_NAME, excelName);
+		if(excelExportBean instanceof ExcelExport){
+			map.put(ExcelView.EXCEL_EXPORT_TYPE, ExcelView.EXCEL_EXPORT_TYPE_SINGLE_SHEET);
+		}else{
+			map.put(ExcelView.EXCEL_EXPORT_TYPE, ExcelView.EXCEL_EXPORT_TYPE_MULTIPLE_SHEET);
+		}
+		return new ModelAndView(new ExcelView(), map);
+	}
 
-	public PermissionSubject(Subject subject) {
-		this.subject = subject;
-	}
-	public boolean isPermitted(String permission) {
-		return subject.isPermitted(permission);
-	}
 }

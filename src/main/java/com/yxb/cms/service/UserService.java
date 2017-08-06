@@ -39,6 +39,7 @@ import com.yxb.cms.dao.RoleMapper;
 import com.yxb.cms.dao.UserMapper;
 import com.yxb.cms.dao.UserRoleMapper;
 import com.yxb.cms.domain.bo.BussinessMsg;
+import com.yxb.cms.domain.bo.ExcelExport;
 import com.yxb.cms.domain.vo.Role;
 import com.yxb.cms.domain.vo.User;
 import com.yxb.cms.domain.vo.UserRole;
@@ -50,10 +51,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 
 /**
@@ -98,19 +96,144 @@ public class UserService {
      */
     public String selectUserResultPageList(User user){
 
-        List<User> userList = userMapper.selectUserListByPage(user);
+        List<User> userDataTableList = new ArrayList<User>();
 
+        List<User> userList = userMapper.selectUserListByPage(user);
+        if(null != userList && !userList.isEmpty() ){
+            for (User u : userList) {
+                User userRole = selectUserRolesByUserId(u.getUserId());
+                u.setRoleNames(userRole.getRoleNames());
+                userDataTableList.add(u);
+            }
+        }
         Long count = userMapper.selectCountUser(user);
         user.setTotalCount(count);
 
         Map<String, Object> map = new HashMap<String, Object>();
         map.put("total",count);
         map.put("totalSize",user.getTotalSize());
-        map.put("rows", userList);
+        map.put("rows", userDataTableList);
 
         return Json.toJson(map);
     }
 
+    /**
+     * 用户列表EXCEL导出
+     * @param user 用户实体
+     * @return
+     */
+    public ExcelExport excelExportUserList(User user){
+        ExcelExport excelExport = new ExcelExport();
+        List<User> userList = this.selectUsersList(user);
+        excelExport.addColumnInfo("登陆账号","userLoginName");
+        excelExport.addColumnInfo("用户姓名","userName");
+        excelExport.addColumnInfo("用户状态","userStatus_Lable");
+        excelExport.addColumnInfo("拥有角色","roleNames");
+        excelExport.addColumnInfo("创建人","creator");
+        excelExport.addColumnInfo("创建时间","createTime_Lable");
+        excelExport.addColumnInfo("修改人","modifier");
+        excelExport.addColumnInfo("修改时间","updateTime_Lable");
+
+        excelExport.setDataList(userList);
+        return excelExport;
+    }
+
+
+    /**
+     * 用户列表信息List
+     * @param user 用户实体
+     * @return
+     */
+    public List<User> selectUsersList(User user){
+
+        List<User> userListResult = new ArrayList<User>();
+        List<User> userList = userMapper.selectUserList(user);
+        if (null != userList && !userList.isEmpty()){
+            for (User u : userList) {
+                User userRole = selectUserRolesByUserId(u.getUserId());
+                u.setRoleNames(userRole.getRoleNames());
+                userListResult.add(u);
+            }
+        }
+
+        return userListResult;
+    }
+
+
+    /**
+     * 用户状态失效
+     * @param userId	用户Id
+     * @param longinName 当前登录用户名
+     * @return
+     * @throws Exception
+     */
+    @Transactional
+    public BussinessMsg updateUserStatus(Integer userId,String longinName) throws Exception{
+        log.info("用户失效开始，当前用户Id:"+userId);
+        long start = System.currentTimeMillis();
+        try {
+
+            //解除用户与角色绑定关系
+            List<UserRole> userRoles = userRoleMapper.selectUserRolesListByUserId(userId);
+            if (null != userRoles && !userRoles.isEmpty()) {
+                for (UserRole userRole : userRoles) {
+                    userRoleMapper.deleteByPrimaryKey(userRole.getUserRoleId());
+                }
+            }
+            //更改用户状态为1-失效
+            Map<String, Object> params = new HashMap<String, Object>();
+            params.put("userStatus", BusinessConstants.SYS_USER_STATUS_1.getCode());
+            params.put("modifier", longinName);
+            params.put("updateTime", new Date());
+            params.put("userId", userId);
+            userMapper.updateUserByStatus(params);
+        } catch (Exception e) {
+            log.error("失效用户方法内部错误",e);
+            throw e;
+        }finally {
+            log.info("用户失效结束,用时" + (System.currentTimeMillis() - start) + "毫秒");
+        }
+        return BussinessMsgUtil.returnCodeMessage(BussinessCode.GLOBAL_SUCCESS);
+    }
+
+    /**
+     * 批量用户状态失效
+     * @param userIds	用户Id
+     * @param longinName 当前登录用户名
+     * @return
+     * @throws Exception
+     */
+    public BussinessMsg updateUserBatchStatus(Integer[] userIds,String longinName) throws Exception{
+        log.info("批量失效用户开始，当前用户Id:"+Arrays.toString(userIds));
+        long start = System.currentTimeMillis();
+        try {
+            if(null != userIds && userIds.length > 0){
+                for (Integer userId : userIds) {
+                    //解除用户与角色绑定关系
+                    List<UserRole> userRoles = userRoleMapper.selectUserRolesListByUserId(userId);
+                    if (null != userRoles && !userRoles.isEmpty()) {
+                        for (UserRole userRole : userRoles) {
+                            userRoleMapper.deleteByPrimaryKey(userRole.getUserRoleId());
+                        }
+                    }
+                    //更改用户状态为1-失效
+                    Map<String, Object> params = new HashMap<String, Object>();
+                    params.put("userStatus", BusinessConstants.SYS_USER_STATUS_1.getCode());
+                    params.put("modifier", longinName);
+                    params.put("updateTime", new Date());
+                    params.put("userId", userId);
+                    userMapper.updateUserByStatus(params);
+                }
+            }
+
+        } catch (Exception e) {
+            log.error("失效用户方法内部错误",e);
+            throw e;
+        }finally {
+            log.info("批量失效用户结束,用时" + (System.currentTimeMillis() - start) + "毫秒");
+        }
+        return BussinessMsgUtil.returnCodeMessage(BussinessCode.GLOBAL_SUCCESS);
+    }
 
     /**
      * 保存用户信息
@@ -124,6 +247,11 @@ public class UserService {
         log.info("保存用户信息开始");
         long start = System.currentTimeMillis();
         try {
+            //验证用户账号唯一性
+            Long checkUserLoginName = userMapper.selectUserLoginNameCheck(user.getUserLoginName(),user.getUserId());
+            if(checkUserLoginName.intValue() > 0){
+                return BussinessMsgUtil.returnCodeMessage(BussinessCode.USER_LOGIN_NAME_EXIST);
+            }
             //保存用户信息
             if (null == user.getUserId()) {
                 user.setUserPassword("123456");

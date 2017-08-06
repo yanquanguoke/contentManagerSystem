@@ -34,8 +34,10 @@ package com.yxb.cms.controller.system;
 
 import com.yxb.cms.architect.constant.BussinessCode;
 import com.yxb.cms.architect.utils.BussinessMsgUtil;
+import com.yxb.cms.architect.utils.CommonHelper;
 import com.yxb.cms.controller.BasicController;
 import com.yxb.cms.domain.bo.BussinessMsg;
+import com.yxb.cms.domain.bo.ExcelExport;
 import com.yxb.cms.domain.vo.User;
 import com.yxb.cms.service.RoleService;
 import com.yxb.cms.service.UserService;
@@ -43,7 +45,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
 
 
 /**
@@ -79,6 +83,17 @@ public class UserController extends BasicController {
     @ResponseBody
     public String ajaxUserList(User user){
         return userService.selectUserResultPageList(user);
+    }
+
+    /**
+     * 导出用户列表信息
+     * @param user 用户实体
+     * @return
+     */
+    @RequestMapping("/excel_users_export.do")
+    public ModelAndView excelUsersExport(User user){
+        ExcelExport excelExport = userService.excelExportUserList(user);
+        return CommonHelper.getExcelModelAndView(excelExport);
     }
 
     /**
@@ -121,6 +136,37 @@ public class UserController extends BasicController {
         }
     }
 
+    /**
+     * 失效用户
+     * @param userId 用户Id
+     * @return
+     */
+    @RequestMapping("/ajax_user_fail.do")
+    @ResponseBody
+    public BussinessMsg ajaxUserFail(Integer userId){
+        try {
+            return userService.updateUserStatus(userId, this.getCurrentLoginName());
+        } catch (Exception e) {
+            log.error("失效用户方法内部错误",e);
+            return BussinessMsgUtil.returnCodeMessage(BussinessCode.USER_FAIL_ERROR);
+        }
+    }
+
+    /**
+     * 批量失效用户
+     * @param userIds 用户Id
+     * @return
+     */
+    @RequestMapping("/ajax_user_batch_fail.do")
+    @ResponseBody
+    public BussinessMsg ajaxUserBatchFail(@RequestParam(value = "userIds[]") Integer[] userIds){
+        try {
+            return userService.updateUserBatchStatus(userIds, this.getCurrentLoginName());
+        } catch (Exception e) {
+            log.error("批量失效用户方法内部错误",e);
+            return BussinessMsgUtil.returnCodeMessage(BussinessCode.USER_FAIL_ERROR);
+        }
+    }
 
     /**
      * 跳转到用户角色分配页面

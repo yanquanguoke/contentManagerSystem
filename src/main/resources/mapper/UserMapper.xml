@@ -180,6 +180,16 @@
     where user_id = #{userId,jdbcType=INTEGER}
   </update>
 
+    <!-- 更改用户状态 -->
+    <update id="updateUserByStatus" parameterType="java.util.Map">
+        update cc_user
+        set
+        user_status = #{userStatus,jdbcType=BIGINT},
+        modifier = #{modifier,jdbcType=VARCHAR},
+        update_time = #{updateTime,jdbcType=TIMESTAMP}
+        where user_id = #{userId,jdbcType=INTEGER}
+    </update>
+
   <!-- 根据用户名和状态查询用户信息-->
   <select id="selectUserByloginNameAndStatus" resultMap="BaseResultMap">
       select *  from cc_user
@@ -191,17 +201,51 @@
     <select id="selectCountUser" parameterType="com.yxb.cms.domain.vo.User" resultType="Long">
         select count(*)
         from cc_user
+        <include refid="selectPageParmas" />
     </select>
     <!-- 用户列表信息分页显示 -->
     <select id="selectUserListByPage" parameterType="com.yxb.cms.domain.vo.User" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List"/>
         from cc_user
+        <include refid="selectPageParmas" />
         order by create_time DESC
         LIMIT #{start},#{rows}
     </select>
 
+    <!-- 用户列表信息List -->
+    <select id="selectUserList" parameterType="com.yxb.cms.domain.vo.User" resultMap="BaseResultMap" >
+        select
+        <include refid="Base_Column_List" />
+        from cc_user
+        <include refid="selectPageParmas" />
 
+    </select>
+    <!-- 分页查询条件 -->
+    <sql id="selectPageParmas">
+        <where>
+            user_login_name != 'admin'
+            <if test="searchTerm != null and searchTerm != '' and searchContent != null and  searchContent != '' and  searchTerm == 'userLoginNameTerm' ">
+               AND  user_login_name LIKE CONCAT('%', #{searchContent,jdbcType=VARCHAR}, '%')
+            </if>
+            <if test="searchTerm != null and searchTerm != '' and searchContent != null and  searchContent != '' and  searchTerm == 'userNameTerm' ">
+                AND user_name LIKE CONCAT('%', #{searchContent,jdbcType=VARCHAR}, '%')
+            </if>
+        </where>
+    </sql>
+
+    <!-- 验证用户账号唯一性 -->
+    <select id="selectUserLoginNameCheck" resultType="java.lang.Long">
+        select count(*) from cc_user
+        <where>
+            <if test="userLoginName != null and userLoginName != '' " >
+                AND user_login_name = #{userLoginName,jdbcType=VARCHAR}
+            </if>
+            <if test="userId != null">
+               AND user_id != #{userId,jdbcType=INTEGER}
+            </if>
+        </where>
+    </select>
 
 
 </mapper>

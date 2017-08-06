@@ -3,7 +3,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.yxb.cms</groupId>
     <artifactId>contentManagerSystem</artifactId>
-    <version>${env}-1.0.1.${scmVersion}</version>
+    <version>${env}-1.0.2.${scmVersion}</version>
         <name>contentManagerSystem</name>
     <packaging>war</packaging>
     <properties>
@@ -158,6 +158,11 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-devtools</artifactId>
             <optional>true</optional>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.poi</groupId>
+            <artifactId>poi</artifactId>
+            <version>3.12</version>
         </dependency>
 
 

@@ -24,7 +24,38 @@ layui.define(['layer'], function (exports) {
                 anim: Math.ceil(Math.random() * 6)
             });
             return
-        }, cmsConfirm: function () {
+        },
+        // ajax Confirm 对话框
+        ajaxCmsConfirm: function (title, text, url,param) {
+            layer.confirm(text, {
+                title: title,
+                resize: false,
+                btn: ['确定', '取消'],
+                btnAlign: 'c',
+                anim:1,
+                icon: 3
+            }, function () {
+                $.ajax({
+                    url : url,
+                    type : 'post',
+                    async: false,
+                    data : param,
+                    success : function(data) {
+                        if(data.returnCode == 0000){
+                            layer.msg(data.returnMessage);
+                            location.reload();
+                        }else{
+                            layer.msg(data.returnMessage);
+                        }
+                    },error:function(data){
+
+                    }
+                });
+
+            }, function () {
+
+            })
+
         },
         logOut: function (title, text, url, type, dataType, data, callback) {
             parent.layer.confirm(text, {
