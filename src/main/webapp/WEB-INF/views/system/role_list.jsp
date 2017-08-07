@@ -148,7 +148,7 @@
 
                         var opt ='<div class="layui-btn-group">';
                         opt+=  '<a class="layui-btn layui-btn-mini role_edit" data-id="'+item.roleId+'"><i class="layui-icon larry-icon larry-bianji2"></i> 编辑</a>';
-                        opt+=  '<a class="layui-btn layui-btn-mini layui-btn-warm  links_del2" data-id=""><i class="layui-icon larry-icon larry-quanxianguanli"></i>权限</a>';
+                        opt+=  '<a class="layui-btn layui-btn-mini layui-btn-warm  role_grant" data-id=""><i class="layui-icon larry-icon larry-quanxianguanli"></i>权限</a>';
                         opt+=  '<a class="layui-btn layui-btn-mini layui-btn-danger  links_del" data-id=""><i class="layui-icon larry-icon larry-ttpodicon"></i>失效</a>';
                         opt+= '</div>';
                         $("#roleTbody").append(
@@ -191,7 +191,19 @@
 
         paging(1);
 
+        /**角色授权*/
+        $("body").on("click",".role_grant",function(){
 
+            var index = layui.layer.open({
+                title : '<i class="larry-icon larry-jiaoseguanli1"></i>角色授权',
+                type : 2,
+                content : "${ctx}/role/role_grant.do",
+                area: ['500px', '440px'],
+                success : function(layero, index){
+
+                }
+            });
+        });
 
 
 

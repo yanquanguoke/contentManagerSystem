@@ -120,4 +120,15 @@ public class RoleController extends BasicController {
         }
     }
 
+    /**
+     * 角色授权页面
+     * @param model
+     * @return
+     */
+    @RequestMapping("/role_grant.do")
+    public String roleGrantPage(Model model){
+
+        return "system/role_grant";
+    }
+
 }
