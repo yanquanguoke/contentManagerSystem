@@ -32,6 +32,8 @@
  */
 package com.yxb.cms.architect.realm;
 
+import com.yxb.cms.dao.ResourceMapper;
+import com.yxb.cms.dao.UserMapper;
 import com.yxb.cms.domain.vo.Resource;
 import com.yxb.cms.domain.vo.User;
 import com.yxb.cms.service.ResourceService;
@@ -46,6 +48,8 @@ import org.apache.shiro.authz.SimpleAuthorizationInfo;
 import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
+import org.springframework.stereotype.Component;
 
 
 /**
@@ -54,13 +58,16 @@ import org.springframework.beans.factory.annotation.Autowired;
  * @author yangxiaobing
  * @date 2017/7/10
  */
+@Component
 public class ShiroDbRealm extends AuthorizingRealm {
 
     private Log log = LogFactory.getLog(ShiroDbRealm.class);
 
     @Autowired
+    @Lazy
     private UserService userService;
     @Autowired
+    @Lazy
     private ResourceService resourceService;
 
     /**
@@ -82,6 +89,7 @@ public class ShiroDbRealm extends AuthorizingRealm {
         if (user == null) {
             throw new AccountException("用户信息为空");
         }
+
         SimpleAuthenticationInfo info = new SimpleAuthenticationInfo(user, user.getUserPassword(), getName());
         if (null != info) {
             log.info("用户认证通过:登陆用户名:" + user.getUserLoginName());

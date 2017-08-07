@@ -33,8 +33,11 @@
 package com.yxb.cms.architect.conf;
 
 import com.yxb.cms.architect.realm.ShiroDbRealm;
+import com.yxb.cms.dao.ResourceMapper;
+import com.yxb.cms.dao.UserMapper;
 import com.yxb.cms.domain.vo.Resource;
 import com.yxb.cms.service.ResourceService;
+import com.yxb.cms.service.UserService;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.shiro.cache.ehcache.EhCacheManager;
@@ -48,6 +51,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.DependsOn;
+import org.springframework.core.annotation.Order;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -62,14 +66,13 @@ public class ShiroConfiguration {
 
     private Log log = LogFactory.getLog(ShiroConfiguration.class);
 
-
     /**
      * Shiro Web过滤器Factory
      * @param securityManager 安全管理Bean
      * @return
      */
     @Bean(name = "shiroFilter")
-    public ShiroFilterFactoryBean shiroFilterFactoryBean(@Qualifier("securityManager") SecurityManager securityManager,ResourceService resourceService) {
+    public ShiroFilterFactoryBean shiroFilterFactoryBean(@Qualifier("securityManager") SecurityManager securityManager, ResourceMapper resourceMapper) {
         log.info("注入Shiro的Web过滤器-->shiroFilter");
         ShiroFilterFactoryBean shiroFilterFactoryBean = new ShiroFilterFactoryBean();
         //Shiro的核心安全接口,这个属性是必须的
@@ -98,7 +101,7 @@ public class ShiroConfiguration {
         filterChainDefinitionMap.put("/static/**", "anon");//anon 可以理解为不拦截
 
         //动态URL过滤
-        Resource res = resourceService.selectByPrimaryKey(2);
+        Resource res = resourceMapper.selectByPrimaryKey(2);
         filterChainDefinitionMap.put(res.getResLinkAddress(), "perms["+res.getResModelCode()+"]");
 
 
@@ -121,15 +124,6 @@ public class ShiroConfiguration {
         return cacheManager;
     }
 
-    /**
-     * 配置自定义权限登陆器
-     * @return
-     */
-    @Bean(name = "myRealm")
-    public ShiroDbRealm myRealm(){
-        ShiroDbRealm myRealm = new ShiroDbRealm();
-        return myRealm;
-    }
 
     /**
      * 配置核心安全事务管理器
@@ -138,7 +132,7 @@ public class ShiroConfiguration {
      * @return
      */
     @Bean(name = "securityManager")
-    public SecurityManager securityManager(@Qualifier("myRealm") ShiroDbRealm myRealm, @Qualifier("cacheManager") EhCacheManager cacheManager) {
+    public SecurityManager securityManager(ShiroDbRealm myRealm, @Qualifier("cacheManager") EhCacheManager cacheManager) {
         log.info("--------------加载securityManager----------------");
         DefaultWebSecurityManager securityManager = new DefaultWebSecurityManager();
         securityManager.setRealm(myRealm);
