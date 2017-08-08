@@ -17,157 +17,61 @@
 
     <link rel="stylesheet" href="${ctx}/static/layui/css/layui.css">
 
+    <link rel="stylesheet" href="${ctx}/static/css/metroStyle/metroStyle.css">
+    <script type="text/javascript" src="${ctx}/static/js/jquery-1.4.4.min.js"></script>
+
 
     <script src="${ctx}/static/layui/layui.js"></script>
 
+    <script type="text/javascript" src="${ctx}/static/js/jquery.ztree.core.js"></script>
+    <script type="text/javascript" src="${ctx}/static/js/jquery.ztree.excheck.js"></script>
 </head>
 <body class="childrenBody" style="font-size: 12px;">
-
-<ul id="demo"></ul>
+<div class="zTreeDemoBackground left">
+    <ul id="treeDemo" class="ztree"></ul>
+</div>
 <script type="text/javascript">
-    layui.use(['tree', 'layer'], function() {
+    layui.use(['tree', 'layer','form'], function() {
         var layer = layui.layer
-                , $ = layui.jquery;
+                , $ = layui.jquery,
+         form = layui.form();
 
-        var tree = layui.tree({
-            elem: '#demo',
-            //指定元素，生成的树放到哪个元素上
-            check: 'checkbox',
-            //勾选风格
-            skin: 'as',
-            //设定皮肤
-            drag: true,
-            //点击每一项时是否生成提示信息
-            checkboxName: 'aa[]',
-            //复选框的name属性值
-            checkboxStyle: "",
-            //设置复选框的样式，必须为字符串，css样式怎么写就怎么写
-            click: function(item) { //点击节点回调
-                console.log(item)
-            },
-            nodes: [ //节点
-                {
-                    name: '常用文件夹',
-                    //节点名称
-                    spread: true,
-                    //是否是展开状态，true为展开状态
-                    href: "http://www.baidu.com",
-                    //设置节点跳转的链接，如果不设置则不会跳转
-                    target: "_self",
-                    //节点链接打开方式
-                    alias: 'changyong',
-                    checkboxValue: 1,
-                    //复选框的值
-                    checked: true,
-                    //复选框默认是否选中
-                    children: [{
-                        name: '所有未读',
-                        alias: 'weidu',
-                        checked: true,
-                        checkboxValue: 2
-                    },
-                        {
-                            name: '置顶邮件',
-                        },
-                        {
-                            name: '标签邮件',
-                            checked: false,
-                            checkboxValue: 3
-                        }]
-                },
-                {
-                    name: '我的邮箱',
-                    checked: true,
-                    spread: true,
-                    children: [{
-                        name: 'QQ邮箱',
-                        checked: true,
-                        checkboxValue: 4,
-                        spread: true,
-                        children: [{
-                            name: '收件箱',
-                            checked: false,
-                            checkboxValue: 5,
-                            children: [{
-                                name: '所有未读',
-                                checked: false,
-                                checkboxValue: 6,
-                                children: [{
-                                    name: '一周未读',
-                                    checked: false,
-                                    checkboxValue: 6
-                                }]
-                            },
-                                {
-                                    name: '置顶邮件',
-                                    checked: false,
-                                    checkboxValue: 7
-                                },
-                                {
-                                    name: '标签邮件',
-                                    checked: false,
-                                    checkboxValue: 8
-                                }]
-                        },
-                            {
-                                name: '已发出的邮件',
-                                checked: false,
-                                checkboxValue: 9
-                            },
-                            {
-                                name: '垃圾邮件',
-                                checked: false,
-                                checkboxValue: 10
-                            }]
-                    },
-                        {
-                            name: '阿里云邮',
-                            checked: true,
-                            checkboxValue: 11,
-                            children: [{
-                                name: '收件箱',
-                                checked: true,
-                                checkboxValue: 12
-                            },
-                                {
-                                    name: '已发出的邮件',
-                                    checked: true,
-                                    checkboxValue: 13
-                                },
-                                {
-                                    name: '垃圾邮件',
-                                    checked: true,
-                                    checkboxValue: 14
-                                }]
-                        }]
-                }]
-        });
 
-        $("ul.layui-tree i.layui-tree-check").on("click",function(){
-            if($(this).hasClass("lee-onChecked")){//已勾选，需要取消购销
-                $(this).html("&#xe626;");
-                $(this).removeClass("lee-onChecked");
-                var childUL = $(this).parent().find("ul");
-                if(childUL.length > 0){//存在子文件夹，需要全部自动取消勾选
-                    childUL.each(function(){
-                        var childCheck = $(this).find("i.layui-tree-check");
-                        childCheck.html("");
-                        childCheck.removeClass("lee-onChecked");
-                    });
-                }
-            }else{
-                $(this).html("&#xe627;");
-                $(this).addClass("lee-onChecked");
-                var childUL = $(this).parent().find("ul");
-                if(childUL.length > 0){//存在子文件夹，需要全部自动勾选
-                    childUL.each(function(){
-                        var childCheck = $(this).find("i.layui-tree-check");
-                        childCheck.html("");
-                        childCheck.addClass("lee-onChecked");
-                    });
-                }
+
+
+
+    });
+
+    var setting = {
+        check: {
+            enable: true
+        },
+        data: {
+            simpleData: {
+                enable: true
             }
-        });
+        }
+    };
+
+    var zNodes =[
+        { id:1, pId:0, name:"随意勾选 1", open:true,iconSkin:"pIcon01"},
+        { id:11, pId:1, name:"随意勾选 1-1", open:true},
+        { id:111, pId:11, name:"随意勾选 1-1-1"},
+        { id:112, pId:11, name:"随意勾选 1-1-2"},
+        { id:12, pId:1, name:"随意勾选 1-2", open:true},
+        { id:121, pId:12, name:"随意勾选 1-2-1"},
+        { id:122, pId:12, name:"随意勾选 1-2-2"},
+        { id:2, pId:0, name:"随意勾选 2", checked:true, open:true},
+        { id:21, pId:2, name:"随意勾选 2-1"},
+        { id:22, pId:2, name:"随意勾选 2-2", open:true},
+        { id:221, pId:22, name:"随意勾选 2-2-1", checked:true},
+        { id:222, pId:22, name:"随意勾选 2-2-2"},
+        { id:23, pId:2, name:"随意勾选 2-3"}
+    ];
+
+    $(document).ready(function(){
+        $.fn.zTree.init($("#treeDemo"), setting, zNodes);
+
     });
 </script>
 </body>

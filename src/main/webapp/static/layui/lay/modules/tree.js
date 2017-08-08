@@ -19,7 +19,7 @@
             var l = n.children && n.children.length > 0, c = o('<ul class="' + (n.spread ? "layui-show" : "") + '"></ul>'), s = o(["<li " + (n.spread ? 'data-spread="' + n.spread + '"' : "") + ">", function () {
                 return l ? '<i class="layui-icon layui-tree-spread">' + (n.spread ? t.arrow[1] : t.arrow[0]) + "</i>" : ""
             }(), function () {
-                alert(i.check)
+               // alert(i.check)
                 return i.check ? '<i class="layui-icon layui-tree-check">' + ("checkbox" === i.check ? t.checkbox[0] : "radio" === i.check ? t.radio[0] : "") + "</i>" : ""
             }(), function () {
                 return '<a href="' + (n.href || "javascript:;") + '" ' + (i.target && n.href ? 'target="' + i.target + '"' : "") + ">" + ('<i class="layui-icon layui-tree-' + (l ? "branch" : "leaf") + '">' + (l ? n.spread ? t.branch[1] : t.branch[0] : t.leaf) + "</i>") + ("<cite>" + (n.name || "未命名") + "</cite></a>")
