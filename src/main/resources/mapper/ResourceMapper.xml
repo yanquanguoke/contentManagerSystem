@@ -286,6 +286,10 @@
         AND res_parentId = #{resParentid,jdbcType=INTEGER}
     </select>
 
+    <!-- 查询有效的所有菜单信息-->
+    <select id="selectResourceAllList" resultMap="BaseResultMap">
+        SELECT * FROM cc_resource  WHERE res_status = 0
+    </select>
 
  
 </mapper>

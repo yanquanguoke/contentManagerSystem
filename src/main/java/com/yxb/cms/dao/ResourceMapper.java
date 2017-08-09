@@ -117,7 +117,18 @@ public interface ResourceMapper {
      */
     List<ResourceMenuDto>selectParentIdResList();
 
+    /**
+     * 查询资源父级菜单
+     * @param resParentid 父级ID
+     */
     List<Resource> selectResLevelListByParentid(@Param("resParentid") Integer resParentid);
+
+    /**
+     * 查询所有菜单信息
+     * @return
+     */
+    List<Resource> selectResourceAllList();
+
 
 
     

@@ -36,13 +36,17 @@ import com.yxb.cms.architect.constant.BussinessCode;
 import com.yxb.cms.architect.utils.BussinessMsgUtil;
 import com.yxb.cms.controller.BasicController;
 import com.yxb.cms.domain.bo.BussinessMsg;
+import com.yxb.cms.domain.bo.Tree;
 import com.yxb.cms.domain.vo.Role;
+import com.yxb.cms.service.ResourceService;
 import com.yxb.cms.service.RoleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+
+import java.util.List;
 
 
 /**
@@ -58,6 +62,8 @@ public class RoleController extends BasicController {
 
     @Autowired
     private RoleService roleService;
+    @Autowired
+    private ResourceService resourceService;
 
 
     /**
@@ -129,6 +135,16 @@ public class RoleController extends BasicController {
     public String roleGrantPage(Model model){
 
         return "system/role_grant";
+    }
+
+
+    /**
+     * 获取当前用户所属菜单资源Tree菜单展示
+     */
+    @RequestMapping("/ajax_resource_tree_list")
+    @ResponseBody
+    public List<Tree> ajaxResourceTreeList(){
+        return resourceService.selectResourceAllTree();
     }
 
 }

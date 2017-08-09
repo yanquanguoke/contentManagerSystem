@@ -198,7 +198,7 @@
                 title : '<i class="larry-icon larry-jiaoseguanli1"></i>角色授权',
                 type : 2,
                 content : "${ctx}/role/role_grant.do",
-                area: ['500px', '440px'],
+                area: ['255px', '550px'],
                 success : function(layero, index){
 
                 }

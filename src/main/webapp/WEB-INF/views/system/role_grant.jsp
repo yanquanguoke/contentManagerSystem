@@ -17,19 +17,28 @@
 
     <link rel="stylesheet" href="${ctx}/static/layui/css/layui.css">
 
-    <link rel="stylesheet" href="${ctx}/static/css/metroStyle/metroStyle.css">
-    <script type="text/javascript" src="${ctx}/static/js/jquery-1.4.4.min.js"></script>
+    <link rel="stylesheet" href="${ctx}/static/tree/tree.css" type="text/css">
+    <link rel="stylesheet" type="text/css" href="http://at.alicdn.com/t/font_9h680jcse4620529.css">
 
 
     <script src="${ctx}/static/layui/layui.js"></script>
+    <script type="text/javascript" src="${ctx}/static/js/jquery-1.8.3.js"></script>
+    <script type="text/javascript" src="${ctx}/static/tree/tree.min.js" ></script>
+    <script type="text/javascript" src="${ctx}/static/tree/extend.tree.js" ></script>
 
-    <script type="text/javascript" src="${ctx}/static/js/jquery.ztree.core.js"></script>
-    <script type="text/javascript" src="${ctx}/static/js/jquery.ztree.excheck.js"></script>
+
 </head>
-<body class="childrenBody" style="font-size: 12px;">
-<div class="zTreeDemoBackground left">
-    <ul id="treeDemo" class="ztree"></ul>
-</div>
+<body class="childrenBody" style="font-size:12px;">
+<fieldset class="layui-elem-field">
+    <legend  style="font-size: 12px;color:#FF5722;">请选择菜单信息</legend>
+    <div class="layui-field-box" style="height: 430px; overflow: auto;">
+        <ul id="resourceTree"></ul>
+    </div>
+</fieldset>
+
+
+
+
 <script type="text/javascript">
     layui.use(['tree', 'layer','form'], function() {
         var layer = layui.layer
@@ -37,42 +46,44 @@
          form = layui.form();
 
 
-
+        initResourceAllTree();
 
 
     });
 
-    var setting = {
-        check: {
-            enable: true
-        },
-        data: {
-            simpleData: {
-                enable: true
+
+    /**获取所有有效的资源菜单*/
+    function initResourceAllTree(){
+        var resourceTree;
+        resourceTree =  $('#resourceTree').tree({
+            url:'${ctx}/role/ajax_resource_tree_list.do',
+            parentField : 'pid',
+            checkbox : true,
+            cascadeCheck : false,
+            lines : true,
+            cache:false,
+            onCheck: function (node,checked) {
+                if(checked){
+                    var parentNode = resourceTree.tree('getParent', node.target);
+                    if(parentNode != null){
+                        resourceTree.tree('check', parentNode.target);
+                    }
+
+                }else{
+                    var childNode = resourceTree.tree('getChildren', node.target);
+                    if (childNode.length > 0) {
+                        for (var i = 0; i < childNode.length; i++) {
+                            resourceTree.tree('uncheck', childNode[i].target);
+                        }
+                    }
+                }
+            },
+            onLoadSuccess : function(node, data) {
+
             }
-        }
-    };
+        });
+    }
 
-    var zNodes =[
-        { id:1, pId:0, name:"随意勾选 1", open:true,iconSkin:"pIcon01"},
-        { id:11, pId:1, name:"随意勾选 1-1", open:true},
-        { id:111, pId:11, name:"随意勾选 1-1-1"},
-        { id:112, pId:11, name:"随意勾选 1-1-2"},
-        { id:12, pId:1, name:"随意勾选 1-2", open:true},
-        { id:121, pId:12, name:"随意勾选 1-2-1"},
-        { id:122, pId:12, name:"随意勾选 1-2-2"},
-        { id:2, pId:0, name:"随意勾选 2", checked:true, open:true},
-        { id:21, pId:2, name:"随意勾选 2-1"},
-        { id:22, pId:2, name:"随意勾选 2-2", open:true},
-        { id:221, pId:22, name:"随意勾选 2-2-1", checked:true},
-        { id:222, pId:22, name:"随意勾选 2-2-2"},
-        { id:23, pId:2, name:"随意勾选 2-3"}
-    ];
-
-    $(document).ready(function(){
-        $.fn.zTree.init($("#treeDemo"), setting, zNodes);
-
-    });
 </script>
 </body>
 </html>

@@ -34,9 +34,11 @@ package com.yxb.cms.service;
 
 
 import com.yxb.cms.dao.ResourceMapper;
+import com.yxb.cms.domain.bo.Tree;
 import com.yxb.cms.domain.dto.ResourceChildrenMenuDto;
 import com.yxb.cms.domain.dto.ResourceMenuDto;
 import com.yxb.cms.domain.vo.Resource;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.nutz.json.Json;
@@ -101,6 +103,11 @@ public class ResourceService {
 
     }
 
+    /**
+     * 根据父级菜单Id查询各级菜单信息
+     * @param resParentid 父级菜单
+     * @return
+     */
     public  String selectResLevelListByParentid(Integer resParentid) {
 
         //二级菜单
@@ -136,5 +143,33 @@ public class ResourceService {
 
         }
         return null;
+    }
+
+
+    /**
+     * 查询所有资源信息用以角色赋权限的时候Tree菜单显示
+     */
+    public List<Tree> selectResourceAllTree() {
+        // 菜单资源集合
+        List<Resource> resList = resourceMapper.selectResourceAllList();
+
+        // tree 树形集合
+        List<Tree> trees = new ArrayList<Tree>();
+        if (null != resList && !resList.isEmpty()) {
+            for (Resource r : resList) {
+                Tree tree = new Tree();
+                tree.setId(r.getResId());
+                if (null != r.getResParentid()) {
+                    tree.setPid(r.getResParentid());
+                }
+                tree.setText(r.getResName());
+                tree.setIconCls(r.getResImage());
+                Map<String, Object> attr = new HashMap<String, Object>();
+                attr.put("url", r.getResLinkAddress());
+                tree.setAttributes(attr);
+                trees.add(tree);
+            }
+        }
+        return trees;
     }
 }
