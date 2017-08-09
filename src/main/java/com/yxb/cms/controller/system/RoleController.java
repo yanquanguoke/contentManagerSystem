@@ -44,6 +44,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.List;
@@ -129,14 +130,15 @@ public class RoleController extends BasicController {
     /**
      * 角色授权页面
      * @param model
+     * @param roleId 角色Id
      * @return
      */
     @RequestMapping("/role_grant.do")
-    public String roleGrantPage(Model model){
-
+    public String roleGrantPage(Model model,Integer roleId){
+        Role role = roleService.selectRoleResourcesByRoleId(roleId);
+        model.addAttribute("role",role);
         return "system/role_grant";
     }
-
 
     /**
      * 获取当前用户所属菜单资源Tree菜单展示
@@ -146,5 +148,24 @@ public class RoleController extends BasicController {
     public List<Tree> ajaxResourceTreeList(){
         return resourceService.selectResourceAllTree();
     }
+
+
+    /**
+     * 保存角色资源信息
+     * @param roleId        角色Id
+     * @param resourceIds   资源菜单Ids
+     * @return
+     */
+    @RequestMapping("/ajax_save_role_res.do")
+    @ResponseBody
+    public BussinessMsg ajaxSaveOrUpdateRoleResource(Integer roleId, @RequestParam(value = "resourceIds[]",required = false) Integer[] resourceIds ){
+        try {
+            return roleService.saveOrUpdateRoleResource(roleId,resourceIds, this.getCurrentLoginName());
+        } catch (Exception e) {
+            log.error("保存角色信息授权信息方法内部错误",e);
+            return BussinessMsgUtil.returnCodeMessage(BussinessCode.ROLE_RES_SAVE_ERROR);
+        }
+    }
+
 
 }

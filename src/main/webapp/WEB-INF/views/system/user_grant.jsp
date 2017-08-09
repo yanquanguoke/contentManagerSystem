@@ -212,7 +212,7 @@
             $('#roleIds').val(ids);
 
             var userRoleLoading = top.layer.msg('数据提交中，请稍候',{icon: 16,time:false,shade:0.8});
-            //登陆验证
+
             $.ajax({
                 url : '${ctx}/user/ajax_save_user_role.do',
                 type : 'post',
@@ -234,7 +234,6 @@
                     }
                 },error:function(data){
                     top.layer.close(userRoleLoading);
-                    top.layer.close(index);
 
                 }
             });

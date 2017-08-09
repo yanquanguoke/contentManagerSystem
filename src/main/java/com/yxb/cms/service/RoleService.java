@@ -35,9 +35,13 @@ package com.yxb.cms.service;
 import com.yxb.cms.architect.constant.BussinessCode;
 import com.yxb.cms.architect.utils.BussinessMsgUtil;
 import com.yxb.cms.architect.utils.ParseObjectUtils;
+import com.yxb.cms.dao.ResourceMapper;
 import com.yxb.cms.dao.RoleMapper;
+import com.yxb.cms.dao.RoleResourceMapper;
 import com.yxb.cms.domain.bo.BussinessMsg;
+import com.yxb.cms.domain.vo.Resource;
 import com.yxb.cms.domain.vo.Role;
+import com.yxb.cms.domain.vo.RoleResource;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -46,10 +50,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * 角色信息服务类
@@ -66,8 +67,10 @@ public class RoleService {
 
     @Autowired
     private RoleMapper roleMapper;
-
-
+    @Autowired
+    private RoleResourceMapper roleResourceMapper;
+    @Autowired
+    private ResourceMapper resourceMapper;
     /**
      * 根据角色Id查询角色信息
      *
@@ -134,9 +137,12 @@ public class RoleService {
 
 
 
+
+
+
     /**
      * 查询状态为有效,待分配的角色信息(用以用户分配角色时显示)
-     * @param 已分配角色Id,以逗号分割
+     * @param roleIds 已分配角色Id,以逗号分割
      */
     public String selectUserRoleByRoleIdList(String roleIds){
         Map<String, Object> map = new HashMap<String, Object>();
@@ -166,5 +172,87 @@ public class RoleService {
             return Json.toJson(map);
         }
         return null;
+    }
+
+
+    /**
+     * 根据roleId查询角色资源信息
+     * @param roleId 角色Id
+     * @return
+     */
+    public Role selectRoleResourcesByRoleId(Integer roleId){
+
+        StringBuilder sb = new StringBuilder();
+        StringBuilder sb2 = new StringBuilder();
+
+        if(null != roleId){
+            Role role = roleMapper.selectByPrimaryKey(roleId);
+            List<RoleResource> roleRes =  roleResourceMapper.selectRoleResourceByRoleId(roleId);
+            if(null != roleRes && !roleRes.isEmpty()){
+                for (RoleResource r : roleRes) {
+                    Resource res = resourceMapper.selectByPrimaryKey(r.getResourceId());
+                    if(res != null){
+                        //取得当前角色所属资源的ID以逗号拼接
+                        sb.append(res.getResId()).append(",");
+                        //取得当前角色所属资源的名称以逗号拼接
+                        sb2.append(res.getResName()).append(",");
+                    }
+                }
+                //将拼接后的资源信息的最后一个逗号删除
+                if(sb.length()>0){
+                    sb.deleteCharAt(sb.length()-1);
+                }
+                if(sb2.length()>0){
+                    sb2.deleteCharAt(sb2.length()-1);
+                }
+            }
+
+            //赋给角色实体,方便页面显示
+            role.setResourceNames(sb2.toString());
+            role.setResourceIds(sb.toString());
+            return role;
+        }
+        return null;
+    }
+
+
+    /**
+     * 保存角色信息授权信息
+     * @param roleId        角色Id
+     * @param resourceIds    资源Id数组
+     * @param loginName     当前登陆用户名
+     * @return
+     * @throws Exception
+     */
+    @Transactional
+    public BussinessMsg saveOrUpdateRoleResource(Integer roleId, Integer[] resourceIds,String loginName) throws Exception {
+        log.info("保存角色信息授权信息开始,参数,roleId:"+roleId+",resourceIds:"+ Arrays.toString(resourceIds));
+        long start = System.currentTimeMillis();
+        try {
+            if(null != resourceIds && resourceIds.length > 0){
+                for (Integer resourceId : resourceIds) {
+                    RoleResource roleRes = roleResourceMapper.selectRoleResourceByRoleIdAndResId(roleId,resourceId);
+                    if(null!= roleRes && resourceId.equals(roleRes.getResourceId())){
+                        continue;
+                    }
+                    //保存角色资源信息
+                    RoleResource roleResource = new RoleResource();
+                    roleResource.setRoleId(roleId);
+                    roleResource.setResourceId(resourceId);
+                    roleResource.setCreator(loginName);
+                    roleResource.setCreateTime(new Date());
+                    roleResourceMapper.insertSelective(roleResource);
+                }
+
+            }else{   //如果资源Id为空，则清空当前角色所有的菜单资源信息
+                roleResourceMapper.deleteRoleResourceByRoleId(roleId);
+            }
+        } catch (Exception e) {
+            log.error("保存角色信息授权信息方法内部错误", e);
+            throw e;
+        } finally {
+            log.info("保存角色信息授权信息结束,用时" + (System.currentTimeMillis() - start) + "毫秒");
+        }
+        return BussinessMsgUtil.returnCodeMessage(BussinessCode.GLOBAL_SUCCESS);
     }
 }

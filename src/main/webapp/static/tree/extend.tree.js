@@ -52,3 +52,24 @@ $.fn.tree.defaults.loadFilter = function(data, parent) {
     }
     return data;
 };
+
+/**
+ *
+ * 增加formatString功能
+ *
+ * 使用方法：$.formatString('字符串{0}字符串{1}字符串','第一个变量','第二个变量');
+ *
+ * @returns 格式化后的字符串
+ */
+$.stringToList = function(value) {
+    if (value != undefined && value != '') {
+        var values = [];
+        var t = value.split(',');
+        for ( var i = 0; i < t.length; i++) {
+            values.push('' + t[i]);/* 避免他将ID当成数字 */
+        }
+        return values;
+    } else {
+        return [];
+    }
+};

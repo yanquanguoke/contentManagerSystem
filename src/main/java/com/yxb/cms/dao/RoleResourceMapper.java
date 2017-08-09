@@ -34,6 +34,9 @@ package com.yxb.cms.dao;
 
 import com.yxb.cms.domain.vo.RoleResource;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 
 /**
@@ -91,4 +94,31 @@ public interface RoleResourceMapper {
      * @mbggenerated Tue Nov 29 21:23:21 CST 2016
      */
     int updateByPrimaryKey(RoleResource record);
+
+
+    /**
+     * 根据roleId查询角色资源信息
+     * @param roleId 角色Id
+     * @return
+     */
+    List<RoleResource> selectRoleResourceByRoleId(@Param("roleId") Integer roleId);
+
+    /**
+     * 根据roleId和resourceId查询角色资源信息
+     * @param roleId        角色Id
+     * @param resourceId    资源Id
+     * @return
+     */
+    RoleResource selectRoleResourceByRoleIdAndResId(@Param("roleId") Integer roleId,@Param("resourceId") Integer resourceId);
+
+    /**
+     * 根据角色Id删除角色资源信息
+     * @param roleId 角色Id
+     */
+    void deleteRoleResourceByRoleId(@Param("roleId") Integer roleId);
+
+
+
+
+
 }
