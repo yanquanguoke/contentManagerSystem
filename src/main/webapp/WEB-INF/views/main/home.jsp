@@ -35,7 +35,7 @@
         本人魔都纯后端Java程序员,前端技术确实比较弱，无意间看到layui社区的模板确实比较好看，但大多数都是静态的,于是就想做一套前后端交互的完整一点的项目，供大家一起交流和学习。
         <span style="color:#f00;">郑重声明：</span>
         本项目前端框架，借鉴layui社区,此模板 <a class="layui-btn layui-btn-mini" target="_blank" href="http://demo.larrycms.com/backstage/">点此跳转</a>，部分布局风格，如果有任何问题，
-        请原作者联系我:联系方式  <span style="color:#f00;">QQ:873559947 微信:yxb873559947  qq交流群:187568013 oschina开源项目交流</span>
+        请原作者联系我:联系方式  <span style="color:#f00;">QQ:873559947 微信:yxb873559947  qq交流群:187568013 </span>
 
     </p>
 </blockquote>
