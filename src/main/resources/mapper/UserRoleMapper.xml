@@ -163,4 +163,17 @@
         from cc_user_role
         where user_id = #{userId,jdbcType=INTEGER}
     </select>
+
+    <!-- 根据角色Id,查询用户角色信息 -->
+    <select id="selectUserRolesListByRoleId" resultMap="BaseResultMap" >
+        select
+        <include refid="Base_Column_List" />
+        from cc_user_role
+        where role_id = #{roleId,jdbcType=INTEGER}
+    </select>
+    <!-- 根据角色Id删除用户角色信息-->
+    <delete id="deleteUserRoleByRoleId" >
+        delete from cc_user_role
+        where role_id = #{roleId,jdbcType=INTEGER}
+    </delete>
 </mapper>

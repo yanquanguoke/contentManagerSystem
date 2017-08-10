@@ -102,6 +102,16 @@
     <div class="sysNotice col">
         <blockquote class="layui-elem-quote title">更新日志</blockquote>
         <div class="layui-elem-quote layui-quote-nm">
+
+            <h3><span style="color:#f00;"># beta-1.0.3 (测试版) - 2017-08-10</span></h3>
+            <p>*角色管理:新增查询功能</p>
+            <p>*角色管理:新增导出功能</p>
+            <p>*角色管理:新增失效、批量失效,解除用户、角色、菜单绑定关系功能</p>
+            <p>*角色管理:新增、修改表单验证 </p>
+            <p>*角色管理:新增授权功能,tree菜单展示，并选择菜单. </p>
+            <p>*部分代码优化</p>
+
+
             <h3><span style="color:#f00;"># beta-1.0.2 (测试版) - 2017-08-06</span></h3>
             <p>*用户管理:新增查询功能</p>
             <p>*用户管理:新增导出功能</p>

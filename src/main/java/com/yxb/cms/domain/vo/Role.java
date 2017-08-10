@@ -33,6 +33,7 @@
 package com.yxb.cms.domain.vo;
 
 
+import com.yxb.cms.architect.utils.DateUtil;
 import com.yxb.cms.domain.dto.PageDto;
 
 import java.io.Serializable;
@@ -115,11 +116,6 @@ public class Role extends PageDto implements Serializable{
      * @mbggenerated Tue Nov 29 21:23:21 CST 2016
      */
     private Date modifierTime;
-
-    
-    private String beginTime;
-    private String endTime;
-    
     
     /**
      * 角色所对应的资源Id
@@ -129,6 +125,17 @@ public class Role extends PageDto implements Serializable{
      * 角色所对应的资源名称
      */
     private String resourceNames;
+
+
+    /**
+     * 查询项
+     */
+    private String searchTerm;
+    /**
+     * 查询内容
+     */
+    private String searchContent;
+
     
     
     /**
@@ -325,24 +332,7 @@ public class Role extends PageDto implements Serializable{
     
     
     
-    
-    
-    
-    public String getBeginTime() {
-		return beginTime;
-	}
 
-	public void setBeginTime(String beginTime) {
-		this.beginTime = beginTime;
-	}
-
-	public String getEndTime() {
-		return endTime;
-	}
-
-	public void setEndTime(String endTime) {
-		this.endTime = endTime;
-	}
 
 	public String getResourceIds() {
 		return resourceIds;
@@ -359,4 +349,58 @@ public class Role extends PageDto implements Serializable{
 	public void setResourceNames(String resourceNames) {
 		this.resourceNames = resourceNames;
 	}
+
+
+    public String getSearchTerm() {
+        return searchTerm;
+    }
+
+    public void setSearchTerm(String searchTerm) {
+        this.searchTerm = searchTerm;
+    }
+
+    public String getSearchContent() {
+        return searchContent;
+    }
+
+    public void setSearchContent(String searchContent) {
+        this.searchContent = searchContent;
+    }
+
+
+    /**
+     * 创建日期格式化
+     * @return
+     */
+    public String getCreateTime_Lable(){
+        if(this.getCreateTime() != null){
+            return DateUtil.Date2Stirng2Second(createTime);
+        }
+        return "";
+    }
+    /**
+     * 修改日期格式化
+     * @return
+     */
+    public String getUpdateTime_Lable(){
+        if(this.getModifierTime() != null){
+            return DateUtil.Date2Stirng2Second(modifierTime);
+        }
+        return "";
+    }
+
+    /**
+     * 角色状态格式化
+     * @return
+     */
+    public String getRoleStatus_Lable(){
+        if(this.getRoleStatus() != null && this.getRoleStatus().intValue() == 0){
+            return "0-有效";
+        }else if(this.getRoleStatus() != null && this.getRoleStatus().intValue() == 1){
+            return "1-失效";
+        }else{
+            return "";
+        }
+
+    }
 }

@@ -102,4 +102,20 @@ public interface UserRoleMapper {
      * @return
      */
     List<UserRole> selectUserRolesListByUserId(@Param("userId") Integer userId);
+
+
+    /**
+     * 根据角色Id,查询用户角色信息
+     * @param roleId 角色Id
+     * @return
+     */
+    List<UserRole> selectUserRolesListByRoleId(@Param("roleId") Integer roleId);
+
+    /**
+     * 根据角色Id删除用户角色信息
+     * @param roleId 角色Id
+     */
+    void deleteUserRoleByRoleId(@Param("roleId") Integer roleId);
+
+
 }

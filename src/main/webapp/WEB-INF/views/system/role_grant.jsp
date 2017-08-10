@@ -46,9 +46,12 @@
 
 <script type="text/javascript">
     var resourceTree;
-    layui.use(['tree', 'layer','form'], function() {
+    layui.config({
+        base : "${ctx}/static/js/"
+    }).use(['tree', 'layer','form','common'], function() {
         var $ = layui.jquery,
                 form = layui.form(),
+                common = layui.common,
                 layer = parent.layer === undefined ? layui.layer : parent.layer;
 
         //加载菜单资源信息
@@ -81,13 +84,13 @@
                 success : function(data) {
                     if(data.returnCode == 0000){
                         top.layer.close(roleGranLoading);
-                        top.layer.msg("角色授权信息保存成功！");
+                        common.cmsLaySucMsg("角色授权信息保存成功")
                         var index = parent.layer.getFrameIndex(window.name); //先得到当前iframe层的索引
                         parent.layer.close(index); //再执行关闭                        //刷新父页面
                         parent.location.reload();
                     }else{
                         top.layer.close(roleGranLoading);
-                        top.layer.msg(data.returnMessage);
+                        common.cmsLayErrorMsg(data.returnMessage);
                     }
                 },error:function(data){
                     top.layer.close(roleGranLoading);

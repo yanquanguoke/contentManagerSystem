@@ -165,20 +165,62 @@
       modifier_time = #{modifierTime,jdbcType=TIMESTAMP}
     where role_id = #{roleId,jdbcType=INTEGER}
   </update>
-
+    <!-- 更改角色状态 -->
+    <update id="updateRoleByStatus" parameterType="java.util.Map">
+        update cc_role
+        set
+        role_status = #{roleStatus,jdbcType=INTEGER},
+        modifier = #{modifier,jdbcType=VARCHAR},
+        modifier_time = #{modifierTime,jdbcType=TIMESTAMP}
+        where role_id = #{roleId,jdbcType=INTEGER}
+    </update>
 
     <!-- 查询角色总记录数 -->
     <select id="selectCountRole" parameterType="com.yxb.cms.domain.vo.Role" resultType="Long">
         select count(*)
         from cc_role
+        <include refid="selectPageParmas" />
     </select>
     <!-- 角色列表信息分页显示 -->
     <select id="selectRoleListByPage" parameterType="com.yxb.cms.domain.vo.Role" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List"/>
         from cc_role
+        <include refid="selectPageParmas" />
         order by create_time DESC
         LIMIT #{start},#{rows}
+    </select>
+
+    <!-- 角色列表信息List -->
+    <select id="selectRoleList" parameterType="com.yxb.cms.domain.vo.Role" resultMap="BaseResultMap" >
+        select
+        <include refid="Base_Column_List" />
+        from cc_role
+        <include refid="selectPageParmas" />
+
+    </select>
+
+    <!-- 分页查询条件 -->
+    <sql id="selectPageParmas">
+        <where>
+           <!--  role_name != 'admin'-->
+            <if test="searchTerm != null and searchTerm != '' and searchContent != null and  searchContent != '' and  searchTerm == 'roleNameTerm' ">
+                AND  role_name LIKE CONCAT('%', #{searchContent,jdbcType=VARCHAR}, '%')
+            </if>
+        </where>
+    </sql>
+
+    <!-- 验证角色名称唯一性 -->
+    <select id="selectRoleNameCheck" resultType="java.lang.Long">
+        select count(*) from cc_role
+        <where>
+            <if test="roleName != null and roleName != '' " >
+                AND role_name = #{roleName,jdbcType=VARCHAR}
+            </if>
+            <if test="roleId != null">
+                AND role_id != #{roleId,jdbcType=INTEGER}
+            </if>
+        </where>
     </select>
 
     <!-- 根据用户Id查询用户所对应的角色信息 -->
@@ -191,7 +233,7 @@
 
 
     <!-- 查询状态为有效的所有角色信息 -->
-    <select id="selectRoleList" resultMap="BaseResultMap" >
+    <select id="selectRoleListByStatus" resultMap="BaseResultMap" >
         select
         <include refid="Base_Column_List" />
         from cc_role

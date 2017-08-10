@@ -96,14 +96,12 @@ public class UserService {
      */
     public String selectUserResultPageList(User user){
 
-        List<User> userDataTableList = new ArrayList<User>();
 
         List<User> userList = userMapper.selectUserListByPage(user);
         if(null != userList && !userList.isEmpty() ){
             for (User u : userList) {
                 User userRole = selectUserRolesByUserId(u.getUserId());
                 u.setRoleNames(userRole.getRoleNames());
-                userDataTableList.add(u);
             }
         }
         Long count = userMapper.selectCountUser(user);
@@ -112,7 +110,7 @@ public class UserService {
         Map<String, Object> map = new HashMap<String, Object>();
         map.put("total",count);
         map.put("totalSize",user.getTotalSize());
-        map.put("rows", userDataTableList);
+        map.put("rows", userList);
 
         return Json.toJson(map);
     }
@@ -146,29 +144,26 @@ public class UserService {
      */
     public List<User> selectUsersList(User user){
 
-        List<User> userListResult = new ArrayList<User>();
         List<User> userList = userMapper.selectUserList(user);
         if (null != userList && !userList.isEmpty()){
             for (User u : userList) {
                 User userRole = selectUserRolesByUserId(u.getUserId());
                 u.setRoleNames(userRole.getRoleNames());
-                userListResult.add(u);
             }
         }
-
-        return userListResult;
+        return userList;
     }
 
 
     /**
      * 用户状态失效
      * @param userId	用户Id
-     * @param longinName 当前登录用户名
+     * @param loginName 当前登录用户名
      * @return
      * @throws Exception
      */
     @Transactional
-    public BussinessMsg updateUserStatus(Integer userId,String longinName) throws Exception{
+    public BussinessMsg updateUserStatus(Integer userId,String loginName) throws Exception{
         log.info("用户失效开始，当前用户Id:"+userId);
         long start = System.currentTimeMillis();
         try {
@@ -183,7 +178,7 @@ public class UserService {
             //更改用户状态为1-失效
             Map<String, Object> params = new HashMap<String, Object>();
             params.put("userStatus", BusinessConstants.SYS_USER_STATUS_1.getCode());
-            params.put("modifier", longinName);
+            params.put("modifier", loginName);
             params.put("updateTime", new Date());
             params.put("userId", userId);
             userMapper.updateUserByStatus(params);
@@ -203,7 +198,7 @@ public class UserService {
      * @return
      * @throws Exception
      */
-    public BussinessMsg updateUserBatchStatus(Integer[] userIds,String longinName) throws Exception{
+    public BussinessMsg updateUserBatchStatus(Integer[] userIds,String loginName) throws Exception{
         log.info("批量失效用户开始，当前用户Id:"+Arrays.toString(userIds));
         long start = System.currentTimeMillis();
         try {
@@ -219,7 +214,7 @@ public class UserService {
                     //更改用户状态为1-失效
                     Map<String, Object> params = new HashMap<String, Object>();
                     params.put("userStatus", BusinessConstants.SYS_USER_STATUS_1.getCode());
-                    params.put("modifier", longinName);
+                    params.put("modifier", loginName);
                     params.put("updateTime", new Date());
                     params.put("userId", userId);
                     userMapper.updateUserByStatus(params);

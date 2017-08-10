@@ -28,7 +28,7 @@
     <div class="layui-form-item">
         <label class="layui-form-label">角色名称</label>
         <div class="layui-input-block">
-            <input type="text" class="layui-input" name="roleName" lay-verify="required" value="${role.roleName}" placeholder="请输入角色名称">
+            <input type="text" class="layui-input" name="roleName" lay-verify="required|roleName" maxlength="10" value="${role.roleName}" placeholder="请输入角色名称">
         </div>
     </div>
     <div class="layui-form-item" pane>
@@ -36,9 +36,13 @@
         <div class="layui-input-block">
             <c:if test="${pageFlag == 'addPage' }">
                 <input type="radio" name="roleStatus" value="0" title="有效" checked>
-                <input type="radio" name="roleStatus" value="1" title="失效" >
+                <input type="radio" name="roleStatus" value="1" title="失效" disabled>
             </c:if>
-            <c:if test="${pageFlag == 'updatePage' }">
+            <c:if test="${pageFlag == 'updatePage' and  role.roleStatus == '0' }">
+                <input type="radio" name="roleStatus" value="0" title="有效" disabled  <c:if test="${role.roleStatus ==0 }">checked</c:if>/>
+                <input type="radio" name="roleStatus" value="1" title="失效" disabled  <c:if test="${role.roleStatus ==1 }">checked</c:if>/>
+            </c:if>
+            <c:if test="${pageFlag == 'updatePage' and  role.roleStatus == '1' }">
                 <input type="radio" name="roleStatus" value="0" title="有效"  <c:if test="${role.roleStatus ==0 }">checked</c:if>/>
                 <input type="radio" name="roleStatus" value="1" title="失效"  <c:if test="${role.roleStatus ==1 }">checked</c:if>/>
             </c:if>
@@ -57,11 +61,22 @@
     </div>
 </form>
 <script type="text/javascript">
-    layui.use(['form','layer','jquery'],function(){
+    layui.config({
+        base : "${ctx}/static/js/"
+    }).use(['form','layer','jquery','common'],function(){
         var $ = layui.jquery,
                 form = layui.form(),
+                common = layui.common,
                 layer = parent.layer === undefined ? layui.layer : parent.layer;
-
+        /**表单验证*/
+        form.verify({
+            roleName: function(value, item){
+                //角色名称
+                if(!new RegExp("^[a-zA-Z0-9_\u4e00-\u9fa5\\s·]+$").test(value)){
+                    return '角色名称不能有特殊字符';
+                }
+            }
+        });
 
         //保存
         form.on("submit(saveRole)",function(data){
@@ -74,13 +89,13 @@
                 success : function(data) {
                     if(data.returnCode == 0000){
                         top.layer.close(roleSaveLoading);
-                        top.layer.msg("角色信息保存成功！");
+                        common.cmsLaySucMsg("角色信息保存成功！");
                         var index = parent.layer.getFrameIndex(window.name); //先得到当前iframe层的索引
                         parent.layer.close(index); //再执行关闭                        //刷新父页面
                         parent.location.reload();
                     }else{
                         top.layer.close(roleSaveLoading);
-                        top.layer.msg(data.returnMessage);
+                        common.cmsLayErrorMsg(data.returnMessage);
                     }
                 },error:function(data){
                     top.layer.close(index);

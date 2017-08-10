@@ -37,6 +37,7 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
+import java.util.Map;
 
 
 /**
@@ -95,7 +96,11 @@ public interface RoleMapper {
      */
     int updateByPrimaryKey(Role record);
 
-
+    /**
+     * 更改角色状态
+     * @param params
+     */
+    void updateRoleByStatus(Map<String, Object> params);
     /**
      * 查询角色总记录数
      * @param role 角色实体
@@ -110,7 +115,21 @@ public interface RoleMapper {
      */
     List<Role> selectRoleListByPage(Role role);
 
+    /**
+     * 角色信息列表
+     * @param role 角色实体
+     * @return
+     */
+    List<Role> selectRoleList(Role role);
 
+
+    /**
+     * 验证角色名称唯一性
+     * @param roleName 角色名称
+     * @param roleId   角色Id
+     * @return
+     */
+    Long selectRoleNameCheck(@Param("roleName") String roleName,@Param("roleId") Integer roleId);
     /**
      * 根据用户Id查询用户所对应的角色信息
      * @param userId 用户Id
@@ -122,7 +141,7 @@ public interface RoleMapper {
      * 查询状态为有效的所有角色信息
      * @return
      */
-     List<Role>selectRoleList();
+     List<Role>selectRoleListByStatus();
 
     /**
      *  查询状态为有效的待分配角色信息(已分配的角色信息除外)

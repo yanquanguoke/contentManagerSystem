@@ -34,8 +34,10 @@ package com.yxb.cms.controller.system;
 
 import com.yxb.cms.architect.constant.BussinessCode;
 import com.yxb.cms.architect.utils.BussinessMsgUtil;
+import com.yxb.cms.architect.utils.CommonHelper;
 import com.yxb.cms.controller.BasicController;
 import com.yxb.cms.domain.bo.BussinessMsg;
+import com.yxb.cms.domain.bo.ExcelExport;
 import com.yxb.cms.domain.bo.Tree;
 import com.yxb.cms.domain.vo.Role;
 import com.yxb.cms.service.ResourceService;
@@ -46,6 +48,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
 
 import java.util.List;
 
@@ -87,6 +90,19 @@ public class RoleController extends BasicController {
     }
 
     /**
+     * 导出角色列表信息
+     * @param role 角色实体
+     * @return
+     */
+    @RequestMapping("/excel_role_export.do")
+    public ModelAndView excelRolesExport(Role role){
+        ExcelExport excelExport = roleService.excelExportRoleList(role);
+        return CommonHelper.getExcelModelAndView(excelExport);
+    }
+
+
+
+    /**
      * 跳转到角色新增页面
      * @return
      */
@@ -124,6 +140,38 @@ public class RoleController extends BasicController {
         } catch (Exception e) {
             log.error("保存角色信息方法内部错误",e);
             return BussinessMsgUtil.returnCodeMessage(BussinessCode.ROLE_SAVE_ERROR);
+        }
+    }
+
+    /**
+     * 失效角色
+     * @param roleId 角色Id
+     * @return
+     */
+    @RequestMapping("/ajax_role_fail.do")
+    @ResponseBody
+    public BussinessMsg ajaxRoleFail(Integer roleId){
+        try {
+            return roleService.updateRoleStatus(roleId, this.getCurrentLoginName());
+        } catch (Exception e) {
+            log.error("失效角色方法内部错误",e);
+            return BussinessMsgUtil.returnCodeMessage(BussinessCode.ROLE_FAILK_ERROR);
+        }
+    }
+
+    /**
+     * 批量失效角色
+     * @param roleIds 角色Id
+     * @return
+     */
+    @RequestMapping("/ajax_role_batch_fail.do")
+    @ResponseBody
+    public BussinessMsg ajaxRoleBatchFail(@RequestParam(value = "roleIds[]") Integer[] roleIds){
+        try {
+            return roleService.updateRoleBatchStatus(roleIds, this.getCurrentLoginName());
+        } catch (Exception e) {
+            log.error("批量失效角色方法内部错误",e);
+            return BussinessMsgUtil.returnCodeMessage(BussinessCode.ROLE_FAILK_ERROR);
         }
     }
 

@@ -71,6 +71,8 @@ public enum BussinessCode {
 	RES_FAILK_ERROR("1507","失效资源失败,程序异常"),
     USER_LOGIN_NAME_EXIST("1508","用户账号已存在，请重新输入"),
     ROLE_RES_SAVE_ERROR("1509","角色分配菜单失败"),
+    ROLE_NAME_EXIST("1508","角色名称已存在，请重新输入"),
+
     ;
 
 	BussinessCode(String code, String msg) {

@@ -29,10 +29,10 @@ layui.define(['layer'], function (exports) {
                     data : param,
                     success : function(data) {
                         if(data.returnCode == 0000){
-                            layer.msg(data.returnMessage, {icon: 6});
+                            top.layer.msg(data.returnMessage, {icon: 6});
                             location.reload();
                         }else{
-                            layer.msg(data.returnMessage,{icon: 5});
+                            top.layer.msg(data.returnMessage,{icon: 5});
                         }
                     },error:function(data){
 

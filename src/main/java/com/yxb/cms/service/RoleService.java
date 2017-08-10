@@ -32,13 +32,16 @@
  */
 package com.yxb.cms.service;
 
+import com.yxb.cms.architect.constant.BusinessConstants;
 import com.yxb.cms.architect.constant.BussinessCode;
 import com.yxb.cms.architect.utils.BussinessMsgUtil;
 import com.yxb.cms.architect.utils.ParseObjectUtils;
 import com.yxb.cms.dao.ResourceMapper;
 import com.yxb.cms.dao.RoleMapper;
 import com.yxb.cms.dao.RoleResourceMapper;
+import com.yxb.cms.dao.UserRoleMapper;
 import com.yxb.cms.domain.bo.BussinessMsg;
+import com.yxb.cms.domain.bo.ExcelExport;
 import com.yxb.cms.domain.vo.Resource;
 import com.yxb.cms.domain.vo.Role;
 import com.yxb.cms.domain.vo.RoleResource;
@@ -67,6 +70,8 @@ public class RoleService {
 
     @Autowired
     private RoleMapper roleMapper;
+    @Autowired
+    private UserRoleMapper userRoleMapper;
     @Autowired
     private RoleResourceMapper roleResourceMapper;
     @Autowired
@@ -109,6 +114,118 @@ public class RoleService {
         return Json.toJson(map);
     }
 
+    /**
+     * 角色列表EXCEL导出
+     * @param role 角色实体
+     * @return
+     */
+    public ExcelExport excelExportRoleList(Role role){
+        ExcelExport excelExport = new ExcelExport();
+        List<Role> roleList = this.selectRoleList(role);
+        excelExport.addColumnInfo("角色名称","roleName");
+        excelExport.addColumnInfo("角色状态","roleStatus_Lable");
+        excelExport.addColumnInfo("菜单资源","resourceNames");
+        excelExport.addColumnInfo("角色说明","roleRemark");
+        excelExport.addColumnInfo("创建人","creator");
+        excelExport.addColumnInfo("创建时间","createTime_Lable");
+        excelExport.addColumnInfo("修改人","modifier");
+        excelExport.addColumnInfo("修改时间","updateTime_Lable");
+
+        excelExport.setDataList(roleList);
+        return excelExport;
+    }
+
+    /**
+     * 角色列表信息List
+     * @param role 角色实体
+     * @return
+     */
+    public List<Role> selectRoleList(Role role){
+
+        List<Role> roleList = roleMapper.selectRoleList(role);
+        if (null != roleList && !roleList.isEmpty()){
+            for (Role r : roleList) {
+                Role rr = selectRoleResourcesByRoleId(r.getRoleId());
+                r.setResourceIds(rr.getResourceIds());
+                r.setResourceNames(rr.getResourceNames());
+            }
+        }
+        return roleList;
+    }
+
+    /**
+     * 角色状态失效
+     * @param roleId	角色Id
+     * @param loginName 当前登录用户名
+     * @return
+     * @throws Exception
+     */
+    @Transactional
+    public BussinessMsg updateRoleStatus(Integer roleId,String loginName) throws Exception{
+        log.info("角色失效开始，当前角色Id:"+roleId);
+        long start = System.currentTimeMillis();
+        try {
+
+            //解除用户与角色绑定关系
+            userRoleMapper.deleteUserRoleByRoleId(roleId);
+            //解除角色与菜单绑定关系
+            roleResourceMapper.deleteRoleResourceByRoleId(roleId);
+
+            //更改角色状态为1-失效
+            Map<String, Object> params = new HashMap<String, Object>();
+            params.put("roleStatus", BusinessConstants.SYS_ROLE_STATUS_1.getCode());
+            params.put("modifier", loginName);
+            params.put("modifierTime", new Date());
+            params.put("roleId", roleId);
+            roleMapper.updateRoleByStatus(params);
+        } catch (Exception e) {
+            log.error("角色失效方法内部错误",e);
+            throw e;
+        }finally {
+            log.info("角色失效结束,用时" + (System.currentTimeMillis() - start) + "毫秒");
+        }
+        return BussinessMsgUtil.returnCodeMessage(BussinessCode.GLOBAL_SUCCESS);
+    }
+
+    /**
+     * 批量角色状态失效
+     * @param roleIds	角色Id
+     * @param loginName 当前登录用户名
+     * @return
+     * @throws Exception
+     */
+    public BussinessMsg updateRoleBatchStatus(Integer[] roleIds,String loginName) throws Exception{
+        log.info("批量失效角色开始，当前角色Id:"+Arrays.toString(roleIds));
+        long start = System.currentTimeMillis();
+        try {
+            if(null != roleIds && roleIds.length > 0){
+                for (Integer roleId : roleIds) {
+                    //解除用户与角色绑定关系
+                    userRoleMapper.deleteUserRoleByRoleId(roleId);
+                    //解除角色与菜单绑定关系
+                    roleResourceMapper.deleteRoleResourceByRoleId(roleId);
+
+                    //更改角色状态为1-失效
+                    Map<String, Object> params = new HashMap<String, Object>();
+                    params.put("roleStatus", BusinessConstants.SYS_ROLE_STATUS_1.getCode());
+                    params.put("modifier", loginName);
+                    params.put("modifierTime", new Date());
+                    params.put("roleId", roleId);
+                    roleMapper.updateRoleByStatus(params);
+                }
+            }
+
+        } catch (Exception e) {
+            log.error("批量失效角色方法内部错误",e);
+            throw e;
+        }finally {
+            log.info("批量失效角色结束,用时" + (System.currentTimeMillis() - start) + "毫秒");
+        }
+        return BussinessMsgUtil.returnCodeMessage(BussinessCode.GLOBAL_SUCCESS);
+    }
+
+
+
 
     /**
      * 保存角色信息
@@ -123,6 +240,12 @@ public class RoleService {
         log.info("保存用户角色开始");
         long start = System.currentTimeMillis();
         try {
+            //验证角色名称唯一性
+            Long checkRoleName = roleMapper.selectRoleNameCheck(role.getRoleName(),role.getRoleId());
+            if(checkRoleName.intValue() > 0){
+                return BussinessMsgUtil.returnCodeMessage(BussinessCode.ROLE_NAME_EXIST);
+            }
+
             //保存角色信息
             if (null == role.getRoleId()) {
                 role.setCreator(loginName);
@@ -144,10 +267,6 @@ public class RoleService {
     }
 
 
-
-
-
-
     /**
      * 查询状态为有效,待分配的角色信息(用以用户分配角色时显示)
      * @param roleIds 已分配角色Id,以逗号分割
@@ -161,7 +280,7 @@ public class RoleService {
             map.put("rows", lists);
             return Json.toJson(map);
         }
-        map.put("rows", roleMapper.selectRoleList());
+        map.put("rows", roleMapper.selectRoleListByStatus());
         //没有给用户分配角色,待分配显示栏中显示所有角色信息
         return Json.toJson(map);
     }
