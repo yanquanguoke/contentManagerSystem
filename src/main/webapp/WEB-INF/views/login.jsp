@@ -32,9 +32,12 @@
 </body>
 </html>
 <script>
-    layui.use('form', function () {
-        var form = layui.form(),
-                $ = layui.jquery;
+    layui.config({
+        base : "${ctx}/static/js/"
+    }).use(['form','layer','jquery','common'], function () {
+        var $ = layui.jquery,
+                form = layui.form(),
+                common = layui.common;
         //监听提交
         form.on('submit(login)', function (data) {
             //弹出loading
@@ -58,7 +61,7 @@
                 return true;
             } else {
                 top.layer.close(loginLoading);
-                top.layer.msg(ajaxReturnData.returnMessage);
+                common.cmsLayErrorMsg(ajaxReturnData.returnMessage)
                 return false;
             }
         });

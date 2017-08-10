@@ -21,10 +21,7 @@
     <link rel="stylesheet" type="text/css" href="${ctx}/static/css/common.css" media="all">
     <link rel="stylesheet" type="text/css" href="${ctx}/static/css/personal.css" media="all">
     <link rel="stylesheet" type="text/css" href="http://at.alicdn.com/t/font_9h680jcse4620529.css">
-
-
     <script src="${ctx}/static/layui/layui.js"></script>
-    <%--<script type="text/javascript" src="${ctx}/static/js/index.js"></script>--%>
 
 
 <body>
@@ -41,23 +38,12 @@
             <div class="layui-tab-item layui-field-box layui-show">
                 <div class="layui-form">
                     <table class="layui-table" lay-even="" lay-skin="row">
-                        <%--<colgroup>--%>
-                            <%--<col width="50">--%>
-                            <%--<col width="150">--%>
-                            <%--<col width="100">--%>
-                            <%--<col width="150">--%>
-                            <%--<col width="150">--%>
-                            <%--<col width="150">--%>
-                            <%--<col width="120">--%>
-                            <%--<col width="150">--%>
-                            <%--<col width="202">--%>
-
-                        <%--</colgroup>--%>
                         <thead >
                             <tr>
                                 <th><input name="" lay-skin="primary" lay-filter="allChoose" type="checkbox"></th>
                                 <th>角色名称</th>
                                 <th>角色状态</th>
+                                <th>菜单资源</th>
                                 <th>角色说明</th>
                                 <th>创建人</th>
                                 <th>创建时间</th>
@@ -67,13 +53,6 @@
                             </tr>
                         </thead>
                         <tbody id="roleTbody">
-                            <%--<tr>--%>
-                                <%--<td><input name="" lay-skin="primary" type="checkbox"></td>--%>
-                                <%--<td>贤心</td>--%>
-                                <%--<td>2016-11-29</td>--%>
-                                <%--<td>人生就像是一场修行</td>--%>
-                            <%--</tr>--%>
-
                         </tbody>
                     </table>
                 </div>
@@ -133,56 +112,81 @@
                     rows: 7           //每页显示四条数据
                 },
                 success : function(data) {
-                    var pdata = $.parseJSON(data);
-                    $(pdata.rows).each(function(index,item){
+                    if(data != "" ){
+                        $("#roleTbody").text('');//先清空原先内容
+                        var pdata = $.parseJSON(data);
+                        $(pdata.rows).each(function(index,item){
 
-                        var roleStatusLable;
-                        switch (item.roleStatus){
-                            case 0:
-                                roleStatusLable = '<span class="label label-success">0-有效</span>';
-                                break;
-                            case 1:
-                                roleStatusLable = '<span class="label label-danger">1-失效</span>'
-                                break;
-                        }
+                            //角色名称
+                            var roleNameLable;
+                            if(objNull(item.roleName) != "" && item.roleName.length > 9){
+                                roleNameLable = item.roleName.substring(0,9) +"...";
 
-                        var opt ='<div class="layui-btn-group">';
-                        opt+=  '<a class="layui-btn layui-btn-mini role_edit" data-id="'+item.roleId+'"><i class="layui-icon larry-icon larry-bianji2"></i> 编辑</a>';
-                        opt+=  '<a class="layui-btn layui-btn-mini layui-btn-warm  role_grant" data-id="'+item.roleId+'"><i class="layui-icon larry-icon larry-quanxianguanli"></i>权限</a>';
-                        opt+=  '<a class="layui-btn layui-btn-mini layui-btn-danger  links_del" data-id=""><i class="layui-icon larry-icon larry-ttpodicon"></i>失效</a>';
-                        opt+= '</div>';
-                        $("#roleTbody").append(
-                             '<tr>'+
-                                '<td><input name="" lay-skin="primary" type="checkbox"></td>'+
-                                '<td style="text-align: left;">'+item.roleName+'</td>'+
-                                '<td>'+roleStatusLable+'</td>'+
-                                '<td>'+item.roleRemark+'</td>'+
-                                '<td>'+item.creator+'</td>'+
-                                '<td>'+item.createTime+'</td>'+
-                                '<td>'+objNull(item.modifier)+'</td>'+
-                                '<td>'+objNull(item.modifierTime)+'</td>'+
-                                '<td>'+opt+'</td>'+
-                             '</tr>'
-                        );
-                        form.render();
-
-                    });
-                    laypage({
-                        cont: 'rolePage',
-                        pages:  pdata.totalSize,
-                        curr: curr || 1, //当前页
-                        skip: true,
-                        jump: function(obj, first){ //触发分页后的回调
-                            if(!first){ //点击跳页触发函数自身，并传递当前页：obj.curr
-                                $("#roleTbody").text('');//先清空原先内容
-                                paging(obj.curr);
-
-
+                            }else{
+                                roleNameLable = item.roleName;
                             }
-                        }
-                    });
-                    layer.close(pageLoading);
+                            //角色状态
+                            var roleStatusLable;
+                            switch (item.roleStatus){
+                                case 0:
+                                    roleStatusLable = '<span class="label label-success">0-有效</span>';
+                                    break;
+                                case 1:
+                                    roleStatusLable = '<span class="label label-danger">1-失效</span>'
+                                    break;
+                            }
 
+                            //拥有资源
+                            var resourceNamesLable;
+                            if(objNull(item.resourceNames) != "" && item.resourceNames.length > 12){
+                                resourceNamesLable = item.resourceNames.substring(0,12) +"...";
+
+                            }else{
+                                resourceNamesLable = item.resourceNames;
+                            }
+                            //角色说明
+                            var roleRemarkLable;
+                            if(objNull(item.roleRemark) != "" && item.roleRemark.length > 12){
+                                roleRemarkLable = item.roleRemark.substring(0,12) +"...";
+
+                            }else{
+                                roleRemarkLable = item.roleRemark;
+                            }
+                            var opt ='<div class="layui-btn-group">';
+                            opt+=  '<a class="layui-btn layui-btn-mini role_edit" data-id="'+item.roleId+'"><i class="layui-icon larry-icon larry-bianji2"></i> 编辑</a>';
+                            opt+=  '<a class="layui-btn layui-btn-mini layui-btn-warm  role_grant" data-id="'+item.roleId+'"><i class="layui-icon larry-icon larry-quanxianguanli"></i>权限</a>';
+                            opt+=  '<a class="layui-btn layui-btn-mini layui-btn-danger  links_del" data-id=""><i class="layui-icon larry-icon larry-ttpodicon"></i>失效</a>';
+                            opt+= '</div>';
+                            $("#roleTbody").append(
+                                 '<tr>'+
+                                    '<td><input name="" lay-skin="primary" type="checkbox"></td>'+
+                                    '<td title="'+objNull(item.roleName)+'">'+objNull(roleNameLable)+'</td>'+
+                                    '<td>'+roleStatusLable+'</td>'+
+                                    '<td title="'+objNull(item.resourceNames)+'">'+objNull(resourceNamesLable)+'</td>'+
+                                    '<td title="'+objNull(item.roleRemark)+'">'+objNull(roleRemarkLable)+'</td>'+
+                                    '<td>'+item.creator+'</td>'+
+                                    '<td>'+item.createTime+'</td>'+
+                                    '<td>'+objNull(item.modifier)+'</td>'+
+                                    '<td>'+objNull(item.modifierTime)+'</td>'+
+                                    '<td>'+opt+'</td>'+
+                                 '</tr>'
+                            );
+                            form.render();
+                        });
+                        laypage({
+                            cont: 'rolePage',
+                            pages:  pdata.totalSize,
+                            curr: curr || 1, //当前页
+                            skip: true,
+                            jump: function(obj, first){ //触发分页后的回调
+                                if(!first){ //点击跳页触发函数自身，并传递当前页：obj.curr
+                                    paging(obj.curr);
+                                }
+                            }
+                        });
+                        layer.close(pageLoading);
+
+                    }
                 }
 
             });

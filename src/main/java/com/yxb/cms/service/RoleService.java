@@ -90,6 +90,14 @@ public class RoleService {
     public String selectRoleResultPageList(Role role) {
 
         List<Role> roleList = roleMapper.selectRoleListByPage(role);
+        if(null != roleList && !roleList.isEmpty()){
+            for (Role r : roleList) {
+                Role rr = selectRoleResourcesByRoleId(r.getRoleId());
+                r.setResourceIds(rr.getResourceIds());
+                r.setResourceNames(rr.getResourceNames());
+            }
+
+        }
         Long count = roleMapper.selectCountRole(role);
         role.setTotalCount(count);
 

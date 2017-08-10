@@ -64,12 +64,17 @@
 </div>
 
 <script type="text/javascript">
-    layui.use(['form','layer','jquery'],function(){
+    layui.config({
+        base : "${ctx}/static/js/"
+    }).use(['form','layer','jquery','common'],function(){
         var $ = layui.jquery,
                 form = layui.form(),
+                common = layui.common,
                 layer = parent.layer === undefined ? layui.layer : parent.layer;
 
+        //查询待分配的角色
         getUndistributedRoleList();
+        //查询已分配的角色*
         getDeceasedRolelist();
 
         /**查询待分配的角色*/
@@ -170,7 +175,7 @@
 
                 });
             }else{
-                layer.msg('请选择需要分配的角色信息');
+                common.cmsLayErrorMsg("请选择需要分配的角色信息");
             }
         });
 
@@ -194,7 +199,8 @@
 
                 });
             }else{
-                layer.msg('请选择需要移除的已分配角色信息');
+                common.cmsLayErrorMsg("请选择需要移除的已分配角色信息");
+
             }
         });
 
@@ -224,13 +230,13 @@
                 success : function(data) {
                     if(data.returnCode == 0000){
                         top.layer.close(userRoleLoading);
-                        top.layer.msg("用户角色信息保存成功！");
+                        common.cmsLaySucMsg("用户角色信息保存成功.")
                         var index = parent.layer.getFrameIndex(window.name); //先得到当前iframe层的索引
                         parent.layer.close(index); //再执行关闭                        //刷新父页面
                         parent.location.reload();
                     }else{
                         top.layer.close(userRoleLoading);
-                        top.layer.msg(data.returnMessage);
+                        common.cmsLayErrorMsg(data.returnMessage);
                     }
                 },error:function(data){
                     top.layer.close(userRoleLoading);
@@ -239,13 +245,10 @@
             });
 
         });
-
-
         //取消
         $("#cancle").click(function(){
             var index = parent.layer.getFrameIndex(window.name); //先得到当前iframe层的索引
             parent.layer.close(index); //再执行关闭
-           // layer.closeAll("iframe");
         });
 
     });

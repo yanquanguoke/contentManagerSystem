@@ -1,31 +1,18 @@
-/**
- *  自定义扩转模块
- */
+/**自定义模块*/
 layui.define(['layer'], function (exports) {
-    var $ = layui.jquery, layer = layui.layer;
+    var $ = layui.jquery,
+        layer = layui.layer;
     var CmsCommon = {
-        cmsError: function (msg, title) {
-            parent.layer.alert(msg, {
-                title: title,
-                icon: 2,
-                time: 0,
-                resize: false,
-                zIndex: layer.zIndex,
-                anim: Math.ceil(Math.random() * 6)
-            });
-            return
-        }, cmsInfo: function (msg, title) {
-            parent.layer.alert(msg, {
-                title: title,
-                icon: 6,
-                time: 0,
-                resize: false,
-                zIndex: layer.zIndex,
-                anim: Math.ceil(Math.random() * 6)
-            });
-            return
+
+        /**错误msg提示 */
+        cmsLayErrorMsg:function (text) {
+            top.layer.msg(text, {icon: 5});
         },
-        // ajax Confirm 对话框
+        /**成功 msg提示 */
+        cmsLaySucMsg:function (text) {
+            top.layer.msg(text, {icon: 6});
+        },
+        /**ajax Confirm 对话框*/
         ajaxCmsConfirm: function (title, text, url,param) {
             layer.confirm(text, {
                 title: title,
@@ -42,10 +29,10 @@ layui.define(['layer'], function (exports) {
                     data : param,
                     success : function(data) {
                         if(data.returnCode == 0000){
-                            layer.msg(data.returnMessage);
+                            layer.msg(data.returnMessage, {icon: 6});
                             location.reload();
                         }else{
-                            layer.msg(data.returnMessage);
+                            layer.msg(data.returnMessage,{icon: 5});
                         }
                     },error:function(data){
 
@@ -57,6 +44,24 @@ layui.define(['layer'], function (exports) {
             })
 
         },
+        /**弹出层*/
+        cmsLayOpen:function (title,url,width,height) {
+
+            var index = layui.layer.open({
+                title : '<i class="larry-icon larry-bianji3"></i>'+title,
+                type : 2,
+                skin : 'layui-layer-molv',
+                content : url,
+                area: [width, height],
+                resize:false,
+                anim:1,
+                success : function(layero, index){
+
+                }
+            })
+            
+        },
+        /**退出*/
         logOut: function (title, text, url, type, dataType, data, callback) {
             parent.layer.confirm(text, {
                 title: title,
