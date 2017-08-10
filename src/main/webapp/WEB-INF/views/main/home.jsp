@@ -54,7 +54,7 @@
             </tr>
             <tr>
                 <td>版本信息:</td>
-                <td class="author"><span style="color:#f00;">beta-1.0.2</span></td>
+                <td class="author"><span style="color:#f00;">beta-1.0.3</span></td>
             </tr>
             <tr>
                 <td>开发作者</td>
