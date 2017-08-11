@@ -60,6 +60,10 @@ public enum BusinessConstants {
 	/**菜单资源状态*/
 	SYS_RES_STATUS_0(0,"0-有效"),
 	SYS_RES_STATUS_1(1,"1-失效"),
+    /**菜单级别*/
+    SYS_RES_LEVEL_1(1,"一级菜单"),
+    SYS_RES_LEVEL_2(2,"二级菜单"),
+    SYS_RES_LEVEL_3(3,"三级菜单")
     ;
 	
 

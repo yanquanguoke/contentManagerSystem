@@ -370,12 +370,15 @@
     </div>
 </fieldset>
 <script type="text/javascript">
-    layui.use(['form','layer','jquery'],function(){
+    layui.config({
+        base : "${ctx}/static/js/"
+    }).use(['form','layer','jquery','common'],function(){
         var $ = layui.jquery,
                 form = layui.form(),
+                common = layui.common,
                 layer = parent.layer === undefined ? layui.layer : parent.layer;
 
-        //选择图标
+        /**选择图标*/
         $("body").on("dblclick",".select_img",function(){
             //得到当前iframe层的索引
             var index = parent.layer.getFrameIndex(window.name);
@@ -394,11 +397,6 @@
 
 
     });
-    
-    function ddd() {
-        
-    }
-
 </script>
 </body>
 </html>

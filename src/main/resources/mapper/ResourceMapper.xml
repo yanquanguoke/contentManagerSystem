@@ -13,6 +13,7 @@
     <result column="res_model_code" property="resModelCode" jdbcType="VARCHAR" />
     <result column="res_link_address" property="resLinkAddress" jdbcType="VARCHAR" />
     <result column="res_image" property="resImage" jdbcType="VARCHAR" />
+    <result column="res_level" property="resLevel" jdbcType="INTEGER" />
     <result column="res_type" property="resType" jdbcType="INTEGER" />
     <result column="res_status" property="resStatus" jdbcType="INTEGER" />
     <result column="res_display_order" property="resDisplayOrder" jdbcType="INTEGER" />
@@ -58,12 +59,12 @@
       This element was generated on Mon Aug 15 17:19:21 CST 2016.
     -->
     insert into cc_resource (res_id, res_parentId, res_name, 
-      res_model_code, res_link_address, res_image, 
+      res_model_code, res_link_address, res_image, res_level,
       res_type, res_status, res_display_order, res_remark, 
       creator, create_time, modifier, 
       modify_time)
     values (#{resId,jdbcType=INTEGER}, #{resParentid,jdbcType=INTEGER}, #{resName,jdbcType=VARCHAR},
-      #{resModelCode,jdbcType=VARCHAR}, #{resLinkAddress,jdbcType=VARCHAR}, #{resImage,jdbcType=VARCHAR}, 
+      #{resModelCode,jdbcType=VARCHAR}, #{resLinkAddress,jdbcType=VARCHAR}, #{resImage,jdbcType=VARCHAR}, #{resLevel,jdbcType=INTEGER},
       #{resType,jdbcType=INTEGER}, #{resStatus,jdbcType=INTEGER}, #{resDisplayOrder,jdbcType=INTEGER}, #{resRemark,jdbcType=VARCHAR}, 
       #{creator,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{modifier,jdbcType=VARCHAR}, 
       #{modifyTime,jdbcType=TIMESTAMP})
@@ -94,6 +95,9 @@
       <if test="resImage != null" >
         res_image,
       </if>
+        <if test="resLevel != null" >
+            res_level,
+        </if>
       <if test="resType != null" >
         res_type,
       </if>
@@ -138,6 +142,9 @@
       <if test="resImage != null" >
         #{resImage,jdbcType=VARCHAR},
       </if>
+        <if test="resLevel != null" >
+            #{resLevel,jdbcType=INTEGER},
+        </if>
       <if test="resType != null" >
         #{resType,jdbcType=INTEGER},
       </if>
@@ -187,6 +194,9 @@
       <if test="resImage != null" >
         res_image = #{resImage,jdbcType=VARCHAR},
       </if>
+        <if test="resLevel != null" >
+            res_level = #{resLevel,jdbcType=INTEGER},
+        </if>
       <if test="resType != null" >
         res_type = #{resType,jdbcType=INTEGER},
       </if>
@@ -226,6 +236,7 @@
       res_model_code = #{resModelCode,jdbcType=VARCHAR},
       res_link_address = #{resLinkAddress,jdbcType=VARCHAR},
       res_image = #{resImage,jdbcType=VARCHAR},
+      res_level = #{resLevel,jdbcType=INTEGER},
       res_type = #{resType,jdbcType=INTEGER},
       res_status = #{resStatus,jdbcType=INTEGER},
       res_display_order = #{resDisplayOrder,jdbcType=INTEGER},
@@ -291,5 +302,4 @@
         SELECT * FROM cc_resource  WHERE res_status = 0
     </select>
 
- 
 </mapper>

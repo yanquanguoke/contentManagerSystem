@@ -107,7 +107,7 @@
         /**新增菜单*/
         $(".resAdd_btn").click(function(){
             var url = "${ctx}/res/res_edit.do";
-            common.cmsLayOpen('新增菜单',url,'750px','470px');
+            common.cmsLayOpen('新增菜单',url,'750px','470px','top');
         });
 
         /**加载菜单信息*/

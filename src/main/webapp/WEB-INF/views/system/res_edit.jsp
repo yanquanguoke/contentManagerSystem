@@ -22,39 +22,48 @@
     <script src="${ctx}/static/layui/layui.js"></script>
 </head>
 <body class="childrenBody" style="font-size: 12px;">
+<%--<blockquote class="layui-elem-quote layui-quote-nm"--%>
+        <%--style="border-radius:0.25em;color: #31708f;background-color: #d9edf7;border-width:1px; padding:6px; border-color:#bce8f1;">--%>
+        <%--温馨提示:1.菜单类型为菜单时父级菜单可以为空;2.菜单类型为按钮时父级菜单不能为空;3.父级菜单选中时，资源路径不能为空--%>
+<%--</blockquote>--%>
 <form class="layui-form layui-form-pane">
     <div class="layui-form-item">
         <div class="layui-inline">
             <label class="layui-form-label">菜单名称</label>
             <div class="layui-input-inline">
-                <input type="text" class="layui-input newsName" lay-verify="required" placeholder="请输入菜单名称">
+                <input type="text" id="resName" name="resName" class="layui-input" lay-verify="required" placeholder="请输入菜单名称">
             </div>
         </div>
-        <div class="layui-inline">
-            <label class="layui-form-label">菜单路径</label>
-            <div class="layui-input-inline">
-                <input type="text" class="layui-input newsName" >
-            </div>
-        </div>
-
-    </div>
-    <div class="layui-form-item">
         <div class="layui-inline">
             <label class="layui-form-label">菜单类型</label>
             <div class="layui-input-inline">
-                <select name="city" >
+                <select id="resType" name="resType" lay-filter="resTypeFilter">
                     <option value=""></option>
                     <option value="0">0-菜单</option>
                     <option value="1">1-按钮</option>
                 </select>
             </div>
         </div>
+
+
+    </div>
+    <div class="layui-form-item">
+        <div class="layui-inline">
+            <label class="layui-form-label">菜单级别</label>
+            <div class="layui-input-inline">
+                <select id="resLevel" name="resLevel" lay-filter="resLevelFilter">
+                    <option value=""></option>
+                    <option value="1">一级菜单</option>
+                    <option value="2">二级菜单</option>
+                    <option value="3">三级菜单</option>
+                </select>
+            </div>
+        </div>
         <div class="layui-inline">
             <label class="layui-form-label">父级菜单</label>
             <div class="layui-input-inline">
-                <select name="city" >
+                <select id="resParentid" name="resParentid" >
                     <option value=""></option>
-
                 </select>
             </div>
         </div>
@@ -62,11 +71,12 @@
     <div class="layui-form-item">
 
         <div class="layui-inline">
-            <label class="layui-form-label">排序</label>
+            <label class="layui-form-label">菜单路径</label>
             <div class="layui-input-inline">
-                <input type="text" class="layui-input newsName" >
+                <input type="text" id="resLinkAddress" name="resLinkAddress" class="layui-input" >
             </div>
         </div>
+
         <div class="layui-inline">
             <label class="layui-form-label">菜单图标</label>
             <div class="layui-input-inline">
@@ -77,47 +87,63 @@
             </div>
         </div>
     </div>
-    <div class="layui-form-item" pane>
-        <label class="layui-form-label">资源状态</label>
-        <div class="layui-input-inline">
-            <input type="radio" name="userStatus" value="0" title="有效" checked>
-            <input type="radio" name="userStatus" value="1" title="失效" >
+    <div class="layui-form-item">
+        <div class="layui-inline">
+            <label class="layui-form-label">菜单状态</label>
+            <div class="layui-input-inline" style="border: 1px solid #e6e6e6;background-color: #fff;height: 36px;">
+                <input type="radio" name="resStatus" value="0" title="有效" checked>
+                <input type="radio" name="resStatus" value="1" title="失效" >
+            </div>
+        </div>
+        <div class="layui-inline">
+            <label class="layui-form-label">排序</label>
+            <div class="layui-input-inline">
+                <input type="text" id="resDisplayOrder" name="resDisplayOrder" class="layui-input" >
+            </div>
         </div>
     </div>
     <div class="layui-form-item layui-form-text">
         <label class="layui-form-label">备注</label>
         <div class="layui-input-block">
-            <textarea name="desc" placeholder="请输入内容" class="layui-textarea" maxlength="50" style="resize:none;min-height:40px;"></textarea>
+            <textarea id="resRemark" name="resRemark" placeholder="请输入内容" class="layui-textarea" maxlength="50" style="resize:none;min-height:40px;"></textarea>
         </div>
     </div>
     </div>
     <div class="layui-form-item" style="text-align: center;">
         <button class="layui-btn" lay-submit="" lay-filter="saveRes">保存</button>
         <button type="layui-btn" id="cancle" class="layui-btn layui-btn-primary">取消</button>
-
     </div>
 </form>
 <script type="text/javascript">
-    layui.use(['form','layer','jquery'],function(){
+    layui.config({
+        base : "${ctx}/static/js/"
+    }).use(['form','layer','jquery','common'],function(){
         var $ = layui.jquery,
                 form = layui.form(),
+                common = layui.common,
                 layer = parent.layer === undefined ? layui.layer : parent.layer;
 
-        //选择图标
+
+        /**监听菜单类型选择*/
+        form.on('select(resTypeFilter)', function(data){
+            console.log(data.elem); //得到select原始DOM对象
+            console.log(data.value); //得到被选中的值
+            console.log(data.othis); //得到美化后的DOM对象
+        });
+
+        /**监听菜单级别选择*/
+        form.on('select(resLevelFilter)', function(data){
+            console.log(data.elem); //得到select原始DOM对象
+            console.log(data.value); //得到被选中的值
+            console.log(data.othis); //得到美化后的DOM对象
+        });
+
+
+
+        /**选择图标*/
         $(".select_img").click(function(){
-            var index = top.layui.layer.open({
-                title : '<i class="larry-icon larry-tupianguanli"></i>选择图标',
-                type : 2,
-                skin : 'layui-layer-molv',
-                content : "${ctx}/res/res_img.do",
-                area: ['485px', '370px '],
-                resize:false,
-                anim:1,
-                success : function(layero, index){
-
-
-                }
-            })
+            var url = "${ctx}/res/res_img.do";
+            common.cmsLayOpen('选择图标',url,'485px','370px','top');
         })
 
 
@@ -150,11 +176,11 @@
             return false;
         });
 
-        //取消
+
+        /**取消*/
         $("#cancle").click(function(){
             var index = parent.layer.getFrameIndex(window.name); //先得到当前iframe层的索引
             parent.layer.close(index); //再执行关闭
-            // layer.closeAll("iframe");
         });
 
     });
