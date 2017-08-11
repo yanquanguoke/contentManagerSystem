@@ -110,7 +110,6 @@
             common.cmsLayOpen('新增菜单',url,'750px','470px');
         });
 
-
         /**加载菜单信息*/
         function rolePageList(curr,searchTerm,searchContent){
             var pageLoading = layer.load(2);
