@@ -27,9 +27,9 @@ CREATE TABLE `cc_resource` (
 -- ----------------------------
 -- Records of cc_resource
 -- ----------------------------
-INSERT INTO `cc_resource` VALUES ('2', '5', '用户管理', '0', '7JMoS6yG', '/user/user_list', 'larry-10103', '0', '2', '配置系统用户信息', 'admin', '2016-11-25 16:57:22', 'admin', '2017-07-28 22:52:22');
-INSERT INTO `cc_resource` VALUES ('3', '5', '角色管理', '0', 'SPAn6H46', '/role/role_list', 'larry-jiaoseguanli1', '0', '3', '配置系统角色信息', 'admin', '2016-11-25 16:57:25', null, null);
-INSERT INTO `cc_resource` VALUES ('4', '5', '菜单管理', '0', '0rbT8g7m', '/res/res_list', 'larry-caidanguanli', '0', '4', '配置系统菜单信息', 'admin', '2016-11-25 16:57:31', 'admin', '2016-12-14 16:01:09');
+INSERT INTO `cc_resource` VALUES ('2', '5', '用户管理', '0', '7JMoS6yG', '/user/user_list.do', 'larry-10103', '0', '2', '配置系统用户信息', 'admin', '2016-11-25 16:57:22', 'admin', '2017-07-28 22:52:22');
+INSERT INTO `cc_resource` VALUES ('3', '5', '角色管理', '0', 'SPAn6H46', '/role/role_list.do', 'larry-jiaoseguanli1', '0', '3', '配置系统角色信息', 'admin', '2016-11-25 16:57:25', null, null);
+INSERT INTO `cc_resource` VALUES ('4', '5', '菜单管理', '0', '0rbT8g7m', '/res/res_list.do', 'larry-caidanguanli', '0', '4', '配置系统菜单信息', 'admin', '2016-11-25 16:57:31', 'admin', '2016-12-14 16:01:09');
 INSERT INTO `cc_resource` VALUES ('5', '7', '系统设置', '0', '0rbT8g9m', null, 'larry-xitongshezhi1', '0', '5', '配置系统菜单信息', 'admin', '2017-07-28 09:31:43', null, null);
 INSERT INTO `cc_resource` VALUES ('7', null, '系统管理', '0', '0rbT8g8m', null, 'larry-xitongshezhi1', '0', '6', '配置系统菜单信息', 'admin', '2017-07-28 13:24:57', null, null);
 INSERT INTO `cc_resource` VALUES ('8', null, '微信公众', '0', '0rbT8g6m', null, 'larry-weixingongzhongpingtai', '0', '7', '配置系统菜单信息', 'admin', '2017-07-28 13:26:50', null, null);
