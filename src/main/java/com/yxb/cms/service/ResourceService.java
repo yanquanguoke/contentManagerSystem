@@ -33,6 +33,7 @@
 package com.yxb.cms.service;
 
 
+import com.yxb.cms.architect.constant.BusinessConstants;
 import com.yxb.cms.dao.ResourceMapper;
 import com.yxb.cms.domain.bo.Tree;
 import com.yxb.cms.domain.dto.ResourceChildrenMenuDto;
@@ -171,5 +172,33 @@ public class ResourceService {
             }
         }
         return trees;
+    }
+
+    /**
+     * 根据菜单类型和菜单级别查询菜单信息
+     * @param resType
+     * @param resLevel
+     * @param resId 菜单Id
+     * @return
+     */
+    public List<Resource> selectParentResListByResTypeAndResLevel(Integer resType,Integer resLevel,Integer resId){
+
+        //1.菜单类型为0-菜单，菜单级别为1级菜单 父级菜单为空
+        if(BusinessConstants.SYS_RES_TYPE_0.getCode().equals(resType) && BusinessConstants.SYS_RES_LEVEL_1.getCode().equals(resLevel)){
+            return null;
+        }
+        //2.菜单类型为0-菜单，菜单级别为2级菜单 查询1级父级菜单
+        if(BusinessConstants.SYS_RES_TYPE_0.getCode().equals(resType) && BusinessConstants.SYS_RES_LEVEL_2.getCode().equals(resLevel)){
+            return  resourceMapper.selectParentResListByResTypeAndResLevel(BusinessConstants.SYS_RES_TYPE_0.getCode(),BusinessConstants.SYS_RES_LEVEL_1.getCode(),resId);
+        }
+        //3.菜单类型为0-菜单，菜单级别为3级菜单 查询2级父级菜单
+        if(BusinessConstants.SYS_RES_TYPE_0.getCode().equals(resType) && BusinessConstants.SYS_RES_LEVEL_3.getCode().equals(resLevel)){
+            return  resourceMapper.selectParentResListByResTypeAndResLevel(BusinessConstants.SYS_RES_TYPE_0.getCode(),BusinessConstants.SYS_RES_LEVEL_2.getCode(),resId);
+        }
+        //4.菜单类型为1-按钮，菜单级别为3级菜单 查询3级菜单
+        if(BusinessConstants.SYS_RES_TYPE_1.getCode().equals(resType) && BusinessConstants.SYS_RES_LEVEL_3.getCode().equals(resLevel)){
+            return  resourceMapper.selectParentResListByResTypeAndResLevel(BusinessConstants.SYS_RES_TYPE_0.getCode(),BusinessConstants.SYS_RES_LEVEL_3.getCode(),resId);
+        }
+        return null;
     }
 }

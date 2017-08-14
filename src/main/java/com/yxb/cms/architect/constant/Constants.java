@@ -34,10 +34,9 @@ package com.yxb.cms.architect.constant;
 
 
 /**
- * 综合系统管理平台公共常量定义
- * 
- * @date   2016年8月15日 上午10:48:50
- * @author yangxiaobing@tomstaff.com
+ * 系统管理平台公共常量定义
+ * @author yangxiaobing
+ * @date   2016/8/15
  *
  */
 public class Constants {

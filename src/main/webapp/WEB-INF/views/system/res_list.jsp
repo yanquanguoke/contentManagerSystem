@@ -65,6 +65,7 @@
                                 <th>菜单状态</th>
                                 <th>菜单路径</th>
                                 <th>菜单类型</th>
+                                <th>菜单级别</th>
                                 <th>上级菜单</th>
                                 <th>创建时间</th>
                                 <th>修改时间</th>
@@ -110,6 +111,14 @@
             common.cmsLayOpen('新增菜单',url,'750px','470px','top');
         });
 
+        /**编辑菜单*/
+        $("body").on("click",".res_edit",function(){
+            var resId = $(this).attr("data-id");
+            var url =  "${ctx}/res/res_update.do?resId="+resId;
+            common.cmsLayOpen('编辑菜单',url,'750px','470px','top');
+        });
+
+
         /**加载菜单信息*/
         function rolePageList(curr,searchTerm,searchContent){
             var pageLoading = layer.load(2);
@@ -154,7 +163,21 @@
                                     menuTypeLable = '<span class="label label-info ">0-菜单</span>';
                                     break;
                                 case 1:
-                                    menuTypeLable = '<span class="label label-info ">1-菜单</span>'
+                                    menuTypeLable = '<span class="label label-warning ">1-按钮</span>'
+                                    break;
+                            }
+
+                            //菜单级别
+                            var resLevelLable;
+                            switch (item.resLevel){
+                                case 1:
+                                    resLevelLable = '1级菜单';
+                                    break;
+                                case 2:
+                                    resLevelLable = '2级菜单';
+                                    break;
+                                case 3:
+                                    resLevelLable = '3级菜单';
                                     break;
                             }
 
@@ -179,6 +202,7 @@
                                     '<td>'+resStatusLable+'</td>'+
                                     '<td  title="'+objNull(item.resLinkAddress)+'">'+objNull(resLinkAddressLable)+'</td>'+
                                     '<td>'+menuTypeLable+'</td>'+
+                                    '<td>'+objNull(resLevelLable)+'</td>'+
                                     '<td>'+objNull(item.parentname)+'</td>'+
                                     '<td>'+item.createTime+'</td>'+
                                     '<td>'+objNull(item.modifyTime)+'</td>'+

@@ -33,12 +33,16 @@
 package com.yxb.cms.controller.system;
 
 import com.yxb.cms.controller.BasicController;
+import com.yxb.cms.dao.ResourceMapper;
 import com.yxb.cms.domain.vo.Resource;
 import com.yxb.cms.service.ResourceService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+
+import java.util.List;
 
 
 /**
@@ -54,6 +58,8 @@ public class ResourceController extends BasicController {
     @Autowired
     private ResourceService resourceService;
 
+    @Autowired
+    private ResourceMapper resourceMapper;
 
     /**
      *跳转到资源列表页面
@@ -89,8 +95,40 @@ public class ResourceController extends BasicController {
      * @return
      */
     @RequestMapping("/res_edit.do")
-    public String toResEditPage() {
+    public String toResEditPage(Model model) {
+        //新增页面标识
+        model.addAttribute("pageFlag", "addPage");
         return "system/res_edit";
+    }
+
+    /**
+     * 菜单资源修改页面
+     * @param resId 菜单Id
+     * @return
+     */
+    @RequestMapping("/res_update.do")
+    public String userUpdatePage(Model model, Integer resId){
+        Resource res = resourceService.selectByPrimaryKey(resId);
+        Long resParentCount = resourceMapper.selectCountResParentByResId(resId);
+        //修改页面标识
+        model.addAttribute("pageFlag", "updatePage");
+        model.addAttribute("res", res);
+        model.addAttribute("resParentCount", resParentCount);
+        return "system/res_edit";
+    }
+
+
+    /**
+     * 根据菜单类型和菜单级别查询菜单信息
+     * @param resType   菜单类型
+     * @param resLevel  菜单级别
+     * @param resId 菜单Id
+     * @return
+     */
+    @RequestMapping("ajax_res_parent_menu.do")
+    @ResponseBody
+    public List<Resource> ajaxResParentMenu(Integer resType,Integer resLevel,Integer resId){
+        return resourceService.selectParentResListByResTypeAndResLevel(resType,resLevel,resId);
     }
 
     @RequestMapping("/ajax_res_menu_top.do")

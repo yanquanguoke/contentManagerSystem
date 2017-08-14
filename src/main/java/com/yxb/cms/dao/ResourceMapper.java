@@ -104,6 +104,13 @@ public interface ResourceMapper {
      * @return
      */
     Long selectCountResource(Resource resource);
+
+    /**
+     * 根据Id查询父级资源总记录数
+     * @param resParentid 父级资源
+     * @return
+     */
+    Long selectCountResParentByResId(Integer resParentid);
     /**
      * 资源信息分页列表显示
      * @param resource 资源实体
@@ -129,7 +136,16 @@ public interface ResourceMapper {
      */
     List<Resource> selectResourceAllList();
 
+    /**
+     * 根据菜单类型、和菜单级别查询菜单信息
+     * @param resType   菜单类型
+     * @param resLevel  菜单级别
+     * @return
+     */
+    List<Resource> selectParentResListByResTypeAndResLevel(@Param("resType") Integer resType,@Param("resLevel") Integer resLevel,@Param("resId") Integer resId);
 
 
-    
+
+
+
 }

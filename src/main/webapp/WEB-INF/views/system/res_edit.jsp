@@ -27,18 +27,22 @@
         <%--温馨提示:1.菜单类型为菜单时父级菜单可以为空;2.菜单类型为按钮时父级菜单不能为空;3.父级菜单选中时，资源路径不能为空--%>
 <%--</blockquote>--%>
 <form class="layui-form layui-form-pane">
+    <input id="resId" name="resId" type="hidden" value="${res.resId}">
+
+    <input id="pageFlag"  type="hidden" value="${pageFlag}">
+
     <div class="layui-form-item">
         <div class="layui-inline">
             <label class="layui-form-label">菜单名称</label>
             <div class="layui-input-inline">
-                <input type="text" id="resName" name="resName" class="layui-input" lay-verify="required" placeholder="请输入菜单名称">
+                <input type="text" id="resName" name="resName" class="layui-input" maxlength="10" value="${res.resName}" lay-verify="required" placeholder="请输入菜单名称">
             </div>
         </div>
         <div class="layui-inline">
             <label class="layui-form-label">菜单类型</label>
             <div class="layui-input-inline">
-                <select id="resType" name="resType" lay-filter="resTypeFilter">
-                    <option value=""></option>
+                <select id="resType" name="resType" lay-filter="resTypeFilter" >
+                    <option value="">请选择</option>
                     <option value="0">0-菜单</option>
                     <option value="1">1-按钮</option>
                 </select>
@@ -52,7 +56,7 @@
             <label class="layui-form-label">菜单级别</label>
             <div class="layui-input-inline">
                 <select id="resLevel" name="resLevel" lay-filter="resLevelFilter">
-                    <option value=""></option>
+                    <option value="">请选择</option>
                     <option value="1">一级菜单</option>
                     <option value="2">二级菜单</option>
                     <option value="3">三级菜单</option>
@@ -63,7 +67,7 @@
             <label class="layui-form-label">父级菜单</label>
             <div class="layui-input-inline">
                 <select id="resParentid" name="resParentid" >
-                    <option value=""></option>
+                    <option value="">请选择</option>
                 </select>
             </div>
         </div>
@@ -73,14 +77,14 @@
         <div class="layui-inline">
             <label class="layui-form-label">菜单路径</label>
             <div class="layui-input-inline">
-                <input type="text" id="resLinkAddress" name="resLinkAddress" class="layui-input" >
+                <input type="text" id="resLinkAddress" name="resLinkAddress" class="layui-input" value="${res.resLinkAddress}">
             </div>
         </div>
 
         <div class="layui-inline">
             <label class="layui-form-label">菜单图标</label>
             <div class="layui-input-inline">
-                <input type="text" class="layui-input" id="resImage" name="resImage" value="" disabled>
+                <input type="text" class="layui-input" id="resImage" name="resImage" value="${res.resImage}" disabled>
             </div>
             <div class="layui-form-mid layui-word-aux">
                 <a class="layui-btn layui-btn-mini select_img" data-id="" title="选择图标"><i class="layui-icon larry-icon larry-tupianguanli"></i></a>'
@@ -91,8 +95,19 @@
         <div class="layui-inline">
             <label class="layui-form-label">菜单状态</label>
             <div class="layui-input-inline" style="border: 1px solid #e6e6e6;background-color: #fff;height: 36px;">
-                <input type="radio" name="resStatus" value="0" title="有效" checked>
-                <input type="radio" name="resStatus" value="1" title="失效" >
+                <c:if test="${pageFlag == 'addPage' }">
+                    <input type="radio" name="resStatus" value="0" title="有效" checked disabled>
+                    <input type="radio" name="resStatus" value="1" title="失效" disabled>
+                </c:if>
+                <c:if test="${pageFlag == 'updatePage' and  res.resStatus == '0' }">
+                    <input type="radio" name="resStatus" value="0" title="有效"  disabled <c:if test="${res.resStatus ==0 }">checked</c:if>/>
+                    <input type="radio" name="resStatus" value="1" title="失效" disabled  <c:if test="${res.resStatus ==1 }">checked</c:if>/>
+                </c:if>
+                <c:if test="${pageFlag == 'updatePage' and  res.resStatus == '1' }">
+                    <input type="radio" name="resStatus" value="0" title="有效"   <c:if test="${res.resStatus ==0 }">checked</c:if>/>
+                    <input type="radio" name="resStatus" value="1" title="失效"   <c:if test="${res.resStatus ==1 }">checked</c:if>/>
+                </c:if>
+
             </div>
         </div>
         <div class="layui-inline">
@@ -124,20 +139,116 @@
                 layer = parent.layer === undefined ? layui.layer : parent.layer;
 
 
+        /**菜单新增初始化*/
+        resInit();
+
+        /***菜单新增初始化**/
+        function resInit(){
+            var pageFlag = $("#pageFlag").val();
+            if(pageFlag == "addPage"){
+                //默认菜单级别不可点击
+                $("#resLevel").attr("disabled","disabled");
+            }
+            //更新标识
+            if(pageFlag == "updatePage"){
+                alert(pageFlag);
+                 resTypeVal = ${res.resType}
+                 resLevelVal = ${res.resLevel}
+                 resParentIdVal = ${res.resParentid}
+                 resParentCount = ${resParentCount}
+
+                         alert(resParentCount)
+                //菜单类型选中，不能点击
+                $("#resType option[value='"+resTypeVal+"']").prop("selected","selected");
+                $("#resType").attr("disabled","disabled");
+
+                //菜单级别选中
+                $("#resLevel option[value='"+resLevelVal+"']").prop("selected","selected");
+                if(resTypeVal == 1 || (resTypeVal == 0 && resParentCount > 0)){
+                    $("#resLevel").attr("disabled","disabled");
+
+                }
+
+                //加载父级菜单
+                loadParentMenu();
+
+                $("#resParentid option[value='"+resParentIdVal+"']").prop("selected","selected");
+
+
+
+            }
+
+            form.render('select');
+        }
         /**监听菜单类型选择*/
         form.on('select(resTypeFilter)', function(data){
-            console.log(data.elem); //得到select原始DOM对象
-            console.log(data.value); //得到被选中的值
-            console.log(data.othis); //得到美化后的DOM对象
+            //如果菜单类型为按钮, 菜单级别选中三级菜单,并禁用选择
+            if(data.value == 1){
+                $("#resLevel option[value='3']").prop("selected","selected");
+                $("#resLevel").attr("disabled","disabled");
+            }else{
+                $('#resParentid option').not(":first").remove();
+                $("#resLevel").removeAttr("disabled");
+                $("#resLevel option:first").prop("selected", 'selected');
+
+            }
+            form.render('select');
+
+            //加载父级菜单
+            loadParentMenu();
         });
 
         /**监听菜单级别选择*/
         form.on('select(resLevelFilter)', function(data){
-            console.log(data.elem); //得到select原始DOM对象
-            console.log(data.value); //得到被选中的值
-            console.log(data.othis); //得到美化后的DOM对象
+            //加载父级菜单
+            loadParentMenu();
+
         });
 
+        /**加载父级菜单*/
+        function loadParentMenu(resType,resLevel){
+            var resType =  $("#resType option:selected").val();
+            var resLevel =  $("#resLevel option:selected").val();
+            var resId = $("#resId").val();
+
+            if(resType != "" && resLevel != "" ){
+                //1级菜单、父级菜单为空
+                if(resLevel == 1){
+                    $('#resParentid option').not(":first").remove();
+                    form.render('select');
+                    return;
+                }
+                //加载父级菜单
+                $.ajax({
+                    url : '${ctx}/res/ajax_res_parent_menu.do',
+                    type : 'post',
+                    async: false,
+                    data : {
+                        resType:resType,
+                        resLevel:resLevel,
+                        resId:resId
+                    },
+                    success : function(data) {
+                        if(data != "" ){
+                            $('#resParentid option').not(":first").remove();
+                            $(data).each(function(index,item){
+                                $("#resParentid").append(
+                                        '<option value="'+item.resId+'">'+item.resName+'</option>'
+                                );
+
+
+                            });
+
+                        }
+                    }
+                });
+                form.render('select');
+
+
+            }
+
+
+        }
 
 
         /**选择图标*/
