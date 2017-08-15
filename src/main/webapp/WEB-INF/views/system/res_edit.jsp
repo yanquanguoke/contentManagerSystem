@@ -77,7 +77,7 @@
         <div class="layui-inline">
             <label class="layui-form-label">菜单路径</label>
             <div class="layui-input-inline">
-                <input type="text" id="resLinkAddress" name="resLinkAddress" class="layui-input" maxlength="50" value="${res.resLinkAddress}">
+                <input type="text" id="resLinkAddress" name="resLinkAddress" class="layui-input" maxlength="50" lay-verify="resLinkAddress"  value="${res.resLinkAddress}">
             </div>
         </div>
 
@@ -166,6 +166,11 @@
                     $("#resLevel").attr("disabled","disabled");
 
                 }
+                if(resLevelVal == 1){
+                    $("#resLinkAddress").val('');
+                    $("#resLinkAddress").attr("disabled","disabled");
+                }
+
 
                 //加载父级菜单
                 loadParentMenu();
@@ -188,6 +193,7 @@
                 $('#resParentid option').not(":first").remove();
                 $("#resLevel").removeAttr("disabled");
                 $("#resLevel option:first").prop("selected", 'selected');
+                $("#resLinkAddress").removeAttr("disabled","disabled");
 
             }
             form.render('select');
@@ -198,6 +204,13 @@
 
         /**监听菜单级别选择*/
         form.on('select(resLevelFilter)', function(data){
+            if(data.value == 1){
+                $("#resLinkAddress").val('');
+                $("#resLinkAddress").attr("disabled","disabled");
+            }else{
+                $("#resLinkAddress").removeAttr("disabled","disabled");
+
+            }
             //加载父级菜单
             loadParentMenu();
 
@@ -263,8 +276,16 @@
                 }
 
             },
+            resLinkAddress: function(value, item){
+                //验证菜单路径
+                if(value != '' && !new RegExp("^[a-zA-Z/.]+$").test(value)){
+                    return '菜单路径只能为英文';
+                }
+
+            },
+
             resDisplayOrder: function(value, item){
-                //验证登陆账号
+                //验证排序
                 if(value != '' && !new RegExp("^[0-9]*$").test(value)){
                     return '排序只能为数字';
                 }
