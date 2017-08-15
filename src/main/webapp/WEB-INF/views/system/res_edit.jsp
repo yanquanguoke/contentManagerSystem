@@ -35,13 +35,13 @@
         <div class="layui-inline">
             <label class="layui-form-label">菜单名称</label>
             <div class="layui-input-inline">
-                <input type="text" id="resName" name="resName" class="layui-input" maxlength="10" value="${res.resName}" lay-verify="required" placeholder="请输入菜单名称">
+                <input type="text" id="resName" name="resName" class="layui-input" maxlength="20" value="${res.resName}" lay-verify="required|resName" placeholder="请输入菜单名称">
             </div>
         </div>
         <div class="layui-inline">
             <label class="layui-form-label">菜单类型</label>
             <div class="layui-input-inline">
-                <select id="resType" name="resType" lay-filter="resTypeFilter" >
+                <select id="resType" name="resType" lay-filter="resTypeFilter" lay-verify="required">
                     <option value="">请选择</option>
                     <option value="0">0-菜单</option>
                     <option value="1">1-按钮</option>
@@ -55,7 +55,7 @@
         <div class="layui-inline">
             <label class="layui-form-label">菜单级别</label>
             <div class="layui-input-inline">
-                <select id="resLevel" name="resLevel" lay-filter="resLevelFilter">
+                <select id="resLevel" name="resLevel" lay-filter="resLevelFilter" lay-verify="required">
                     <option value="">请选择</option>
                     <option value="1">一级菜单</option>
                     <option value="2">二级菜单</option>
@@ -77,7 +77,7 @@
         <div class="layui-inline">
             <label class="layui-form-label">菜单路径</label>
             <div class="layui-input-inline">
-                <input type="text" id="resLinkAddress" name="resLinkAddress" class="layui-input" value="${res.resLinkAddress}">
+                <input type="text" id="resLinkAddress" name="resLinkAddress" class="layui-input" maxlength="50" value="${res.resLinkAddress}">
             </div>
         </div>
 
@@ -113,14 +113,14 @@
         <div class="layui-inline">
             <label class="layui-form-label">排序</label>
             <div class="layui-input-inline">
-                <input type="text" id="resDisplayOrder" name="resDisplayOrder" class="layui-input" >
+                <input type="text" id="resDisplayOrder" name="resDisplayOrder" class="layui-input" lay-verify="resDisplayOrder" maxlength="10" value="${res.resDisplayOrder}">
             </div>
         </div>
     </div>
     <div class="layui-form-item layui-form-text">
         <label class="layui-form-label">备注</label>
         <div class="layui-input-block">
-            <textarea id="resRemark" name="resRemark" placeholder="请输入内容" class="layui-textarea" maxlength="50" style="resize:none;min-height:40px;"></textarea>
+            <textarea id="resRemark" name="resRemark" placeholder="请输入内容" class="layui-textarea" maxlength="50" style="resize:none;min-height:40px;">${res.resRemark}</textarea>
         </div>
     </div>
     </div>
@@ -151,13 +151,11 @@
             }
             //更新标识
             if(pageFlag == "updatePage"){
-                alert(pageFlag);
                  resTypeVal = ${res.resType}
                  resLevelVal = ${res.resLevel}
                  resParentIdVal = ${res.resParentid}
                  resParentCount = ${resParentCount}
 
-                         alert(resParentCount)
                 //菜单类型选中，不能点击
                 $("#resType option[value='"+resTypeVal+"']").prop("selected","selected");
                 $("#resType").attr("disabled","disabled");
@@ -250,42 +248,63 @@
 
         }
 
-
         /**选择图标*/
         $(".select_img").click(function(){
             var url = "${ctx}/res/res_img.do";
-            common.cmsLayOpen('选择图标',url,'485px','370px','top');
-        })
-
-
-        //保存
-        form.on("submit(saveRes)",function(data){
-            alert(data.field.resImage)
-            <%--var userSaveLoading = top.layer.msg('数据提交中，请稍候',{icon: 16,time:false,shade:0.8});--%>
-            <%--//登陆验证--%>
-            <%--$.ajax({--%>
-                <%--url : '${ctx}/user/ajax_save_user',--%>
-                <%--type : 'post',--%>
-                <%--async: false,--%>
-                <%--data : data.field,--%>
-                <%--success : function(data) {--%>
-                    <%--if(data.returnCode == 0000){--%>
-                        <%--top.layer.close(userSaveLoading);--%>
-                        <%--top.layer.msg("用户信息保存成功！");--%>
-                        <%--var index = parent.layer.getFrameIndex(window.name); //先得到当前iframe层的索引--%>
-                        <%--parent.layer.close(index); //再执行关闭                        //刷新父页面--%>
-                        <%--parent.location.reload();--%>
-                    <%--}else{--%>
-                        <%--top.layer.close(userSaveLoading);--%>
-                        <%--top.layer.msg(data.returnMessage);--%>
-                    <%--}--%>
-                <%--},error:function(data){--%>
-                    <%--top.layer.close(index);--%>
-
-                <%--}--%>
-            <%--});--%>
-            return false;
+            common.cmsLayOpen('选择图标',url,'485px','370px');
         });
+
+        /**表单验证*/
+        form.verify({
+            resName: function(value, item){
+                //验证菜单名称
+                if(!new RegExp("^[a-zA-Z\u4e00-\u9fa5]+$").test(value)){
+                    return '菜单名称只能为中文或者字母';
+                }
+
+            },
+            resDisplayOrder: function(value, item){
+                //验证登陆账号
+                if(value != '' && !new RegExp("^[0-9]*$").test(value)){
+                    return '排序只能为数字';
+                }
+                //验证登陆账号是否存在
+
+            }
+        });
+
+
+        /**保存菜单资源信息*/
+        form.on("submit(saveRes)",function(data){
+            var resSaveLoading = top.layer.msg('数据提交中，请稍候',{icon: 16,time:false,shade:0.8});
+            $.ajax({
+                url : '${ctx}/res/ajax_save_resource.do',
+                type : 'post',
+                async: false,
+                data : data.field,
+                success : function(data) {
+                    if(data.returnCode == 0000){
+                        location.reload();
+                        top.layer.close(resSaveLoading);
+                        common.cmsLaySucMsg("保存成功")
+                        var index = parent.layer.getFrameIndex(window.name); //先得到当前iframe层的索引
+                        parent.layer.close(index); //再执行关闭
+                        parent.location.reload();
+
+
+
+                    }else{
+                        top.layer.close(resSaveLoading);
+                        common.cmsLayErrorMsg(data.returnMessage);
+                    }
+                },error:function(data){
+                    top.layer.close(resSaveLoading);
+                    top.layer.close(index);
+
+                }
+            });
+            return false;
+        })
 
 
         /**取消*/

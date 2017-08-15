@@ -32,8 +32,11 @@
  */
 package com.yxb.cms.controller.system;
 
+import com.yxb.cms.architect.constant.BussinessCode;
+import com.yxb.cms.architect.utils.BussinessMsgUtil;
 import com.yxb.cms.controller.BasicController;
 import com.yxb.cms.dao.ResourceMapper;
+import com.yxb.cms.domain.bo.BussinessMsg;
 import com.yxb.cms.domain.vo.Resource;
 import com.yxb.cms.service.ResourceService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -130,6 +133,24 @@ public class ResourceController extends BasicController {
     public List<Resource> ajaxResParentMenu(Integer resType,Integer resLevel,Integer resId){
         return resourceService.selectParentResListByResTypeAndResLevel(resType,resLevel,resId);
     }
+
+
+    /**
+     * 保存用户信息
+     * @param user 用户实体
+     * @return
+     */
+    @RequestMapping("/ajax_save_resource.do")
+    @ResponseBody
+    public BussinessMsg ajaxSaveResource(Resource res){
+        try {
+            return resourceService.saveOrUpdateResource(res, this.getCurrentLoginName());
+        } catch (Exception e) {
+            log.error("保存用户信息方法内部错误",e);
+            return BussinessMsgUtil.returnCodeMessage(BussinessCode.RES_SAVE_ERROR);
+        }
+    }
+
 
     @RequestMapping("/ajax_res_menu_top.do")
     @ResponseBody

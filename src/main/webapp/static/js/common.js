@@ -45,36 +45,20 @@ layui.define(['layer'], function (exports) {
 
         },
         /**弹出层*/
-        cmsLayOpen:function (title,url,width,height,isTop) {
-            if(typeof(isTop) == "undefined" || isTop == null){
-                var index = layui.layer.open({
-                    title : '<i class="larry-icon larry-bianji3"></i>'+title,
-                    type : 2,
-                    skin : 'layui-layer-molv',
-                    content : url,
-                    area: [width, height],
-                    resize:false,
-                    anim:1,
-                    success : function(layero, index){
+        cmsLayOpen:function (title,url,width,height) {
 
-                    }
-                })
-            }else{
-                var index = top.layui.layer.open({
-                    title : '<i class="larry-icon larry-bianji3"></i>'+title,
-                    type : 2,
-                    skin : 'layui-layer-molv',
-                    content : url,
-                    area: [width, height],
-                    resize:false,
-                    anim:1,
-                    success : function(layero, index){
+            var index = layui.layer.open({
+                title : '<i class="larry-icon larry-bianji3"></i>'+title,
+                type : 2,
+                skin : 'layui-layer-molv',
+                content : url,
+                area: [width, height],
+                resize:false,
+                anim:1,
+                success : function(layero, index){
 
-                    }
-                })
-            }
-
-            
+                }
+            });
         },
         /**退出*/
         logOut: function (title, text, url, type, dataType, data, callback) {

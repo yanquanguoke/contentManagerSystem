@@ -19,7 +19,7 @@
 <%--<div class="video_mask"></div>--%>
 <div class="login">
      <h1>CMS 后台管理系统</h1></p>
-    <form class="layui-form" action="${ctx}/main/index.do" method="post">
+    <form class="layui-form" action="" method="post">
         <div class="layui-form-item">
             <input type="text" name="username" lay-verify="required" placeholder="请输入账号" autocomplete="off"  value="admin" class="layui-input">
         </div>
@@ -57,8 +57,9 @@
             });
             //登陆成功
             if (ajaxReturnData.returnCode == 0000) {
+                window.location.href="${ctx}/main/index.do";
                 top.layer.close(loginLoading);
-                return true;
+                return false;
             } else {
                 top.layer.close(loginLoading);
                 common.cmsLayErrorMsg(ajaxReturnData.returnMessage)

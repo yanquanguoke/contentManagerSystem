@@ -179,9 +179,7 @@
     -->
     update cc_resource
     <set >
-      <if test="resParentid != null" >
         res_parentId = #{resParentid,jdbcType=INTEGER},
-      </if>
       <if test="resName != null" >
         res_name = #{resName,jdbcType=VARCHAR},
       </if>

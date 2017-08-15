@@ -376,21 +376,16 @@
         var $ = layui.jquery,
                 form = layui.form(),
                 common = layui.common,
-                layer = parent.layer === undefined ? layui.layer : parent.layer;
+                layer = layui.layer;
 
         /**选择图标*/
         $("body").on("dblclick",".select_img",function(){
             //得到当前iframe层的索引
             var index = parent.layer.getFrameIndex(window.name);
-
-            //得到父级iframe层的索引
-            var indexTop = parent.layer.getFrameIndex(top.window.name);
-            var body = layer.getChildFrame('body', indexTop);
             //赋值
             var resImage = $(this).attr("data-id");
-            body.find("#resImage").val(resImage)
-
-           parent.layer.close(index); //执行关闭
+            $('#resImage', window.parent.document).val(resImage);
+            parent.layer.close(index); //执行关闭
         });
 
 

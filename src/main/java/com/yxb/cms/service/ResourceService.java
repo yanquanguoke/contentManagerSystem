@@ -34,23 +34,24 @@ package com.yxb.cms.service;
 
 
 import com.yxb.cms.architect.constant.BusinessConstants;
+import com.yxb.cms.architect.constant.BussinessCode;
+import com.yxb.cms.architect.utils.BussinessMsgUtil;
+import com.yxb.cms.architect.utils.KeyConfig;
 import com.yxb.cms.dao.ResourceMapper;
+import com.yxb.cms.domain.bo.BussinessMsg;
 import com.yxb.cms.domain.bo.Tree;
 import com.yxb.cms.domain.dto.ResourceChildrenMenuDto;
 import com.yxb.cms.domain.dto.ResourceMenuDto;
 import com.yxb.cms.domain.vo.Resource;
-import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.nutz.json.Json;
 import org.nutz.json.JsonFormat;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * 菜单资源服务类
@@ -200,5 +201,40 @@ public class ResourceService {
             return  resourceMapper.selectParentResListByResTypeAndResLevel(BusinessConstants.SYS_RES_TYPE_0.getCode(),BusinessConstants.SYS_RES_LEVEL_3.getCode(),resId);
         }
         return null;
+    }
+
+
+
+    /**
+     * 新增或者修改资源信息
+     * @param res 资源对象
+     * @param loginName 当前登录用户
+     * @return
+     * @throws Exception
+     */
+    @Transactional
+    public BussinessMsg saveOrUpdateResource(Resource res,String loginName) throws Exception{
+        log.info("保存菜单信息开始");
+        long start = System.currentTimeMillis();
+        try {
+            //保存菜单资源信息
+            if (null == res.getResId()) {
+                res.setResModelCode(KeyConfig.randomResourceModeCode());
+                res.setCreator(loginName);
+                res.setCreateTime(new Date());
+                resourceMapper.insertSelective(res);
+            } else {
+                //更新菜单资源信息
+                res.setModifier(loginName);
+                res.setModifyTime(new Date());
+                resourceMapper.updateByPrimaryKeySelective(res);
+            }
+        } catch (Exception e) {
+            log.error("保存菜单信息方法内部错误",e);
+            throw e;
+        }finally {
+            log.info("保存菜单信息结束,用时" + (System.currentTimeMillis() - start) + "毫秒");
+        }
+        return BussinessMsgUtil.returnCodeMessage(BussinessCode.GLOBAL_SUCCESS);
     }
 }

@@ -62,7 +62,7 @@ public enum BussinessCode {
 
 
 
-	RES_SAVE_ERROR("1501","资源信息保存失败"),
+	RES_SAVE_ERROR("1501","菜单资源信息保存失败"),
 	ROLE_SAVE_ERROR("1502","角色信息保存失败"),
 	USER_SAVE_ERROR("1503","用户信息保存失败"),
 	USER_ROLE_SAVE_ERROR("1504","用户分配角色信息失败"),

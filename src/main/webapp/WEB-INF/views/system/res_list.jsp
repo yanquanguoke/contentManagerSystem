@@ -108,14 +108,14 @@
         /**新增菜单*/
         $(".resAdd_btn").click(function(){
             var url = "${ctx}/res/res_edit.do";
-            common.cmsLayOpen('新增菜单',url,'750px','470px','top');
+            common.cmsLayOpen('新增菜单',url,'750px','470px');
         });
 
         /**编辑菜单*/
         $("body").on("click",".res_edit",function(){
             var resId = $(this).attr("data-id");
             var url =  "${ctx}/res/res_update.do?resId="+resId;
-            common.cmsLayOpen('编辑菜单',url,'750px','470px','top');
+            common.cmsLayOpen('编辑菜单',url,'750px','470px');
         });
 
 
