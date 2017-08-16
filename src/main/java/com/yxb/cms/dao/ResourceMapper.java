@@ -137,12 +137,25 @@ public interface ResourceMapper {
     List<Resource> selectResourceAllList();
 
     /**
+     *查询有效的,URL不为空的所有菜单信息
+     * @return
+     */
+    List<Resource> selectResUrlAllList();
+
+    /**
      * 根据菜单类型、和菜单级别查询菜单信息
      * @param resType   菜单类型
      * @param resLevel  菜单级别
      * @return
      */
     List<Resource> selectParentResListByResTypeAndResLevel(@Param("resType") Integer resType,@Param("resLevel") Integer resLevel,@Param("resId") Integer resId);
+
+    /**
+     * 根据用户Id查询用户资源菜单信息
+     * @param userId 用户Id
+     * @return
+     */
+    List<Resource> selectResListByUserId(@Param("userId") Integer userId);
 
 
 

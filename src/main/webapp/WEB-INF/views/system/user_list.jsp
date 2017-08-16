@@ -42,9 +42,12 @@
                         <a class="layui-btn userSearchList_btn" lay-submit lay-filter="userSearchFilter"><i class="layui-icon larry-icon larry-chaxun7"></i>查询</a>
                     </form>
                 </div>
-                <div class="layui-inline">
-                    <a class="layui-btn layui-btn-normal userAdd_btn"> <i class="layui-icon larry-icon larry-xinzeng1"></i>新增用户</a>
-                </div>
+                    <shiro:hasPermission name="0rbT8t2P">
+                        <div class="layui-inline">
+                            <a class="layui-btn layui-btn-normal userAdd_btn"> <i class="layui-icon larry-icon larry-xinzeng1"></i>新增用户</a>
+                        </div>
+                    </shiro:hasPermission>
+
                 <div class="layui-inline">
                     <a class="layui-btn layui-btn-normal excelUserExport_btn"  style="background-color:#5FB878"> <i class="layui-icon larry-icon larry-danye"></i>导出</a>
                 </div>
@@ -93,7 +96,6 @@
 
         /**加载用户列表信息*/
         userPageList(1);
-
         /**全选*/
         form.on('checkbox(allChoose)', function (data) {
             var child = $(data.elem).parents('table').find('tbody input[type="checkbox"]');
@@ -229,8 +231,8 @@
 
                             //登陆用户名
                             var userLoginNameLable;
-                            if(objNull(item.userLoginName) != "" && item.userLoginName.length > 9){
-                                userLoginNameLable = item.userLoginName.substring(0,9) +"...";
+                            if(objNull(item.userLoginName) != "" && item.userLoginName.length > 20){
+                                userLoginNameLable = item.userLoginName.substring(0,20) +"...";
 
                             }else{
                                 userLoginNameLable = item.userLoginName;

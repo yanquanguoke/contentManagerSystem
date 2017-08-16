@@ -28,17 +28,17 @@
     <div class="layui-form-item">
         <label class="layui-form-label">登陆账号</label>
         <div class="layui-input-block">
-            <input type="text" class="layui-input" name="userLoginName" lay-verify="required|userLoginName" maxlength="10" value="${user.userLoginName}" placeholder="请输入登陆账号">
+            <input type="text" class="layui-input" name="userLoginName" lay-verify="required|userLoginName" maxlength="20" value="${user.userLoginName}" placeholder="请输入登陆账号">
         </div>
     </div>
     <div class="layui-form-item">
         <label class="layui-form-label">用户姓名</label>
         <div class="layui-input-block">
-            <input type="text" class="layui-input" name="userName" lay-verify="required|userName" maxlength="25" value="${user.userName}" placeholder="请输入用户姓名">
+            <input type="text" class="layui-input" name="userName" lay-verify="required|userName" maxlength="20" value="${user.userName}" placeholder="请输入用户姓名">
         </div>
     </div>
     <div class="layui-form-item" pane>
-        <label class="layui-form-label">角色状态</label>
+        <label class="layui-form-label">用户状态</label>
         <div class="layui-input-block">
             <c:if test="${pageFlag == 'addPage' }">
                 <input type="radio" name="userStatus" value="0" title="有效" checked disabled>
@@ -73,8 +73,8 @@
         form.verify({
             userLoginName: function(value, item){
                 //验证登陆账号
-                if(!new RegExp("^[0-9A-Za-z_]{2,15}$").test(value)){
-                    return '登陆账号只能为英文、数字、下划线，长度2-7位';
+                if(!new RegExp("^[0-9A-Za-z_]{2,20}$").test(value)){
+                    return '登陆账号只能为英文、数字、下划线，长度2-20位';
                 }
                 //验证登陆账号是否存在
 

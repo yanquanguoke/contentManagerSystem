@@ -51,6 +51,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
+
 
 /**
  * 自定义Realm 实现Shiro权限验证
@@ -114,8 +116,20 @@ public class ShiroDbRealm extends AuthorizingRealm {
         User user = (User) getAvailablePrincipal(principals);
         log.info("加载用户权限信息，当前登陆用户名:" + user.getUserLoginName());
         SimpleAuthorizationInfo info = new SimpleAuthorizationInfo();
-        Resource res = resourceService.selectByPrimaryKey(2);
-        info.addStringPermission(res.getResModelCode());
+        //如果登陆用户是admin,拥有所有权限
+        if(user.getUserLoginName().equals("admin")){
+            List<Resource> resList = resourceService.selectResUrlAllList();
+            for (Resource resource : resList) {
+                info.addStringPermission(resource.getResModelCode());
+
+            }
+        }else{
+            List<Resource> resUserList = resourceService.selectResListByUserId(user.getUserId());
+            for (Resource resUser : resUserList) {
+                info.addStringPermission(resUser.getResModelCode());
+                log.info(resUser.getResModelCode());
+            }
+        }
         return  info;
     }
 }

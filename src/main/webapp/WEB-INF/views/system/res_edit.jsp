@@ -271,8 +271,8 @@
         form.verify({
             resName: function(value, item){
                 //验证菜单名称
-                if(!new RegExp("^[a-zA-Z\u4e00-\u9fa5]+$").test(value)){
-                    return '菜单名称只能为中文或者字母';
+                if(!new RegExp("^[0-9a-zA-Z\u4e00-\u9fa5]+$").test(value)){
+                    return '菜单名称只能为中文数字或者字母';
                 }
 
             },
@@ -289,8 +289,8 @@
                 if((resLevel == 2 || resLevel == 3)&& value == ''){
                     return '菜单路径不能为空';
                 }
-                if(value != '' && !new RegExp("^[a-zA-Z/.]+$").test(value)){
-                    return '菜单路径只能为英文';
+                if(value != '' && !new RegExp("^[a-zA-Z_/.]+$").test(value)){
+                    return '菜单路径只能为英文下划线斜杠和点';
                 }
 
             },

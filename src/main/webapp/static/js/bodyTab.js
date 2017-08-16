@@ -61,9 +61,6 @@ layui.define(["element","jquery"],function(exports){
             success : function(data) {
                 if(data != "" ){
                     var pdata = $.parseJSON(data);
-                    //显示左边菜单
-                    var contextB = $.trim($("#navBarId").html());
-                    if(contextB == null || contextB.length == 0 ){
                         var ulHtml = '<ul class="layui-nav layui-nav-tree layui-left-nav">';
                         $.each(pdata,function(index,item){
                             if(index == 0){
@@ -99,7 +96,7 @@ layui.define(["element","jquery"],function(exports){
                         element.init();  //初始化页面元素
 
 
-                     }
+
                 }else{
                     $("#navBarId").empty();
                 }

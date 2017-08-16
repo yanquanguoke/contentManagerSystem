@@ -168,6 +168,7 @@
         from cc_role_resource
         where role_id = #{roleId,jdbcType=INTEGER} AND resource_id = #{resourceId,jdbcType=INTEGER}
     </select>
+
     <!-- 根据角色Id删除 角色资源信息-->
     <delete id="deleteRoleResourceByRoleId">
 

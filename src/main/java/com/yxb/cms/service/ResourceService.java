@@ -237,4 +237,22 @@ public class ResourceService {
         }
         return BussinessMsgUtil.returnCodeMessage(BussinessCode.GLOBAL_SUCCESS);
     }
+
+    /**
+     * 查询有效的,URL不为空的所有菜单信息
+     * @return
+     */
+    public List<Resource>selectResUrlAllList(){
+        return resourceMapper.selectResUrlAllList();
+    }
+
+    /**
+     * 根据用户Id查询用户资源菜单信息
+     * @param userId 用户Id
+     * @return
+     */
+    public List<Resource>selectResListByUserId(Integer userId){
+        return resourceMapper.selectResListByUserId(userId);
+
+    }
 }

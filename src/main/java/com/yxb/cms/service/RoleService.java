@@ -353,15 +353,21 @@ public class RoleService {
      */
     @Transactional
     public BussinessMsg saveOrUpdateRoleResource(Integer roleId, Integer[] resourceIds,String loginName) throws Exception {
+        // TODO BUG 需修改
         log.info("保存角色信息授权信息开始,参数,roleId:"+roleId+",resourceIds:"+ Arrays.toString(resourceIds));
         long start = System.currentTimeMillis();
         try {
             if(null != resourceIds && resourceIds.length > 0){
-                for (Integer resourceId : resourceIds) {
-                    RoleResource roleRes = roleResourceMapper.selectRoleResourceByRoleIdAndResId(roleId,resourceId);
-                    if(null!= roleRes && resourceId.equals(roleRes.getResourceId())){
-                        continue;
+
+                List<RoleResource> roleNotRes  = roleResourceMapper.selectRoleResourceByRoleId(roleId);
+                if(null!= roleNotRes && !roleNotRes.isEmpty()){
+                    for (RoleResource roleNotRe : roleNotRes) {
+                        roleResourceMapper.deleteByPrimaryKey(roleNotRe.getRoleResId());
                     }
+                }
+                for (Integer resourceId : resourceIds) {
+
+
                     //保存角色资源信息
                     RoleResource roleResource = new RoleResource();
                     roleResource.setRoleId(roleId);

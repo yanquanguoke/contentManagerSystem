@@ -54,6 +54,7 @@ import org.springframework.context.annotation.DependsOn;
 import org.springframework.core.annotation.Order;
 
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -101,10 +102,10 @@ public class ShiroConfiguration {
         filterChainDefinitionMap.put("/static/**", "anon");//anon 可以理解为不拦截
 
         //动态URL过滤
-        Resource res = resourceMapper.selectByPrimaryKey(2);
-        filterChainDefinitionMap.put(res.getResLinkAddress(), "perms["+res.getResModelCode()+"]");
-
-
+        List<Resource> resList= resourceMapper.selectResUrlAllList();
+        for (Resource resource : resList) {
+            filterChainDefinitionMap.put(resource.getResLinkAddress(), "perms["+resource.getResModelCode()+"]");
+        }
         filterChainDefinitionMap.put("/**", "authc");//表示需要认证才可以访问
 
         shiroFilterFactoryBean.setFilterChainDefinitionMap(filterChainDefinitionMap);
