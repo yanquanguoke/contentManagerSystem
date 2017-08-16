@@ -66,7 +66,7 @@
         <div class="layui-inline">
             <label class="layui-form-label">父级菜单</label>
             <div class="layui-input-inline">
-                <select id="resParentid" name="resParentid" >
+                <select id="resParentid" name="resParentid" lay-verify="resParentid">
                     <option value="">请选择</option>
                 </select>
             </div>
@@ -84,7 +84,7 @@
         <div class="layui-inline">
             <label class="layui-form-label">菜单图标</label>
             <div class="layui-input-inline">
-                <input type="text" class="layui-input" id="resImage" name="resImage" value="${res.resImage}" disabled>
+                <input type="text" class="layui-input" id="resImage" name="resImage" lay-verify="required" value="${res.resImage}" disabled>
             </div>
             <div class="layui-form-mid layui-word-aux">
                 <a class="layui-btn layui-btn-mini select_img" data-id="" title="选择图标"><i class="layui-icon larry-icon larry-tupianguanli"></i></a>'
@@ -276,20 +276,29 @@
                 }
 
             },
+            resParentid:function(value,item){
+                //验证父级菜单
+                var  resLevel = $("#resLevel").val();
+                if((resLevel == 2 || resLevel == 3)&& value == ''){
+                    return '父级菜单不能为空';
+                }
+            },
             resLinkAddress: function(value, item){
                 //验证菜单路径
+                var  resLevel = $("#resLevel").val();
+                if((resLevel == 2 || resLevel == 3)&& value == ''){
+                    return '菜单路径不能为空';
+                }
                 if(value != '' && !new RegExp("^[a-zA-Z/.]+$").test(value)){
                     return '菜单路径只能为英文';
                 }
 
             },
-
             resDisplayOrder: function(value, item){
                 //验证排序
                 if(value != '' && !new RegExp("^[0-9]*$").test(value)){
                     return '排序只能为数字';
                 }
-                //验证登陆账号是否存在
 
             }
         });

@@ -72,8 +72,8 @@
         form.verify({
             roleName: function(value, item){
                 //角色名称
-                if(!new RegExp("^[a-zA-Z0-9_\u4e00-\u9fa5\\s·]+$").test(value)){
-                    return '角色名称不能有特殊字符';
+                if(!new RegExp("^[a-zA-Z\u4e00-\u9fa5]+$").test(value)){
+                    return '角色名称只能为中文或字母';
                 }
             }
         });
