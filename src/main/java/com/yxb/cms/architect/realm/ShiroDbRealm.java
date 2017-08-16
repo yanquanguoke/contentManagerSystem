@@ -32,8 +32,6 @@
  */
 package com.yxb.cms.architect.realm;
 
-import com.yxb.cms.dao.ResourceMapper;
-import com.yxb.cms.dao.UserMapper;
 import com.yxb.cms.domain.vo.Resource;
 import com.yxb.cms.domain.vo.User;
 import com.yxb.cms.service.ResourceService;
