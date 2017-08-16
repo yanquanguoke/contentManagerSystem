@@ -42,18 +42,22 @@
                         <a class="layui-btn userSearchList_btn" lay-submit lay-filter="userSearchFilter"><i class="layui-icon larry-icon larry-chaxun7"></i>查询</a>
                     </form>
                 </div>
-                    <shiro:hasPermission name="0rbT8t2P">
-                        <div class="layui-inline">
-                            <a class="layui-btn layui-btn-normal userAdd_btn"> <i class="layui-icon larry-icon larry-xinzeng1"></i>新增用户</a>
-                        </div>
-                    </shiro:hasPermission>
+                <shiro:hasPermission name="0rbT8t2P">
+                    <div class="layui-inline">
+                        <a class="layui-btn layui-btn-normal userAdd_btn"> <i class="layui-icon larry-icon larry-xinzeng1"></i>新增用户</a>
+                    </div>
+                </shiro:hasPermission>
+                <shiro:hasPermission name="0jOfTHGx">
+                    <div class="layui-inline">
+                        <a class="layui-btn layui-btn-normal excelUserExport_btn"  style="background-color:#5FB878"> <i class="layui-icon larry-icon larry-danye"></i>导出</a>
+                    </div>
+                </shiro:hasPermission>
+                <shiro:hasPermission name="lBE3hz5c">
+                    <div class="layui-inline">
+                        <a class="layui-btn layui-btn-danger userBatchFail_btn"><i class="layui-icon larry-icon larry-shanchu"></i>批量失效</a>
+                    </div>
+                </shiro:hasPermission>
 
-                <div class="layui-inline">
-                    <a class="layui-btn layui-btn-normal excelUserExport_btn"  style="background-color:#5FB878"> <i class="layui-icon larry-icon larry-danye"></i>导出</a>
-                </div>
-                <div class="layui-inline">
-                    <a class="layui-btn layui-btn-danger userBatchFail_btn"><i class="layui-icon larry-icon larry-shanchu"></i>批量失效</a>
-                </div>
             </blockquote>
             <div class="larry-separate"></div>
             <!-- 用户列表 -->
@@ -266,9 +270,16 @@
                             }
                             //操作按钮
                             var opt ='<div class="layui-btn-group">';
-                                opt+=  '<a class="layui-btn layui-btn-mini user_edit" data-id="'+item.userId+'"><i class="layui-icon larry-icon larry-bianji2"></i> 编辑</a>';
-                                opt+=  '<a class="layui-btn layui-btn-mini layui-btn-warm  user_grant" data-id="'+item.userId+'" data-status= "'+item.userStatus+'"><i class="layui-icon larry-icon larry-jiaoseguanli3"></i>角色</a>';
-                                opt+=  '<a class="layui-btn layui-btn-mini layui-btn-danger  user_fail" data-id="'+item.userId+'" data-status= "'+item.userStatus+'"><i class="layui-icon larry-icon larry-ttpodicon"></i>失效</a>';
+                                <shiro:hasPermission name="fSv1B2kZ">
+                                    opt+=  '<a class="layui-btn layui-btn-mini user_edit" data-id="'+item.userId+'"><i class="layui-icon larry-icon larry-bianji2"></i> 编辑</a>';
+                                </shiro:hasPermission>
+                                <shiro:hasPermission name="mScICO9G">
+                                    opt+=  '<a class="layui-btn layui-btn-mini layui-btn-warm  user_grant" data-id="'+item.userId+'" data-status= "'+item.userStatus+'"><i class="layui-icon larry-icon larry-jiaoseguanli3"></i>角色</a>';
+                                </shiro:hasPermission>
+                                <shiro:hasPermission name="uBg9TdEr">
+                                    opt+=  '<a class="layui-btn layui-btn-mini layui-btn-danger  user_fail" data-id="'+item.userId+'" data-status= "'+item.userStatus+'"><i class="layui-icon larry-icon larry-ttpodicon"></i>失效</a>';
+                                </shiro:hasPermission>
+
                                 opt+= '</div>';
                             //组装table
                             $("#userTbody").append(

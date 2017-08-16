@@ -21,7 +21,7 @@
      <h1>CMS 后台管理系统</h1></p>
     <form class="layui-form" action="" method="post">
         <div class="layui-form-item">
-            <input type="text" name="username" lay-verify="required" placeholder="请输入账号" autocomplete="off"  value="admin" class="layui-input">
+            <input type="text" name="username" lay-verify="required" placeholder="请输入账号" autocomplete="off"  value="user_readonly" class="layui-input">
         </div>
         <div class="layui-form-item">
                 <input type="password" name="password" lay-verify="required" placeholder="请输入密码" autocomplete="off" value="123456" class="layui-input">

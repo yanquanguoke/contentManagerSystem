@@ -127,7 +127,6 @@ public class ShiroDbRealm extends AuthorizingRealm {
             List<Resource> resUserList = resourceService.selectResListByUserId(user.getUserId());
             for (Resource resUser : resUserList) {
                 info.addStringPermission(resUser.getResModelCode());
-                log.info(resUser.getResModelCode());
             }
         }
         return  info;

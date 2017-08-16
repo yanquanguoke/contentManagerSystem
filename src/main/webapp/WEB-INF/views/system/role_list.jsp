@@ -42,15 +42,22 @@
                         <a class="layui-btn roleSearchList_btn" lay-submit lay-filter="roleSearchFilter"><i class="layui-icon larry-icon larry-chaxun7"></i>查询</a>
                     </form>
                 </div>
-                <div class="layui-inline">
-                    <a class="layui-btn layui-btn-normal  roleAdd_btn"> <i class="layui-icon larry-icon larry-xinzeng1"></i>新增角色</a>
-                </div>
-                <div class="layui-inline">
-                    <a class="layui-btn layui-btn-normal excelRoleExport_btn"  style="background-color:#5FB878"> <i class="layui-icon larry-icon larry-danye"></i>导出</a>
-                </div>
-                <div class="layui-inline">
-                    <a class="layui-btn layui-btn-danger roleBatchFail_btn"><i class="layui-icon larry-icon larry-shanchu"></i>批量失效</a>
-                </div>
+                <shiro:hasPermission name="nxRVZA5i">
+                    <div class="layui-inline">
+                        <a class="layui-btn layui-btn-normal  roleAdd_btn"> <i class="layui-icon larry-icon larry-xinzeng1"></i>新增角色</a>
+                    </div>
+                </shiro:hasPermission>
+                <shiro:hasPermission name="oCNcsKmk">
+                    <div class="layui-inline">
+                        <a class="layui-btn layui-btn-normal excelRoleExport_btn"  style="background-color:#5FB878"> <i class="layui-icon larry-icon larry-danye"></i>导出</a>
+                    </div>
+                </shiro:hasPermission>
+                <shiro:hasPermission name="qsieHTy4">
+                    <div class="layui-inline">
+                        <a class="layui-btn layui-btn-danger roleBatchFail_btn"><i class="layui-icon larry-icon larry-shanchu"></i>批量失效</a>
+                    </div>
+                </shiro:hasPermission>
+
             </blockquote>
             <div class="larry-separate"></div>
             <!-- 角色列表 -->
@@ -248,9 +255,15 @@
                                 roleRemarkLable = item.roleRemark;
                             }
                             var opt ='<div class="layui-btn-group">';
-                            opt+=  '<a class="layui-btn layui-btn-mini role_edit" data-id="'+item.roleId+'"><i class="layui-icon larry-icon larry-bianji2"></i> 编辑</a>';
-                            opt+=  '<a class="layui-btn layui-btn-mini layui-btn-warm  role_grant" data-id="'+item.roleId+'" data-status= "'+item.roleStatus+'"><i class="layui-icon larry-icon larry-quanxianguanli"></i>权限</a>';
-                            opt+=  '<a class="layui-btn layui-btn-mini layui-btn-danger  role_fail" data-id="'+item.roleId+'" data-status= "'+item.roleStatus+'"><i class="layui-icon larry-icon larry-ttpodicon"></i>失效</a>';
+                            <shiro:hasPermission name="moHbdnjz">
+                                opt+=  '<a class="layui-btn layui-btn-mini role_edit" data-id="'+item.roleId+'"><i class="layui-icon larry-icon larry-bianji2"></i> 编辑</a>';
+                            </shiro:hasPermission>
+                            <shiro:hasPermission name="bSG7LAmU">
+                                opt+=  '<a class="layui-btn layui-btn-mini layui-btn-warm  role_grant" data-id="'+item.roleId+'" data-status= "'+item.roleStatus+'"><i class="layui-icon larry-icon larry-quanxianguanli"></i>权限</a>';
+                            </shiro:hasPermission>
+                            <shiro:hasPermission name="tkwJk34z">
+                                opt+=  '<a class="layui-btn layui-btn-mini layui-btn-danger  role_fail" data-id="'+item.roleId+'" data-status= "'+item.roleStatus+'"><i class="layui-icon larry-icon larry-ttpodicon"></i>失效</a>';
+                            </shiro:hasPermission>
                             opt+= '</div>';
                             $("#roleTbody").append(
                                  '<tr>'+

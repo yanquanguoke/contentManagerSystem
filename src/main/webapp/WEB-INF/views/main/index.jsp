@@ -79,7 +79,7 @@
         <div class="layui-side layui-bg-black">
             <div class="user-photo">
                 <a class="img" title="我的头像" ><img src="${ctx}/static/img/face.jpg"></a>
-                <p>你好！<span class="userName">系统管理员</span>, 欢迎登录</p>
+                <p>你好！<span class="userName" id="userNameSpan" title="${LOGIN_NAME.userName}">${LOGIN_NAME.userName}</span>, 欢迎登录</p>
             </div>
             <!-- 左侧菜单-->
             <div class="navBar layui-side-scroll" id="navBarId"></div>
@@ -140,3 +140,23 @@
 
 </body>
 </html>
+
+<script type="text/javascript">
+    layui.config({
+        base : "${ctx}/static/js/"
+    }).use(['form', 'laypage', 'layer','common'], function () {
+        var $ = layui.jquery,
+                form = layui.form(),
+                laypage = layui.laypage,
+                layer = layui.layer,
+                common = layui.common;
+
+
+
+        if($("#userNameSpan").text().length > 6){
+            $("#userNameSpan").text($("#userNameSpan").text().substring(0,6) +"...");
+
+        }
+    });
+
+</script>
