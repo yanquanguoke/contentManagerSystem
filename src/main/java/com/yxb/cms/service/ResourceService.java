@@ -66,6 +66,8 @@ public class ResourceService {
 	@Autowired
 	private ResourceMapper resourceMapper;
 
+    private ShiroService shiroService;
+
     /**
      * 资源信息分页显示
      * @param resource
@@ -229,6 +231,9 @@ public class ResourceService {
                 res.setModifyTime(new Date());
                 resourceMapper.updateByPrimaryKeySelective(res);
             }
+
+          
+
         } catch (Exception e) {
             log.error("保存菜单信息方法内部错误",e);
             throw e;

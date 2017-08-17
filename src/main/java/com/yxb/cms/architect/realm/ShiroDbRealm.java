@@ -43,6 +43,7 @@ import org.apache.shiro.authc.*;
 import org.apache.shiro.authz.AuthorizationException;
 import org.apache.shiro.authz.AuthorizationInfo;
 import org.apache.shiro.authz.SimpleAuthorizationInfo;
+import org.apache.shiro.cache.Cache;
 import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -125,8 +126,30 @@ public class ShiroDbRealm extends AuthorizingRealm {
             List<Resource> resUserList = resourceService.selectResListByUserId(user.getUserId());
             for (Resource resUser : resUserList) {
                 info.addStringPermission(resUser.getResModelCode());
+                log.info("权限"+resUser.getResName()+" --");
             }
         }
         return  info;
     }
+
+
+
+    /**
+     * 清除所有用户授权信息缓存.
+     */
+    public void clearAllCachedAuthorizationInfo()
+    {
+
+        log.info("清除所有账号缓存");
+        Cache<Object, AuthorizationInfo> cache = getAuthorizationCache();
+        if (cache != null)
+        {
+            for (Object key : cache.keys())
+            {
+                cache.remove(key);
+            }
+        }
+    }
+
+
 }

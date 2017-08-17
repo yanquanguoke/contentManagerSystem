@@ -34,6 +34,7 @@ package com.yxb.cms.service;
 
 import com.yxb.cms.architect.constant.BusinessConstants;
 import com.yxb.cms.architect.constant.BussinessCode;
+import com.yxb.cms.architect.realm.ShiroDbRealm;
 import com.yxb.cms.architect.utils.BussinessMsgUtil;
 import com.yxb.cms.architect.utils.ParseObjectUtils;
 import com.yxb.cms.dao.ResourceMapper;
@@ -48,6 +49,8 @@ import com.yxb.cms.domain.vo.RoleResource;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.mgt.RealmSecurityManager;
 import org.nutz.json.Json;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -76,6 +79,8 @@ public class RoleService {
     private RoleResourceMapper roleResourceMapper;
     @Autowired
     private ResourceMapper resourceMapper;
+    @Autowired
+    private ShiroService shiroService;
     /**
      * 根据角色Id查询角色信息
      *
@@ -379,6 +384,17 @@ public class RoleService {
             }else{   //如果资源Id为空，则清空当前角色所有的菜单资源信息
                 roleResourceMapper.deleteRoleResourceByRoleId(roleId);
             }
+
+            //动态更新菜单权限
+            shiroService.updatePermission();
+
+
+            RealmSecurityManager securityManager =
+                    (RealmSecurityManager) SecurityUtils.getSecurityManager();
+            ShiroDbRealm userRealm = (ShiroDbRealm)securityManager.getRealms().iterator().next();
+            userRealm.clearAllCachedAuthorizationInfo();
+
+
         } catch (Exception e) {
             log.error("保存角色信息授权信息方法内部错误", e);
             throw e;
