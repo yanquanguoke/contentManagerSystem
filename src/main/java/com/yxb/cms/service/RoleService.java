@@ -353,7 +353,6 @@ public class RoleService {
      */
     @Transactional
     public BussinessMsg saveOrUpdateRoleResource(Integer roleId, Integer[] resourceIds,String loginName) throws Exception {
-        // TODO BUG 需修改
         log.info("保存角色信息授权信息开始,参数,roleId:"+roleId+",resourceIds:"+ Arrays.toString(resourceIds));
         long start = System.currentTimeMillis();
         try {

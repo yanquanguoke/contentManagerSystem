@@ -39,12 +39,14 @@ import com.yxb.cms.dao.ResourceMapper;
 import com.yxb.cms.domain.bo.BussinessMsg;
 import com.yxb.cms.domain.vo.Resource;
 import com.yxb.cms.service.ResourceService;
+import org.nutz.json.Json;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -70,7 +72,7 @@ public class ResourceController extends BasicController {
      */
     @RequestMapping("/res_list.do")
     public String toResListPage() {
-        return "system/res_list";
+        return "system/res_tree_list";
     }
 
 
@@ -84,6 +86,19 @@ public class ResourceController extends BasicController {
     public String ajaxResourceList(Resource resource){
         return resourceService.selectResourceResultPageList(resource);
     }
+
+    /**
+     * 加载资源列表List
+     * @param resource
+     * @return
+     */
+    @RequestMapping("/ajax_res_tree_list.do")
+    @ResponseBody
+    public String ajaxResourceTreeList(Resource resource){
+        List<Resource> resourceList = resourceMapper.selectResourceAllList();
+        return Json.toJson(resourceList);
+    }
+
 
     /**
      * 选择图标
