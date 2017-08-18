@@ -126,7 +126,6 @@ public class ShiroDbRealm extends AuthorizingRealm {
             List<Resource> resUserList = resourceService.selectResListByUserId(user.getUserId());
             for (Resource resUser : resUserList) {
                 info.addStringPermission(resUser.getResModelCode());
-                log.info("权限"+resUser.getResName()+" --");
             }
         }
         return  info;
@@ -137,19 +136,13 @@ public class ShiroDbRealm extends AuthorizingRealm {
     /**
      * 清除所有用户授权信息缓存.
      */
-    public void clearAllCachedAuthorizationInfo()
-    {
-
+    public void clearAllCachedAuthorizationInfo(){
         log.info("清除所有账号缓存");
         Cache<Object, AuthorizationInfo> cache = getAuthorizationCache();
-        if (cache != null)
-        {
-            for (Object key : cache.keys())
-            {
+        if (cache != null){
+            for (Object key : cache.keys()) {
                 cache.remove(key);
             }
         }
     }
-
-
 }

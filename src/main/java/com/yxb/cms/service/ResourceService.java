@@ -66,7 +66,7 @@ public class ResourceService {
 	@Autowired
 	private ResourceMapper resourceMapper;
 
-    private ShiroService shiroService;
+
 
     /**
      * 资源信息分页显示

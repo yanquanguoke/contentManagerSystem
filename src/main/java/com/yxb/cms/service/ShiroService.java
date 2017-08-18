@@ -1,8 +1,11 @@
 package com.yxb.cms.service;
 
+import com.yxb.cms.architect.realm.ShiroDbRealm;
 import com.yxb.cms.dao.ResourceMapper;
 import com.yxb.cms.domain.vo.Resource;
+import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.cache.ehcache.EhCacheManager;
+import org.apache.shiro.mgt.RealmSecurityManager;
 import org.apache.shiro.spring.web.ShiroFilterFactoryBean;
 import org.apache.shiro.web.filter.mgt.DefaultFilterChainManager;
 import org.apache.shiro.web.filter.mgt.PathMatchingFilterChainResolver;
@@ -84,6 +87,16 @@ public class ShiroService  {
     }
 
 
+    /**
+     * 清空权限缓存信息
+     */
+    public void clearAllCacheAuth(){
+        //清空权限缓存信息
+        RealmSecurityManager securityManager = (RealmSecurityManager) SecurityUtils.getSecurityManager();
+        ShiroDbRealm userRealm = (ShiroDbRealm)securityManager.getRealms().iterator().next();
+        userRealm.clearAllCachedAuthorizationInfo();
+
+    }
 
 
 }

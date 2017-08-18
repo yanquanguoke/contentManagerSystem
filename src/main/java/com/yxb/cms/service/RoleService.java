@@ -183,6 +183,12 @@ public class RoleService {
             params.put("modifierTime", new Date());
             params.put("roleId", roleId);
             roleMapper.updateRoleByStatus(params);
+
+
+            // 清空用户权限缓存信息
+            shiroService.clearAllCacheAuth();
+
+
         } catch (Exception e) {
             log.error("角色失效方法内部错误",e);
             throw e;
@@ -218,6 +224,9 @@ public class RoleService {
                     params.put("roleId", roleId);
                     roleMapper.updateRoleByStatus(params);
                 }
+
+                // 清空用户权限缓存信息
+                shiroService.clearAllCacheAuth();
             }
 
         } catch (Exception e) {
@@ -384,15 +393,9 @@ public class RoleService {
             }else{   //如果资源Id为空，则清空当前角色所有的菜单资源信息
                 roleResourceMapper.deleteRoleResourceByRoleId(roleId);
             }
+            // 清空用户权限缓存信息
+            shiroService.clearAllCacheAuth();
 
-            //动态更新菜单权限
-            shiroService.updatePermission();
-
-
-            RealmSecurityManager securityManager =
-                    (RealmSecurityManager) SecurityUtils.getSecurityManager();
-            ShiroDbRealm userRealm = (ShiroDbRealm)securityManager.getRealms().iterator().next();
-            userRealm.clearAllCachedAuthorizationInfo();
 
 
         } catch (Exception e) {

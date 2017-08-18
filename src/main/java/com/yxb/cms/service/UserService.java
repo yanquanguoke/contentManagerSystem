@@ -72,6 +72,10 @@ public class UserService {
     private RoleMapper roleMapper;
     @Autowired
     private UserRoleMapper userRoleMapper;
+
+    @Autowired
+    private ShiroService shiroService;
+
     /**
      * 根据用户Id查询用户信息
      * @param userLoginName 登陆用户名
@@ -182,6 +186,10 @@ public class UserService {
             params.put("updateTime", new Date());
             params.put("userId", userId);
             userMapper.updateUserByStatus(params);
+
+            // 清空用户权限缓存信息
+            shiroService.clearAllCacheAuth();
+
         } catch (Exception e) {
             log.error("失效用户方法内部错误",e);
             throw e;
@@ -219,6 +227,9 @@ public class UserService {
                     params.put("userId", userId);
                     userMapper.updateUserByStatus(params);
                 }
+
+                // 清空用户权限缓存信息
+                shiroService.clearAllCacheAuth();
             }
 
         } catch (Exception e) {
@@ -341,6 +352,10 @@ public class UserService {
                     }
                 }
             }
+
+            // 清空用户权限缓存信息
+            shiroService.clearAllCacheAuth();
+
         } catch (Exception e) {
             log.error("用户分配角色信息方法内部错误",e);
             throw e;
