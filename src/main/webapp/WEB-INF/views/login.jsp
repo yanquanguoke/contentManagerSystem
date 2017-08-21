@@ -27,10 +27,10 @@
         <h1>CMS 后台管理系统</h1></p>
         <form class="layui-form" action="" method="post">
             <div class="layui-form-item">
-                <input type="text" name="username" lay-verify="required" placeholder="请输入账号" autocomplete="off"  value="admin" class="layui-input">
+                <input type="text" name="username" lay-verify="required" placeholder="请输入账号" autocomplete="off"  value="" class="layui-input">
             </div>
             <div class="layui-form-item">
-                <input type="password" name="password" lay-verify="required" placeholder="请输入密码" autocomplete="off" value="900903" class="layui-input">
+                <input type="password" name="password" lay-verify="required" placeholder="请输入密码" autocomplete="off" value="" class="layui-input">
             </div>
             <button class="layui-btn login_btn" lay-submit="" lay-filter="login">登陆系统</button>
         </form>
@@ -54,7 +54,7 @@
              elem: '#login_carousel',
              width: '100%',
              height: '100%',
-             interval:2500,
+             interval:2000,
              arrow: 'none',
              anim: 'fade',
              indicator:'none'

@@ -72,7 +72,7 @@ public class ResourceController extends BasicController {
      */
     @RequestMapping("/res_list.do")
     public String toResListPage() {
-        return "system/res_list";
+        return "system/res_tree_list.jsp";
     }
 
 
