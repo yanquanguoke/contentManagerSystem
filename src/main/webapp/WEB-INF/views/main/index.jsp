@@ -14,22 +14,22 @@
     <meta name="format-detection" content="telephone=no">
     <link rel="shortcut icon" href="${ctx}/static/img/favicon.ico">
 
-    <link rel="stylesheet" href="${ctx}/static/layui/css/layui.css">
+    <link rel="stylesheet" href="${ctx}/static/layui_v2/css/layui.css">
     <link rel="stylesheet" href="${ctx}/static/css/global.css">
 
     <link rel="stylesheet" type="text/css" href="http://at.alicdn.com/t/font_9h680jcse4620529.css">
     <link rel="stylesheet" href="${ctx}/static/css/main.css">
     <link rel="stylesheet" href="${ctx}/static/css/backstage.css">
-    <script src="${ctx}/static/layui/layui.js"></script>
+    <script src="${ctx}/static/layui_v2/layui.js"></script>
     <script type="text/javascript" src="${ctx}/static/js/index.js"></script>
 
 
 </head>
 <body class="main_body larryTheme-A">
 
-    <div class="layui-layout layui-layout-admin">
+    <div class="layui-layout layui-layout-admin ">
         <!-- 顶部-->
-        <div class="layui-header header header-menu">
+        <div class="layui-header header header-menu ">
             <div class="layui-main ">
                 <a href="#" class="logo">CMS后台管理系统</a>
                 <!-- 左侧导航收缩开关 -->
@@ -146,8 +146,7 @@
         base : "${ctx}/static/js/"
     }).use(['form', 'laypage', 'layer','common'], function () {
         var $ = layui.jquery,
-                form = layui.form(),
-                laypage = layui.laypage,
+                form = layui.form,
                 layer = layui.layer,
                 common = layui.common;
 

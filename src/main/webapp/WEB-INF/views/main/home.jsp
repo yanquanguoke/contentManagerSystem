@@ -14,10 +14,10 @@
     <meta name="format-detection" content="telephone=no">
 
     <link rel="shortcut icon" href="${ctx}/static/img/favicon.ico">
-    <link rel="stylesheet" href="${ctx}/static/layui/css/layui.css">
+    <link rel="stylesheet" href="${ctx}/static/layui_v2/css/layui.css">
     <link rel="stylesheet" href="${ctx}/static/css/main.css">
 
-    <script src="${ctx}/static/layui/layui.js"></script>
+    <script src="${ctx}/static/layui_v2/layui.js"></script>
 
 </head>
 <body class="childrenBody">
@@ -102,38 +102,64 @@
     <div class="sysNotice col">
         <blockquote class="layui-elem-quote title">更新日志</blockquote>
         <div class="layui-elem-quote layui-quote-nm">
-
-            <h3><span style="color:#f00;"># beta-1.0.3 (测试版) - 2017-08-10</span></h3>
-            <p>*角色管理:新增查询功能</p>
-            <p>*角色管理:新增导出功能</p>
-            <p>*角色管理:新增失效、批量失效,解除用户、角色、菜单绑定关系功能</p>
-            <p>*角色管理:新增、修改表单验证 </p>
-            <p>*角色管理:新增授权功能,tree菜单展示，并选择菜单. </p>
-            <p>*部分代码优化</p>
-
-
-            <h3><span style="color:#f00;"># beta-1.0.2 (测试版) - 2017-08-06</span></h3>
-            <p>*用户管理:新增查询功能</p>
-            <p>*用户管理:新增导出功能</p>
-            <p>*用户管理:新增失效、批量失效功能</p>
-            <p>*用户管理:新增、修改表单验证 </p>
-            <p>*部分代码优化</p>
-
-
-            <h3><span style="color:#f00;"># beta-1.0.1 (测试版) - 2017-08-03</span></h3>
-            <p>*登陆页优化，加入H5视频效果，视频来源腾讯，仅供交流学习使用</p>
-            <p>*实现角色新增修改功能</p>
-            <p>*实现用户分配角色功能</p>
-
-            <h3><span style="color:#f00;"># beta-1.0.0 (测试版) - 2017-07-31</span></h3>
-            <p>*SpringBoot项目构建</p>
-            <p>*加入 mybatis+druid数据持久化功能</p>
-            <p>*加入apacheShiro权限验证</p>
-            <p>*新增用户管理、角色管理、菜单管理等部分功能实现.</p>
-            <p>*页面列表基于后台数据库交互实现table列表展示-分页、form表单提交.</p>
-            <p>*动态菜单导航,选项卡功能、弹层实现编辑保存功能</p>
-
-
+            <ul class="layui-timeline">
+                <li class="layui-timeline-item">
+                    <i class="layui-icon layui-timeline-axis">&#xe63f;</i>
+                    <div class="layui-timeline-content layui-text">
+                        <h3 class="layui-timeline-title">2017年8月10号</h3>
+                        <p>beta-1.0.3</p>
+                        <ul>
+                            <li>角色管理:新增查询功能</li>
+                            <li>角色管理:新增导出功能</li>
+                            <li>角色管理:新增失效、批量失效,解除用户、角色、菜单绑定关系功能</li>
+                            <li>角色管理:新增、修改表单验证</li>
+                            <li>角色管理:新增授权功能,tree菜单展示，并选择菜单</li>
+                            <li>部分代码优化</li>
+                        </ul>
+                    </div>
+                </li>
+                <li class="layui-timeline-item">
+                    <i class="layui-icon layui-timeline-axis">&#xe63f;</i>
+                    <div class="layui-timeline-content layui-text">
+                        <h3 class="layui-timeline-title">2017年8月6号</h3>
+                        <p>beta-1.0.2</p>
+                        <ul>
+                            <li>用户管理:新增查询功能</li>
+                            <li>用户管理:新增导出功能</li>
+                            <li>用户管理:新增失效、批量失效功能</li>
+                            <li>用户管理:新增、修改表单验证</li>
+                            <li>部分代码优化</li>
+                        </ul>
+                    </div>
+                </li>
+                <li class="layui-timeline-item">
+                    <i class="layui-icon layui-timeline-axis">&#xe63f;</i>
+                    <div class="layui-timeline-content layui-text">
+                        <h3 class="layui-timeline-title">2017年8月3号</h3>
+                        <p>beta-1.0.1</p>
+                        <ul>
+                            <li>登陆页优化，加入H5视频效果，视频来源腾讯，仅供交流学习使用</li>
+                            <li>实现角色新增修改功能</li>
+                            <li>实现用户分配角色功能</li>
+                        </ul>
+                    </div>
+                </li>
+                <li class="layui-timeline-item">
+                    <i class="layui-icon layui-timeline-axis">&#xe63f;</i>
+                    <div class="layui-timeline-content layui-text">
+                        <h3 class="layui-timeline-title">2017年7月31号</h3>
+                        <p>beta-1.0.0</p>
+                        <ul>
+                            <li>SpringBoot项目构建</li>
+                            <li>加入 mybatis+druid数据持久化功能</li>
+                            <li>加入apacheShiro权限验证</li>
+                            <li>新增用户管理、角色管理、菜单管理等部分功能实现</li>
+                            <li>页面列表基于后台数据库交互实现table列表展示-分页、form表单提交</li>
+                            <li>动态菜单导航,选项卡功能、弹层实现编辑保存功能</li>
+                        </ul>
+                    </div>
+                </li>
+            </ul>
         </div>
     </div>
     <div class="sysNotice col">

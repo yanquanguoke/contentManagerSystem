@@ -1,6 +1,6 @@
 var tabFilter,menu=[],liIndex,curNav,delMenu;
 layui.define(["element","jquery"],function(exports){
-	var element = layui.element(),
+	var element = layui.element,
 		$ = layui.jquery,
 		layId,
 		Tab = function(){
@@ -31,7 +31,7 @@ layui.define(["element","jquery"],function(exports){
         // 显示上部菜单
         var topMenuContext = $.trim($("#topMenu").html());
         if(topMenuContext == null || topMenuContext.length == 0 ){
-            var ulHtml = '<ul class="layui-nav clearfix layui-top-nav">';
+            var ulHtml = '<ul class="layui-nav clearfix layui-top-nav ">';
             $.each(pdata,function(index,item){
 
                 if(index == 0){

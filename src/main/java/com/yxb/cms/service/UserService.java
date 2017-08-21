@@ -100,7 +100,6 @@ public class UserService {
      */
     public String selectUserResultPageList(User user){
 
-
         List<User> userList = userMapper.selectUserListByPage(user);
         if(null != userList && !userList.isEmpty() ){
             for (User u : userList) {
@@ -109,12 +108,11 @@ public class UserService {
             }
         }
         Long count = userMapper.selectCountUser(user);
-        user.setTotalCount(count);
-
         Map<String, Object> map = new HashMap<String, Object>();
-        map.put("total",count);
-        map.put("totalSize",user.getTotalSize());
-        map.put("rows", userList);
+        map.put("code",0);
+        map.put("msg","");
+        map.put("count",count);
+        map.put("data", userList);
 
         return Json.toJson(map);
     }

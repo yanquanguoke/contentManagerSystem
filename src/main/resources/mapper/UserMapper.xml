@@ -210,7 +210,7 @@
         from cc_user
         <include refid="selectPageParmas" />
         order by create_time DESC
-        LIMIT #{start},#{rows}
+        LIMIT #{start},#{limit}
     </select>
 
     <!-- 用户列表信息List -->

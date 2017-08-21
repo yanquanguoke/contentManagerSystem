@@ -15,14 +15,14 @@
     <meta name="format-detection" content="telephone=no">
     <link rel="shortcut icon" href="${ctx}/static/img/favicon.ico">
 
-    <link rel="stylesheet" href="${ctx}/static/layui/css/layui.css">
+    <link rel="stylesheet" href="${ctx}/static/layui_v2/css/layui.css">
     <link rel="stylesheet" href="${ctx}/static/css/global.css">
     <link rel="stylesheet" type="text/css" href="${ctx}/static/css/common.css" media="all">
     <link rel="stylesheet" type="text/css" href="${ctx}/static/css/personal.css" media="all">
     <link rel="stylesheet" type="text/css" href="http://at.alicdn.com/t/font_9h680jcse4620529.css">
+    <script src="${ctx}/static/layui_v2/layui.js"></script>
 
 
-    <script src="${ctx}/static/layui/layui.js"></script>
 <body>
 <div class="larry-grid larryTheme-A">
     <div class="larry-personal">
@@ -62,273 +62,90 @@
             <div class="larry-separate"></div>
             <!-- 用户列表 -->
             <div class="layui-tab-item layui-field-box layui-show">
-                <div class="layui-form">
-                    <table class="layui-table" lay-even="" lay-skin="row">
-                        <thead >
-                            <tr>
-                                <th><input name="" lay-skin="primary" lay-filter="allChoose" type="checkbox"></th>
-                                <th>登陆账号</th>
-                                <th>用户姓名</th>
-                                <th>用户状态</th>
-                                <th>拥有角色</th>
-                                <th>创建人</th>
-                                <th>创建时间</th>
-                                <th>修改人</th>
-                                <th>修改时间</th>
-                                <th>操作</th>
-                            </tr>
-                        </thead>
-                        <tbody id="userTbody"></tbody>
-                    </table>
-                </div>
-                <div class="larry-table-page clearfix" id="userPage"></div>
+                <table id="userTableList"></table>
             </div>
-
         </div>
     </div>
 </div>
 <script type="text/javascript">
     layui.config({
         base : "${ctx}/static/js/"
-    }).use(['form', 'laypage', 'layer','common'], function () {
-        var $ = layui.jquery,
-                form = layui.form(),
-                laypage = layui.laypage,
+    }).use(['form', 'table', 'layer','common'], function () {
+        var $ =  layui.$,
+                form = layui.form,
+                table = layui.table,
                 layer = layui.layer,
                 common = layui.common;
+        /**用户表格加载*/
+        var userTableRender= table.render({
+            elem: '#userTableList',
+            url: '${ctx}/user/ajax_user_list.do',
+            method: 'post',
+            height:'480',
+            skin:'row',
+            even:'true',
 
-
-        /**加载用户列表信息*/
-        userPageList(1);
-        /**全选*/
-        form.on('checkbox(allChoose)', function (data) {
-            var child = $(data.elem).parents('table').find('tbody input[type="checkbox"]');
-            child.each(function (index, item) {
-                item.checked = data.elem.checked;
-            });
-            form.render('checkbox');
+            cols: [[
+                {checkbox: true},
+                {field:'userLoginName', title: '登陆账号',width: 150 },
+                {field:'userName', title: '用户姓名',width: 150},
+                {field:'userStatus', title: '用户状态',width: 150,templet: '#userStatusTpl'},
+                {field:'roleNames', title: '拥有角色',width: 200},
+                {field:'creator', title: '创建人',width: 150},
+                {field:'createTime', title: '创建时间',width: 150},
+                {field:'modifier', title: '修改人',width: 150},
+                {field:'updateTime', title: '修改时间',width: 150},
+                {field:'right', title: '操作',align:'center',width: 150,toolbar: '#barDemo'}
+            ]],
+            page: true,
+            limit: 10, //默认显示10条
         });
+
+
+
         /**添加用户*/
         $(".userAdd_btn").click(function(){
             var url = "${ctx}/user/user_add.do";
             common.cmsLayOpen('新增用户',url,'550px','265px');
         });
-        /**修改用户*/
-        $("body").on("click",".user_edit",function(){
-            var userId = $(this).attr("data-id");
-            var url =  "${ctx}/user/user_update.do?userId="+userId;
-            common.cmsLayOpen('编辑用户',url,'550px','265px');
 
+        //监听工具条
+        table.on('tool(userTableList)', function(obj){ //注：tool是工具条事件名，test是table原始容器的属性 lay-filter="对应的值"
+            var data = obj.data; //获得当前行数据
+            var layEvent = obj.event; //获得 lay-event 对应的值
+            alert(layEvent);
         });
 
-        /**用户失效*/
-        $("body").on("click",".user_fail",function(){
-            var userId = $(this).attr("data-id");
-            var userStatus = $(this).attr("data-status");
-            var currentUserId = '${LOGIN_NAME.userId}';/*当前登录用户的ID*/
-            if(userStatus == 1){
-                common.cmsLayErrorMsg("当前用户已失效");
-                return false;
-            }
-            if(userId == currentUserId){
-                common.cmsLayErrorMsg("当前登陆用户不能被失效");
-                return false;
-            }
 
-            var url = "${ctx}/user/ajax_user_fail.do";
-            var param = {userId:userId};
-            common.ajaxCmsConfirm('系统提示', '确定失效用户，并解除与角色绑定关系吗?',url,param);
-
-        });
-        /**分配角色*/
-        $("body").on("click",".user_grant",function(){
-            var userId = $(this).attr("data-id");
-            var userStatus = $(this).attr("data-status");
-            if(userStatus == 1){
-                common.cmsLayErrorMsg("当前用户已失效,不能被分配角色");
-                return false;
-            }
-            var url =  "${ctx}/user/user_grant.do?userId="+userId;
-            common.cmsLayOpen('分配角色',url,'500px','440px');
-
-
-        });
-        /**导出用户信息*/
-        $(".excelUserExport_btn").click(function(){
-            var url = '${ctx}/user/excel_users_export.do';
-            $("#userSearchForm").attr("action",url);
-            $("#userSearchForm").submit();
-        });
-            //
-        /**查询*/
-        $(".userSearchList_btn").click(function(){
-            //监听提交
-            form.on('submit(userSearchFilter)', function (data) {
-                userPageList(1,data.field.searchTerm,data.field.searchContent);
-            });
-
-        });
-        /**批量失效*/
-        $(".userBatchFail_btn").click(function(){
-            if($("input:checkbox[name='userIdCK']:checked").length == 0){
-                common.cmsLayErrorMsg("请选择要失效的用户信息");
-            }else{
-                var isCreateBy = false;
-                var userStatus = false;
-                var currentUserName = '${LOGIN_NAME.userId}';
-                var userIds = [];
-
-                $("input:checkbox[name='userIdCK']:checked").each(function(){
-                    userIds.push($(this).val());
-                    //不能失效当前登录用户
-                    if(currentUserName != $(this).val()){
-                        isCreateBy = true;
-                    }else{
-                        isCreateBy = false;
-                        return false;
-                    }
-                    //用户已失效
-                    if($(this).attr('alt') == 0){
-                        userStatus = true;
-                    }else{
-                        userStatus = false;
-                        return false;
-                    }
-
-                });
-                if(isCreateBy==false){
-                    common.cmsLayErrorMsg("当前登录用户不能被失效,请重新选择");
-
-                    return false;
-                }
-                if(userStatus==false){
-                    common.cmsLayErrorMsg("当前选择的用户已失效");
-
-                    return false;
-                }
-                var url = "${ctx}/user/ajax_user_batch_fail.do";
-                var param = {userIds:userIds};
-                common.ajaxCmsConfirm('系统提示', '确定失效当前用户，并解除与角色绑定关系吗?',url,param);
-            }
-
-
-
-        });
-
-        /**加载用户信息**/
-        function userPageList(curr,searchTerm,searchContent){
-            var pageLoading = layer.load(2);
-            $.ajax({
-                url : '${ctx}/user/ajax_user_list.do',
-                type : 'post',
-                data :{
-                    page: curr || 1 ,   //当前页
-                    rows: 7 ,          //每页显示7条数据
-                    searchTerm: searchTerm,
-                    searchContent: searchContent
-                },
-                success : function(data) {
-                    if(data != "" ){
-                        $("#userTbody").text('');//先清空原先内容
-                        var pdata = $.parseJSON(data);
-                        $(pdata.rows).each(function(index,item){
-
-                            //登陆用户名
-                            var userLoginNameLable;
-                            if(objNull(item.userLoginName) != "" && item.userLoginName.length > 20){
-                                userLoginNameLable = item.userLoginName.substring(0,20) +"...";
-
-                            }else{
-                                userLoginNameLable = item.userLoginName;
-                            }
-
-                            //用户姓名
-                            var userNameLable;
-                            if(objNull(item.userName) != "" && item.userName.length > 9){
-                                userNameLable = item.userName.substring(0,9) +"...";
-
-                            }else{
-                                userNameLable = item.userName;
-                            }
-                            //用户状态
-                            var userStatusLable;
-                            switch (item.userStatus){
-                                case 0:
-                                    userStatusLable = '<span class="label label-success ">0-有效</span>';
-                                    break;
-                                case 1:
-                                    userStatusLable = '<span class="label label-danger ">1-失效</span>'
-                                    break;
-                            }
-                            //拥有角色
-                            var roleNamesLable;
-                            if(objNull(item.roleNames) != "" && item.roleNames.length > 15){
-                                roleNamesLable = item.roleNames.substring(0,15) +"...";
-
-                            }else{
-                                roleNamesLable = item.roleNames;
-                            }
-                            //操作按钮
-                            var opt ='<div class="layui-btn-group">';
-                                <shiro:hasPermission name="fSv1B2kZ">
-                                    opt+=  '<a class="layui-btn layui-btn-mini user_edit" data-id="'+item.userId+'"><i class="layui-icon larry-icon larry-bianji2"></i> 编辑</a>';
-                                </shiro:hasPermission>
-                                <shiro:hasPermission name="mScICO9G">
-                                    opt+=  '<a class="layui-btn layui-btn-mini layui-btn-warm  user_grant" data-id="'+item.userId+'" data-status= "'+item.userStatus+'"><i class="layui-icon larry-icon larry-jiaoseguanli3"></i>角色</a>';
-                                </shiro:hasPermission>
-                                <shiro:hasPermission name="uBg9TdEr">
-                                    opt+=  '<a class="layui-btn layui-btn-mini layui-btn-danger  user_fail" data-id="'+item.userId+'" data-status= "'+item.userStatus+'"><i class="layui-icon larry-icon larry-ttpodicon"></i>失效</a>';
-                                </shiro:hasPermission>
-
-                                opt+= '</div>';
-                            //组装table
-                            $("#userTbody").append(
-                                    '<tr>'+
-                                    '<td><input name="userIdCK" lay-skin="primary" type="checkbox"  alt="'+item.userStatus+'" value="'+item.userId+'"></td>'+
-                                    '<td title="'+objNull(item.userLoginName)+'">'+objNull(userLoginNameLable)+'</td>'+
-                                    '<td title="'+objNull(item.userName)+'">'+objNull(userNameLable)+'</td>'+
-                                    '<td>'+userStatusLable+'</td>'+
-                                    '<td title="'+objNull(item.roleNames)+'" style="text-align:left;">'+objNull(roleNamesLable)+'</td>'+
-                                    '<td>'+item.creator+'</td>'+
-                                    '<td>'+item.createTime+'</td>'+
-                                    '<td>'+objNull(item.modifier)+'</td>'+
-                                    '<td>'+objNull(item.updateTime)+'</td>'+
-                                    '<td>'+opt+'</td>'+
-                                    '</tr>'
-                            );
-                            //重新渲染form
-                            form.render();
-
-                        });
-                        //分页
-                        laypage({
-                            cont: 'userPage',
-                            pages:  pdata.totalSize,
-                            curr: curr || 1, //当前页
-                            groups: 8, //连续显示分页数
-                            skip: true,
-                            jump: function(obj, first){ //触发分页后的回调
-                                if(!first){ //点击跳页触发函数自身，并传递当前页：obj.curr
-                                    userPageList(obj.curr);
-                                }
-                            }
-                        });
-                        layer.close(pageLoading);
-                    }
-                }
-
-            });
-        };
     });
-    /**undefined 值 过滤*/
-    function objNull(obj) {
-        if(typeof(obj) == "undefined" || obj == null){
-            return "";
-        }
-        return obj;
-    }
-
 </script>
+<!-- 用户状态tpl-->
+<script type="text/html" id="userStatusTpl">
+
+    {{# if(d.userStatus == 0){ }}
+        <span class="label label-success ">0-有效</span>
+    {{# } else if(d.userStatus == 1){ }}
+        <span class="label label-danger ">1-失效</span>
+    {{# } else { }}
+        {{d.userStatus}}
+    {{# }  }}
+</script>
+<script type="text/html" id="barDemo">
+    <a class="layui-btn layui-btn-mini" lay-event="detail">查看</a>
+    <a class="layui-btn layui-btn-mini" lay-event="edit">编辑</a>
+    <a class="layui-btn layui-btn-danger layui-btn-mini" lay-event="del">删除</a>
+</script>
+
+<!--工具条 -->
+<script type="text/html" id="userBar">
+    <div>
+    <a class="layui-btn layui-btn-mini user_edit" lay-event="user_edit"><i class="layui-icon larry-icon larry-bianji2"></i> 编辑</a>
+    <a class="layui-btn layui-btn-mini layui-btn-warm  user_grant" lay-event="user_grant"><i class="layui-icon larry-icon larry-jiaoseguanli3"></i>角色</a>
+    <a class="layui-btn layui-btn-mini layui-btn-danger user_fail" lay-event="user_fail"><i class="layui-icon larry-icon larry-ttpodicon"></i>失效</a>
+    </div>
+</script>
+
+
 
 </body>
 </html>

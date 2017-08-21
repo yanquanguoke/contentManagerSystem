@@ -43,7 +43,7 @@ public class PageDto {
 	/**当前页**/
 	private int page;
 	/**每页显示总记录数**/
-	private int rows;
+	private int limit;
 
 	/**每页的开始记录数**/
 	private int start;
@@ -53,21 +53,24 @@ public class PageDto {
     protected long totalSize = 0;
 
 
-	
+
 	public int getPage() {
 		return page;
 	}
 	public void setPage(int page) {
 		this.page = page;
 	}
-	public int getRows() {
-		return rows;
-	}
-	public void setRows(int rows) {
-		this.rows = rows;
-	}
-	public int getStart() {
-		this.start = (page-1)*rows;
+
+    public int getLimit() {
+        return limit;
+    }
+
+    public void setLimit(int limit) {
+        this.limit = limit;
+    }
+
+    public int getStart() {
+		this.start = (page-1)*limit;
 		return start;
 	}
     public long getTotalCount() {
@@ -82,8 +85,8 @@ public class PageDto {
             return -1L;
         }
 
-        long count = this.totalCount / this.rows;
-        if (this.totalCount % this.rows > 0L) {
+        long count = this.totalCount / this.limit;
+        if (this.totalCount % this.limit > 0L) {
             count += 1L;
         }
         return count;

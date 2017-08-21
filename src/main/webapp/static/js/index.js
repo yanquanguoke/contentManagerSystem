@@ -5,7 +5,7 @@ layui.config({
     var $ = layui.jquery,
         layer = layui.layer,
         common = layui.common,
-        element = layui.element() ,  //导航的hover效果、二级菜单等功能，需要依赖element模块
+        element = layui.element ,  //导航的hover效果、二级菜单等功能，需要依赖element模块
         tab = layui.bodyTab()
         ;
 
