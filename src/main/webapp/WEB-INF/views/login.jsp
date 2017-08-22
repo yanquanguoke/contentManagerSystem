@@ -34,8 +34,6 @@
             </div>
             <button class="layui-btn login_btn" lay-submit="" lay-filter="login">登陆系统</button>
         </form>
-        <span id="showUser" style="color: #fff;cursor: pointer;font-size: 12px;position: static; float: right;">登陆账号?</span>
-
     </div>
 
 </div>
@@ -91,26 +89,7 @@
             }
         });
 
-        var userInfo = '<div class="layer_notice" >'+
-                            '<ul class=" layui-layer-wrap">'+
-                                '<li>账号：user_system  密码：123456  用户系统管理员</li>'+
-                                '<li>账号:user_readonly  密码:123456  只读用户</li>'+
-                            '</ul>'+
-                        '</div>';
-        $("#showUser").click(function(){
-            layer.open({
-                type: 1,
-                title: false,
-                closeBtn: true,
-                shadeClose: false,
-                shade: 0.15,
-                content: userInfo
-            })
-
-        });
-
-
-
+        layer.alert('账号:user_system/123456 用户管理员<br>账号:user_readonly/123456 只读用户<br>原admin账号暂时回收');
     });
 
 </script>
