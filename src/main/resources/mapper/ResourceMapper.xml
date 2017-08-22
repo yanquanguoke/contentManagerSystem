@@ -332,7 +332,7 @@
     </select>
     <!-- 查询有效的,URL不为空的所有菜单信息-->
     <select id="selectResUrlAllList" resultMap="BaseResultMap">
-        SELECT * FROM CC_RESOURCE C WHERE RES_STATUS = 0 AND  C.RES_LINK_ADDRESS IS NOT NULL
+        SELECT * FROM CC_RESOURCE C WHERE RES_STATUS = 0 AND  C.RES_LINK_ADDRESS != ""
 
     </select>
 
