@@ -78,12 +78,13 @@ public class ResourceService {
         List<Resource> resourceList = resourceMapper.selectResourceListByPage(resource);
 
         Long count = resourceMapper.selectCountResource(resource);
-        resource.setTotalCount(count);
 
         Map<String, Object> map = new HashMap<String, Object>();
-        map.put("total",count);
-        map.put("totalSize",resource.getTotalSize());
-        map.put("rows", resourceList);
+
+        map.put("code",0);
+        map.put("msg","");
+        map.put("count",count);
+        map.put("data", resourceList);
 
         return Json.toJson(map);
     }

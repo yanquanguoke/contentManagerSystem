@@ -15,13 +15,13 @@
     <meta name="format-detection" content="telephone=no">
     <link rel="shortcut icon" href="${ctx}/static/img/favicon.ico">
 
-    <link rel="stylesheet" href="${ctx}/static/layui/css/layui.css">
+    <link rel="stylesheet" href="${ctx}/static/layui_v2/css/layui.css">
     <link rel="stylesheet" href="${ctx}/static/css/global.css">
 
     <link rel="stylesheet" type="text/css" href="${ctx}/static/css/common.css" media="all">
     <link rel="stylesheet" type="text/css" href="${ctx}/static/css/personal.css" media="all">
     <link rel="stylesheet" type="text/css" href="http://at.alicdn.com/t/font_9h680jcse4620529.css">
-    <script src="${ctx}/static/layui/layui.js"></script>
+    <script src="${ctx}/static/layui_v2/layui.js"></script>
 
 
 <body>
@@ -61,28 +61,8 @@
             </blockquote>
             <div class="larry-separate"></div>
             <!-- 角色列表 -->
-            <div class="layui-tab-item layui-field-box layui-show">
-                <div class="layui-form">
-                    <table class="layui-table" lay-even="" lay-skin="row">
-                        <thead >
-                            <tr>
-                                <th><input name="" lay-skin="primary" lay-filter="allChoose" type="checkbox"></th>
-                                <th>角色名称</th>
-                                <th>角色状态</th>
-                                <th>菜单资源</th>
-                                <th>角色说明</th>
-                                <th>创建人</th>
-                                <th>创建时间</th>
-                                <th>修改人</th>
-                                <th>修改时间</th>
-                                <th>操作</th>
-                            </tr>
-                        </thead>
-                        <tbody id="roleTbody">
-                        </tbody>
-                    </table>
-                </div>
-                <div class="larry-table-page clearfix" id="rolePage"></div>
+            <div class="layui-tab-item  layui-show" style="padding: 10px 15px;">
+                <table id="roleTableList"></table>
             </div>
 
         </div>
@@ -91,68 +71,59 @@
 <script type="text/javascript">
     layui.config({
         base : "${ctx}/static/js/"
-    }).use(['form', 'laypage', 'layer','common'], function () {
-        var $ = layui.jquery,
-                form = layui.form(),
-                laypage = layui.laypage,
+    }).use(['form', 'table', 'layer','common'], function () {
+        var $ =  layui.$,
+                form = layui.form,
+                table = layui.table,
                 layer = layui.layer,
                 common = layui.common;
 
-        /**加载角色列表信息*/
-        rolePageList(1);
+        /**角色表格加载*/
+        var roleTableRender = table.render({
+            elem: '#roleTableList',
+            url: '${ctx}/role/ajax_role_list.do',
+            id:'roleTableId',
+            method: 'post',
+            height:'400',
+            skin:'row',
+            even:'true',
+            size: 'sm',
+            cols: [[
+                {checkbox: true,fixed:'left',},
+                {field:'roleName', title: '角色名称',width: 120 },
+                {field:'roleStatus', title: '角色状态',width: 90,templet: '#roleStatusTpl'},
+                {field:'resourceNames', title: '菜单资源',width: 150},
+                {field:'roleRemark', title: '角色说明',width: 150},
+                {field:'creator', title: '创建人',width: 120},
+                {field:'createTime', title: '创建时间',width: 150},
+                {field:'modifier', title: '修改人',width: 120},
+                {field:'modifierTime', title: '修改时间',width: 150},
+                {fixed:'right', title: '操作', align:'center',width: 195, toolbar: '#roleBar'}
 
-        /**全选*/
-        form.on('checkbox(allChoose)', function (data) {
-            var child = $(data.elem).parents('table').find('tbody input[type="checkbox"]');
-            child.each(function (index, item) {
-                item.checked = data.elem.checked;
-            });
-            form.render('checkbox');
+            ]],
+            page: true,
+            limit: 10//默认显示10条
         });
 
+        /**查询*/
+        $(".roleSearchList_btn").click(function(){
+            //监听提交
+            form.on('submit(roleSearchFilter)', function (data) {
+                roleTableRender.reload({
+                    where: {
+                        searchTerm:data.field.searchTerm,
+                        searchContent:data.field.searchContent
+                    }
+                });
+            });
 
-         /**添加角色*/
+        });
+        /**角色新增*/
         $(".roleAdd_btn").click(function(){
-
             var url = "${ctx}/role/role_add.do";
             common.cmsLayOpen('新增角色',url,'550px','340px');
         });
 
-
-         /**修改角色*/
-         $("body").on("click",".role_edit",function(){
-             var roleId = $(this).attr("data-id");
-             var url = "${ctx}/role/role_update.do?roleId="+roleId;
-             common.cmsLayOpen('编辑角色',url,'550px','340px');
-        });
-
-        /**角色失效*/
-        $("body").on("click",".role_fail",function(){
-            var roleId = $(this).attr("data-id");
-            var roleStatus = $(this).attr("data-status");
-            if(roleStatus == 1){
-                common.cmsLayErrorMsg("当前角色已失效");
-                return false;
-            }
-
-            var url = "${ctx}/role/ajax_role_fail.do";
-            var param = {roleId:roleId};
-            common.ajaxCmsConfirm('系统提示', '失效角色、解除角色、用户、菜单绑定关系?',url,param);
-
-        });
-
-        /**角色授权*/
-        $("body").on("click",".role_grant",function(){
-            var roleId = $(this).attr("data-id");
-            var roleStatus = $(this).attr("data-status");
-            if(roleStatus == 1){
-                common.cmsLayErrorMsg("当前角色已失效,不能授权");
-                return false;
-            }
-            var url =  "${ctx}/role/role_grant.do?roleId="+roleId;
-            common.cmsLayOpen('角色授权',url,'255px','520px');
-
-        });
 
         /**导出角色信息*/
         $(".excelRoleExport_btn").click(function(){
@@ -161,34 +132,29 @@
             $("#roleSearchForm").submit();
         });
 
-        /**查询*/
-        $(".roleSearchList_btn").click(function(){
-            //监听提交
-            form.on('submit(roleSearchFilter)', function (data) {
-                rolePageList(1,data.field.searchTerm,data.field.searchContent);
-            });
-
-        });
 
         /**批量失效*/
         $(".roleBatchFail_btn").click(function(){
-            if($("input:checkbox[name='roleIdCK']:checked").length == 0){
+
+            //表格行操作
+            var checkStatus = table.checkStatus('roleTableId');
+
+            if(checkStatus.data.length == 0){
                 common.cmsLayErrorMsg("请选择要失效的角色信息");
             }else{
                 var roleStatus = false;
                 var roleIds = [];
-
-                $("input:checkbox[name='roleIdCK']:checked").each(function(){
-                    roleIds.push($(this).val());
+                $(checkStatus.data).each(function(index,item){
+                    roleIds.push(item.roleId);
                     //角色已失效
-                    if($(this).attr('alt') == 0){
+                    if(item.roleStatus == 0){
                         roleStatus = true;
                     }else{
                         roleStatus = false;
                         return false;
                     }
-
                 });
+
                 if(roleStatus==false){
                     common.cmsLayErrorMsg("当前选择的角色已失效");
                     return false;
@@ -196,120 +162,82 @@
                 var url = "${ctx}/role/ajax_role_batch_fail.do";
                 var param = {roleIds:roleIds};
                 common.ajaxCmsConfirm('系统提示', '失效角色、解除角色、用户、菜单绑定关系?',url,param);
-            }
 
+            }
         });
 
+        /**监听工具条*/
+        table.on('tool(roleTableId)', function(obj) {
+            var data = obj.data; //获得当前行数据
+            var layEvent = obj.event; //获得 lay-event 对应的值
 
-        /**加载角色信息*/
-        function rolePageList(curr,searchTerm,searchContent){
-            var pageLoading = layer.load(2);
-            $.ajax({
-                url : '${ctx}/role/ajax_role_list.do',
-                type : 'post',
-                data :{
-                    page: curr || 1 ,   //当前页
-                    rows: 7 ,          //每页显示四条数据
-                    searchTerm: searchTerm,
-                    searchContent: searchContent
-                },
-                success : function(data) {
-                    if(data != "" ){
-                        $("#roleTbody").text('');//先清空原先内容
-                        var pdata = $.parseJSON(data);
-                        $(pdata.rows).each(function(index,item){
+            //修改角色
+            if(layEvent === 'role_edit') {
+                var roleId = data.roleId;
+                var url = "${ctx}/role/role_update.do?roleId="+roleId;
+                common.cmsLayOpen('编辑角色',url,'550px','340px');
 
-                            //角色名称
-                            var roleNameLable;
-                            if(objNull(item.roleName) != "" && item.roleName.length > 9){
-                                roleNameLable = item.roleName.substring(0,9) +"...";
+            //角色授权
+            }else if(layEvent === 'role_grant'){
 
-                            }else{
-                                roleNameLable = item.roleName;
-                            }
-                            //角色状态
-                            var roleStatusLable;
-                            switch (item.roleStatus){
-                                case 0:
-                                    roleStatusLable = '<span class="label label-success">0-有效</span>';
-                                    break;
-                                case 1:
-                                    roleStatusLable = '<span class="label label-danger">1-失效</span>'
-                                    break;
-                            }
+                var roleId = data.roleId;
+                var roleStatus = data.roleStatus;
+                if(roleStatus == 1){
+                    common.cmsLayErrorMsg("当前角色已失效,不能授权");
+                    return false;
+                }
+                var url =  "${ctx}/role/role_grant.do?roleId="+roleId;
+                common.cmsLayOpen('角色授权',url,'255px','520px');
 
-                            //拥有资源
-                            var resourceNamesLable;
-                            if(objNull(item.resourceNames) != "" && item.resourceNames.length > 12){
-                                resourceNamesLable = item.resourceNames.substring(0,12) +"...";
 
-                            }else{
-                                resourceNamesLable = item.resourceNames;
-                            }
-                            //角色说明
-                            var roleRemarkLable;
-                            if(objNull(item.roleRemark) != "" && item.roleRemark.length > 12){
-                                roleRemarkLable = item.roleRemark.substring(0,12) +"...";
-
-                            }else{
-                                roleRemarkLable = item.roleRemark;
-                            }
-                            var opt ='<div class="layui-btn-group">';
-                            <shiro:hasPermission name="moHbdnjz">
-                                opt+=  '<a class="layui-btn layui-btn-mini role_edit" data-id="'+item.roleId+'"><i class="layui-icon larry-icon larry-bianji2"></i> 编辑</a>';
-                            </shiro:hasPermission>
-                            <shiro:hasPermission name="bSG7LAmU">
-                                opt+=  '<a class="layui-btn layui-btn-mini layui-btn-warm  role_grant" data-id="'+item.roleId+'" data-status= "'+item.roleStatus+'"><i class="layui-icon larry-icon larry-quanxianguanli"></i>权限</a>';
-                            </shiro:hasPermission>
-                            <shiro:hasPermission name="tkwJk34z">
-                                opt+=  '<a class="layui-btn layui-btn-mini layui-btn-danger  role_fail" data-id="'+item.roleId+'" data-status= "'+item.roleStatus+'"><i class="layui-icon larry-icon larry-ttpodicon"></i>失效</a>';
-                            </shiro:hasPermission>
-                            opt+= '</div>';
-                            $("#roleTbody").append(
-                                 '<tr>'+
-                                    '<td><input name="roleIdCK" lay-skin="primary" type="checkbox" alt="'+item.roleStatus+'" value="'+item.roleId+'"></td>'+
-                                    '<td title="'+objNull(item.roleName)+'">'+objNull(roleNameLable)+'</td>'+
-                                    '<td>'+roleStatusLable+'</td>'+
-                                    '<td title="'+objNull(item.resourceNames)+'">'+objNull(resourceNamesLable)+'</td>'+
-                                    '<td title="'+objNull(item.roleRemark)+'">'+objNull(roleRemarkLable)+'</td>'+
-                                    '<td>'+item.creator+'</td>'+
-                                    '<td>'+item.createTime+'</td>'+
-                                    '<td>'+objNull(item.modifier)+'</td>'+
-                                    '<td>'+objNull(item.modifierTime)+'</td>'+
-                                    '<td>'+opt+'</td>'+
-                                 '</tr>'
-                            );
-                            form.render();
-                        });
-                        laypage({
-                            cont: 'rolePage',
-                            pages:  pdata.totalSize,
-                            curr: curr || 1, //当前页
-                            groups: 8, //连续显示分页数
-                            skip: true,
-                            jump: function(obj, first){ //触发分页后的回调
-                                if(!first){ //点击跳页触发函数自身，并传递当前页：obj.curr
-                                    rolePageList(obj.curr);
-                                }
-                            }
-                        });
-                        layer.close(pageLoading);
-
-                    }
+            //角色失效
+            }else if(layEvent === 'role_fail') {
+                var roleId = data.roleId;
+                var roleStatus = data.roleStatus;
+                if(roleStatus == 1){
+                    common.cmsLayErrorMsg("当前角色已失效");
+                    return false;
                 }
 
-            });
-        }
+                var url = "${ctx}/role/ajax_role_fail.do";
+                var param = {roleId:roleId};
+                common.ajaxCmsConfirm('系统提示', '失效角色、解除角色、用户、菜单绑定关系?',url,param);
+
+            }
+        });
     });
-    /**undefined 值 过滤*/
-    function objNull(obj) {
-        if(typeof(obj) == "undefined" || obj == null){
-            return "";
-        }
-        return obj;
-    }
+
 
 </script>
+
+<!-- 角色状态tpl-->
+<script type="text/html" id="roleStatusTpl">
+
+    {{# if(d.roleStatus == 0){ }}
+    <span class="label label-success ">0-有效</span>
+    {{# } else if(d.roleStatus == 1){ }}
+    <span class="label label-danger ">1-失效</span>
+    {{# } else { }}
+    {{d.roleStatus}}
+    {{# }  }}
+</script>
+
+
+<!--工具条 -->
+<script type="text/html" id="roleBar">
+    <div class="layui-btn-group">
+        <shiro:hasPermission name="moHbdnjz">
+            <a class="layui-btn layui-btn-mini role_edit" lay-event="role_edit"><i class="layui-icon larry-icon larry-bianji2"></i> 编辑</a>
+        </shiro:hasPermission>
+        <shiro:hasPermission name="bSG7LAmU">
+            <a class="layui-btn layui-btn-mini layui-btn-warm  role_grant" lay-event="role_grant"><i class="layui-icon larry-icon larry-jiaoseguanli3"></i>权限</a>
+        </shiro:hasPermission>
+        <shiro:hasPermission name="tkwJk34z">
+            <a class="layui-btn layui-btn-mini layui-btn-danger role_fail" lay-event="role_fail"><i class="layui-icon larry-icon larry-ttpodicon"></i>失效</a>
+        </shiro:hasPermission>
+    </div>
+</script>
+
 
 </body>
 </html>

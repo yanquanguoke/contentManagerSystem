@@ -109,12 +109,13 @@ public class RoleService {
 
         }
         Long count = roleMapper.selectCountRole(role);
-        role.setTotalCount(count);
 
         Map<String, Object> map = new HashMap<String, Object>();
-        map.put("total", count);
-        map.put("totalSize", role.getTotalSize());
-        map.put("rows", roleList);
+
+        map.put("code",0);
+        map.put("msg","");
+        map.put("count",count);
+        map.put("data", roleList);
 
         return Json.toJson(map);
     }

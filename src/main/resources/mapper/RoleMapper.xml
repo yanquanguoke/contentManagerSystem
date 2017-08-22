@@ -188,7 +188,7 @@
         from cc_role
         <include refid="selectPageParmas" />
         order by create_time DESC
-        LIMIT #{start},#{rows}
+        LIMIT #{start},#{limit}
     </select>
 
     <!-- 角色列表信息List -->

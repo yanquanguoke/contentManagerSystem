@@ -272,7 +272,7 @@
         FROM cc_resource T1
         LEFT JOIN cc_resource T2 ON T1.res_parentId = T2.res_id
         ORDER BY T1.res_display_order,T1.create_time
-        LIMIT #{start},#{rows}
+        LIMIT #{start},#{limit}
     </select>
     <!-- 查询资源父级菜单-->
     <select id="selectParentIdResList" resultType="com.yxb.cms.domain.dto.ResourceMenuDto">
