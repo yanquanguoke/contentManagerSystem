@@ -8,10 +8,22 @@
     background: url(../img/login-bg3.jpg) fixed center center;
 }
 
+
+
 body {
     overflow: hidden;
 }
-
+.layer_notice {
+    background: #5fb878 none repeat scroll 0 0;
+    float: left;
+    height: 75px;
+    overflow: hidden;
+    padding: 10px;
+    width: 330px;
+}
+.layer_notice ul li {
+    color: #fff;
+}
 .video-player {
     background-color: transparent;
     min-width: 100%;

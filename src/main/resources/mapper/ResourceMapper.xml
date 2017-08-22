@@ -248,7 +248,9 @@
     <!-- 查询资源总记录数 -->
     <select id="selectCountResource" parameterType="com.yxb.cms.domain.vo.Resource" resultType="Long">
         select count(*)
-        from cc_resource
+        from cc_resource T1
+        LEFT JOIN cc_resource T2 ON T1.res_parentId = T2.res_id
+        <include refid="selectPageParmas" />
     </select>
     <!-- 资源列表信息分页显示 -->
     <select id="selectResourceListByPage" resultType="com.yxb.cms.domain.vo.Resource" parameterType="com.yxb.cms.domain.vo.Resource">
@@ -271,9 +273,30 @@
             T1.res_remark 		   			AS resRemark
         FROM cc_resource T1
         LEFT JOIN cc_resource T2 ON T1.res_parentId = T2.res_id
+        <include refid="selectPageParmas" />
         ORDER BY T1.res_display_order,T1.create_time
         LIMIT #{start},#{limit}
     </select>
+
+    <!-- 分页查询条件 -->
+    <sql id="selectPageParmas">
+        <where>
+            <if test="searchTerm != null and searchTerm != '' and searchContent != null and  searchContent != '' and  searchTerm == 'resNameTerm' ">
+                T1.res_name LIKE CONCAT('%', #{searchContent,jdbcType=VARCHAR}, '%')
+            </if>
+            <if test="searchTerm != null and searchTerm != '' and searchContent != null and  searchContent != '' and  searchTerm == 'parentNameTerm' ">
+                AND  T2.res_name LIKE CONCAT('%', #{searchContent,jdbcType=VARCHAR}, '%')
+            </if>
+            <if test="searchTerm != null and searchTerm != '' and searchContent != null and  searchContent != '' and  searchTerm == 'resTypeTerm' ">
+                AND T1.res_type = #{searchContent,jdbcType=VARCHAR}
+            </if>
+            <if test="searchTerm != null and searchTerm != '' and searchContent != null and  searchContent != '' and  searchTerm == 'resLevelTerm' ">
+                AND T1.res_level = #{searchContent,jdbcType=VARCHAR}
+            </if>
+
+        </where>
+    </sql>
+
     <!-- 查询资源父级菜单-->
     <select id="selectParentIdResList" resultType="com.yxb.cms.domain.dto.ResourceMenuDto">
       SELECT

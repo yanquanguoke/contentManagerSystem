@@ -15,14 +15,14 @@
     <meta name="format-detection" content="telephone=no">
     <link rel="shortcut icon" href="${ctx}/static/img/favicon.ico">
 
-    <link rel="stylesheet" href="${ctx}/static/layui/css/layui.css">
+    <link rel="stylesheet" href="${ctx}/static/layui_v2/css/layui.css">
     <link rel="stylesheet" href="${ctx}/static/css/global.css">
 
     <link rel="stylesheet" type="text/css" href="${ctx}/static/css/common.css" media="all">
     <link rel="stylesheet" type="text/css" href="${ctx}/static/css/personal.css" media="all">
     <link rel="stylesheet" type="text/css" href="http://at.alicdn.com/t/font_9h680jcse4620529.css">
 
-    <script src="${ctx}/static/layui/layui.js"></script>
+    <script src="${ctx}/static/layui_v2/layui.js"></script>
 
 <body>
 <div class="larry-grid" >
@@ -31,9 +31,13 @@
             <blockquote class="layui-elem-quote mylog-info-tit">
                 <div class="layui-inline">
                     <form class="layui-form" id="resSearchForm">
+
                         <div class="layui-input-inline" style="width:110px;">
                             <select name="searchTerm" >
                                 <option value="resNameTerm">菜单名称</option>
+                                <option value="parentNameTerm">父级菜单</option>
+                                <option value="resTypeTerm">菜单类型</option>
+                                <option value="resLevelTerm">菜单级别</option>
                             </select>
                         </div>
                         <div class="layui-input-inline" style="width:145px;">
@@ -42,41 +46,23 @@
                         <a class="layui-btn resSearchList_btn" lay-submit lay-filter="resSearchFilter"><i class="layui-icon larry-icon larry-chaxun7"></i>查询</a>
                     </form>
                 </div>
-                <div class="layui-inline">
-                    <a class="layui-btn layui-btn-normal  resAdd_btn"> <i class="layui-icon larry-icon larry-xinzeng1"></i>新增菜单</a>
-                </div>
-                <div class="layui-inline">
-                    <a class="layui-btn layui-btn-normal excelResExport_btn"  style="background-color:#5FB878"> <i class="layui-icon larry-icon larry-danye"></i>导出</a>
-                </div>
-                <div class="layui-inline">
-                    <a class="layui-btn layui-btn-danger resBatchFail_btn"><i class="layui-icon larry-icon larry-shanchu"></i>批量失效</a>
-                </div>
+                <shiro:hasPermission name="Mhtly5er">
+                    <div class="layui-inline">
+                        <a class="layui-btn layui-btn-normal  resAdd_btn"> <i class="layui-icon larry-icon larry-xinzeng1"></i>新增菜单</a>
+                    </div>
+                </shiro:hasPermission>
+                <shiro:hasPermission name="wPUNDGgZ">
+                    <div class="layui-inline">
+                        <a class="layui-btn layui-btn-normal excelResExport_btn"  style="background-color:#5FB878"> <i class="layui-icon larry-icon larry-danye"></i>导出</a>
+                    </div>
+                </shiro:hasPermission>
+
             </blockquote>
             <div class="larry-separate"></div>
             <!-- 菜单列表 -->
-            <div class="layui-tab-item layui-field-box layui-show" >
-                <div class="layui-form">
-                    <table class="layui-table" lay-even="" lay-skin="row">
-                        <thead >
-                            <tr>
-                                <th><input name="" lay-skin="primary" lay-filter="allChoose" type="checkbox"></th>
-                                <th>菜单名称</th>
-                                <th>菜单编码</th>
-                                <th>菜单状态</th>
-                                <th>菜单路径</th>
-                                <th>菜单类型</th>
-                                <th>菜单级别</th>
-                                <th>上级菜单</th>
-                                <th>创建时间</th>
-                                <th>修改时间</th>
-                                <th>操作</th>
-                            </tr>
-                        </thead>
-                        <tbody id="resTbody">
-                        </tbody>
-                    </table>
-                </div>
-                <div class="larry-table-page clearfix" id="resPage"></div>
+            <div class="layui-tab-item layui-show" style="padding: 10px 15px;">
+                <table id="resTableList"></table>
+
             </div>
 
         </div>
@@ -85,25 +71,57 @@
 <script type="text/javascript">
     layui.config({
         base : "${ctx}/static/js/"
-    }).use(['form', 'laypage', 'layer','common'], function () {
-        var $ = layui.jquery,
-                form = layui.form(),
-                laypage = layui.laypage,
+    }).use(['form', 'table', 'layer','common'], function () {
+        var $ = layui.$,
+                form = layui.form,
+                table = layui.table,
                 layer = layui.layer,
                 common = layui.common;
 
-        /**加载菜单列表信息*/
-        rolePageList(1);
 
+        /**用户表格加载*/
+        var userTableRender = table.render({
+            elem: '#resTableList',
+            url: '${ctx}/res/ajax_res_list.do',
+            id:'resTableId',
+            method: 'post',
+            height:'400',
+            skin:'row',
+            even:'true',
+            size: 'sm',
+            cols: [[
+                {checkbox: true,fixed:'left',},
+                {field:'resName', title: '菜单名称',width: 100 },
+                {field:'resModelCode', title: '菜单编码',width: 100},
+                {field:'resStatus', title: '菜单状态',width: 85,templet: '#resStatusTpl'},
+                {field:'resLinkAddress', title: '菜单路径',width: 200},
+                {field:'resType', title: '菜单类型',width: 85,templet: '#resTypeTpl'},
+                {field:'resLevel', title: '菜单级别',width: 100,templet: '#resLevelTpl'},
+                {field:'parentname', title: '上级菜单',width: 100 },
+                {field:'createTime', title: '创建时间',width: 150},
+                {field:'modifyTime', title: '修改时间',width: 150},
+                {fixed:'right', title: '操作', align:'center',width: 140, toolbar: '#resBar'}
 
-        /**全选*/
-        form.on('checkbox(allChoose)', function (data) {
-            var child = $(data.elem).parents('table').find('tbody input[type="checkbox"]');
-            child.each(function (index, item) {
-                item.checked = data.elem.checked;
-            });
-            form.render('checkbox');
+            ]],
+            page: true,
+            limit: 10//默认显示10条
         });
+
+        /**查询*/
+        $(".resSearchList_btn").click(function(){
+            //监听提交
+            form.on('submit(resSearchFilter)', function (data) {
+                userTableRender.reload({
+                    where: {
+                        searchTerm:data.field.searchTerm,
+                        searchContent:data.field.searchContent
+                    }
+                });
+
+            });
+
+        });
+
 
         /**新增菜单*/
         $(".resAdd_btn").click(function(){
@@ -111,136 +129,76 @@
             common.cmsLayOpen('新增菜单',url,'750px','470px');
         });
 
-        /**编辑菜单*/
-        $("body").on("click",".res_edit",function(){
-            var resId = $(this).attr("data-id");
-            var url =  "${ctx}/res/res_update.do?resId="+resId;
-            common.cmsLayOpen('编辑菜单',url,'750px','470px');
+        /**监听工具条*/
+        table.on('tool(resTableId)', function(obj) {
+            var data = obj.data; //获得当前行数据
+            var layEvent = obj.event; //获得 lay-event 对应的值
+
+            //编辑菜单
+            if(layEvent === 'res_edit') {
+
+                var resId = data.resId;
+                var url =  "${ctx}/res/res_update.do?resId="+resId;
+                common.cmsLayOpen('编辑菜单',url,'750px','470px');
+            //失效菜单
+            }else if(layEvent === 'res_fail'){
+
+            }
+
+
+
         });
 
-
-        /**加载菜单信息*/
-        function rolePageList(curr,searchTerm,searchContent){
-            var pageLoading = layer.load(2);
-            $.ajax({
-                url : '${ctx}/res/ajax_res_list.do',
-                type : 'post',
-                data :{
-                    page: curr || 1 ,   //当前页
-                    rows: 7 ,         //每页显示四条数据
-                    searchTerm: searchTerm,
-                    searchContent: searchContent
-                },
-                success : function(data) {
-                    if(data != "" ){
-                        $("#resTbody").text('');//先清空原先内容
-                        var pdata = $.parseJSON(data);
-                        $(pdata.rows).each(function(index,item){
-
-                            //菜单名称
-                            var resNameLable;
-                            if(objNull(item.resName) != "" && item.resName.length > 9){
-                                resNameLable = item.resName.substring(0,9) +"...";
-
-                            }else{
-                                resNameLable = item.resName;
-                            }
-
-                            //菜单状态
-                            var resStatusLable;
-                            switch (item.resStatus){
-                                case 0:
-                                    resStatusLable = '<span class="label label-success ">0-有效</span>';
-                                    break;
-                                case 1:
-                                    resStatusLable = '<span class="label label-danger ">1-失效</span>'
-                                    break;
-                            }
-                            //菜单类型
-                            var menuTypeLable;
-                            switch (item.resType){
-                                case 0:
-                                    menuTypeLable = '<span class="label label-info ">0-菜单</span>';
-                                    break;
-                                case 1:
-                                    menuTypeLable = '<span class="label label-warning ">1-按钮</span>'
-                                    break;
-                            }
-
-                            //菜单级别
-                            var resLevelLable;
-                            switch (item.resLevel){
-                                case 1:
-                                    resLevelLable = '1级菜单';
-                                    break;
-                                case 2:
-                                    resLevelLable = '2级菜单';
-                                    break;
-                                case 3:
-                                    resLevelLable = '3级菜单';
-                                    break;
-                            }
-
-                            var resLinkAddressLable;
-                            if(objNull(item.resLinkAddress) != "" && item.resLinkAddress.length > 18){
-                                resLinkAddressLable = item.resLinkAddress.substring(0,18) +"...";
-
-                            }else{
-                                resLinkAddressLable = item.resLinkAddress;
-                            }
-                            //操作
-                            var opt ='<div class="layui-btn-group">';
-                            opt+=  '<a class="layui-btn layui-btn-mini res_edit" data-id="'+item.resId+'"><i class="layui-icon larry-icon larry-bianji2"></i> 编辑</a>';
-                            opt+=  '<a class="layui-btn layui-btn-mini layui-btn-danger  links_del" data-id=""><i class="layui-icon larry-icon larry-ttpodicon"></i>失效</a>';
-                            opt+= '</div>';
-
-                            $("#resTbody").append(
-                                    '<tr>'+
-                                    '<td><input name="" lay-skin="primary" type="checkbox"></td>'+
-                                    '<td  title="'+objNull(item.resName)+'">'+objNull(resNameLable)+'</td>'+
-                                    '<td>'+item.resModelCode+'</td>'+
-                                    '<td>'+resStatusLable+'</td>'+
-                                    '<td  title="'+objNull(item.resLinkAddress)+'">'+objNull(resLinkAddressLable)+'</td>'+
-                                    '<td>'+menuTypeLable+'</td>'+
-                                    '<td>'+objNull(resLevelLable)+'</td>'+
-                                    '<td>'+objNull(item.parentname)+'</td>'+
-                                    '<td>'+item.createTime+'</td>'+
-                                    '<td>'+objNull(item.modifyTime)+'</td>'+
-                                    '<td>'+opt+'</td>'+
-                                    '</tr>'
-                            );
-                            form.render();
-
-                        });
-                        laypage({
-                            cont: 'resPage',
-                            pages:  pdata.totalSize,
-                            curr: curr || 1, //当前页
-                            skip: true,
-                            jump: function(obj, first){ //触发分页后的回调
-                                if(!first){ //点击跳页触发函数自身，并传递当前页：obj.curr
-                                    rolePageList(obj.curr);
-                                }
-                            }
-                        });
-                        layer.close(pageLoading);
-                    }
-                }
-
-            });
-        }
     });
 
+</script>
+<!-- 菜单状态tpl-->
+<script type="text/html" id="resStatusTpl">
 
-    /**undefined 值 过滤*/
-    function objNull(obj) {
-        if(typeof(obj) == "undefined" || obj == null){
-            return "";
-        }
-        return obj;
-    }
+    {{# if(d.resStatus == 0){ }}
+    <span class="label label-success ">0-有效</span>
+    {{# } else if(d.resStatus == 1){ }}
+    <span class="label label-danger ">1-失效</span>
+    {{# } else { }}
+    {{d.resStatus}}
+    {{# }  }}
+</script>
+<!-- 菜单类型tpl-->
+<script type="text/html" id="resTypeTpl">
 
+    {{# if(d.resType == 0){ }}
+    <span class="label label-info ">0-菜单</span>
+    {{# } else if(d.resType == 1){ }}
+    <span class="label label-warning ">1-按钮</span>
+    {{# } else { }}
+    {{d.resType}}
+    {{# }  }}
+</script>
 
+<!-- 菜单级别tpl-->
+<script type="text/html" id="resLevelTpl">
+
+    {{# if(d.resLevel == 1){ }}
+    <span>1级菜单</span>
+    {{# } else if(d.resLevel == 2){ }}
+    <span>2级菜单</span>
+    {{# } else if(d.resLevel == 3){ }}
+    <span>3级菜单</span>
+    {{# } else { }}
+    {{d.resLevel}}
+    {{# }  }}
+</script>
+
+<!--工具条 -->
+<script type="text/html" id="resBar">
+    <div class="layui-btn-group">
+        <shiro:hasPermission name="KxCQVzRq">
+            <a class="layui-btn layui-btn-mini res_edit" lay-event="res_edit"><i class="layui-icon larry-icon larry-bianji2"></i> 编辑</a>
+        </shiro:hasPermission>
+        <shiro:hasPermission name="DK3uPfe7">
+            <a class="layui-btn layui-btn-mini layui-btn-danger res_fail" lay-event="res_fail"><i class="layui-icon larry-icon larry-ttpodicon"></i>失效</a>
+        </shiro:hasPermission>
+    </div>
 </script>
 
 </body>

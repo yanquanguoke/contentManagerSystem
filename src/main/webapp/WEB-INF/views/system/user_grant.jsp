@@ -15,11 +15,11 @@
     <meta name="format-detection" content="telephone=no">
     <link rel="shortcut icon" href="${ctx}/static/img/favicon.ico">
 
-    <link rel="stylesheet" href="${ctx}/static/layui/css/layui.css">
+    <link rel="stylesheet" href="${ctx}/static/layui_v2/css/layui.css">
     <link rel="stylesheet" href="${ctx}/static/css/main.css">
 
 
-    <script src="${ctx}/static/layui/layui.js"></script>
+    <script src="${ctx}/static/layui_v2/layui.js"></script>
 
 </head>
 <body class="childrenBody" style="font-size: 12px;">
@@ -67,8 +67,8 @@
     layui.config({
         base : "${ctx}/static/js/"
     }).use(['form','layer','jquery','common'],function(){
-        var $ = layui.jquery,
-                form = layui.form(),
+        var $ = layui.$,
+                form = layui.form,
                 common = layui.common,
                 layer = parent.layer === undefined ? layui.layer : parent.layer;
 

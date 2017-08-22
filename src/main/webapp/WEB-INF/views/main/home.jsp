@@ -54,7 +54,7 @@
             </tr>
             <tr>
                 <td>版本信息:</td>
-                <td class="author"><span style="color:#f00;">beta-1.0.3</span></td>
+                <td class="author"><span style="color:#f00;">beta-1.0.4</span></td>
             </tr>
             <tr>
                 <td>开发作者</td>
@@ -72,10 +72,6 @@
             <tr>
                 <td>服务器环境</td>
                 <td class="dataBase">centos 7</td>
-            </tr>
-            <tr>
-                <td>当前用户权限</td>
-                <td class="userRights">超级管理员</td>
             </tr>
             </tbody>
         </table>
@@ -103,6 +99,21 @@
         <blockquote class="layui-elem-quote title">更新日志</blockquote>
         <div class="layui-elem-quote layui-quote-nm">
             <ul class="layui-timeline">
+                <li class="layui-timeline-item">
+                    <i class="layui-icon layui-timeline-axis">&#xe63f;</i>
+                    <div class="layui-timeline-content layui-text">
+                        <h3 class="layui-timeline-title">2017年8月22号</h3>
+                        <p>beta-1.0.4</p>
+                        <ul>
+                            <li>layui版本升级至2.0.1</li>
+                            <li>重写所有普通表格为新版本数据表格</li>
+                            <li>新增登录页图片轮播功能</li>
+                            <li>开放菜单管理新增功能</li>
+                            <li>动态权限控制,可以根据不同账号查看不同菜单功能</li>
+                            <li>部分代码优化</li>
+                        </ul>
+                    </div>
+                </li>
                 <li class="layui-timeline-item">
                     <i class="layui-icon layui-timeline-axis">&#xe63f;</i>
                     <div class="layui-timeline-content layui-text">
@@ -165,7 +176,11 @@
     <div class="sysNotice col">
         <blockquote class="layui-elem-quote title">系统公告</blockquote>
         <div class="layui-elem-quote layui-quote-nm">
-            <h3>#此项目目前部分功能还在进一步完善中，如果出现不能点击或者点击无效的情况，皆属于正常现象，请大家期待后续的版本。</h3>
+            <h3>目前开放两个测试账号:</h3>
+            <h3>user_system/123456 此帐号拥有用户、角色、菜单、修改新增功能</h3>
+            <h3>user_readonly/123456 此帐号为只读用户,只能查看数据不能做任何功能性操作</h3>
+            <h3 style="color:#f00;">麻烦大家测试的时候,数据尽量造一些有意义的数据，不要写111或者222之类的，谢谢啦๑乛◡乛๑</h3>
+            <h3>由于目前部分功能还未完善，暂不放开超级管理员权限:</h3>
         </div>
     </div>
 </div>

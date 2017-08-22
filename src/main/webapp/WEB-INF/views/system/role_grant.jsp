@@ -15,13 +15,13 @@
     <meta name="format-detection" content="telephone=no">
     <link rel="shortcut icon" href="${ctx}/static/img/favicon.ico">
 
-    <link rel="stylesheet" href="${ctx}/static/layui/css/layui.css">
+    <link rel="stylesheet" href="${ctx}/static/layui_v2/css/layui.css">
 
     <link rel="stylesheet" href="${ctx}/static/tree/tree.css" type="text/css">
     <link rel="stylesheet" type="text/css" href="http://at.alicdn.com/t/font_9h680jcse4620529.css">
 
 
-    <script src="${ctx}/static/layui/layui.js"></script>
+    <script src="${ctx}/static/layui_v2/layui.js"></script>
     <script type="text/javascript" src="${ctx}/static/js/jquery-1.8.3.js"></script>
     <script type="text/javascript" src="${ctx}/static/tree/tree.min.js" ></script>
     <script type="text/javascript" src="${ctx}/static/tree/extend.tree.js" ></script>
@@ -49,8 +49,8 @@
     layui.config({
         base : "${ctx}/static/js/"
     }).use(['tree', 'layer','form','common'], function() {
-        var $ = layui.jquery,
-                form = layui.form(),
+        var $ = layui.$,
+                form = layui.form,
                 common = layui.common,
                 layer = parent.layer === undefined ? layui.layer : parent.layer;
 

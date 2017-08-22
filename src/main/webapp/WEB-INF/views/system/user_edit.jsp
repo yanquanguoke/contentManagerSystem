@@ -14,12 +14,12 @@
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="format-detection" content="telephone=no">
     <link rel="shortcut icon" href="${ctx}/static/img/favicon.ico">
-    <link rel="stylesheet" href="${ctx}/static/layui/css/layui.css">
+    <link rel="stylesheet" href="${ctx}/static/layui_v2/css/layui.css">
 
-    <script src="${ctx}/static/layui/layui.js"></script>
+    <script src="${ctx}/static/layui_v2/layui.js"></script>
 
 </head>
-<body class="childrenBody" style="font-size: 12px;">
+<body class="childrenBody" style="font-size: 12px;margin: 10px 10px 0;">
 <form class="layui-form layui-form-pane">
     <input id="userId" name="userId" type="hidden" value="${user.userId}">
 
@@ -28,7 +28,12 @@
     <div class="layui-form-item">
         <label class="layui-form-label">登陆账号</label>
         <div class="layui-input-block">
-            <input type="text" class="layui-input" name="userLoginName" lay-verify="required|userLoginName" maxlength="20" value="${user.userLoginName}" placeholder="请输入登陆账号">
+            <c:if test="${pageFlag == 'addPage' }">
+             <input type="text" class="layui-input" name="userLoginName" lay-verify="required|userLoginName" maxlength="20" value="" placeholder="请输入登陆账号">
+            </c:if>
+            <c:if test="${pageFlag == 'updatePage' }">
+                <input type="text" class="layui-input" name="userLoginName" lay-verify="required|userLoginName" maxlength="20"  value="${user.userLoginName}" placeholder="请输入登陆账号" disabled>
+            </c:if>
         </div>
     </div>
     <div class="layui-form-item">
@@ -64,8 +69,8 @@
     layui.config({
         base : "${ctx}/static/js/"
     }).use(['form','layer','jquery','common'],function(){
-        var $ = layui.jquery,
-                form = layui.form(),
+        var $ = layui.$,
+                form = layui.form,
                 common = layui.common,
                 layer = parent.layer === undefined ? layui.layer : parent.layer;
 

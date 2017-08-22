@@ -189,8 +189,15 @@ public class Resource extends PageDto implements Serializable {
     
     private String beginTime;
     private String endTime;
-    
-    
+
+    /**
+     * 查询项
+     */
+    private String searchTerm;
+    /**
+     * 查询内容
+     */
+    private String searchContent;
     
     
     
@@ -564,4 +571,20 @@ public class Resource extends PageDto implements Serializable {
 	public void setParentname(String parentname) {
 		this.parentname = parentname;
 	}
+
+    public String getSearchTerm() {
+        return searchTerm;
+    }
+
+    public void setSearchTerm(String searchTerm) {
+        this.searchTerm = searchTerm;
+    }
+
+    public String getSearchContent() {
+        return searchContent;
+    }
+
+    public void setSearchContent(String searchContent) {
+        this.searchContent = searchContent;
+    }
 }

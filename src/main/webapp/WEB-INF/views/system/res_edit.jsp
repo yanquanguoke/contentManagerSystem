@@ -15,13 +15,13 @@
     <meta name="format-detection" content="telephone=no">
     <link rel="shortcut icon" href="${ctx}/static/img/favicon.ico">
 
-    <link rel="stylesheet" href="${ctx}/static/layui/css/layui.css">
+    <link rel="stylesheet" href="${ctx}/static/layui_v2/css/layui.css">
     <link rel="stylesheet" type="text/css" href="http://at.alicdn.com/t/font_9h680jcse4620529.css">
 
 
-    <script src="${ctx}/static/layui/layui.js"></script>
+    <script src="${ctx}/static/layui_v2/layui.js"></script>
 </head>
-<body class="childrenBody" style="font-size: 12px;">
+<body class="childrenBody" style="font-size: 12px;margin: 10px 10px 0;">
 <%--<blockquote class="layui-elem-quote layui-quote-nm"--%>
         <%--style="border-radius:0.25em;color: #31708f;background-color: #d9edf7;border-width:1px; padding:6px; border-color:#bce8f1;">--%>
         <%--温馨提示:1.菜单类型为菜单时父级菜单可以为空;2.菜单类型为按钮时父级菜单不能为空;3.父级菜单选中时，资源路径不能为空--%>
@@ -133,8 +133,8 @@
     layui.config({
         base : "${ctx}/static/js/"
     }).use(['form','layer','jquery','common'],function(){
-        var $ = layui.jquery,
-                form = layui.form(),
+        var $ = layui.$,
+                form = layui.form,
                 common = layui.common,
                 layer = parent.layer === undefined ? layui.layer : parent.layer;
 

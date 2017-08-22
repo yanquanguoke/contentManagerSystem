@@ -144,7 +144,7 @@
 <script type="text/javascript">
     layui.config({
         base : "${ctx}/static/js/"
-    }).use(['form', 'laypage', 'layer','common'], function () {
+    }).use(['form', 'layer','common'], function () {
         var $ = layui.jquery,
                 form = layui.form,
                 layer = layui.layer,
