@@ -414,12 +414,12 @@ ul.layui-tab-title li {
     padding: 0 12px;
 }
 
-ul.layui-tab-title li i {
-    display: inline-block;
-    vertical-align: top;
-    padding-right: 3px;
-    line-height: 40px;
-}
+/*ul.layui-tab-title li i {*/
+    /*display: inline-block;*/
+    /*vertical-align: top;*/
+    /*padding-right: 3px;*/
+    /*line-height: 40px;*/
+/*}*/
 
 ul.layui-tab-title li em {
     display: inline-block;

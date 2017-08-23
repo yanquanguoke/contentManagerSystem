@@ -2758,7 +2758,7 @@ body .layui-table-tips .layui-layer-content {
     position: relative;
     line-height: 40px;
     min-width: 65px;
-    padding: 0 15px;
+    padding: 0 10px;
     text-align: center;
     cursor: pointer
 }

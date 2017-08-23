@@ -151,15 +151,15 @@ public class ResourceController extends BasicController {
 
 
     /**
-     * 保存用户信息
-     * @param user 用户实体
+     * 保存角色信息
+     * @param res 角色实体
      * @return
      */
     @RequestMapping("/ajax_save_resource.do")
     @ResponseBody
     public BussinessMsg ajaxSaveResource(Resource res){
         try {
-            return resourceService.saveOrUpdateResource(res, this.getCurrentLoginName());
+            return resourceService.saveOrUpdateResource(res, this.getCurrentLoginName() );
         } catch (Exception e) {
             log.error("保存用户信息方法内部错误",e);
             return BussinessMsgUtil.returnCodeMessage(BussinessCode.RES_SAVE_ERROR);
