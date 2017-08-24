@@ -55,17 +55,25 @@
                         <%--<li style="" class="layui-nav-item">--%>
                             <%--<a id="larryTheme"><i class="larry-icon larry-theme1"></i>设置主题</a>--%>
                         <%--</li>--%>
-                        <%--<li class="layui-nav-item kjfs posb" >--%>
-                            <%--<a class="kuaijiefangshi"><i class="larry-icon larry-kuaijie"></i><cite>快捷方式</cite><span class="layui-nav-more"></span></a>--%>
-                            <%--<dl class="layui-nav-child">--%>
-                                <%--<dd>--%>
-                                    <%--<a href="http://www.larrycms.com/" target="_blank">网站主页</a>--%>
-                                <%--</dd>--%>
-                                <%--<dd>--%>
-                                    <%--<a href="http://blog.larrycms.com/" target="_blank">我的博客</a>--%>
-                                <%--</dd>--%>
-                            <%--</dl>--%>
-                        <%--</li>--%>
+                        <li class="layui-nav-item kjfs posb" >
+                            <a class="kuaijiefangshi"><i class="larry-icon larry-kuaijie"></i><cite>快捷方式</cite><span class="layui-nav-more"></span></a>
+                            <dl class="layui-nav-child">
+                                <dd>
+                                    <a href="/about/about_brief.html" target="_blank">关于我们</a>
+                                </dd>
+                                <dd>
+                                    <a href="http://fly.layui.com/" target="_blank">Layui社区</a>
+                                </dd>
+                                <dd>
+                                    <a href="http://www.layui.com/doc/" target="_blank">Layui文档</a>
+                                </dd>
+                                <dd>
+                                    <a href="http://fly.layui.com/case/u/5849928" target="_blank">我的案例</a>
+                                </dd>
+
+
+                            </dl>
+                        </li>
                         <li class="layui-nav-item exit">
                             <a id="logout"><i class="larry-icon larry-exit"></i><cite>退出</cite></a>
                         </li>
@@ -132,7 +140,7 @@
         <div class="layui-footer footer layui-larry-foot">
 
             <div class="layui-main">
-                <p>Copyright 2017 © yangxiaobing, 873559947@qq.com (推荐使用IE9+,Firefox、Chrome 浏览器访问)</p>
+                <p>Copyright 2017 © yangxiaobing,873559947@qq.com(推荐使用IE9+,Firefox、Chrome 浏览器访问)</p>
             </div>
         </div>
     </div>

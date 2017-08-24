@@ -1,0 +1,63 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>后台管理系统-关于我们</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="keywords" content="后台管理系统-关于我们">
+    <meta name="description" content="致力于提供通用版本后台管理解决方案">
+    <link rel="shortcut icon" href="/static/img/favicon.ico">
+    <link rel="stylesheet" href="/static/layui_v2/css/layui.css">
+    <link rel="stylesheet" href="/static/css/about.css">
+    <script src="/static/layui_v2/layui.js"></script>
+</head>
+
+<body>
+<div class="main fly-user-main layui-clear">
+    <ul class="layui-nav layui-nav-tree layui-inline" lay-filter="user">
+        <li class="layui-nav-item layui-this">
+            <a href="about_brief.html">
+                <i class="layui-icon">&#xe609;</i>
+                项目简介
+            </a>
+        </li>
+
+        <li class="layui-nav-item">
+            <a href="set.html">
+                <i class="layui-icon">&#xe6b2;</i>
+                关于版权
+            </a>
+        </li>
+        <li class="layui-nav-item">
+            <a href="message.html">
+                <i class="layui-icon">&#xe606;</i>
+                联系作者
+            </a>
+        </li>
+        <li class="layui-nav-item ">
+            <a href="about_log.html">
+                <i class="layui-icon">&#xe60a;</i>
+                更新日志  <span class="layui-badge-dot" id="log-dot"></span>
+            </a>
+
+        </li>
+    </ul>
+
+    <div class="fly-panel fly-panel-user" pad20>
+            <div class="layui-tab layui-tab-brief" lay-filter="user" id="LAY_msg" style="margin-top: 15px;">
+                <blockquote class="layui-elem-quote title">更新日志</blockquote>
+                <div class="layui-elem-quote layui-quote-nm" style="border-width: 1px;">
+                    墨绿分割线
+                    <hr class="layui-bg-green">
+                    <p>
+                        &nbsp;&nbsp;&nbsp;&nbsp;contentManagerSystem,后台管理系统,采用SpringBoot构建整个项目框架,apacheShiro权限验证，mybatis+druid数据持久化动作
+                        前端框架采用layui<a class="layui-btn layui-btn-mini" target="_blank" href="http://www.layui.com">点此跳转</a>展示，
+                        整个项目全部通过注解方式进行配置,具体大家可以下载代码自行查看.
+                    </p>
+                </div>
+            </div>
+    </div>
+</div>
+</body>
+</html>

@@ -100,6 +100,7 @@ public class ShiroConfiguration {
 
         filterChainDefinitionMap.put("/comm/**", "anon");//anon 可以理解为不拦截
         filterChainDefinitionMap.put("/static/**", "anon");//anon 可以理解为不拦截
+        filterChainDefinitionMap.put("/about/**", "anon");//anon 可以理解为不拦截
 
         //动态URL过滤
         List<Resource> resList= resourceMapper.selectResUrlAllList();
