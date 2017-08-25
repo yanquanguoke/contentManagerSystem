@@ -33,9 +33,6 @@ body {
 .layui-layout-admin #larry-body {
     top: 70px;
     left: 203px;
-    width: calc(100% - 203px);
-    width: -moz-calc(100% - 203px);
-    width: -webkit-calc(100% - 203px);
     height: calc(100% - 100px);
     height: -moz-calc(100% - 100px);
     height: -webkit-calc(100% - 100px);
@@ -50,9 +47,6 @@ body {
 }
 
 .layui-layout-admin .layui-footer {
-    width: calc(100% - 203px);
-    width: -moz-calc(100% - 203px);
-    width: -webkit-calc(100% - 203px);
     height: 33px;
     padding: 5px 0;
     line-height: 33px;

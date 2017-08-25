@@ -29,6 +29,11 @@ layui.config({
         //$(this).parent("li").siblings().removeClass("layui-nav-itemed");
     });
 
+    /**打开或隐藏选项卡*/
+    $(".side-menu-switch").click(function () {
+        $(".layui-layout-admin").toggleClass("showMenu");
+        $(".layui-body,.layui-footer").css("left", ($(".layui-layout-admin").hasClass("showMenu")) ? "0" : "203px")
+    });
 
     $('#dianzhan').click(function (event) {
         layer.open({
