@@ -15,7 +15,7 @@
 
 <body>
 <div class="main fly-user-main layui-clear">
-    <ul class="layui-nav layui-nav-tree layui-inline" lay-filter="user">
+    <ul class="layui-nav layui-nav-tree layui-inline " lay-filter="user">
         <li class="layui-nav-item">
             <a href="about_brief.html">
                 <i class="layui-icon">&#xe609;</i>
@@ -24,31 +24,25 @@
         </li>
 
         <li class="layui-nav-item">
-            <a href="set.html">
+            <a href="about_license.html">
                 <i class="layui-icon">&#xe6b2;</i>
                 关于版权
-            </a>
-        </li>
-        <li class="layui-nav-item">
-            <a href="message.html">
-                <i class="layui-icon">&#xe606;</i>
-                联系作者
             </a>
         </li>
         <li class="layui-nav-item layui-this">
             <a href="about_log.html">
                 <i class="layui-icon">&#xe60a;</i>
                 更新日志  <span class="layui-badge-dot" id="log-dot"></span>
+                <!--时间 -->
+                <div id="curDate" style="display: none;">2017-08-24</div>
             </a>
 
         </li>
     </ul>
 
-    <div class="fly-panel fly-panel-user" pad20>
+    <div class="fly-panel fly-panel-user layui-anim layui-anim-upbit" pad20>
             <div class="layui-tab layui-tab-brief" lay-filter="user" id="LAY_msg" style="margin-top: 15px;">
                 <blockquote class="layui-elem-quote title">更新日志</blockquote>
-                <!--时间 -->
-                <div id="curDate" style="display: none;">2017-08-24</div>
                 <div class="layui-elem-quote layui-quote-nm" style="border-width: 1px;">
                     <ul class="layui-timeline">
                         <li class="layui-timeline-item">
@@ -134,7 +128,12 @@
         var util = layui.util;
         /**fixBar*/
         util.fixbar({
-            bar1: true
+            bar1: true,
+            click: function(type){
+                if(type === 'bar1'){
+                    window.open("http://www.yangxiaobing.org");
+                }
+            }
         });
         /**5天后清除徽章*/
         var curDate = new Date(layui.$("#curDate").text());
