@@ -91,7 +91,7 @@
                 {field:'resStatus', title: '菜单状态',width: 85,templet: '#resStatusTpl'},
                 {field:'resLinkAddress', title: '菜单路径',width: 200},
                 {field:'resType', title: '菜单类型',width: 85,templet: '#resTypeTpl'},
-                {field:'resLevel', title: '菜单级别',width: 100,templet: '#resLevelTpl'},
+                {field:'resLevel', title: '菜单级别',width: 85,templet: '#resLevelTpl'},
                 {field:'parentname', title: '上级菜单',width: 100 },
                 {field:'createTime', title: '创建时间',width: 150},
                 {field:'modifyTime', title: '修改时间',width: 150},
