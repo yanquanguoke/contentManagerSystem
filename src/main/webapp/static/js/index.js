@@ -18,11 +18,6 @@ layui.config({
     })
     // 添加新窗口
     $("body").on("click",".layui-left-nav .layui-nav-item a",function(){
-        // element.tabAdd('bodyTab', {
-        //     title: '选项卡的标题'
-        //     ,content: '选项卡的内容' //支持传入html
-        //     ,id: '选项卡标题的lay-id属性值'
-        // });
         tab.tabAdd($(this));
         $(this).parent("li").siblings().removeClass("layui-nav-itemed");
 
@@ -34,6 +29,73 @@ layui.config({
         $(".layui-layout-admin").toggleClass("showMenu");
         $(".layui-body,.layui-footer").css("left", ($(".layui-layout-admin").hasClass("showMenu")) ? "0" : "203px")
     });
+
+    /**关闭当前*/
+    $(".closeCurrent").on("click",function(){
+        if($("#top_tabs li").length>1 && $("#top_tabs li.layui-this cite").text()!="后台首页"){
+            var menu = JSON.parse(window.sessionStorage.getItem("menu"));
+            $("#top_tabs li").each(function(){
+                if($(this).attr("lay-id") != '' && $(this).hasClass("layui-this")){
+                    element.tabDelete("bodyTab",$(this).attr("lay-id")).init();
+                    //此处将当前窗口重新获取放入session，避免一个个删除来回循环造成的不必要工作量
+                    for(var i=0;i<menu.length;i++){
+                        if($("#top_tabs li.layui-this cite").text() == menu[i].title){
+                            menu.splice(0,menu.length,menu[i]);
+                            window.sessionStorage.setItem("menu",JSON.stringify(menu));
+                        }
+                    }
+                }
+            });
+        }else{
+            top.layer.msg('首页不能关闭',{icon: 0});
+        }
+    });
+
+    /**关闭其他*/
+    $(".closeOther").on("click",function(){
+        if($("#top_tabs li").length>2 && $("#top_tabs li.layui-this cite").text()!="后台首页"){
+            var menu = JSON.parse(window.sessionStorage.getItem("menu"));
+            $("#top_tabs li").each(function(){
+                if($(this).attr("lay-id") != '' && !$(this).hasClass("layui-this")){
+                    element.tabDelete("bodyTab",$(this).attr("lay-id")).init();
+                    //此处将当前窗口重新获取放入session，避免一个个删除来回循环造成的不必要工作量
+                    for(var i=0;i<menu.length;i++){
+                        if($("#top_tabs li.layui-this cite").text() == menu[i].title){
+                            menu.splice(0,menu.length,menu[i]);
+                            window.sessionStorage.setItem("menu",JSON.stringify(menu));
+                        }
+                    }
+                }
+            });
+        }else if($("#top_tabs li.layui-this cite").text()=="后台首页" && $("#top_tabs li").length>1){
+            $("#top_tabs li").each(function(){
+                if($(this).attr("lay-id") != '' && !$(this).hasClass("layui-this")){
+                    element.tabDelete("bodyTab",$(this).attr("lay-id")).init();
+                    window.sessionStorage.removeItem("menu");
+                    menu = [];
+                    window.sessionStorage.removeItem("curmenu");
+                }
+            })
+        }else{
+            top.layer.msg('没有可关闭的窗口',{icon: 0});
+        }
+
+    });
+    /**关闭全部*/
+    $(".closeAll").on("click",function(){
+        if($("#top_tabs li").length > 1 ){
+            $("#top_tabs li").each(function(){
+                if($(this).attr("lay-id") != ''){
+                    element.tabDelete("bodyTab",$(this).attr("lay-id")).init();
+                    window.sessionStorage.removeItem("menu");
+                    menu = [];
+                    window.sessionStorage.removeItem("curmenu");
+                }
+            })
+        }else{
+            top.layer.msg('没有可关闭的窗口',{icon: 0});
+        }
+    })
 
     $('#dianzhan').click(function (event) {
         layer.open({

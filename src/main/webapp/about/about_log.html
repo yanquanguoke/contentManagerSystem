@@ -34,7 +34,7 @@
                 <i class="layui-icon">&#xe60a;</i>
                 更新日志  <span class="layui-badge-dot" id="log-dot"></span>
                 <!--时间 -->
-                <div id="curDate" style="display: none;">2017-08-24</div>
+                <div id="curDate" style="display: none;">2017-08-27</div>
             </a>
 
         </li>
@@ -45,6 +45,21 @@
                 <blockquote class="layui-elem-quote title">更新日志</blockquote>
                 <div class="layui-elem-quote layui-quote-nm" style="border-width: 1px;">
                     <ul class="layui-timeline">
+                        <li class="layui-timeline-item">
+                            <i class="layui-icon layui-timeline-axis">&#xe63f;</i>
+                            <div class="layui-timeline-content layui-text">
+                                <h3 class="layui-timeline-title">2017年8月27号</h3>
+                                <p>beta-1.0.5</p>
+                                <ul>
+                                    <li>layui版本升级至2.0.2</li>
+                                    <li>新增登陆页验证码功能</li>
+                                    <li>新增快捷方式,关于我们页面,以后项目介绍不在写入首页，首页用来做图表汇总以及与系统关联的功能等</li>
+                                    <li>新增左侧菜单展示和隐藏功能</li>
+                                    <li>新增常用操作功能选项，可关闭当前，关闭其他，关闭全部选项卡</li>
+                                    <li>页面UI优化增加动画效果</li>
+                                </ul>
+                            </div>
+                        </li>
                         <li class="layui-timeline-item">
                             <i class="layui-icon layui-timeline-axis">&#xe63f;</i>
                             <div class="layui-timeline-content layui-text">
@@ -129,6 +144,7 @@
         /**fixBar*/
         util.fixbar({
             bar1: true,
+            bgcolor: '#009688',
             click: function(type){
                 if(type === 'bar1'){
                     window.open("http://www.yangxiaobing.org");

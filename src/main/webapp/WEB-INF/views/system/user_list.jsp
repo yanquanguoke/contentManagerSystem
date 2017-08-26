@@ -19,7 +19,7 @@
 
 
 <body>
-<div class="larry-grid larryTheme-A">
+<div class="larry-grid layui-anim layui-anim-upbit larryTheme-A ">
     <div class="larry-personal">
         <div class="layui-tab">
             <blockquote class="layui-elem-quote mylog-info-tit">

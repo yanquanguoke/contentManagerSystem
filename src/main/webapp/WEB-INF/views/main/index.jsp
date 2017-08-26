@@ -97,40 +97,37 @@
         <div class="layui-body layui-form" id="larry-body">
             <div class="layui-tab marg0" id="larry-tab" lay-filter="bodyTab">
                 <! -- 选项卡-->
-                <ul class="layui-tab-title top_tab">
+                <ul class="layui-tab-title top_tab" id="top_tabs">
                     <li class="layui-this" lay-id=""><i class="larry-icon larry-houtaishouye"></i> <cite>后台首页</cite></li>
                 </ul>
                 <div class="larry-title-box" style="height: 41px;" >
                     <div class="go-left key-press pressKey" id="titleLeft" title="滚动至最右侧"><i class="larry-icon larry-weibiaoti6-copy"></i> </div>
-                    <div class="title-right" id="titleRbox" style="width: 110px;">
+                    <div class="title-right" id="titleRbox">
                         <div class="go-right key-press pressKey" id="titleRight" title="滚动至最左侧"><i class="larry-icon larry-right"></i></div>
                         <div class="refresh key-press" id="refresh_iframe"><i class="larry-icon larry-shuaxin2"></i><cite>刷新</cite></div>
 
-                        <%--<div class="often key-press" lay-filter="larryOperate" id="buttonRCtrl">--%>
-                            <%--<ul class="layui-nav posr">--%>
-                                <%--<li class="layui-nav-item posb">--%>
-                                    <%--<a class="top"><i class="larry-icon larry-caozuo"></i><cite>常用操作</cite><span class="layui-nav-more"></span></a>--%>
-                                    <%--<dl class="layui-nav-child">--%>
-                                        <%--<dd>--%>
-                                            <%--<a data-ename="closeCurrent"><i class="larry-icon larry-guanbidangqianye"></i>关闭当前选项卡</a>--%>
-                                        <%--</dd>--%>
-                                        <%--<dd>--%>
-                                            <%--<a data-ename="closeOther"><i class="larry-icon larry-guanbiqita"></i>关闭其他选项卡</a>--%>
-                                        <%--</dd>--%>
-                                        <%--<dd>--%>
-                                            <%--<a data-ename="closeAll"><i class="larry-icon larry-guanbiquanbufenzu"></i>关闭全部选项卡</a>--%>
-                                        <%--</dd>--%>
-                                        <%--<dd>--%>
-                                            <%--<a data-ename="refreshAdmin"><i class="larry-icon larry-kuangjia_daohang_shuaxin"></i>刷新最外层框架</a>--%>
-                                        <%--</dd>--%>
-                                    <%--</dl>--%>
-                                <%--</li>--%>
-                            <%--</ul>--%>
-                        <%--</div>--%>
+                        <div class="often key-press">
+                            <ul class="layui-nav posr">
+                                <li class="layui-nav-item posb">
+                                    <a class="top"><i class="larry-icon larry-caozuo"></i><cite>常用操作</cite><span class="layui-nav-more"></span></a>
+                                    <dl class="layui-nav-child">
+                                        <dd>
+                                            <a href="javascript:;" class="closeCurrent"><i class="larry-icon larry-guanbidangqianye"></i>关闭当前选项卡</a>
+                                        </dd>
+                                        <dd>
+                                            <a href="javascript:;" class="closeOther"><i class="larry-icon larry-guanbiqita"></i>关闭其他选项卡</a>
+                                        </dd>
+                                        <dd>
+                                            <a href="javascript:;" class="closeAll"><i class="larry-icon larry-guanbiquanbufenzu"></i>关闭全部选项卡</a>
+                                        </dd>
+                                    </dl>
+                                </li>
+                            </ul>
+                        </div>
                     </div>
                 </div>
                 <div class="layui-tab-content clildFrame" style="height:793px;">
-                    <div class="layui-tab-item layui-show">
+                    <div class="layui-tab-item layui-show layui-anim layui-anim-upbit">
                         <iframe src="${ctx}/main/home.do" data-id="0" name="ifr_0" id="ifr0"></iframe>
                     </div>
                 </div>
