@@ -34,10 +34,7 @@ package com.yxb.cms.architect.conf;
 
 import com.yxb.cms.architect.realm.ShiroDbRealm;
 import com.yxb.cms.dao.ResourceMapper;
-import com.yxb.cms.dao.UserMapper;
 import com.yxb.cms.domain.vo.Resource;
-import com.yxb.cms.service.ResourceService;
-import com.yxb.cms.service.UserService;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.shiro.cache.ehcache.EhCacheManager;
@@ -51,7 +48,6 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.DependsOn;
-import org.springframework.core.annotation.Order;
 
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -96,6 +92,7 @@ public class ShiroConfiguration {
         filterChainDefinitionMap.put("/login.do", "anon");//anon 可以理解为不拦截
         filterChainDefinitionMap.put("/loginCheck.do", "anon");//anon 可以理解为不拦截
         filterChainDefinitionMap.put("/loginProxy.do", "anon");//anon 可以理解为不拦截
+        filterChainDefinitionMap.put("/captcha.do", "anon");//anon 可以理解为不拦截
 
 
         filterChainDefinitionMap.put("/comm/**", "anon");//anon 可以理解为不拦截

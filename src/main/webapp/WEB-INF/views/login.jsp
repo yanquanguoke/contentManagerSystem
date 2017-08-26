@@ -32,6 +32,11 @@
             <div class="layui-form-item">
                 <input type="password" name="password" lay-verify="required" placeholder="请输入密码" autocomplete="off" value="" class="layui-input">
             </div>
+            <div class="layui-form-item form_code">
+                <input class="layui-input" name="code" placeholder="验证码" lay-verify="required" type="text" autocomplete="off">
+                <div class="code"><img src="${ctx}/captcha.do" width="116" height="36"></div>
+            </div>
+
             <button class="layui-btn login_btn" lay-submit="" lay-filter="login">登陆系统</button>
         </form>
     </div>
@@ -60,6 +65,16 @@
              indicator:'none'
         });
 
+        /**重新生成验证码*/
+        function reqCaptcha() {
+            var url = "${ctx}/captcha.do?nocache=" + new Date().getTime()
+            $('.code img').attr("src",url)
+        }
+        /**点击验证码重新生成*/
+        $('.code img').on('click', function () {
+            reqCaptcha();
+        });
+
         /**监听登陆提交*/
         form.on('submit(login)', function (data) {
             //弹出loading
@@ -84,7 +99,8 @@
                 return false;
             } else {
                 top.layer.close(loginLoading);
-                common.cmsLayErrorMsg(ajaxReturnData.returnMessage)
+                common.cmsLayErrorMsg(ajaxReturnData.returnMessage);
+                reqCaptcha();
                 return false;
             }
         });

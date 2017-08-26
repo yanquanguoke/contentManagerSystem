@@ -35,6 +35,7 @@ package com.yxb.cms.controller;
 import com.yxb.cms.architect.constant.BussinessCode;
 import com.yxb.cms.architect.constant.Constants;
 import com.yxb.cms.architect.utils.BussinessMsgUtil;
+import com.yxb.cms.architect.utils.CreateImageCode;
 import com.yxb.cms.domain.bo.BussinessMsg;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.shiro.SecurityUtils;
@@ -47,6 +48,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+import java.io.IOException;
 
 /**
  * 登陆Controller
@@ -65,16 +69,24 @@ public class LoginController extends BasicController {
         return "main/loginProxy";
     }
 
-
-
     /**
      * 跳转到登录页面
      *
      * @return
      */
     @RequestMapping("/login.do")
-    public String toLoginPage() {
+    public String toLoginPage()  {
         return "login";
+    }
+
+    /**
+     * 生成验证码
+     */
+    @RequestMapping("/captcha.do")
+    public void Captcha(HttpServletResponse response,HttpSession session)throws IOException {
+        CreateImageCode vCode = new CreateImageCode(116,36,5,10);
+        session.setAttribute("code", vCode.getCode());
+        vCode.write(response.getOutputStream());
     }
 
     /**
@@ -85,7 +97,7 @@ public class LoginController extends BasicController {
      */
     @RequestMapping("/loginCheck.do")
     @ResponseBody
-    public BussinessMsg loginCheck(String username, String password,HttpServletRequest request){
+    public BussinessMsg loginCheck(String username, String password,String code,HttpServletRequest request){
         log.info("登陆验证处理开始");
         long start = System.currentTimeMillis();
         try {
@@ -99,6 +111,18 @@ public class LoginController extends BasicController {
                 log.error("登陆验证失败,原因:密码不能为空");
                 return BussinessMsgUtil.returnCodeMessage(BussinessCode.GLOBAL_LOGIN_PASS_NULL);
             }
+            //3.验证码不能为空
+            if (StringUtils.isEmpty(code)) {
+                log.error("登陆验证失败,原因:验证码不能为空");
+                return BussinessMsgUtil.returnCodeMessage(BussinessCode.GLOBAL_CAPTCHA_NULL);
+            }
+            //4.验证码输入错误
+            String sessionCode = (String) request.getSession().getAttribute("code");
+            if(!code.toLowerCase().equals(sessionCode)) {
+                log.error("登陆验证失败,原因:验证码错误：code:"+code+",sessionCode:"+sessionCode);
+                return BussinessMsgUtil.returnCodeMessage(BussinessCode.GLOBAL_CAPTCHA_ERROR);
+            }
+
             UsernamePasswordToken token = new UsernamePasswordToken(username, password);
             token.setRememberMe(true);
             Subject currentUser = SecurityUtils.getSubject();
