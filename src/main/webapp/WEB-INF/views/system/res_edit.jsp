@@ -281,7 +281,9 @@
             resLinkAddress: function(value, item){
                 //验证菜单路径
                 var  resLevel = $("#resLevel").val();
-                if((resLevel == 2 || resLevel == 3)&& value == ''){
+                resParentCount = ${resParentCount};
+
+                if((resLevel == 2 || resLevel == 3)&& value == '' && resParentCount <0){
                     return '菜单路径不能为空';
                 }
                 if(value != '' && !new RegExp("^[a-zA-Z_/.]+$").test(value)){
