@@ -82,7 +82,7 @@ public class MyBatisDataSourceConfig {
     @Primary
     public DataSource myBatisDataSource(AppCommonMyBatisProperties appCommonMyBatisProperties,JdbcProperties jdbcProperties) throws SQLException {
 
-        System.out.println("------------------myBatis DruiDataSource init ---------");
+        log.info("------------------myBatis DruiDataSource init ---------");
         DruidDataSource dataSource = new DruidDataSource();
         dataSource.setDriverClassName("com.mysql.jdbc.Driver");
         dataSource.setUrl(jdbcProperties.getUrl());
