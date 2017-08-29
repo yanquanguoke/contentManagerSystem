@@ -3,15 +3,11 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
     <title>后台管理系统</title>
-    <meta name="renderer" content="webkit">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <meta http-equiv="Access-Control-Allow-Origin" content="*">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="format-detection" content="telephone=no">
+    <meta name="keywords" content="后台管理系统">
+    <meta name="description" content="致力于提供通用版本后台管理解决方案">
 
     <link rel="shortcut icon" href="${ctx}/static/img/favicon.ico">
     <link rel="stylesheet" href="${ctx}/static/layui_v2/css/layui.css">
@@ -19,25 +15,12 @@
 
     <script src="${ctx}/static/layui_v2/layui.js"></script>
 
+    <script src="${ctx}/static/js/jquery-1.8.3.js"></script>
+    <script src="${ctx}/static/js/jquery.leoweather.min.js"></script>
 </head>
 <body class="childrenBody">
-<blockquote class="layui-elem-quote">
-    <p><span style="color:#1E9FFF;">项目简介：</span>
-        contentManagerSystem,后台管理系统,采用SpringBoot构建整个项目框架,apacheShiro权限验证，mybatis+druid数据持久化动作
-        前端框架采用layui<a class="layui-btn layui-btn-mini" target="_blank" href="http://www.layui.com">点此跳转</a>展示，
-        整个项目全部通过注解方式进行配置,具体大家可以下载代码自行查看.
-    </p>
-    <p><span style="color:#1E9FFF;">友情提示：</span>
-        由于此项目完全是在业余时间写的,部分功能和代码可能会有缺陷或者不足，但核心代码都已写完，大家可以下载下来在此基础上继续扩展，我也会一直维护，有问题我们可以一起交流.目前的版本代码刚写完只是测试版本，
-        后续我会抽空继续，做一些封装和优化,敬请期待后续的版本.
-    </p>
-    <p><span style="color:#1E9FFF;">关于作者:</span>
-        本人魔都纯后端Java程序员,前端技术确实比较弱，无意间看到layui社区的模板确实比较好看，但大多数都是静态的,于是就想做一套前后端交互的完整一点的项目，供大家一起交流和学习。
-        <span style="color:#f00;">郑重声明：</span>
-        本项目前端框架，借鉴layui社区,此模板 <a class="layui-btn layui-btn-mini" target="_blank" href="http://demo.larrycms.com/backstage/">点此跳转</a>，部分布局风格，如果有任何问题，
-        请原作者联系我:联系方式  <span style="color:#f00;">QQ:873559947 微信:yxb873559947  qq交流群:187568013 </span>
-
-    </p>
+<blockquote class="layui-elem-quote explain">
+    <div>尊敬的会员<span id="weather"></span></div>
 </blockquote>
 <div class="row">
     <div class="sysNotice col">
@@ -184,5 +167,18 @@
         </div>
     </div>
 </div>
+
+<script type="text/javascript">
+    layui.config({
+        base : "${ctx}/static/js/"
+    }).use(['form','jquery','common'],function() {
+        var $ = layui.$,
+                form = layui.form,
+                common = layui.common;
+        $('#weather').leoweather({format:'，{时段}好！，<span id="colock">现在时间是：<strong>{年}年{月}月{日}日 星期{周} {时}:{分}:{秒}</strong>，</span> <b>{城市}天气</b> {天气} {夜间气温}℃ ~ {白天气温}℃ '});
+
+    });
+
+</script>
 </body>
 </html>
