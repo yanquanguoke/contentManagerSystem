@@ -25,6 +25,8 @@
     <input id="resId" name="resId" type="hidden" value="${res.resId}">
 
     <input id="pageFlag"  type="hidden" value="${pageFlag}">
+    <input id="resParentCount"  type="hidden" value="${resParentCount}">
+
 
     <div class="layui-form-item">
         <div class="layui-inline">
@@ -281,7 +283,7 @@
             resLinkAddress: function(value, item){
                 //验证菜单路径
                 var  resLevel = $("#resLevel").val();
-                resParentCount = ${resParentCount};
+                var resParentCount = $("#resParentCount").val();
 
                 if((resLevel == 2 || resLevel == 3)&& value == '' && resParentCount <0){
                     return '菜单路径不能为空';

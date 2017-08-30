@@ -11,159 +11,109 @@
 
     <link rel="shortcut icon" href="${ctx}/static/img/favicon.ico">
     <link rel="stylesheet" href="${ctx}/static/layui_v2/css/layui.css">
+
+    <link rel="stylesheet" href="${ctx}/static/css/global.css">
+    <link rel="stylesheet" type="text/css" href="${ctx}/static/css/common.css" media="all">
+    <link rel="stylesheet" type="text/css" href="${ctx}/static/css/personal.css" media="all">
     <link rel="stylesheet" href="${ctx}/static/css/main.css">
+
+    <link rel="stylesheet" type="text/css" href="http://at.alicdn.com/t/font_9h680jcse4620529.css">
 
     <script src="${ctx}/static/layui_v2/layui.js"></script>
 
     <script src="${ctx}/static/js/jquery-1.8.3.js"></script>
     <script src="${ctx}/static/js/jquery.leoweather.min.js"></script>
+
+    <script type="text/javascript" src="${ctx}/static/echarts/echarts.min.js" charset="utf-8"></script>
+    <script type="text/javascript" src="${ctx}/static/echarts/macarons.js" charset="utf-8"></script>
+
 </head>
-<body class="childrenBody">
-<blockquote class="layui-elem-quote explain">
-    <div>尊敬的会员<span id="weather"></span></div>
-</blockquote>
-<div class="row">
-    <div class="sysNotice col">
-        <blockquote class="layui-elem-quote title">项目信息</blockquote>
-        <table class="layui-table">
-            <colgroup>
-                <col width="150">
-                <col>
-            </colgroup>
-            <tbody>
-            <tr>
-                <td>系统名称:</td>
-                <td class="version">contentManagerSystem(CMS)后台管理系统</td>
-            </tr>
-            <tr>
-                <td>版本信息:</td>
-                <td class="author"><span style="color:#f00;">beta-1.0.4</span></td>
-            </tr>
-            <tr>
-                <td>开发作者</td>
-                <td class="homePage">yangxiaobing</td>
-            </tr>
-            <tr>
-                <td>项目下载：</td>
-                <td class="homePage"><a class="layui-btn layui-btn-mini layui-btn-danger" target="_blank" href="http://fly.layui.com/case/u/5849928">我要点赞</a></td>
-            </tr>
-            <tr>
-                <td>官网地址</td>
-                <td class="server"><a href="http://www.yangxiaobing.org" class="official" target="_blank">http://www.yangxiaobing.org</a>
-                </td>
-            </tr>
-            <tr>
-                <td>服务器环境</td>
-                <td class="dataBase">centos 7</td>
-            </tr>
-            </tbody>
-        </table>
-    </div>
-    <div class="sysNotice col">
-        <blockquote class="layui-elem-quote title">License</blockquote>
-        <div class="layui-elem-quote layui-quote-nm">
-            <p><span style="color:#f00;">郑重提示：</span></p>
-            <p>&nbsp;&nbsp;&nbsp;contentManagerSystem是一个自由软件，您可以自由分发、修改其中的源代码或者重新发布它，
-                新的任何修改后的重新发布版必须同样在遵守GPL3或更后续的版本协议下发布. 关于GPL协议的细则请参考COPYING文件，
-                您可以在contentManagerSystem的相关目录中获得GPL协议的副本， 如果没有找到，请连接到 http://www.gnu.org/licenses/ 查看.
-            </p>
+<body>
+<div class="larry-grid layui-anim layui-anim-upbit larryTheme-A" >
+    <div class="larry-personal" >
+        <div class="layui-tab" >
+            <blockquote class="layui-elem-quote col-md-12 head-con">
+                <div>${LOGIN_NAME.userName}<span id="weather"></span></div>
+            </blockquote>
+            <div class="larry-separate"></div>
+            <!-- 菜单列表 -->
+            <div class="layui-show" style="padding: 10px 15px;">
+                <div class="panel_box row">
+                    <div class="panel col">
+                        <a href="javascript:;" data-url="page/message/message.html">
+                            <div class="panel_icon">
+                                <i class="layui-icon" data-icon="&#xe63a;">&#xe63a;</i>
+                            </div>
+                            <div class="panel_word newMessage">
+                                <span>22</span>
+                                <cite>站内公告</cite>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="panel col">
+                        <a href="javascript:;" data-url="page/message/message.html">
+                            <div class="panel_icon">
+                                <i class="layui-icon" data-icon="&#xe63a;">&#xe63a;</i>
+                            </div>
+                            <div class="panel_word newMessage">
+                                <span>22</span>
+                                <cite>消息管理</cite>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="panel col">
+                        <a href="javascript:;" data-url="page/user/allUsers.html">
+                            <div class="panel_icon" style="background-color:#F7B824;">
+                            <i class="layui-icon" data-icon="&#xe613;">&#xe613;</i>
+                            </div>
+                            <div class="panel_word waitNews">
+                                <span>0</span>
+                                <cite>待定</cite>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="panel col max_panel">
+                        <a href="javascript:;" data-url="page/img/images.html">
+                            <div class="panel_icon" style="background-color:#5FB878;">
+                                <i class="layui-icon" data-icon="&#xe64a;">&#xe64a;</i>
+                            </div>
+                            <div class="panel_word imgAll">
+                                <span>0</span>
+                                <cite>待定</cite>
+                            </div>
+                        </a>
+                    </div>
 
-            <p><span style="color:#1E9FFF;">源码地址：</span>
-                <a class="layui-btn layui-btn-mini" target="_blank"
-                   href="http://git.oschina.net/yangxiaobing_175/contentManagerSystem">点此跳转</a>
-            </p>
+                </div>
 
-        </div>
-    </div>
+            </div>
+            <div class="larry-separate"></div>
+            <div class="row">
+                <div class="sysNotice col">
+                    <div class="layui-collapse" >
+                        <div class="layui-colla-item">
+                            <h2 class="layui-colla-title" style="background-color: #ffffff;">网站访问情况统计</h2>
+                            <div class="layui-colla-content layui-show" >
+                                <div id="container" style="height: 400px; margin: 0 auto;width: 100%;"></div>
+                            </div>
+                        </div>
 
-</div>
-<div class="row">
-    <div class="sysNotice col">
-        <blockquote class="layui-elem-quote title">更新日志</blockquote>
-        <div class="layui-elem-quote layui-quote-nm">
-            <ul class="layui-timeline">
-                <li class="layui-timeline-item">
-                    <i class="layui-icon layui-timeline-axis">&#xe63f;</i>
-                    <div class="layui-timeline-content layui-text">
-                        <h3 class="layui-timeline-title">2017年8月22号</h3>
-                        <p>beta-1.0.4</p>
-                        <ul>
-                            <li>layui版本升级至2.0.1</li>
-                            <li>重写所有普通表格为新版本数据表格</li>
-                            <li>新增登录页图片轮播功能</li>
-                            <li>开放菜单管理新增功能</li>
-                            <li>动态权限控制,可以根据不同账号查看不同菜单功能</li>
-                            <li>部分代码优化</li>
-                        </ul>
                     </div>
-                </li>
-                <li class="layui-timeline-item">
-                    <i class="layui-icon layui-timeline-axis">&#xe63f;</i>
-                    <div class="layui-timeline-content layui-text">
-                        <h3 class="layui-timeline-title">2017年8月10号</h3>
-                        <p>beta-1.0.3</p>
-                        <ul>
-                            <li>角色管理:新增查询功能</li>
-                            <li>角色管理:新增导出功能</li>
-                            <li>角色管理:新增失效、批量失效,解除用户、角色、菜单绑定关系功能</li>
-                            <li>角色管理:新增、修改表单验证</li>
-                            <li>角色管理:新增授权功能,tree菜单展示，并选择菜单</li>
-                            <li>部分代码优化</li>
-                        </ul>
+                </div>
+                <div class="sysNotice col">
+                    <div class="layui-collapse">
+                        <div class="layui-colla-item">
+                            <h2 class="layui-colla-title" style="background-color: #ffffff;">网站访问情况统计</h2>
+                            <div class="layui-colla-content layui-show" >
+                                <div id="container2" style="height: 400px; margin: 0 auto;width: 100%;"></div>
+                            </div>
+                        </div>
+
                     </div>
-                </li>
-                <li class="layui-timeline-item">
-                    <i class="layui-icon layui-timeline-axis">&#xe63f;</i>
-                    <div class="layui-timeline-content layui-text">
-                        <h3 class="layui-timeline-title">2017年8月6号</h3>
-                        <p>beta-1.0.2</p>
-                        <ul>
-                            <li>用户管理:新增查询功能</li>
-                            <li>用户管理:新增导出功能</li>
-                            <li>用户管理:新增失效、批量失效功能</li>
-                            <li>用户管理:新增、修改表单验证</li>
-                            <li>部分代码优化</li>
-                        </ul>
-                    </div>
-                </li>
-                <li class="layui-timeline-item">
-                    <i class="layui-icon layui-timeline-axis">&#xe63f;</i>
-                    <div class="layui-timeline-content layui-text">
-                        <h3 class="layui-timeline-title">2017年8月3号</h3>
-                        <p>beta-1.0.1</p>
-                        <ul>
-                            <li>登陆页优化，加入H5视频效果，视频来源腾讯，仅供交流学习使用</li>
-                            <li>实现角色新增修改功能</li>
-                            <li>实现用户分配角色功能</li>
-                        </ul>
-                    </div>
-                </li>
-                <li class="layui-timeline-item">
-                    <i class="layui-icon layui-timeline-axis">&#xe63f;</i>
-                    <div class="layui-timeline-content layui-text">
-                        <h3 class="layui-timeline-title">2017年7月31号</h3>
-                        <p>beta-1.0.0</p>
-                        <ul>
-                            <li>SpringBoot项目构建</li>
-                            <li>加入 mybatis+druid数据持久化功能</li>
-                            <li>加入apacheShiro权限验证</li>
-                            <li>新增用户管理、角色管理、菜单管理等部分功能实现</li>
-                            <li>页面列表基于后台数据库交互实现table列表展示-分页、form表单提交</li>
-                            <li>动态菜单导航,选项卡功能、弹层实现编辑保存功能</li>
-                        </ul>
-                    </div>
-                </li>
-            </ul>
-        </div>
-    </div>
-    <div class="sysNotice col">
-        <blockquote class="layui-elem-quote title">系统公告</blockquote>
-        <div class="layui-elem-quote layui-quote-nm">
-            <h3>目前开放两个测试账号:</h3>
-            <h3>user_system/123456 此帐号拥有用户、角色、菜单、修改新增功能</h3>
-            <h3>user_readonly/123456 此帐号为只读用户,只能查看数据不能做任何功能性操作</h3>
-            <h3 style="color:#f00;">麻烦大家测试的时候,数据尽量造一些有意义的数据，不要写111或者222之类的，谢谢啦๑乛◡乛๑</h3>
-            <h3>由于目前部分功能还未完善，暂不放开超级管理员权限:</h3>
+                </div>
+
+            </div>
+
         </div>
     </div>
 </div>
@@ -171,11 +121,130 @@
 <script type="text/javascript">
     layui.config({
         base : "${ctx}/static/js/"
-    }).use(['form','jquery','common'],function() {
+    }).use(['form','jquery','common','element'],function() {
         var $ = layui.$,
                 form = layui.form,
+                element = layui.element,
                 common = layui.common;
         $('#weather').leoweather({format:'，{时段}好！，<span id="colock">现在时间是：<strong>{年}年{月}月{日}日 星期{周} {时}:{分}:{秒}</strong>，</span> <b>{城市}天气</b> {天气} {夜间气温}℃ ~ {白天气温}℃ '});
+
+
+        //图表
+        var psLineChar = echarts.init(document.getElementById('container'),'macarons');
+        var option = {
+            title : {
+                text: '网站访问量',
+                subtext: '纯属虚构'
+            },
+            tooltip : {
+                trigger: 'axis'
+            },
+            legend: {
+                data:['访问量']
+            },
+            toolbox: {
+                show : true,
+                feature : {
+                    magicType : {type: ['line', 'bar']}
+                }
+            },
+            calculable : true,
+            xAxis : [
+                {
+                    type : 'category',
+                    data : ['周一','周二','周三','周四','周五','周六','周日']
+                }
+            ],
+            yAxis : [
+                {
+                    type : 'value'
+                }
+            ],
+            series : [
+                {
+                    name:'访问量',
+                    type:'line',
+                    data:[2.0, 4.9, 7.0, 23.2, 25.6, 76.7, 0.2]
+                }
+            ]
+        };
+
+
+        //查询
+        function loadDrugs() {
+            psLineChar.clear();
+            psLineChar.showLoading({text: '正在努力的读取数据中...'});
+            psLineChar.setOption(option, true);
+            psLineChar.hideLoading();
+
+        }
+
+
+        //载入图表
+        loadDrugs();
+
+
+        //图表
+        var psLineChar2 = echarts.init(document.getElementById('container2'),'macarons');
+        var option = {
+            title : {
+                text: '网站访问量',
+                subtext: '纯属虚构'
+            },
+            tooltip : {
+                trigger: 'axis'
+            },
+            legend: {
+                data:['访问量']
+            },
+            toolbox: {
+                show : true,
+                feature : {
+                    magicType : {type: ['line', 'bar']}
+                }
+            },
+            calculable : true,
+            xAxis : [
+                {
+                    type : 'category',
+                    data : ['周一','周二','周三','周四','周五','周六','周日']
+                }
+            ],
+            yAxis : [
+                {
+                    type : 'value'
+                }
+            ],
+            series : [
+                {
+                    name:'访问量',
+                    type:'bar',
+                    data:[2.0, 4.9, 7.0, 23.2, 25.6, 76.7, 0.2]
+                }
+            ]
+        };
+
+
+        //查询
+        function loadDrugs2() {
+            psLineChar2.clear();
+            psLineChar2.showLoading({text: '正在努力的读取数据中...'});
+            psLineChar2.setOption(option, true);
+            psLineChar2.hideLoading();
+
+        }
+
+
+        //载入图表
+        loadDrugs2();
+
+        //浏览器大小改变时重置大小
+        window.onresize = function () {
+            psLineChar.resize();
+            psLineChar2.resize();
+
+        };
+
 
     });
 
