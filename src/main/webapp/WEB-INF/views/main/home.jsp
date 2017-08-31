@@ -94,7 +94,7 @@
                         <div class="layui-colla-item">
                             <h2 class="layui-colla-title" style="background-color: #ffffff;">网站访问情况统计</h2>
                             <div class="layui-colla-content layui-show" >
-                                <div id="container" style="height: 400px; margin: 0 auto;width: 100%;"></div>
+                                <div id="container" style="height: 300px; margin: 0 auto;width: 100%;"></div>
                             </div>
                         </div>
 
@@ -105,7 +105,7 @@
                         <div class="layui-colla-item">
                             <h2 class="layui-colla-title" style="background-color: #ffffff;">网站访问情况统计</h2>
                             <div class="layui-colla-content layui-show" >
-                                <div id="container2" style="height: 400px; margin: 0 auto;width: 100%;"></div>
+                                <div id="container2" style="height: 300px; margin: 0 auto;width: 100%;"></div>
                             </div>
                         </div>
 
