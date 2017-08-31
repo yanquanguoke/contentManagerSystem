@@ -42,9 +42,9 @@ import java.util.List;
 
 /**
  * 菜单资源DAO
- * 
- * @date   2016年8月15日 下午5:22:59
- * @author yangxiaobing@tomstaff.com
+ *
+ * @author yangxiaobing
+ * @date   2017/7/24
  *
  */
 @Mapper
