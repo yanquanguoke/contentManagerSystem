@@ -48,7 +48,6 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.nutz.json.Json;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -201,7 +200,7 @@ public class UserService {
     /**
      * 批量用户状态失效
      * @param userIds	用户Id
-     * @param longinName 当前登录用户名
+     * @param loginName 当前登录用户名
      * @return
      * @throws Exception
      */

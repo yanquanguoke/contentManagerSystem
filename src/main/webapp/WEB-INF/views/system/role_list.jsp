@@ -74,12 +74,12 @@
                 common = layui.common;
 
         /**角色表格加载*/
-        var roleTableRender = table.render({
+        table.render({
             elem: '#roleTableList',
             url: '${ctx}/role/ajax_role_list.do',
             id:'roleTableId',
             method: 'post',
-            height:'400',
+            height:'full-140',
             skin:'row',
             even:'true',
             size: 'sm',
@@ -104,11 +104,12 @@
         $(".roleSearchList_btn").click(function(){
             //监听提交
             form.on('submit(roleSearchFilter)', function (data) {
-                roleTableRender.reload({
+                table.reload('roleTableId',{
                     where: {
                         searchTerm:data.field.searchTerm,
                         searchContent:data.field.searchContent
-                    }
+                    },
+                    height: 'full-140'
                 });
             });
 

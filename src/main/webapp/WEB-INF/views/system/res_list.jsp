@@ -75,12 +75,12 @@
 
 
         /**用户表格加载*/
-        var userTableRender = table.render({
+         table.render({
             elem: '#resTableList',
             url: '${ctx}/res/ajax_res_list.do',
             id:'resTableId',
             method: 'post',
-            height:'400',
+            height:'full-140',
             skin:'row',
             even:'true',
             size: 'sm',
@@ -106,11 +106,12 @@
         $(".resSearchList_btn").click(function(){
             //监听提交
             form.on('submit(resSearchFilter)', function (data) {
-                userTableRender.reload({
+                table.reload('resTableId',{
                     where: {
                         searchTerm:data.field.searchTerm,
                         searchContent:data.field.searchContent
-                    }
+                    },
+                    height:'full-140'
                 });
 
             });

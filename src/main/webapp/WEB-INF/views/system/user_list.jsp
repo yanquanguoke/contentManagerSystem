@@ -73,12 +73,12 @@
                 layer = layui.layer,
                 common = layui.common;
         /**用户表格加载*/
-        var userTableRender = table.render({
+        table.render({
             elem: '#userTableList',
             url: '${ctx}/user/ajax_user_list.do',
             id:'userTableId',
             method: 'post',
-            height:'400',
+            height:'full-140',
             skin:'row',
             even:'true',
             size: 'sm',
@@ -103,11 +103,12 @@
         $(".userSearchList_btn").click(function(){
             //监听提交
             form.on('submit(userSearchFilter)', function (data) {
-                userTableRender.reload({
+                table.reload('userTableId',{
                     where: {
                             searchTerm:data.field.searchTerm,
                             searchContent:data.field.searchContent
-                    }
+                    },
+                    height: 'full-140'
                 });
 
             });
