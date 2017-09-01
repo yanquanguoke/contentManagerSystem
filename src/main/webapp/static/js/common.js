@@ -60,6 +60,27 @@ layui.define(['layer'], function (exports) {
                 }
             });
         },
+        /**弹出层-tip*/
+        cmsLayOpenTip:function (title,url,width,height) {
+
+            var index = layui.layer.open({
+                title : '<i class="larry-icon larry-bianji3"></i>'+title,
+                type : 2,
+                skin : 'layui-layer-molv',
+                content : url,
+                area: [width, height],
+                resize:false,
+                anim:1,
+                success : function(layero, index){
+                    setTimeout(function(){
+                        layui.layer.tips('点击此处返回', '.layui-layer-setwin .layui-layer-close', {
+                            tips: [3, '#009f95']
+                        });
+                    },500)
+
+                }
+            });
+        },
         /**退出*/
         logOut: function (title, text, url, type, dataType, data, callback) {
             parent.layer.confirm(text, {

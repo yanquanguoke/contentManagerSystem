@@ -136,7 +136,7 @@
             if(layEvent === 'announcement_detail') {
                 var announcementId = data.announcementId;
                 var url =  "${ctx}/announcement/announcement_detail.do?announcementId="+announcementId;
-                common.cmsLayOpen('公告详情',url,'100%','100%');
+                common.cmsLayOpenTip('公告详情',url,'100%','100%');
 
              //公告删除
             }else if(layEvent === 'announcement_delete') {

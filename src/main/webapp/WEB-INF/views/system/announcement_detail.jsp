@@ -42,10 +42,10 @@
                     </div>
                 </div>
             </div>
+
         </div>
     </div>
 </div>
-
 <script type="text/javascript">
     layui.config({
         base : "${ctx}/static/js/"
