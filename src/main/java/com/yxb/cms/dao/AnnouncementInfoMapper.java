@@ -35,6 +35,8 @@ package com.yxb.cms.dao;
 import com.yxb.cms.domain.vo.AnnouncementInfo;
 import org.apache.ibatis.annotations.Mapper;
 
+import java.util.List;
+
 /**
  * 公告信息DAO
  *
@@ -91,4 +93,21 @@ public interface AnnouncementInfoMapper {
      * @mbggenerated Fri Sep 01 00:04:17 CST 2017
      */
     int updateByPrimaryKey(AnnouncementInfo record);
+
+
+
+    /**
+     * 查询站内公告总记录数
+     * @param annInfo 公告实体
+     * @return
+     */
+    Long selectCountAnnouncementInfo(AnnouncementInfo annInfo);
+
+    /**
+     * 公告信息分页列表展示分页列表显示
+     * @param annInfo 公告实体
+     * @return
+     */
+    List<AnnouncementInfo> selectAnnouncementInfoListByPage(AnnouncementInfo annInfo);
+
 }

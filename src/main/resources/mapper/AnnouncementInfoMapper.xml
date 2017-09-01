@@ -144,4 +144,33 @@
       announcement_time = #{announcementTime,jdbcType=TIMESTAMP}
     where announcement_id = #{announcementId,jdbcType=INTEGER}
   </update>
+
+    <!-- 查询站内公告总记录数 -->
+    <select id="selectCountAnnouncementInfo" parameterType="com.yxb.cms.domain.vo.AnnouncementInfo" resultType="Long">
+        select count(*)
+        from cc_announcement_info
+        <include refid="selectPageParmas" />
+    </select>
+    <!-- 公告信息分页列表展示分页列表显示 -->
+    <select id="selectAnnouncementInfoListByPage" parameterType="com.yxb.cms.domain.vo.AnnouncementInfo" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from cc_announcement_info
+        <include refid="selectPageParmas" />
+        order by announcement_time DESC
+        LIMIT #{start},#{limit}
+    </select>
+
+    <!-- 分页查询条件 -->
+    <sql id="selectPageParmas">
+        <where>
+            <if test="beginTime != null and beginTime != '' ">
+                <![CDATA[AND date_format(announcement_time,'%Y-%m-%d') >= #{beginTime,jdbcType=VARCHAR}]]>
+            </if>
+            <if test="endTime != null and endTime != '' ">
+                <![CDATA[AND date_format(announcement_time,'%Y-%m-%d') <= #{endTime,jdbcType=VARCHAR}]]>
+            </if>
+        </where>
+    </sql>
+
 </mapper>
