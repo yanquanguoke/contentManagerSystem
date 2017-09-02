@@ -43,7 +43,7 @@
                     </div>
                     <shiro:hasPermission name="0rbT8t2P">
                         <div class="layui-inline" style="margin-bottom:auto;margin-left: auto;">
-                            <a class="layui-btn layui-btn-normal userAdd_btn"> <i class="layui-icon larry-icon larry-xinzeng1"></i>新增公告</a>
+                            <a class="layui-btn layui-btn-normal announcementAdd_btn"> <i class="layui-icon larry-icon larry-xinzeng1"></i>新增公告</a>
                         </div>
                     </shiro:hasPermission>
                 </div>
@@ -80,11 +80,11 @@
             even:'true',
             size: 'sm',
             cols: [[
-                {field:'announcementTitle', title: '公告标题',width: 300 },
-                {field:'announcementType', title: '公告类型',align:'center',width: 120,templet: '#announcementTypeTpl'},
-                {field:'announcementAuthor', title: '发布人',align:'center',width: 120},
-                {field:'announcementTime', title: '发布时间',align:'center',width: 160},
-                {fixed:'right', title: '操作', align:'center',width: 195, toolbar: '#userBar'}
+                {field:'announcementTitle', title: '公告标题',width: 400 },
+                {field:'announcementType', title: '公告类型',align:'center',width: 200,templet: '#announcementTypeTpl'},
+                {field:'announcementAuthor', title: '发布人',align:'center',width: 220},
+                {field:'announcementTime', title: '发布时间',align:'center',width: 220},
+                {fixed:'right', title: '操作', align:'center',width: 200, toolbar: '#userBar'}
 
             ]],
             page: true,
@@ -119,10 +119,10 @@
         });
 
 
-        /**新增用户*/
-        $(".userAdd_btn").click(function(){
-            var url = "${ctx}/user/user_add.do";
-            common.cmsLayOpen('新增用户',url,'550px','265px');
+        /**新增公告*/
+        $(".announcementAdd_btn").click(function(){
+            var url = "${ctx}/announcement/announcement_add.do";
+            common.cmsLayOpen('新增公告',url,'890px','480px');
         });
 
 

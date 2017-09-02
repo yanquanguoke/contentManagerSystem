@@ -32,9 +32,11 @@
  */
 package com.yxb.cms.controller.system;
 
+import com.yxb.cms.architect.constant.BussinessCode;
+import com.yxb.cms.architect.utils.BussinessMsgUtil;
 import com.yxb.cms.controller.BasicController;
+import com.yxb.cms.domain.bo.BussinessMsg;
 import com.yxb.cms.domain.vo.AnnouncementInfo;
-import com.yxb.cms.domain.vo.User;
 import com.yxb.cms.service.AnnouncementInfoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -77,6 +79,32 @@ public class AnnouncementInfoController extends BasicController {
         return announcementInfoService.selectAnnInfoResultPageList(announcement);
     }
 
+    /**
+     *跳转到公告新增页面
+     * @return
+     */
+    @RequestMapping("/announcement_add.do")
+    public String toAnnouncementAddPage() {
+        return "system/announcement_add";
+    }
+
+    /**
+     * 保存公告信息
+     * @param announcementType      公告类型
+     * @param announcementTitle     公告标题
+     * @param announcementContent   公告内容
+     * @return
+     */
+    @RequestMapping("/ajax_save_announcement.do")
+    @ResponseBody
+    public BussinessMsg ajaxSaveAnnouncement(Integer announcementType, String announcementTitle,String announcementContent){
+        try {
+            return announcementInfoService.saveAnnouncementInfo(announcementType,announcementTitle,announcementContent,this.getCurrentLoginName());
+        } catch (Exception e) {
+            log.error("保存公告信息方法内部错误",e);
+            return BussinessMsgUtil.returnCodeMessage(BussinessCode.ANNOUNCEMENT_SAVE_ERROR);
+        }
+    }
 
     /**
      * 公告详情页面

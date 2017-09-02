@@ -71,7 +71,7 @@ public enum BusinessConstants {
     ;
 	
 
-	private BusinessConstants(Integer code, String msg) {
+	 BusinessConstants(Integer code, String msg) {
 		this.code = code;
 		this.msg = msg;
 	}

@@ -11,8 +11,6 @@
 
     <link rel="shortcut icon" href="${ctx}/static/img/favicon.ico">
     <link rel="stylesheet" href="${ctx}/static/layui_v2/css/layui.css">
-    <link rel="stylesheet" href="${ctx}/static/css/global.css">
-    <link rel="stylesheet" type="text/css" href="${ctx}/static/css/common.css" media="all">
     <link rel="stylesheet" type="text/css" href="${ctx}/static/css/personal.css" media="all">
     <link rel="stylesheet" type="text/css" href="http://at.alicdn.com/t/font_9h680jcse4620529.css">
     <script src="${ctx}/static/layui_v2/layui.js"></script>
@@ -47,19 +45,6 @@
     </div>
 </div>
 <script type="text/javascript">
-    layui.config({
-        base : "${ctx}/static/js/"
-    }).use(['form', 'table', 'layer','common','laydate'], function () {
-        var $ =  layui.$,
-                form = layui.form,
-                table = layui.table,
-                layer = layui.layer,
-                laydate = layui.laydate,
-                common = layui.common;
-
-
-
-    });
 </script>
 </body>
 </html>

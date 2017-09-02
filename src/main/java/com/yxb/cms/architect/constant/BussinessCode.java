@@ -76,6 +76,8 @@ public enum BussinessCode {
     USER_LOGIN_NAME_EXIST("1508","用户账号已存在，请重新输入"),
     ROLE_RES_SAVE_ERROR("1509","角色分配菜单失败"),
     ROLE_NAME_EXIST("1508","角色名称已存在，请重新输入"),
+    ANNOUNCEMENT_SAVE_ERROR("1509","公告信息保存失败"),
+
 
     ;
 

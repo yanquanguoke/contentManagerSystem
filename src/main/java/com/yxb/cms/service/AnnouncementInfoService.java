@@ -32,14 +32,19 @@
  */
 package com.yxb.cms.service;
 
+import com.yxb.cms.architect.constant.BussinessCode;
+import com.yxb.cms.architect.utils.BussinessMsgUtil;
 import com.yxb.cms.dao.AnnouncementInfoMapper;
+import com.yxb.cms.domain.bo.BussinessMsg;
 import com.yxb.cms.domain.vo.AnnouncementInfo;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.nutz.json.Json;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -88,6 +93,38 @@ public class AnnouncementInfoService {
      */
     public AnnouncementInfo selectAnnouncementInfoById(Integer announcementId){
         return announcementInfoMapper.selectByPrimaryKey(announcementId);
+    }
+
+    /**
+     * 保存公告信息
+     * @param announcementType  公告类型
+     * @param announcementTitle 公告标题
+     * @param announcementContent 公告内容
+     * @param loginName 当前登陆用户
+     * @return
+     * @throws Exception
+     */
+    @Transactional
+    public BussinessMsg saveAnnouncementInfo(Integer announcementType, String announcementTitle,String announcementContent,String loginName) throws Exception{
+        log.info("保存公告信息开始");
+        long start = System.currentTimeMillis();
+        try {
+
+            AnnouncementInfo anInfo = new AnnouncementInfo();
+            anInfo.setAnnouncementType(announcementType);
+            anInfo.setAnnouncementTitle(announcementTitle);
+            anInfo.setAnnouncementContent(announcementContent);
+            anInfo.setAnnouncementAuthor(loginName);
+            anInfo.setAnnouncementTime(new Date());
+            announcementInfoMapper.insertSelective(anInfo);
+
+        } catch (Exception e) {
+            log.error("保存公告信息方法内部错误", e);
+            throw e;
+        } finally {
+            log.info("保存公告信息结束,用时" + (System.currentTimeMillis() - start) + "毫秒");
+        }
+        return BussinessMsgUtil.returnCodeMessage(BussinessCode.GLOBAL_SUCCESS);
     }
 
 
