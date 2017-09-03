@@ -84,7 +84,7 @@
                 {field:'announcementType', title: '公告类型',align:'center',width: 200,templet: '#announcementTypeTpl'},
                 {field:'announcementAuthor', title: '发布人',align:'center',width: 220},
                 {field:'announcementTime', title: '发布时间',align:'center',width: 220},
-                {fixed:'right', title: '操作', align:'center',width: 200, toolbar: '#userBar'}
+                {fixed:'right', title: '操作', align:'center',width: 200, toolbar: '#announcementBar'}
 
             ]],
             page: true,
@@ -165,7 +165,7 @@
 
 
 <!--工具条 -->
-<script type="text/html" id="userBar">
+<script type="text/html" id="announcementBar">
     <div class="layui-btn-group">
         <shiro:hasPermission name="mScICO9G">
             <a class="layui-btn layui-btn-mini layui-btn-normal  announcement_detail" lay-event="announcement_detail"><i class="layui-icon larry-icon larry-chaxun2"></i>详情</a>

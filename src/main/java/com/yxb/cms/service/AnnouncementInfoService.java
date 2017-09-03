@@ -158,5 +158,53 @@ public class AnnouncementInfoService {
 
     }
 
+    /**
+     * 查询未读公告列表
+     * @param currentLoginId 用户Id
+     * @return
+     */
+    public String selectUnreadAnnInfoListByUserId(Integer currentLoginId) {
+
+        List<AnnouncementInfo> annList = announcementInfoMapper.selectUnreadAnnInfoListByUserId(currentLoginId);
+        Map<String, Object> map = new HashMap<String, Object>();
+        map.put("code", 0);
+        map.put("msg", "");
+        map.put("count", 0);
+        map.put("data", annList);
+
+        return Json.toJson(map);
+    }
+
+    /**
+     * 查询已读公告列表
+     * @param currentLoginId 用户Id
+     * @return
+     */
+    public String selectReadAnnInfoListByUserId(Integer currentLoginId) {
+
+        List<AnnouncementInfo> annList = announcementInfoMapper.selectReadAnnInfoListByUserId(currentLoginId);
+        Map<String, Object> map = new HashMap<String, Object>();
+        map.put("code", 0);
+        map.put("msg", "");
+        map.put("count", 0);
+        map.put("data", annList);
+
+        return Json.toJson(map);
+    }
+
+    /**
+     * 查询全部公告列表
+     * @return
+     */
+    public String selectAllReadAnnInfoListByUserId() {
+        List<AnnouncementInfo> annList = announcementInfoMapper.selectAllReadAnnInfoListByUserId();
+        Map<String, Object> map = new HashMap<String, Object>();
+        map.put("code", 0);
+        map.put("msg", "");
+        map.put("count", 0);
+        map.put("data", annList);
+
+        return Json.toJson(map);
+    }
 
 }

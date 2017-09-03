@@ -118,10 +118,37 @@ public interface AnnouncementInfoMapper {
     List<AnnouncementInfo> selectUnreadAnnInfoListByUserId(@Param("userId") Integer userId);
 
     /**
+     * 根据userId查询已读公告集合
+     * @param userId 用户Id
+     * @return
+     */
+    List<AnnouncementInfo> selectReadAnnInfoListByUserId(@Param("userId") Integer userId);
+
+    /**
+     * 查询全部公告集合
+     * @return
+     */
+    List<AnnouncementInfo> selectAllReadAnnInfoListByUserId();
+
+    /**
      * 根据userId查询未读公告记录数
      * @param userId 用户Id
      * @return
      */
     Long selectUnreadAnnInfoCountByUserId(@Param("userId") Integer userId);
+
+
+    /**
+     * 根据userId查询已读公告记录数
+     * @param userId 用户Id
+     * @return
+     */
+    Long selectReadAnnInfoCountByUserId(@Param("userId") Integer userId);
+
+    /**
+     * 查询全部公告记录数
+     * @return
+     */
+    Long selectAllReadAnnInfoCount();
 
 }

@@ -21,19 +21,26 @@
 <body>
 <div class="larry-grid layui-anim layui-anim-upbit larryTheme-A ">
     <div class="larry-personal">
-        <div class="layui-tab layui-tab-brief">
+        <div class="layui-tab layui-tab-brief" lay-filter="filterAnnInfoTab">
             <ul class="layui-tab-title">
-                <li class="layui-this">未读公告<span class="layui-badge">4</span></li>
-                <li>已读公告<span class="layui-badge layui-bg-green">0</span></li>
-                <li>全部公告<span class="layui-badge layui-bg-blue">0</span></li>
+                <li class="layui-this">未读公告<span class="layui-badge unreadSpan">0</span></li>
+                <li>已读公告<span class="layui-badge layui-bg-green readSpan">0</span></li>
+                <li>全部公告<span class="layui-badge layui-bg-blue allreadSpan">0</span></li>
             </ul>
             <div class="layui-tab-content">
                 <div class="layui-tab-item layui-show">
-                    <!-- 公告列表 -->
-                    <table id="announcementTableList" lay-filter="announcementTableId"></table>
+                    <!-- 未读公告列表 -->
+                    <table id="unReadAnnInfoTableList" lay-filter="unReadAnnInfoTableId"></table>
                 </div>
-                <div class="layui-tab-item">内容2</div>
-                <div class="layui-tab-item">内容3</div>
+                <div class="layui-tab-item">
+                    <!-- 已读公告列表 -->
+                    <table id="readAnnInfoTableList" lay-filter="readAnnInfoTableId"></table>
+                </div>
+                <div class="layui-tab-item">
+                    <!-- 全部公告列表 -->
+                    <table id="allReadAnnInfoTableList" lay-filter="allReadAnnInfoTableId"></table>
+
+                </div>
             </div>
 
         </div>
@@ -41,21 +48,107 @@
 </div>
 
 <script type="text/javascript">
+    var $,table;
     layui.config({
         base : "${ctx}/static/js/"
-    }).use(['form', 'table', 'layer','common','laydate','element'], function () {
-        var $ =  layui.$,
-                form = layui.form,
-                table = layui.table,
-                layer = layui.layer,
-                laydate = layui.laydate,
-                element = layui.element,
-                common = layui.common;
-        /**公告表格加载*/
+    }).use(['form', 'table','common','element'], function () {
+        $ =  layui.$;
+        table = layui.table;
+       var  form = layui.form,
+        element = layui.element,
+        common = layui.common;
+
+        //未读公告
+        unReadAnnInfo();
+        //已读公告
+        readAnnInfo();
+        //全部公告
+        allreadAnnInfo();
+
+        //默认加载未读公告
+        unReadAnnInfoTable();
+        /**tab监听*/
+        element.on('tab(filterAnnInfoTab)', function(data){
+            if(data.index == 1){
+                readAnnInfoTable(); //已读公告table
+            }else if(data.index == 2){
+                allReadAnnInfoTable(); //全部公告table
+            }
+
+        });
+
+
+
+
+        /**监听未读公告工具条*/
+        table.on('tool(unReadAnnInfoTableId)', function(obj){
+            var data = obj.data; //获得当前行数据
+            var layEvent = obj.event; //获得 lay-event 对应的值
+
+            //公告详情
+            if(layEvent === 'announcement_detail') {
+                var announcementId = data.announcementId;
+                var url =  "${ctx}/announcement/announcement_detail.do?announcementId="+announcementId;
+                common.cmsLayOpenTip('公告详情',url,'100%','100%');
+
+            }
+        });
+
+        /**监听已读公告工具条*/
+        table.on('tool(readAnnInfoTableId)', function(obj){
+            var data = obj.data; //获得当前行数据
+            var layEvent = obj.event; //获得 lay-event 对应的值
+
+            //公告详情
+            if(layEvent === 'announcement_detail') {
+                var announcementId = data.announcementId;
+                var url =  "${ctx}/announcement/announcement_detail.do?announcementId="+announcementId;
+                common.cmsLayOpenTip('公告详情',url,'100%','100%');
+
+            }
+        });
+        /**监听全部公告工具条*/
+        table.on('tool(allReadAnnInfoTableId)', function(obj){
+            var data = obj.data; //获得当前行数据
+            var layEvent = obj.event; //获得 lay-event 对应的值
+
+            //公告详情
+            if(layEvent === 'announcement_detail') {
+                var announcementId = data.announcementId;
+                var url =  "${ctx}/announcement/announcement_detail.do?announcementId="+announcementId;
+                common.cmsLayOpenTip('公告详情',url,'100%','100%');
+
+            }
+        });
+
+
+    });
+
+    /**加载未读公告数*/
+    function unReadAnnInfo() {
+        $.post("${ctx}/announcement/ajax_unread_anninfo_count.do", function(data) {
+            $(".unreadSpan").text(data);
+        });
+    }
+    /**查询已读公告数*/
+    function readAnnInfo() {
+        $.post("${ctx}/announcement/ajax_read_anninfo_count.do", function(data) {
+            $(".readSpan").text(data);
+        });
+    }
+    /**查询全部公告数*/
+    function allreadAnnInfo() {
+        $.post("${ctx}/announcement/ajax_allread_anninfo_count.do", function(data) {
+            $(".allreadSpan").text(data);
+        });
+
+    }
+    /**加载未读公告Table*/
+    function unReadAnnInfoTable() {
         table.render({
-            elem: '#announcementTableList',
-            url: '${ctx}/announcement/ajax_announcement_list.do',
-            id:'announcementTableId',
+            elem: '#unReadAnnInfoTableList',
+            url: '${ctx}/announcement/ajax_unread_anninfo_list.do',
+            id:'unReadAnnInfoTableId',
             method: 'post',
             height:'full-120',
             skin:'row',
@@ -66,72 +159,57 @@
                 {field:'announcementType', title: '公告类型',align:'center',width: 200,templet: '#announcementTypeTpl'},
                 {field:'announcementAuthor', title: '发布人',align:'center',width: 220},
                 {field:'announcementTime', title: '发布时间',align:'center',width: 220},
-                {fixed:'right', title: '操作', align:'center',width: 200, toolbar: '#userBar'}
+                {fixed:'right', title: '操作', align:'center',width: 200, toolbar: '#announcementBar'}
 
-            ]],
-            page: true,
-            limit: 10//默认显示10条
+            ]]
         });
 
-        /**查询*/
-        $(".announcementSearchList_btn").click(function(){
-            //监听提交
-            form.on('submit(announcementSearchFilter)', function (data) {
-                table.reload('announcementTableId',{
-                    where: {
-                        beginTime:data.field.beginTime,
-                        endTime:data.field.endTime
-                    },
-                    height: 'full-140'
-                });
+    }
+    /**加载已读公告Table*/
+    function readAnnInfoTable() {
+        table.render({
+            elem: '#readAnnInfoTableList',
+            url: '${ctx}/announcement/ajax_read_anninfo_list.do',
+            id:'allReadAnnInfoTableId',
+            method: 'post',
+            height:'full-120',
+            skin:'row',
+            even:'true',
+            size: 'sm',
+            cols: [[
+                {field:'announcementTitle', title: '公告标题',width: 400 },
+                {field:'announcementType', title: '公告类型',align:'center',width: 200,templet: '#announcementTypeTpl'},
+                {field:'announcementAuthor', title: '发布人',align:'center',width: 220},
+                {field:'announcementTime', title: '发布时间',align:'center',width: 220},
+                {fixed:'right', title: '操作', align:'center',width: 200, toolbar: '#announcementBar'}
 
-            });
-
+            ]]
         });
 
-        /**开始日期*/
-        laydate.render({
-            elem: '#beginTime',
-            theme: 'molv'
+    }
+
+    /**加载全部公告Table*/
+    function allReadAnnInfoTable() {
+        table.render({
+            elem: '#allReadAnnInfoTableList',
+            url: '${ctx}/announcement/ajax_allread_anninfo_list.do',
+            id:'allReadAnnInfoTableId',
+            method: 'post',
+            height:'full-120',
+            skin:'row',
+            even:'true',
+            size: 'sm',
+            cols: [[
+                {field:'announcementTitle', title: '公告标题',width: 400 },
+                {field:'announcementType', title: '公告类型',align:'center',width: 200,templet: '#announcementTypeTpl'},
+                {field:'announcementAuthor', title: '发布人',align:'center',width: 220},
+                {field:'announcementTime', title: '发布时间',align:'center',width: 220},
+                {fixed:'right', title: '操作', align:'center',width: 200, toolbar: '#announcementBar'}
+
+            ]]
         });
-        /**结束日期*/
-        laydate.render({
-            elem: '#endTime',
-            theme: 'molv'
-        });
-
-
-        /**新增公告*/
-        $(".announcementAdd_btn").click(function(){
-            var url = "${ctx}/announcement/announcement_add.do";
-            common.cmsLayOpen('新增公告',url,'890px','480px');
-        });
-
-
-
-        /**监听工具条*/
-        table.on('tool(announcementTableId)', function(obj){
-            var data = obj.data; //获得当前行数据
-            var layEvent = obj.event; //获得 lay-event 对应的值
-
-            //公告详情
-            if(layEvent === 'announcement_detail') {
-                var announcementId = data.announcementId;
-                var url =  "${ctx}/announcement/announcement_detail.do?announcementId="+announcementId;
-                common.cmsLayOpenTip('公告详情',url,'100%','100%');
-
-             //公告删除
-            }else if(layEvent === 'announcement_delete') {
-                var announcementId = data.announcementId;
-                var url = "${ctx}/announcement/ajax_del_announcement.do";
-                var param = {announcementId:announcementId};
-                common.ajaxCmsConfirm('系统提示', '确定要删除当前公告吗?',url,param);
-
-            }
-        });
-
-
-    });
+        
+    }
 </script>
 <!-- 公告类型tpl-->
 <script type="text/html" id="announcementTypeTpl">
@@ -147,14 +225,9 @@
 
 
 <!--工具条 -->
-<script type="text/html" id="userBar">
+<script type="text/html" id="announcementBar">
     <div class="layui-btn-group">
-        <shiro:hasPermission name="mScICO9G">
             <a class="layui-btn layui-btn-mini layui-btn-normal  announcement_detail" lay-event="announcement_detail"><i class="layui-icon larry-icon larry-chaxun2"></i>详情</a>
-        </shiro:hasPermission>
-        <shiro:hasPermission name="uBg9TdEr">
-            <a class="layui-btn layui-btn-mini layui-btn-danger announcement_delete" lay-event="announcement_delete"><i class="layui-icon larry-icon larry-ttpodicon"></i>删除</a>
-        </shiro:hasPermission>
     </div>
 </script>
 

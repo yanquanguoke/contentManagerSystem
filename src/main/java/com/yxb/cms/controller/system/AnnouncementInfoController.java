@@ -153,14 +153,67 @@ public class AnnouncementInfoController extends BasicController {
         return 0;
 
     }
+    /**
+     * 查询用户已读公告信息
+     * @return
+     */
+    @RequestMapping("/ajax_read_anninfo_count.do")
+    @ResponseBody
+    public  Integer ajaxReadAnnInfoCount(){
+        if(null != this.getCurrentLoginId()){
+            Long readCount = announcementInfoMapper.selectReadAnnInfoCountByUserId(this.getCurrentLoginId());
+            return readCount.intValue();
+        }
+        return 0;
+
+    }
+    /**
+     * 查询全部公告信息
+     * @return
+     */
+    @RequestMapping("/ajax_allread_anninfo_count.do")
+    @ResponseBody
+    public  Integer ajaxAllReadAnnInfoCount(){
+        Long allReadCount = announcementInfoMapper.selectAllReadAnnInfoCount();
+        return allReadCount.intValue();
+
+    }
 
 
     /**
-     *跳转到公告列表页面
+     *跳转到未读公告列表页面
      * @return
      */
     @RequestMapping("/announcement_unread_list.do")
     public String toAnnouncementUnReadListPage() {
         return "system/announcement_unread_list";
+    }
+
+    /**
+     * 未读公告列表List
+     * @return
+     */
+    @RequestMapping("/ajax_unread_anninfo_list.do")
+    @ResponseBody
+    public String ajaxUnReadAnnInfoList() {
+        return announcementInfoService.selectUnreadAnnInfoListByUserId(this.getCurrentLoginId());
+    }
+    /**
+     * 已读公告列表List
+     * @return
+     */
+    @RequestMapping("/ajax_read_anninfo_list.do")
+    @ResponseBody
+    public String ajaxReadAnnInfoList() {
+        return announcementInfoService.selectReadAnnInfoListByUserId(this.getCurrentLoginId());
+    }
+    /**
+     * 全部公告列表List
+     * @return
+     */
+    @RequestMapping("/ajax_allread_anninfo_list.do")
+    @ResponseBody
+    public String ajaxAllReadAnnInfoList() {
+        return announcementInfoService.selectAllReadAnnInfoListByUserId();
     }
 }

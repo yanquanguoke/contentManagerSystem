@@ -173,7 +173,7 @@
         </where>
     </sql>
 
-
+    <!-- 根据userId查询未读公告集合-->
     <select id="selectUnreadAnnInfoListByUserId"  resultType="com.yxb.cms.domain.vo.AnnouncementInfo">
         SELECT
             DISTINCT
@@ -193,6 +193,35 @@
                     AND B.USER_ID = #{userId,jdbcType=INTEGER})
     </select>
 
+    <!-- 根据userId查询已读公告集合-->
+    <select id="selectReadAnnInfoListByUserId"  resultType="com.yxb.cms.domain.vo.AnnouncementInfo">
+        SELECT
+            DISTINCT
+            C.ANNOUNCEMENT_ID			AS announcementId,
+            C.ANNOUNCEMENT_TYPE			AS announcementType,
+            C.ANNOUNCEMENT_TITLE		AS announcementTitle,
+            C.ANNOUNCEMENT_CONTENT	    AS announcementContent,
+            C.ANNOUNCEMENT_AUTHOR		AS announcementAuthor,
+            C.ANNOUNCEMENT_TIME			AS announcementTime
+        FROM CC_ANNOUNCEMENT_INFO C
+        WHERE EXISTS(
+            SELECT * FROM CC_ANNOUNCEMENT_INFO_USER B
+              WHERE C.ANNOUNCEMENT_ID = B.ANNOUNCEMENT_ID
+                AND B.USER_ID = #{userId,jdbcType=INTEGER})
+    </select>
+    <!-- 查询全部公告集合-->
+    <select id="selectAllReadAnnInfoListByUserId"  resultType="com.yxb.cms.domain.vo.AnnouncementInfo">
+        SELECT
+            DISTINCT
+            C.ANNOUNCEMENT_ID			AS announcementId,
+            C.ANNOUNCEMENT_TYPE			AS announcementType,
+            C.ANNOUNCEMENT_TITLE		AS announcementTitle,
+            C.ANNOUNCEMENT_CONTENT	    AS announcementContent,
+            C.ANNOUNCEMENT_AUTHOR		AS announcementAuthor,
+            C.ANNOUNCEMENT_TIME			AS announcementTime
+        FROM CC_ANNOUNCEMENT_INFO C
+    </select>
+
     <!-- 根据userId查询未读公告记录数 -->
     <select id="selectUnreadAnnInfoCountByUserId" resultType="Long">
        SELECT
@@ -203,8 +232,19 @@
                 AND B.USER_ID = #{userId,jdbcType=INTEGER})
     </select>
 
+    <!-- 根据userId查询已读公告记录数 -->
+    <select id="selectReadAnnInfoCountByUserId" resultType="Long">
+        SELECT
+        COUNT(*)
+        FROM CC_ANNOUNCEMENT_INFO C
+        WHERE EXISTS(SELECT * FROM CC_ANNOUNCEMENT_INFO_USER B
+        WHERE C.ANNOUNCEMENT_ID = B.ANNOUNCEMENT_ID
+        AND B.USER_ID = #{userId,jdbcType=INTEGER})
+    </select>
 
-
-
-
+    <!-- 查询全部公告总记录数 -->
+    <select id="selectAllReadAnnInfoCount" resultType="Long">
+        select count(*)
+        from cc_announcement_info
+    </select>
 </mapper>
