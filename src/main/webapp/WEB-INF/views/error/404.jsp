@@ -14,10 +14,10 @@
     <meta name="format-detection" content="telephone=no">
 
     <link rel="shortcut icon" href="${ctx}/static/img/favicon.ico">
-    <link rel="stylesheet" href="${ctx}/static/layui/css/layui.css">
+    <link rel="stylesheet" href="${ctx}/static/layui_v2/css/layui.css">
     <link rel="stylesheet" href="${ctx}/static/css/global.css">
     <link rel="stylesheet" type="text/css" href="http://at.alicdn.com/t/font_9h680jcse4620529.css">
-    <script src="${ctx}/static/layui/layui.js"></script>
+    <script src="${ctx}/static/layui_v2/layui.js"></script>
 
     <style type="text/css">
         html, body {

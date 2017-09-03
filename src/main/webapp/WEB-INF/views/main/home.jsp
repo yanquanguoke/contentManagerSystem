@@ -56,8 +56,8 @@
                                 <i class="layui-icon" data-icon="&#xe63a;">&#xe63a;</i>
                             </div>
                             <div class="panel_word newMessage">
-                                <span>22</span>
-                                <cite>消息管理</cite>
+                                <span>0</span>
+                                <cite>待定</cite>
                             </div>
                         </a>
                     </div>
