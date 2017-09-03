@@ -35,6 +35,7 @@ package com.yxb.cms.service;
 import com.yxb.cms.architect.constant.BussinessCode;
 import com.yxb.cms.architect.utils.BussinessMsgUtil;
 import com.yxb.cms.dao.AnnouncementInfoMapper;
+import com.yxb.cms.dao.AnnouncementInfoUserMapper;
 import com.yxb.cms.domain.bo.BussinessMsg;
 import com.yxb.cms.domain.vo.AnnouncementInfo;
 import org.apache.commons.logging.Log;
@@ -65,6 +66,8 @@ public class AnnouncementInfoService {
 
     @Autowired
     private AnnouncementInfoMapper announcementInfoMapper;
+    @Autowired
+    private AnnouncementInfoUserMapper announcementInfoUserMapper;
 
 
     /**
@@ -125,6 +128,34 @@ public class AnnouncementInfoService {
             log.info("保存公告信息结束,用时" + (System.currentTimeMillis() - start) + "毫秒");
         }
         return BussinessMsgUtil.returnCodeMessage(BussinessCode.GLOBAL_SUCCESS);
+    }
+
+
+    /**
+     * 删除公告信息
+     * @param announcementId 公告Id
+     * @return
+     */
+    @Transactional
+    public BussinessMsg deleteAnnouncementInfo(Integer announcementId){
+
+        log.info("删除公告信息开始,公告Id:"+announcementId);
+        long start = System.currentTimeMillis();
+
+        try {
+            //删除公告用户关联信息
+            announcementInfoUserMapper.deleteAnnInfoUserByAnnouncementId(announcementId);
+            //删除公告信息
+            announcementInfoMapper.deleteByPrimaryKey(announcementId);
+        } catch (Exception e) {
+            log.error("删除公告信息方法内部错误", e);
+            throw e;
+        } finally {
+
+            log.info("删除公告信息结束,用时" + (System.currentTimeMillis() - start) + "毫秒");
+        }
+        return BussinessMsgUtil.returnCodeMessage(BussinessCode.GLOBAL_SUCCESS);
+
     }
 
 

@@ -14,6 +14,8 @@
 
 
     <script src="${ctx}/static/layui_v2/layui.js"></script>
+    <script src="${ctx}/static/layui_v2/layui.js"></script>
+    <script src="${ctx}/static/layui_v2/layui.js"></script>
 
 </head>
 <body class="childrenBody" style="font-size: 12px;margin: 10px 10px 0;">
@@ -67,9 +69,6 @@
 
         /**保存公告信息**/
         form.on("submit(saveAnnouncement)",function(data){
-
-
-            alert(layedit.getContent(index).length)
             if($.trim(layedit.getText(index)).length <= 0){
                 common.cmsLayErrorMsg("请输入公告内容")
                 return false;

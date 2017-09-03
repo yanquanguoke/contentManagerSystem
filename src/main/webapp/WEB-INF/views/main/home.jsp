@@ -40,13 +40,13 @@
             <div class="layui-show" style="padding: 10px 15px;">
                 <div class="panel_box row">
                     <div class="panel col">
-                        <a href="javascript:;" data-url="page/message/message.html">
+                        <a href="javascript:;" data-url="${ctx}/announcement/announcement_unread_list.do">
                             <div class="panel_icon">
-                                <i class="layui-icon" data-icon="&#xe63a;">&#xe63a;</i>
+                                <i class="layui-icon larry-icon larry-gonggaoguanli" data-icon="larry-gonggaoguanli"></i>
                             </div>
-                            <div class="panel_word newMessage">
-                                <span>22</span>
-                                <cite>站内公告</cite>
+                            <div class="panel_word unreadAnnInfo">
+                                <span>0</span>
+                                <cite>未读公告</cite>
                             </div>
                         </a>
                     </div>
@@ -121,13 +121,22 @@
 <script type="text/javascript">
     layui.config({
         base : "${ctx}/static/js/"
-    }).use(['form','jquery','common','element'],function() {
+    }).use(['form','jquery','layer','common','element'],function() {
         var $ = layui.$,
                 form = layui.form,
                 element = layui.element,
                 common = layui.common;
         $('#weather').leoweather({format:'，{时段}好！，<span id="colock">现在时间是：<strong>{年}年{月}月{日}日 星期{周} {时}:{分}:{秒}</strong>，</span> <b>{城市}天气</b> {天气} {夜间气温}℃ ~ {白天气温}℃ '});
 
+
+        $(".panel a").on("click",function(){
+            window.parent.addTab($(this));
+        });
+
+        /**加载未读公告数*/
+        $.post("${ctx}/announcement/ajax_unread_anninfo_count.do", function(data) {
+            $(".unreadAnnInfo span").text(data);
+        });
 
         //图表
         var psLineChar = echarts.init(document.getElementById('container'),'macarons');

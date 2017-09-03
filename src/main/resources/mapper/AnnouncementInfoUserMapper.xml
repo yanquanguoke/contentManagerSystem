@@ -119,4 +119,12 @@
       announcement_flag = #{announcementFlag,jdbcType=INTEGER}
     where announcement_info_user_id = #{announcementInfoUserId,jdbcType=INTEGER}
   </update>
+
+    <!-- 根据公告Id删除公告用户管理信息 -->
+    <delete id="deleteAnnInfoUserByAnnouncementId"  >
+        delete from cc_announcement_info_user
+        where  announcement_id = #{announcementId,jdbcType=INTEGER}
+    </delete>
+
+
 </mapper>

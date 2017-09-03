@@ -1,13 +1,13 @@
 
+var tab;
 layui.config({
     base : "/static/js/"
-}).use(['jquery', 'common','layer','element','bodyTab'], function () {
+    }).use(['jquery', 'common','layer','element','bodyTab'], function () {
     var $ = layui.jquery,
         layer = layui.layer,
         common = layui.common,
-        element = layui.element ,  //导航的hover效果、二级菜单等功能，需要依赖element模块
-        tab = layui.bodyTab()
-        ;
+        element = layui.element;  //导航的hover效果、二级菜单等功能，需要依赖element模块
+        tab = layui.bodyTab();
 
 
 
@@ -18,10 +18,13 @@ layui.config({
     })
     // 添加新窗口
     $("body").on("click",".layui-left-nav .layui-nav-item a",function(){
-        tab.tabAdd($(this));
+        if($(this).attr("data-url")){
+            //如果不存在子级
+            if($(this).siblings().length == 0){
+                addTab($(this));
+            }
+        }
         $(this).parent("li").siblings().removeClass("layui-nav-itemed");
-
-        //$(this).parent("li").siblings().removeClass("layui-nav-itemed");
     });
 
     /**打开或隐藏选项卡*/
@@ -123,3 +126,9 @@ layui.config({
 
 
 });
+
+
+//打开新窗口
+function addTab(_this){
+    tab.tabAdd(_this);
+}

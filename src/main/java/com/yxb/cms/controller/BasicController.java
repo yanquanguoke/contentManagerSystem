@@ -63,6 +63,16 @@ public class BasicController {
     }
 
     /**
+     * 登陆用户id
+     * @return
+     */
+    public Integer getCurrentLoginId(){
+        Subject currentUser = SecurityUtils.getSubject();
+        User user = currentUser.getPrincipals().oneByType(User.class);
+        return user.getUserId();
+    }
+
+    /**
      * 登录用户对象
      */
     public User getCurrentUser() {

@@ -34,6 +34,7 @@ package com.yxb.cms.dao;
 
 import com.yxb.cms.domain.vo.AnnouncementInfo;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -109,5 +110,18 @@ public interface AnnouncementInfoMapper {
      * @return
      */
     List<AnnouncementInfo> selectAnnouncementInfoListByPage(AnnouncementInfo annInfo);
+    /**
+     * 根据userId查询未读公告集合
+     * @param userId 用户Id
+     * @return
+     */
+    List<AnnouncementInfo> selectUnreadAnnInfoListByUserId(@Param("userId") Integer userId);
+
+    /**
+     * 根据userId查询未读公告记录数
+     * @param userId 用户Id
+     * @return
+     */
+    Long selectUnreadAnnInfoCountByUserId(@Param("userId") Integer userId);
 
 }

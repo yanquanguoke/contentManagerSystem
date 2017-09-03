@@ -35,6 +35,7 @@ package com.yxb.cms.controller.system;
 import com.yxb.cms.architect.constant.BussinessCode;
 import com.yxb.cms.architect.utils.BussinessMsgUtil;
 import com.yxb.cms.controller.BasicController;
+import com.yxb.cms.dao.AnnouncementInfoMapper;
 import com.yxb.cms.domain.bo.BussinessMsg;
 import com.yxb.cms.domain.vo.AnnouncementInfo;
 import com.yxb.cms.service.AnnouncementInfoService;
@@ -58,6 +59,9 @@ public class AnnouncementInfoController extends BasicController {
 
     @Autowired
     private AnnouncementInfoService announcementInfoService;
+
+    @Autowired
+    private AnnouncementInfoMapper announcementInfoMapper;
 
     /**
      *跳转到公告列表页面
@@ -119,5 +123,44 @@ public class AnnouncementInfoController extends BasicController {
         return "system/announcement_detail";
     }
 
+    /**
+     * 删除公告
+     * @param announcementId 公告Id
+     * @return
+     */
+    @RequestMapping("/ajax_del_announcement.do")
+    @ResponseBody
+    public BussinessMsg ajaxDelAnnouncement(Integer announcementId){
+        try {
+            return announcementInfoService.deleteAnnouncementInfo(announcementId);
+        } catch (Exception e) {
+            log.error("删除公告信息方法内部错误",e);
+            return BussinessMsgUtil.returnCodeMessage(BussinessCode.ANNOUNCEMENT_DEL_ERROR);
+        }
+    }
 
+    /**
+     * 查询用户未读公告信息
+     * @return
+     */
+    @RequestMapping("/ajax_unread_anninfo_count.do")
+    @ResponseBody
+    public  Integer ajaxUnreadAnnInfoCount(){
+        if(null != this.getCurrentLoginId()){
+            Long unReadCount = announcementInfoMapper.selectUnreadAnnInfoCountByUserId(this.getCurrentLoginId());
+            return unReadCount.intValue();
+        }
+        return 0;
+
+    }
+
+
+    /**
+     *跳转到公告列表页面
+     * @return
+     */
+    @RequestMapping("/announcement_unread_list.do")
+    public String toAnnouncementUnReadListPage() {
+        return "system/announcement_unread_list";
+    }
 }

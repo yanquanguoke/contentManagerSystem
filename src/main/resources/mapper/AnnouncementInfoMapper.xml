@@ -173,4 +173,38 @@
         </where>
     </sql>
 
+
+    <select id="selectUnreadAnnInfoListByUserId"  resultType="com.yxb.cms.domain.vo.AnnouncementInfo">
+        SELECT
+            DISTINCT
+            C.ANNOUNCEMENT_ID			AS announcementId,
+            C.ANNOUNCEMENT_TYPE			AS announcementType,
+            C.ANNOUNCEMENT_TITLE		AS announcementTitle,
+            C.ANNOUNCEMENT_CONTENT	    AS announcementContent,
+            C.ANNOUNCEMENT_AUTHOR		AS announcementAuthor,
+            C.ANNOUNCEMENT_TIME			AS announcementTime,
+            CC.ANNOUNCEMENT_FLAG		AS announcementFlag
+
+        FROM CC_ANNOUNCEMENT_INFO C
+        LEFT JOIN CC_ANNOUNCEMENT_INFO_USER CC ON C.ANNOUNCEMENT_ID = CC.ANNOUNCEMENT_ID
+        WHERE NOT EXISTS(
+            SELECT * FROM CC_ANNOUNCEMENT_INFO_USER B
+                WHERE C.ANNOUNCEMENT_ID = B.ANNOUNCEMENT_ID
+                    AND B.USER_ID = #{userId,jdbcType=INTEGER})
+    </select>
+
+    <!-- 根据userId查询未读公告记录数 -->
+    <select id="selectUnreadAnnInfoCountByUserId" resultType="Long">
+       SELECT
+            COUNT(*)
+        FROM CC_ANNOUNCEMENT_INFO C
+        WHERE NOT EXISTS(SELECT * FROM CC_ANNOUNCEMENT_INFO_USER B
+            WHERE C.ANNOUNCEMENT_ID = B.ANNOUNCEMENT_ID
+                AND B.USER_ID = #{userId,jdbcType=INTEGER})
+    </select>
+
+
+
+
+
 </mapper>

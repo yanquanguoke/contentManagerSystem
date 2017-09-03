@@ -21,40 +21,21 @@
 <body>
 <div class="larry-grid layui-anim layui-anim-upbit larryTheme-A ">
     <div class="larry-personal">
-        <div class="layui-tab">
-            <blockquote class="layui-elem-quote mylog-info-tit">
-                <div class="layui-form-item" style="margin-bottom:auto;">
-
-                    <div class="layui-inline" style="margin-bottom:auto;margin-left: auto;">
-                        <form class="layui-form" id="userSearchForm">
-                            <label class="layui-form-label" style="width:auto;">发布时间</label>
-
-                            <div class="layui-input-inline" style="width:145px;">
-                                <input type="text" class="layui-input" id="beginTime" name="beginTime" placeholder="请选择"  readonly>
-
-                            </div>
-                            <div class="layui-form-mid">-</div>
-                            <div class="layui-input-inline" style="width:145px;">
-                                <input type="text" class="layui-input" id="endTime" name="endTime" placeholder="请选择" readonly>
-                            </div>
-
-                            <a class="layui-btn announcementSearchList_btn" lay-submit lay-filter="announcementSearchFilter"><i class="layui-icon larry-icon larry-chaxun7"></i>查询</a>
-                        </form>
-                    </div>
-                    <shiro:hasPermission name="0rbT8t2P">
-                        <div class="layui-inline" style="margin-bottom:auto;margin-left: auto;">
-                            <a class="layui-btn layui-btn-normal announcementAdd_btn"> <i class="layui-icon larry-icon larry-xinzeng1"></i>新增公告</a>
-                        </div>
-                    </shiro:hasPermission>
+        <div class="layui-tab layui-tab-brief">
+            <ul class="layui-tab-title">
+                <li class="layui-this">未读公告<span class="layui-badge">4</span></li>
+                <li>已读公告<span class="layui-badge layui-bg-green">0</span></li>
+                <li>全部公告<span class="layui-badge layui-bg-blue">0</span></li>
+            </ul>
+            <div class="layui-tab-content">
+                <div class="layui-tab-item layui-show">
+                    <!-- 公告列表 -->
+                    <table id="announcementTableList" lay-filter="announcementTableId"></table>
                 </div>
-
-
-            </blockquote>
-            <div class="larry-separate"></div>
-            <!-- 公告列表 -->
-            <div class="layui-tab-item layui-show" style="padding: 10px 15px;">
-                <table id="announcementTableList"  lay-filter="announcementTableId"></table>
+                <div class="layui-tab-item">内容2</div>
+                <div class="layui-tab-item">内容3</div>
             </div>
+
         </div>
     </div>
 </div>
@@ -62,12 +43,13 @@
 <script type="text/javascript">
     layui.config({
         base : "${ctx}/static/js/"
-    }).use(['form', 'table', 'layer','common','laydate'], function () {
+    }).use(['form', 'table', 'layer','common','laydate','element'], function () {
         var $ =  layui.$,
                 form = layui.form,
                 table = layui.table,
                 layer = layui.layer,
                 laydate = layui.laydate,
+                element = layui.element,
                 common = layui.common;
         /**公告表格加载*/
         table.render({
@@ -75,7 +57,7 @@
             url: '${ctx}/announcement/ajax_announcement_list.do',
             id:'announcementTableId',
             method: 'post',
-            height:'full-140',
+            height:'full-120',
             skin:'row',
             even:'true',
             size: 'sm',
