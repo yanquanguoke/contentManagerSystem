@@ -41,7 +41,7 @@
                             <a class="layui-btn announcementSearchList_btn" lay-submit lay-filter="announcementSearchFilter"><i class="layui-icon larry-icon larry-chaxun7"></i>查询</a>
                         </form>
                     </div>
-                    <shiro:hasPermission name="0rbT8t2P">
+                    <shiro:hasPermission name="4JQVLmOd">
                         <div class="layui-inline" style="margin-bottom:auto;margin-left: auto;">
                             <a class="layui-btn layui-btn-normal announcementAdd_btn"> <i class="layui-icon larry-icon larry-xinzeng1"></i>新增公告</a>
                         </div>
@@ -167,10 +167,8 @@
 <!--工具条 -->
 <script type="text/html" id="announcementBar">
     <div class="layui-btn-group">
-        <shiro:hasPermission name="mScICO9G">
-            <a class="layui-btn layui-btn-mini layui-btn-normal  announcement_detail" lay-event="announcement_detail"><i class="layui-icon larry-icon larry-chaxun2"></i>详情</a>
-        </shiro:hasPermission>
-        <shiro:hasPermission name="uBg9TdEr">
+        <a class="layui-btn layui-btn-mini layui-btn-normal  announcement_detail" lay-event="announcement_detail"><i class="layui-icon larry-icon larry-chaxun2"></i>详情</a>
+        <shiro:hasPermission name="eTDnjGAM">
             <a class="layui-btn layui-btn-mini layui-btn-danger announcement_delete" lay-event="announcement_delete"><i class="layui-icon larry-icon larry-ttpodicon"></i>删除</a>
         </shiro:hasPermission>
     </div>
