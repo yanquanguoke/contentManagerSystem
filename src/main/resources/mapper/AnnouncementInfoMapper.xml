@@ -182,11 +182,8 @@
             C.ANNOUNCEMENT_TITLE		AS announcementTitle,
             C.ANNOUNCEMENT_CONTENT	    AS announcementContent,
             C.ANNOUNCEMENT_AUTHOR		AS announcementAuthor,
-            C.ANNOUNCEMENT_TIME			AS announcementTime,
-            CC.ANNOUNCEMENT_FLAG		AS announcementFlag
-
+            C.ANNOUNCEMENT_TIME			AS announcementTime
         FROM CC_ANNOUNCEMENT_INFO C
-        LEFT JOIN CC_ANNOUNCEMENT_INFO_USER CC ON C.ANNOUNCEMENT_ID = CC.ANNOUNCEMENT_ID
         WHERE NOT EXISTS(
             SELECT * FROM CC_ANNOUNCEMENT_INFO_USER B
                 WHERE C.ANNOUNCEMENT_ID = B.ANNOUNCEMENT_ID

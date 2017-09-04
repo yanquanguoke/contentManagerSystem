@@ -43,6 +43,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 
@@ -215,5 +216,37 @@ public class AnnouncementInfoController extends BasicController {
     @ResponseBody
     public String ajaxAllReadAnnInfoList() {
         return announcementInfoService.selectAllReadAnnInfoListByUserId();
+    }
+
+    /**
+     * 公告信息标记为已读
+     * @param announcementId 公告Id
+     * @return
+     */
+    @RequestMapping("/ajax_ins_read_anninfo_user.do")
+    @ResponseBody
+    public BussinessMsg ajaxReadAnnUserInfo(Integer announcementId){
+        try {
+            return announcementInfoService.insertReadAnnUserInfo(announcementId,this.getCurrentLoginId());
+        } catch (Exception e) {
+            log.error("公告信息标记为已读处理方法内部错误",e);
+            return BussinessMsgUtil.returnCodeMessage(BussinessCode.ANNOUNCEMENT_USER_INSERT_ERROR);
+        }
+    }
+
+    /**
+     * 公告信息全部标记为已读
+     * @param announcementIds 公告Ids
+     * @return
+     */
+    @RequestMapping("/ajax_ins_allread_anninfo_user.do")
+    @ResponseBody
+    public BussinessMsg ajaxAllReadAnnUserInfo(@RequestParam(value = "announcementIds[]") Integer[] announcementIds){
+        try {
+            return announcementInfoService.insertAllReadAnnUserInfo(announcementIds, this.getCurrentLoginId());
+        } catch (Exception e) {
+            log.error("公告信息标记为已读处理方法内部错误",e);
+            return BussinessMsgUtil.returnCodeMessage(BussinessCode.ROLE_FAILK_ERROR);
+        }
     }
 }

@@ -98,10 +98,6 @@ public class  AnnouncementInfo extends PageDto implements Serializable{
 
     private String endTime;
 
-    /**
-     * 公告标识
-     */
-    private Integer announcementFlag;
 
 
     /**
@@ -264,16 +260,6 @@ public class  AnnouncementInfo extends PageDto implements Serializable{
     public void setEndTime(String endTime) {
         this.endTime = endTime;
     }
-
-
-    public Integer getAnnouncementFlag() {
-        return announcementFlag;
-    }
-
-    public void setAnnouncementFlag(Integer announcementFlag) {
-        this.announcementFlag = announcementFlag;
-    }
-
     /**
      * 公告日期格式化
      * @return

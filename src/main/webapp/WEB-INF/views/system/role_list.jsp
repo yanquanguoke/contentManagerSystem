@@ -84,7 +84,7 @@
             even:'true',
             size: 'sm',
             cols: [[
-                {checkbox: true,fixed:'left',},
+                {checkbox: true,fixed:'left'},
                 {field:'roleName', title: '角色名称',width: 120 },
                 {field:'roleStatus', title: '角色状态',width: 90,templet: '#roleStatusTpl'},
                 {field:'resourceNames', title: '菜单资源',width: 130},

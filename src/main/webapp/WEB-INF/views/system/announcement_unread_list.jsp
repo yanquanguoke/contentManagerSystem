@@ -17,7 +17,6 @@
     <link rel="stylesheet" type="text/css" href="http://at.alicdn.com/t/font_9h680jcse4620529.css">
     <script src="${ctx}/static/layui_v2/layui.js"></script>
 
-
 <body>
 <div class="larry-grid layui-anim layui-anim-upbit larryTheme-A ">
     <div class="larry-personal">
@@ -29,6 +28,7 @@
             </ul>
             <div class="layui-tab-content">
                 <div class="layui-tab-item layui-show">
+                    <button class="layui-btn  layui-btn-mini allreadUserInfoBtn"><i class="layui-icon larry-icon larry-fabu"></i>已读</button>
                     <!-- 未读公告列表 -->
                     <table id="unReadAnnInfoTableList" lay-filter="unReadAnnInfoTableId"></table>
                 </div>
@@ -77,8 +77,25 @@
 
         });
 
+        /**全部标记为已读*/
+        $(".allreadUserInfoBtn").click(function(){
 
+            //表格行操作
+            var checkStatus = table.checkStatus('unReadAnnInfoTableId');
 
+            if(checkStatus.data.length == 0){
+                common.cmsLayErrorMsg("请选择未读公告信息");
+            }else{
+                var announcementIds = [];
+                $(checkStatus.data).each(function(index,item){
+                    announcementIds.push(item.announcementId);
+
+                });
+                var url = "${ctx}/announcement/ajax_ins_allread_anninfo_user.do";
+                var param = {announcementIds:announcementIds};
+                common.ajaxCmsConfirm('系统提示', '是否将选中的未读公告标记为已读?',url,param);
+            }
+        });
 
         /**监听未读公告工具条*/
         table.on('tool(unReadAnnInfoTableId)', function(obj){
@@ -90,6 +107,15 @@
                 var announcementId = data.announcementId;
                 var url =  "${ctx}/announcement/announcement_detail.do?announcementId="+announcementId;
                 common.cmsLayOpenTip('公告详情',url,'100%','100%');
+            //已读
+            }else if(layEvent === 'announcement_read') {
+                var announcementId = data.announcementId;
+                var url = "${ctx}/announcement/ajax_ins_read_anninfo_user.do";
+                var param = {announcementId:announcementId};
+                common.ajaxCmsConfirm('系统提示', '是否将当前公告标记为已读?',url,param);
+
+
+
 
             }
         });
@@ -117,6 +143,8 @@
                 var announcementId = data.announcementId;
                 var url =  "${ctx}/announcement/announcement_detail.do?announcementId="+announcementId;
                 common.cmsLayOpenTip('公告详情',url,'100%','100%');
+
+
 
             }
         });
@@ -150,16 +178,17 @@
             url: '${ctx}/announcement/ajax_unread_anninfo_list.do',
             id:'unReadAnnInfoTableId',
             method: 'post',
-            height:'full-120',
+            height:'full-125',
             skin:'row',
             even:'true',
             size: 'sm',
             cols: [[
+                {checkbox: true,fixed:'left'},
                 {field:'announcementTitle', title: '公告标题',width: 400 },
                 {field:'announcementType', title: '公告类型',align:'center',width: 200,templet: '#announcementTypeTpl'},
                 {field:'announcementAuthor', title: '发布人',align:'center',width: 220},
                 {field:'announcementTime', title: '发布时间',align:'center',width: 220},
-                {fixed:'right', title: '操作', align:'center',width: 200, toolbar: '#announcementBar'}
+                {fixed:'right', title: '操作', align:'center',width: 200, toolbar: '#unReadannouncementBar'}
 
             ]]
         });
@@ -224,10 +253,18 @@
 </script>
 
 
+<!--未读Table工具条 -->
+<script type="text/html" id="unReadannouncementBar">
+    <div class="layui-btn-group">
+            <a class="layui-btn layui-btn-mini layui-btn-normal  announcement_detail" lay-event="announcement_detail"><i class="layui-icon larry-icon larry-chaxun2"></i>详情</a>
+            <a class="layui-btn layui-btn-mini announcement_read" lay-event="announcement_read"><i class="layui-icon larry-icon larry-fabu"></i>已读</a>
+    </div>
+</script>
+
 <!--工具条 -->
 <script type="text/html" id="announcementBar">
     <div class="layui-btn-group">
-            <a class="layui-btn layui-btn-mini layui-btn-normal  announcement_detail" lay-event="announcement_detail"><i class="layui-icon larry-icon larry-chaxun2"></i>详情</a>
+        <a class="layui-btn layui-btn-mini layui-btn-normal  announcement_detail" lay-event="announcement_detail"><i class="layui-icon larry-icon larry-chaxun2"></i>详情</a>
     </div>
 </script>
 

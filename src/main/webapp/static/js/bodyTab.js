@@ -215,6 +215,10 @@ layui.define(["element","jquery"],function(exports){
 				}
 			}
 		}
+        //刷新首页初始化参数
+        if($(this).index() == 0){
+            document.getElementById('ifr_0').contentWindow.homeInit();
+        }
 		element.tabChange(tabFilter,$(this).attr("lay-id")).init();
 	})
 

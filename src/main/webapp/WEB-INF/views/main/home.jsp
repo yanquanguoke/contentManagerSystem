@@ -119,24 +119,23 @@
 </div>
 
 <script type="text/javascript">
+    var $;
     layui.config({
         base : "${ctx}/static/js/"
     }).use(['form','jquery','layer','common','element'],function() {
-        var $ = layui.$,
-                form = layui.form,
+        $ = layui.$;
+              var  form = layui.form,
                 element = layui.element,
                 common = layui.common;
+        //天气插件
         $('#weather').leoweather({format:'，{时段}好！，<span id="colock">现在时间是：<strong>{年}年{月}月{日}日 星期{周} {时}:{分}:{秒}</strong>，</span> <b>{城市}天气</b> {天气} {夜间气温}℃ ~ {白天气温}℃ '});
 
-
+        //首页卡片tab添加
         $(".panel a").on("click",function(){
             window.parent.addTab($(this));
         });
-
-        /**加载未读公告数*/
-        $.post("${ctx}/announcement/ajax_unread_anninfo_count.do", function(data) {
-            $(".unreadAnnInfo span").text(data);
-        });
+        //首页数据初始化
+        homeInit();
 
         //图表
         var psLineChar = echarts.init(document.getElementById('container'),'macarons');
@@ -256,7 +255,13 @@
 
 
     });
-
+    /**页面赋值初始化*/
+    function homeInit() {
+        /**加载未读公告数*/
+        $.post("${ctx}/announcement/ajax_unread_anninfo_count.do", function(data) {
+            $(".unreadAnnInfo span").text(data);
+        });
+    }
 </script>
 </body>
 </html>

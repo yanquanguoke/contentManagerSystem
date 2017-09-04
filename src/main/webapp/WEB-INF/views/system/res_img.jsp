@@ -53,7 +53,7 @@
                     <a class="select_img" data-id="larry-iconfontxiazai" title="下载"><i class="layui-icon larry-icon larry-iconfontxiazai"></i></a>
                 </div>
                 <div class="layui-form-mid layui-word-aux">
-                    <a class="select_img" data-id="larry-shanchu" title="删除"><i class="layui-icon larry-icon larry-shanchu"></i></a>
+                    <a class="select_img" data-id="larry-gonggaoguanli" title="公告"><i class="layui-icon larry-icon larry-gonggaoguanli"></i></a>
                 </div>
                 <div class="layui-form-mid layui-word-aux">
                     <a class="select_img" data-id="larry-tags" title="tags"><i class="layui-icon larry-icon larry-tags"></i></a>

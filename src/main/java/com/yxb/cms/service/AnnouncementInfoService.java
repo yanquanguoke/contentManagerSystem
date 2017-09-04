@@ -38,6 +38,7 @@ import com.yxb.cms.dao.AnnouncementInfoMapper;
 import com.yxb.cms.dao.AnnouncementInfoUserMapper;
 import com.yxb.cms.domain.bo.BussinessMsg;
 import com.yxb.cms.domain.vo.AnnouncementInfo;
+import com.yxb.cms.domain.vo.AnnouncementInfoUser;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.nutz.json.Json;
@@ -45,10 +46,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 
 /**
@@ -205,6 +203,68 @@ public class AnnouncementInfoService {
         map.put("data", annList);
 
         return Json.toJson(map);
+    }
+
+
+    /**
+     * 将当前用户公告信息标记为已读
+     * @param announcementId    公告Id
+     * @param currentLoginId    当前用户Id
+     * @return
+     */
+    @Transactional
+    public BussinessMsg insertReadAnnUserInfo(Integer announcementId,Integer currentLoginId) throws Exception{
+
+        log.info("公告信息标记为已读处理开始,公告Id:"+announcementId);
+        long start = System.currentTimeMillis();
+
+        try {
+            AnnouncementInfoUser annInfoUser = new AnnouncementInfoUser();
+            annInfoUser.setAnnouncementId(announcementId);
+            annInfoUser.setUserId(currentLoginId);
+            announcementInfoUserMapper.insertSelective(annInfoUser);
+        } catch (Exception e) {
+            log.error("公告信息标记为已读处理方法内部错误", e);
+            throw e;
+        } finally {
+
+            log.info("公告信息标记为已读处理结束,用时" + (System.currentTimeMillis() - start) + "毫秒");
+        }
+        return BussinessMsgUtil.returnCodeMessage(BussinessCode.GLOBAL_SUCCESS);
+
+    }
+
+    /**
+     * 将当前用户全部公告信息标记为已读
+     * @param announcementId    公告Id
+     * @param currentLoginId    当前用户Id
+     * @return
+     */
+    @Transactional
+    public BussinessMsg insertAllReadAnnUserInfo(Integer[] announcementIds,Integer currentLoginId)  throws Exception{
+
+        log.info("公告信息全部标记为已读处理开始,公告Id:"+ Arrays.toString(announcementIds));
+        long start = System.currentTimeMillis();
+
+        try {
+            if(null != announcementIds && announcementIds.length > 0){
+                for (Integer announcementId : announcementIds) {
+                    AnnouncementInfoUser annInfoUser = new AnnouncementInfoUser();
+                    annInfoUser.setAnnouncementId(announcementId);
+                    annInfoUser.setUserId(currentLoginId);
+                    announcementInfoUserMapper.insertSelective(annInfoUser);
+                }
+            }
+
+        } catch (Exception e) {
+            log.error("公告信息全部标记为已读处理方法内部错误", e);
+            throw e;
+        } finally {
+
+            log.info("公告信息全部标记为已读处理结束,用时" + (System.currentTimeMillis() - start) + "毫秒");
+        }
+        return BussinessMsgUtil.returnCodeMessage(BussinessCode.GLOBAL_SUCCESS);
+
     }
 
 }
