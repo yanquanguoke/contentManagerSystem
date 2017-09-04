@@ -184,10 +184,10 @@
             size: 'sm',
             cols: [[
                 {checkbox: true,fixed:'left'},
-                {field:'announcementTitle', title: '公告标题',width: 400 },
+                {field:'announcementTitle', title: '公告标题',width: 350 },
                 {field:'announcementType', title: '公告类型',align:'center',width: 200,templet: '#announcementTypeTpl'},
                 {field:'announcementAuthor', title: '发布人',align:'center',width: 220},
-                {field:'announcementTime', title: '发布时间',align:'center',width: 220},
+                {field:'announcementTime', title: '发布时间',align:'center',width: 210},
                 {fixed:'right', title: '操作', align:'center',width: 200, toolbar: '#unReadannouncementBar'}
 
             ]]
