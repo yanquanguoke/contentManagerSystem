@@ -2,14 +2,20 @@ package com.yxb.cms.test;
 
 import com.yxb.cms.Application;
 import com.yxb.cms.architect.properties.JdbcProperties;
+import com.yxb.cms.architect.utils.ClientIpUtil;
+import com.yxb.cms.architect.utils.HttpUtil;
 import com.yxb.cms.domain.vo.Resource;
 import com.yxb.cms.service.ResourceService;
 import com.yxb.cms.service.UserService;
+import net.sf.json.JSONObject;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
+
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Spring boot 测试
@@ -36,9 +42,16 @@ public class AppTest {
     public void test2() throws Exception{
 
 
-        String result = resourceService.selectResLevelListByParentid(7);
+        String url = "http://ip.taobao.com/service/getIpInfo.php";
+        Map<String,Object> param = new HashMap<>();
+        param.put("ip","180.169.59.214");
+       String str =  HttpUtil.post(url,param);
 
-        System.out.println(result);
+        JSONObject obj = JSONObject.fromObject(str);
+        JSONObject obj2 =  (JSONObject) obj.get("data");
+
+      //String dd =  ClientIpUtil.decodeUnicode(obj2.get("country").toString());
+        System.out.println(obj2.get("country")+"--" +obj2.get("area")+"--" +obj2.get("city")+"--" +obj2.get("isp"));
 
 
     }
