@@ -45,4 +45,6 @@ public class Constants {
 	public static final String SESSION_KEY_LOGIN_NAME="LOGIN_NAME";
 	/**初始化密码*/
 	public static final String INIT_LOGIN_PWD = "123456";
+    /**ip来源apiUrl**/
+    public static final String IP_INFO_API_URL = "http://ip.taobao.com/service/getIpInfo.php";
 }

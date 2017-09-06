@@ -32,7 +32,6 @@
  */
 package com.yxb.cms.service;
 
-import com.yxb.cms.architect.annotation.SystemControllerLog;
 import com.yxb.cms.architect.constant.BusinessConstants;
 import com.yxb.cms.architect.constant.BussinessCode;
 import com.yxb.cms.architect.utils.BussinessMsgUtil;
@@ -248,12 +247,13 @@ public class UserService {
      * @throws Exception
      */
     @Transactional
-    @SystemControllerLog(description="保存用户信息")
-
+    //@SystemServiceLog(description="保存用户信息Service")
     public BussinessMsg saveOrUpdateUser(User user, String loginName) throws Exception{
         log.info("保存用户信息开始");
         long start = System.currentTimeMillis();
         try {
+            log.info(1/0);
+
             //验证用户账号唯一性
             Long checkUserLoginName = userMapper.selectUserLoginNameCheck(user.getUserLoginName(),user.getUserId());
             if(checkUserLoginName.intValue() > 0){

@@ -32,9 +32,14 @@
  */
 package com.yxb.cms.architect.utils;
 
+import com.yxb.cms.architect.constant.Constants;
+import net.sf.json.JSONObject;
+
 import javax.servlet.http.HttpServletRequest;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * 获取客户端IP地址
@@ -80,4 +85,26 @@ public class ClientIpUtil {
         return ip;
     }
 
+    /**
+     * 获取IP返回地理位置
+     * @param ipAddr ip地址
+     * @return
+     */
+    public static String getIpAddrSource(String ipAddr){
+        if(null != ipAddr){
+            String url = Constants.IP_INFO_API_URL;
+            Map<String,Object> param = new HashMap<>();
+            param.put("ip",ipAddr);
+            String result =  HttpUtil.post(url,param);
+            if(null != result){
+                JSONObject obj = JSONObject.fromObject(result);
+                //查询返回结果成功
+                if("0".equals(obj.get("code").toString())){
+                    JSONObject obj2 =  (JSONObject) obj.get("data");
+                    return obj2.get("region")+" " +obj2.get("city");
+                }
+            }
+        }
+        return null;
+    }
 }
