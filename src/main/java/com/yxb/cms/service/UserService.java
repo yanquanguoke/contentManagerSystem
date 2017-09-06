@@ -32,6 +32,7 @@
  */
 package com.yxb.cms.service;
 
+import com.yxb.cms.architect.annotation.SystemControllerLog;
 import com.yxb.cms.architect.constant.BusinessConstants;
 import com.yxb.cms.architect.constant.BussinessCode;
 import com.yxb.cms.architect.utils.BussinessMsgUtil;
@@ -247,6 +248,8 @@ public class UserService {
      * @throws Exception
      */
     @Transactional
+    @SystemControllerLog(description="保存用户信息")
+
     public BussinessMsg saveOrUpdateUser(User user, String loginName) throws Exception{
         log.info("保存用户信息开始");
         long start = System.currentTimeMillis();

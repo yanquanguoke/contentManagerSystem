@@ -42,14 +42,13 @@ public class AppTest {
 
         String url = "http://ip.taobao.com/service/getIpInfo.php";
         Map<String,Object> param = new HashMap<>();
-        param.put("ip","192.168.1.1");
+        param.put("ip","119.120.112.120");
        String str =  HttpUtil.post(url,param);
 
         JSONObject obj = JSONObject.fromObject(str);
         JSONObject obj2 =  (JSONObject) obj.get("data");
 
-      //String dd =  ClientIpUtil.decodeUnicode(obj2.get("country").toString());
-        System.out.println(obj2.get("region")+" " +obj2.get("city")+" " +obj2.get("isp"));
+        System.out.println(obj2.get("region")+" " +obj2.get("city"));
 
 
     }

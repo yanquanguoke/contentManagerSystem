@@ -32,6 +32,7 @@
  */
 package com.yxb.cms.controller;
 
+import com.yxb.cms.architect.annotation.SystemControllerLog;
 import com.yxb.cms.architect.constant.BussinessCode;
 import com.yxb.cms.architect.constant.Constants;
 import com.yxb.cms.architect.utils.BussinessMsgUtil;

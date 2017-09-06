@@ -32,6 +32,7 @@
  */
 package com.yxb.cms.controller.system;
 
+import com.yxb.cms.architect.annotation.SystemControllerLog;
 import com.yxb.cms.architect.constant.BussinessCode;
 import com.yxb.cms.architect.utils.BussinessMsgUtil;
 import com.yxb.cms.architect.utils.CommonHelper;
@@ -48,6 +49,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
+
 
 
 /**
@@ -127,6 +129,7 @@ public class UserController extends BasicController {
      */
     @RequestMapping("/ajax_save_user.do")
     @ResponseBody
+    @SystemControllerLog(description="保存用户信息")
     public BussinessMsg ajaxSaveUser(User user){
         try {
             return userService.saveOrUpdateUser(user, this.getCurrentLoginName());

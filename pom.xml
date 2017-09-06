@@ -106,7 +106,6 @@
             <version>1.b.51</version>
         </dependency>
 
-        <!-- json -->
         <dependency>
             <groupId>net.sf.json-lib</groupId>
             <artifactId>json-lib</artifactId>
@@ -178,6 +177,11 @@
             <groupId>commons-httpclient</groupId>
             <artifactId>commons-httpclient</artifactId>
             <version>3.1</version>
+        </dependency>
+        <!-- springBoot AOP-->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-aop</artifactId>
         </dependency>
 
     </dependencies>

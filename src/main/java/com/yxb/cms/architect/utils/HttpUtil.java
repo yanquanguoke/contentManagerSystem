@@ -52,13 +52,11 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 
-
 /**
- * 处理http和https协议请求
- * 
- * 根据请求url判断协议类型
- * 
- * 
+ *  处理http和https协议请求,根据请求url判断协议类型
+ *
+ * @author yangxiaobing
+ * @date 2017/9/6
  */
 public class HttpUtil {
 

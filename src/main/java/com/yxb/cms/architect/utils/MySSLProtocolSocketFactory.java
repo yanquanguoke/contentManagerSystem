@@ -52,12 +52,11 @@ import org.apache.commons.httpclient.ConnectTimeoutException;
 import org.apache.commons.httpclient.params.HttpConnectionParams;
 import org.apache.commons.httpclient.protocol.ProtocolSocketFactory;
 
-
-
 /**
- * 
  * HTTPS 绕开证书验证
  *
+ * @author yangxiaobing
+ * @date 2017/9/6
  */
 public class MySSLProtocolSocketFactory implements ProtocolSocketFactory {
 
