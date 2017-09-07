@@ -38,6 +38,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * 系统日志Servce
@@ -61,6 +62,7 @@ public class SystemLogService {
      * 插入日志记录
      * @param systemLog 日志实体
      */
+    @Transactional
     public void insertSelective(SystemLog systemLog){
         systemLogMapper.insertSelective(systemLog);
     }
@@ -69,6 +71,7 @@ public class SystemLogService {
      * 更新日志记录
      * @param systemLog 日志实体
      */
+    @Transactional
     public void updateByPrimaryKeySelective(SystemLog systemLog){
         systemLogMapper.updateByPrimaryKeySelective(systemLog);
     }

@@ -33,6 +33,7 @@
 package com.yxb.cms.architect.conf;
 
 import com.yxb.cms.architect.annotation.SystemControllerLog;
+import com.yxb.cms.architect.annotation.SystemServiceLog;
 import com.yxb.cms.architect.constant.Constants;
 import com.yxb.cms.architect.utils.ClientIpUtil;
 import com.yxb.cms.architect.utils.ThreadPool;
@@ -87,8 +88,7 @@ public class SystemLogAspect {
     /**
      * Service层切点,注解方式
      */
-   // @Pointcut("@annotation(com.yxb.cms.architect.annotation.SystemServiceLog)")
-    @Pointcut("execution(* *..controller..*Controller*.*(..))")
+    @Pointcut("@annotation(com.yxb.cms.architect.annotation.SystemServiceLog)")
     public void serviceAspect() {
         log.info("========ServiceAspect===========");
     }
@@ -123,7 +123,6 @@ public class SystemLogAspect {
             User user = currentUser.get();
 
             if (null != user) {
-                System.out.println("=====后置通知开始=====");
 
                 Object[] args = joinPoint.getArgs();
 
@@ -137,8 +136,8 @@ public class SystemLogAspect {
                 String logMethod = request.getMethod();
                 //请求参数
                 String logParams = Json.toJson(args, JsonFormat.compact());
-                //请求用户Id
-                Integer logUserId = user.getUserId();
+                //请求用户
+                String logUserName = user.getUserLoginName();
                 //请求IP
                 String logIp = ClientIpUtil.getIpAddr(request);
                 //请求ip所在地
@@ -151,10 +150,9 @@ public class SystemLogAspect {
                 //请求耗时
                 Long logElapsedTime = endTime - beginTime;
 
-                SystemLog systemLog = new SystemLog(logTitle,logType,logUrl,logMethod,logParams,logUserId,logIp,logIpAddress,logStartTime,logElapsedTime);
+                SystemLog systemLog = new SystemLog(logTitle,logType,logUrl,logMethod,logParams,logUserName,logIp,logIpAddress,logStartTime,logElapsedTime);
                 ThreadPool.getPool().execute(new SaveSystemLogThread(systemLog,systemLogService));
 
-                System.out.println("=====后置通知结束=====");
 
             }
 
@@ -171,53 +169,48 @@ public class SystemLogAspect {
      * @param joinPoint
      * @param e
      */
-    @AfterThrowing(value = "execution(* com.yxb.cms.controller.*.*.*(..))", throwing = "e")
+    @AfterThrowing(pointcut="serviceAspect()", throwing="e")
     public void doAfterThrowing(JoinPoint joinPoint, Throwable e) {
 
-
         try {
+            User user = currentUser.get();
+
+            if (null != user) {
+
+                Object[] args = joinPoint.getArgs();
+
+                //日志标题
+                String logTitle = getServiceMethodDescription(joinPoint);
+                //日志类型
+                String logType = "error";
+                //日志请求url
+                String logUrl = joinPoint.getTarget().getClass().getName() + "." + joinPoint.getSignature().getName() + "()";
+                //请求方式
+                String logMethod = request.getMethod();
+                //请求参数
+                String logParams = Json.toJson(args, JsonFormat.compact());
+                //请求用户
+                String logUserName = user.getUserLoginName();
+                //请求IP
+                String logIp = ClientIpUtil.getIpAddr(request);
+                //请求ip所在地
+                String logIpAddress = ClientIpUtil.getIpAddrSource(logIp);
+                //请求开始时间
+                Date logStartTime = beginTimeThreadLocal.get();
+
+                long beginTime = beginTimeThreadLocal.get().getTime();
+                long endTime = System.currentTimeMillis();
+                //请求耗时
+                Long logElapsedTime = endTime - beginTime;
+                //异常描述
+                String LogException = e.toString();
+
+                SystemLog systemLog = new SystemLog(logTitle,logType,logUrl,logMethod,logParams,LogException,logUserName,logIp,logIpAddress,logStartTime,logElapsedTime);
+                ThreadPool.getPool().execute(new SaveSystemLogThread(systemLog,systemLogService));
 
 
-//            User user = currentUser.get();
-//
-//            if (null != user) {
-//                System.out.println("=====异常通知开始=====");
-//
-//                Object[] args = joinPoint.getArgs();
-//
-//                //日志标题
-//                String logTitle = getServiceMethodDescription(joinPoint);
-//                //日志类型
-//                String logType = "error";
-//                //日志请求url
-//                String logUrl = request.getRequestURI();
-//                //请求方式
-//                String logMethod = request.getMethod();
-//                //请求参数
-//                String logParams = Json.toJson(args, JsonFormat.compact());
-//                //请求用户Id
-//                Integer logUserId = user.getUserId();
-//                //请求IP
-//                String logIp = ClientIpUtil.getIpAddr(request);
-//                //请求ip所在地
-//                String logIpAddress = ClientIpUtil.getIpAddrSource(logIp);
-//                //请求开始时间
-//                Date logStartTime = beginTimeThreadLocal.get();
-//
-//                long beginTime = beginTimeThreadLocal.get().getTime();
-//                long endTime = System.currentTimeMillis();
-//                //请求耗时
-//                Long logElapsedTime = endTime - beginTime;
-//                String LogException = e.toString();
-//
-//                SystemLog systemLog = new SystemLog(logTitle,logType,logUrl,logMethod,logParams,LogException,logUserId,logIp,logIpAddress,logStartTime,logElapsedTime);
-//                ThreadPool.getPool().execute(new SaveSystemLogThread(systemLog,systemLogService));
-//
-//                System.out.println("=====异常通知结束=====");
+            }
 
-//            }
-
-            System.out.println("=====异常通知开始====="+e.toString());
         } catch (Exception e1) {
             log.error("AOP异常通知异常", e1);
         }
@@ -305,7 +298,7 @@ public class SystemLogAspect {
             if(clazzs.length != arguments.length) {//比较方法中参数个数与从切点中获取的参数个数是否相同，原因是方法可以重载哦
                 continue;
             }
-            description = method.getAnnotation(SystemControllerLog.class).description();
+            description = method.getAnnotation(SystemServiceLog.class).description();
         }
         return description;
     }
