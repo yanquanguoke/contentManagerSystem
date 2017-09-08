@@ -214,4 +214,41 @@
       log_elapsed_time = #{logElapsedTime,jdbcType=BIGINT}
     where log_id = #{logId,jdbcType=INTEGER}
   </update>
+
+
+    <!-- 查询日志总记录数 -->
+    <select id="selectCountSystemLog" parameterType="com.yxb.cms.domain.vo.SystemLog" resultType="Long">
+        select count(*)
+        from cc_sys_log
+        <include refid="selectPageParmas" />
+    </select>
+    <!-- 日志列表信息分页显示 -->
+    <select id="selectSystemLogListByPage" parameterType="com.yxb.cms.domain.vo.SystemLog" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from cc_sys_log
+        <include refid="selectPageParmas" />
+        order by log_start_time DESC
+        LIMIT #{start},#{limit}
+    </select>
+
+    <!-- 日志列表信息List -->
+    <select id="selectSystemLogList" parameterType="com.yxb.cms.domain.vo.SystemLog" resultMap="BaseResultMap" >
+        select
+        <include refid="Base_Column_List" />
+        from cc_sys_log
+        <include refid="selectPageParmas" />
+
+    </select>
+    <!-- 分页查询条件 -->
+    <sql id="selectPageParmas">
+        <where>
+            <if test="logType != null and logType != '' " >
+                AND log_type = #{logType,jdbcType=VARCHAR}
+            </if>
+            <if test="searchTerm != null and searchTerm != '' and searchContent != null and  searchContent != '' and  searchTerm == 'userLoginNameTerm' ">
+                AND  log_title LIKE CONCAT('%', #{searchContent,jdbcType=VARCHAR}, '%')
+            </if>
+        </where>
+    </sql>
 </mapper>

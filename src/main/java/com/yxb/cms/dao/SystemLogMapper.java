@@ -35,6 +35,8 @@ package com.yxb.cms.dao;
 import com.yxb.cms.domain.vo.SystemLog;
 import org.apache.ibatis.annotations.Mapper;
 
+import java.util.List;
+
 /**
  * 系统日志DAO
  *
@@ -91,4 +93,26 @@ public interface SystemLogMapper {
      * @mbggenerated Wed Sep 06 23:14:17 CST 2017
      */
     int updateByPrimaryKey(SystemLog record);
+
+
+
+    /**
+     * 查询日志总记录数
+     * @param systemLog 日志实体
+     * @return
+     */
+    Long selectCountSystemLog(SystemLog systemLog);
+    /**
+     * 日志信息分页列表显示
+     * @param systemLog 日志实体
+     * @return
+     */
+    List<SystemLog> selectSystemLogListByPage(SystemLog systemLog);
+
+    /**
+     * 日志信息列表信息List
+     * @param systemLog 日志实体
+     * @return
+     */
+    List<SystemLog>selectSystemLogList(SystemLog systemLog);
 }

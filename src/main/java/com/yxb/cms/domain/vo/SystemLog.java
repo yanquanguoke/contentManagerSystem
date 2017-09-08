@@ -140,6 +140,20 @@ public class SystemLog extends PageDto implements Serializable {
      */
     private Long logElapsedTime;
 
+
+
+    /**
+     * 查询项
+     */
+    private String searchTerm;
+    /**
+     * 查询内容
+     */
+    private String searchContent;
+
+
+
+
     public SystemLog() {}
 
     public SystemLog(String logTitle, String logType, String logUrl, String logMethod, String logParams, String logUserName, String logIp, String logIpAddress, Date logStartTime, Long logElapsedTime) {
@@ -440,5 +454,21 @@ public class SystemLog extends PageDto implements Serializable {
      */
     public void setLogElapsedTime(Long logElapsedTime) {
         this.logElapsedTime = logElapsedTime;
+    }
+
+    public String getSearchTerm() {
+        return searchTerm;
+    }
+
+    public void setSearchTerm(String searchTerm) {
+        this.searchTerm = searchTerm;
+    }
+
+    public String getSearchContent() {
+        return searchContent;
+    }
+
+    public void setSearchContent(String searchContent) {
+        this.searchContent = searchContent;
     }
 }
