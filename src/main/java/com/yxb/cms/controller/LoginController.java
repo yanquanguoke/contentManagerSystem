@@ -32,6 +32,7 @@
  */
 package com.yxb.cms.controller;
 
+import com.yxb.cms.architect.annotation.SystemControllerLog;
 import com.yxb.cms.architect.constant.BussinessCode;
 import com.yxb.cms.architect.constant.Constants;
 import com.yxb.cms.architect.utils.BussinessMsgUtil;
@@ -153,6 +154,7 @@ public class LoginController extends BasicController {
      * 用户退出
      */
     @RequestMapping("/logout.do")
+    @SystemControllerLog(description="用户登出")
     public String logout(){
         Subject currentUser = SecurityUtils.getSubject();
         currentUser.logout();

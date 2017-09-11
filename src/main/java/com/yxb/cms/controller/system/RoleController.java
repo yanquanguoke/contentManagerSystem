@@ -32,6 +32,7 @@
  */
 package com.yxb.cms.controller.system;
 
+import com.yxb.cms.architect.annotation.SystemControllerLog;
 import com.yxb.cms.architect.constant.BussinessCode;
 import com.yxb.cms.architect.utils.BussinessMsgUtil;
 import com.yxb.cms.architect.utils.CommonHelper;
@@ -134,6 +135,7 @@ public class RoleController extends BasicController {
      */
     @RequestMapping("/ajax_save_role.do")
     @ResponseBody
+    @SystemControllerLog(description="保存角色信息")
     public BussinessMsg ajaxSaveRole(Role role){
         try {
             return roleService.saveOrUpdateRole(role, this.getCurrentLoginName());
@@ -150,6 +152,7 @@ public class RoleController extends BasicController {
      */
     @RequestMapping("/ajax_role_fail.do")
     @ResponseBody
+    @SystemControllerLog(description="失效角色")
     public BussinessMsg ajaxRoleFail(Integer roleId){
         try {
             return roleService.updateRoleStatus(roleId, this.getCurrentLoginName());
@@ -166,6 +169,7 @@ public class RoleController extends BasicController {
      */
     @RequestMapping("/ajax_role_batch_fail.do")
     @ResponseBody
+    @SystemControllerLog(description="批销失效角色")
     public BussinessMsg ajaxRoleBatchFail(@RequestParam(value = "roleIds[]") Integer[] roleIds){
         try {
             return roleService.updateRoleBatchStatus(roleIds, this.getCurrentLoginName());
@@ -206,6 +210,7 @@ public class RoleController extends BasicController {
      */
     @RequestMapping("/ajax_save_role_res.do")
     @ResponseBody
+    @SystemControllerLog(description="角色赋权")
     public BussinessMsg ajaxSaveOrUpdateRoleResource(Integer roleId, @RequestParam(value = "resourceIds[]",required = false) Integer[] resourceIds ){
         try {
             return roleService.saveOrUpdateRoleResource(roleId,resourceIds, this.getCurrentLoginName());

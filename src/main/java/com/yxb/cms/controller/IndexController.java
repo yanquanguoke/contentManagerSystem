@@ -32,6 +32,7 @@
  */
 package com.yxb.cms.controller;
 
+import com.yxb.cms.architect.annotation.SystemControllerLog;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -52,6 +53,7 @@ public class IndexController extends BasicController {
      * @return
      */
     @RequestMapping("/index.do")
+    @SystemControllerLog(description="用户登陆")
     public String toIndexPage() {
         return "main/index";
     }

@@ -146,6 +146,7 @@ public class UserController extends BasicController {
      */
     @RequestMapping("/ajax_user_fail.do")
     @ResponseBody
+    @SystemControllerLog(description="失效用户信息")
     public BussinessMsg ajaxUserFail(Integer userId){
         try {
             return userService.updateUserStatus(userId, this.getCurrentLoginName());
@@ -162,6 +163,7 @@ public class UserController extends BasicController {
      */
     @RequestMapping("/ajax_user_batch_fail.do")
     @ResponseBody
+    @SystemControllerLog(description="批量失效用户信息")
     public BussinessMsg ajaxUserBatchFail(@RequestParam(value = "userIds[]") Integer[] userIds){
         try {
             return userService.updateUserBatchStatus(userIds, this.getCurrentLoginName());
@@ -212,6 +214,7 @@ public class UserController extends BasicController {
      */
     @RequestMapping("/ajax_save_user_role.do")
     @ResponseBody
+    @SystemControllerLog(description="用户分配角色")
     public BussinessMsg ajaxSaveUserRole(Integer userId,String roleIds){
         try {
            return  userService.saveUserRole(userId,roleIds, this.getCurrentLoginName());
