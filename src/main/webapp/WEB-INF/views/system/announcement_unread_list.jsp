@@ -69,7 +69,9 @@
         unReadAnnInfoTable();
         /**tab监听*/
         element.on('tab(filterAnnInfoTab)', function(data){
-            if(data.index == 1){
+            if(data.index == 0){
+                unReadAnnInfoTable();   // 未读公告
+            }else if(data.index == 1){
                 readAnnInfoTable(); //已读公告table
             }else if(data.index == 2){
                 allReadAnnInfoTable(); //全部公告table

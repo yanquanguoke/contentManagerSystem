@@ -246,8 +246,11 @@
             <if test="logType != null and logType != '' " >
                 AND log_type = #{logType,jdbcType=VARCHAR}
             </if>
-            <if test="searchTerm != null and searchTerm != '' and searchContent != null and  searchContent != '' and  searchTerm == 'userLoginNameTerm' ">
+            <if test="searchTerm != null and searchTerm != '' and searchContent != null and  searchContent != '' and  searchTerm == 'logTitleTerm' ">
                 AND  log_title LIKE CONCAT('%', #{searchContent,jdbcType=VARCHAR}, '%')
+            </if>
+            <if test="searchTerm != null and searchTerm != '' and searchContent != null and  searchContent != '' and  searchTerm == 'logMethodTerm' ">
+                AND  log_method LIKE CONCAT('%', #{searchContent,jdbcType=VARCHAR}, '%')
             </if>
         </where>
     </sql>

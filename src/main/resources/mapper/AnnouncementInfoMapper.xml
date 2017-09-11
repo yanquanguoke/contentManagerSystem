@@ -188,6 +188,7 @@
             SELECT * FROM CC_ANNOUNCEMENT_INFO_USER B
                 WHERE C.ANNOUNCEMENT_ID = B.ANNOUNCEMENT_ID
                     AND B.USER_ID = #{userId,jdbcType=INTEGER})
+                    ORDER BY C.ANNOUNCEMENT_TIME DESC
     </select>
 
     <!-- 根据userId查询已读公告集合-->
@@ -205,6 +206,8 @@
             SELECT * FROM CC_ANNOUNCEMENT_INFO_USER B
               WHERE C.ANNOUNCEMENT_ID = B.ANNOUNCEMENT_ID
                 AND B.USER_ID = #{userId,jdbcType=INTEGER})
+
+                ORDER BY C.ANNOUNCEMENT_TIME DESC
     </select>
     <!-- 查询全部公告集合-->
     <select id="selectAllReadAnnInfoListByUserId"  resultType="com.yxb.cms.domain.vo.AnnouncementInfo">
@@ -217,6 +220,7 @@
             C.ANNOUNCEMENT_AUTHOR		AS announcementAuthor,
             C.ANNOUNCEMENT_TIME			AS announcementTime
         FROM CC_ANNOUNCEMENT_INFO C
+        ORDER BY C.ANNOUNCEMENT_TIME DESC
     </select>
 
     <!-- 根据userId查询未读公告记录数 -->
