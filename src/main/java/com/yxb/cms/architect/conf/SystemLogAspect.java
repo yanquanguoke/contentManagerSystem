@@ -135,7 +135,10 @@ public class SystemLogAspect {
                 //请求方式
                 String logMethod = request.getMethod();
                 //请求参数
-                String logParams = Json.toJson(args, JsonFormat.compact());
+                String logParams = null;
+                if(args != null && args.length > 0){
+                    logParams = Json.toJson(args, JsonFormat.compact());
+                }
                 //请求用户
                 String logUserName = user.getUserLoginName();
                 //请求IP
@@ -188,7 +191,10 @@ public class SystemLogAspect {
                 //请求方式
                 String logMethod = request.getMethod();
                 //请求参数
-                String logParams = Json.toJson(args, JsonFormat.compact());
+                String logParams = null;
+                if(args != null && args.length > 0){
+                    logParams = Json.toJson(args, JsonFormat.compact());
+                }
                 //请求用户
                 String logUserName = user.getUserLoginName();
                 //请求IP

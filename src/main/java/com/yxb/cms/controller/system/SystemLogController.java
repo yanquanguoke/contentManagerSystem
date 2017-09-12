@@ -32,16 +32,16 @@
  */
 package com.yxb.cms.controller.system;
 
+import com.yxb.cms.architect.utils.CommonHelper;
 import com.yxb.cms.controller.BasicController;
+import com.yxb.cms.domain.bo.ExcelExport;
 import com.yxb.cms.domain.vo.SystemLog;
-import com.yxb.cms.domain.vo.User;
-import com.yxb.cms.service.RoleService;
 import com.yxb.cms.service.SystemLogService;
-import com.yxb.cms.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
 
 
 /**
@@ -76,6 +76,28 @@ public class SystemLogController extends BasicController {
     @ResponseBody
     public String ajaxSysLogList(SystemLog systemLog){
         return systemLogService.selectSystemLogResultPageList(systemLog);
+    }
+
+    /**
+     * 业务日志导出
+     * @param systemLog 日志实体
+     * @return
+     */
+    @RequestMapping("/excel_sys_log_export.do")
+    public ModelAndView excelSysLogExport(SystemLog systemLog){
+        ExcelExport excelExport = systemLogService.excelExportSystemLogList(systemLog);
+        return CommonHelper.getExcelModelAndView(excelExport);
+    }
+
+    /**
+     * 异常日志导出
+     * @param systemLog 日志实体
+     * @return
+     */
+    @RequestMapping("/excel_sys_exception_log_export.do")
+    public ModelAndView excelSysExceptionLogExport(SystemLog systemLog){
+        ExcelExport excelExport = systemLogService.excelExportSysExceptionLogList(systemLog);
+        return CommonHelper.getExcelModelAndView(excelExport);
     }
 
 

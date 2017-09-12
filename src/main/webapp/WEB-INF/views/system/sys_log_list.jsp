@@ -31,6 +31,7 @@
                     <blockquote class="layui-elem-quote mylog-info-tit" style="border-bottom: 0px; margin: 10px 15px;">
                         <div class="layui-inline">
                             <form class="layui-form" id="sysSearchForm">
+                                <input type="hidden" name="logType" value="info">
                                 <div class="layui-input-inline" style="width:110px;">
                                     <select name="searchTerm" >
                                         <option value="logTitleTerm">日志标题</option>
@@ -43,6 +44,9 @@
                                 <a class="layui-btn sysSearch_btn" lay-submit lay-filter="sysSearchFilter"><i class="layui-icon larry-icon larry-chaxun7"></i>查询</a>
                             </form>
                         </div>
+                        <div class="layui-inline">
+                            <a class="layui-btn layui-btn-normal excelSysLogExport_btn"  style="background-color:#5FB878"> <i class="layui-icon larry-icon larry-danye"></i>导出</a>
+                        </div>
                     </blockquote>
                     <div class="larry-separate"></div>
                     <div style=" margin: 10px 15px;">
@@ -54,7 +58,8 @@
                 <div class="layui-tab-item">
                     <blockquote class="layui-elem-quote mylog-info-tit" style="border-bottom: 0px; margin: 10px 15px;">
                         <div class="layui-inline">
-                            <form class="layui-form" id="sysExceptionSearchForm">
+                            <form class="layui-form" id="sysExceptionForm">
+                                <input type="hidden" name="logType" value="error">
                                 <div class="layui-input-inline" style="width:110px;">
                                     <select name="searchTerm" >
                                         <option value="logTitleTerm">日志标题</option>
@@ -65,6 +70,9 @@
                                 </div>
                                 <a class="layui-btn sysExceptionSearch_btn" lay-submit lay-filter="sysExceptionSearchFilter"><i class="layui-icon larry-icon larry-chaxun7"></i>查询</a>
                             </form>
+                        </div>
+                        <div class="layui-inline">
+                            <a class="layui-btn layui-btn-normal excelSysExceptionLogExport_btn"  style="background-color:#5FB878"> <i class="layui-icon larry-icon larry-danye"></i>导出</a>
                         </div>
                     </blockquote>
                     <div class="larry-separate"></div>
@@ -135,6 +143,21 @@
 
         });
 
+
+        /**业务日志导出*/
+        $(".excelSysLogExport_btn").click(function(){
+            var url = '${ctx}/syslog/excel_sys_log_export.do';
+            $("#sysSearchForm").attr("action",url);
+            $("#sysSearchForm").submit();
+        });
+
+        /**异常日志导出*/
+        $(".excelSysExceptionLogExport_btn").click(function(){
+            var url = '${ctx}/syslog/excel_sys_exception_log_export.do';
+            $("#sysExceptionForm").attr("action",url);
+            $("#sysExceptionForm").submit();
+        });
+
     });
 
 
@@ -155,12 +178,12 @@
             cols: [[
                 {field:'logTitle', title: '日志标题',width: 145 },
                 {field:'logType', title: '日志类型',align:'center',width: 80,templet: '#logTypeTpl'},
-                {field:'logUrl', title: '日志请求URL',align:'center',width: 180},
+                {field:'logUrl', title: '日志请求URL',width: 155},
                 {field:'logMethod', title: '请求方式',align:'center',width: 80},
-                {field:'logParams', title: '请求参数',align:'center',width: 180},
-                {field:'logUserName', title: '用户Id',align:'center',width: 85},
-                {field:'logIp', title: '请求IP',align:'center',width: 120},
-                {field:'logIpAddress', title: 'IP归属',align:'center',width: 120},
+                {field:'logParams', title: '请求参数',width: 150},
+                {field:'logUserName', title: '请求用户',width: 130},
+                {field:'logIp', title: '请求IP',width: 130},
+                {field:'logIpAddress', title: 'IP归属',width: 120},
                 {field:'logStartTime', title: '请求时间',align:'center',width: 150},
                 {field:'logElapsedTime', title: '耗时(毫秒)',align:'center',width: 100}
 
@@ -191,7 +214,7 @@
                 {field:'logUrl', title: '异常方法',align:'center',width: 150},
                 {field:'logParams', title: '请求参数',align:'center',width: 145},
                 {field:'logException', title: '异常信息',align:'center',width: 145},
-                {field:'logUserName', title: '用户Id',align:'center',width: 85},
+                {field:'logUserName', title: '请求用户',align:'center',width: 85},
                 {field:'logIp', title: '请求IP',align:'center',width: 120},
                 {field:'logIpAddress', title: 'IP归属',align:'center',width: 120},
                 {field:'logStartTime', title: '请求时间',align:'center',width: 150},

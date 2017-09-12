@@ -32,6 +32,7 @@
  */
 package com.yxb.cms.domain.vo;
 
+import com.yxb.cms.architect.utils.DateUtil;
 import com.yxb.cms.domain.dto.PageDto;
 
 import java.io.Serializable;
@@ -470,5 +471,31 @@ public class SystemLog extends PageDto implements Serializable {
 
     public void setSearchContent(String searchContent) {
         this.searchContent = searchContent;
+    }
+
+    /**
+     * 开始日期格式化
+     * @return
+     */
+    public String getLogStartTime_Lable(){
+        if(this.getLogStartTime() != null){
+            return DateUtil.Date2Stirng2Second(logStartTime);
+        }
+        return "";
+    }
+
+    /**
+     * 日志类型
+     * @return
+     */
+    public String getLogType_Lable(){
+        if(null != this.getLogType() &&  ("info").equals(this.getLogType())){
+            return "业务日志";
+        }else if(null != this.getLogType() &&  ("error").equals(this.getLogType())){
+            return "异常日志";
+        }else{
+            return "";
+        }
+
     }
 }
