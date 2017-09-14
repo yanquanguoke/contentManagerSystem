@@ -30,33 +30,29 @@
  * - License: GNU Lesser General Public License (GPL)
  * - source code availability: http://git.oschina.net/yangxiaobing_175/contentManagerSystem
  */
-package com.yxb.cms;
+package com.yxb.cms.architect.task;
 
-import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.boot.builder.SpringApplicationBuilder;
-import org.springframework.boot.web.support.SpringBootServletInitializer;
-import org.springframework.scheduling.annotation.EnableScheduling;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+import org.springframework.scheduling.annotation.Scheduled;
+import org.springframework.stereotype.Component;
 
 /**
- * Spring boot 主类入口测试
- *
+ * 后台管理系统定时任务执行类
  * @author yangxiaobing
- * @date 2017/7/27
+ * @date 2017/9/14
  */
-@SpringBootApplication
-@EnableScheduling
-public class Application extends SpringBootServletInitializer{
-	
-	@Override
-    protected SpringApplicationBuilder configure(SpringApplicationBuilder application) {
-        return application.sources(Application.class);
+@Component
+public class SystemScheduledTask {
+
+    private Log log = LogFactory.getLog(SystemScheduledTask.class);
+
+    @Scheduled(cron = "0/10 * * * * ?") // 每20秒执行一次
+    //@Scheduled(cron = "0 0 3 * * ?")   //  每天3点执行
+    public void scheduler() {
+        log.info(">>>>>>>>>>>>> 10秒执行一次哈哈... ... ");
     }
 
 
-	
-    public static void main(String[] args) throws Exception {
-    	SpringApplication.run(Application.class, args);  
-    }
+
 }
-
