@@ -170,3 +170,52 @@ CREATE TABLE `cc_user_role` (
 -- ----------------------------
 INSERT INTO `cc_user_role` VALUES ('505', '142', '52', 'admin', '2017-08-22 14:39:28', null, null);
 INSERT INTO `cc_user_role` VALUES ('506', '155', '55', 'admin', '2017-08-22 14:41:43', null, null);
+
+
+-- ----------------------------
+-- Table structure for `cc_announcement_info`
+-- ----------------------------
+DROP TABLE IF EXISTS `cc_announcement_info`;
+CREATE TABLE `cc_announcement_info` (
+  `announcement_id` int(11) NOT NULL AUTO_INCREMENT,
+  `announcement_type` int(11) DEFAULT NULL COMMENT '公告类型',
+  `announcement_title` varchar(50) DEFAULT NULL COMMENT '公告标题',
+  `announcement_content` varchar(500) DEFAULT NULL COMMENT '公告内容',
+  `announcement_author` varchar(50) DEFAULT NULL COMMENT '发布者',
+  `announcement_time` datetime DEFAULT NULL COMMENT '发布时间',
+  PRIMARY KEY (`announcement_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=29 DEFAULT CHARSET=utf8;
+
+
+-- ----------------------------
+-- Table structure for `cc_announcement_info_user`
+-- ----------------------------
+DROP TABLE IF EXISTS `cc_announcement_info_user`;
+CREATE TABLE `cc_announcement_info_user` (
+  `announcement_info_user_id` int(11) NOT NULL AUTO_INCREMENT,
+  `announcement_id` int(11) DEFAULT NULL COMMENT '公告Id',
+  `user_id` int(11) DEFAULT NULL COMMENT '用户Id',
+  `announcement_flag` int(11) DEFAULT NULL COMMENT '是否已读',
+  PRIMARY KEY (`announcement_info_user_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=58 DEFAULT CHARSET=utf8;
+
+
+-- ----------------------------
+-- Table structure for `cc_sys_log`
+-- ----------------------------
+DROP TABLE IF EXISTS `cc_sys_log`;
+CREATE TABLE `cc_sys_log` (
+  `log_id` int(11) NOT NULL AUTO_INCREMENT,
+  `log_title` varchar(20) DEFAULT NULL COMMENT '日志标题',
+  `log_type` varchar(10) DEFAULT NULL COMMENT '日志类型 info error',
+  `log_url` varchar(50) DEFAULT NULL COMMENT '日志请求url',
+  `log_method` varchar(10) DEFAULT NULL COMMENT '请求方式 get post',
+  `log_params` varchar(300) DEFAULT NULL COMMENT '请求参数',
+  `log_exception` varchar(200) DEFAULT NULL COMMENT '请求异常',
+  `log_user_name` varchar(50) DEFAULT NULL COMMENT '请求用户Id',
+  `log_ip` varchar(20) DEFAULT NULL COMMENT '请求IP',
+  `log_ip_address` varchar(40) DEFAULT NULL COMMENT '请求ip所在地',
+  `log_start_time` datetime DEFAULT NULL COMMENT '请求开始时间',
+  `log_elapsed_time` bigint(20) DEFAULT NULL COMMENT '请求耗时',
+  PRIMARY KEY (`log_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=1036 DEFAULT CHARSET=utf8;
