@@ -3,7 +3,7 @@
 SET FOREIGN_KEY_CHECKS=0;
 
 -- ----------------------------
--- Table structure for cc_resource
+-- Table structure for `cc_resource`
 -- ----------------------------
 DROP TABLE IF EXISTS `cc_resource`;
 CREATE TABLE `cc_resource` (
@@ -23,7 +23,7 @@ CREATE TABLE `cc_resource` (
   `modifier` varchar(40) DEFAULT NULL,
   `modify_time` datetime DEFAULT NULL,
   PRIMARY KEY (`res_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=32 DEFAULT CHARSET=utf8 COMMENT='资源表';
+) ENGINE=InnoDB AUTO_INCREMENT=56 DEFAULT CHARSET=utf8 COMMENT='资源表';
 
 -- ----------------------------
 -- Records of cc_resource
@@ -34,9 +34,9 @@ INSERT INTO `cc_resource` VALUES ('4', '5', '菜单管理', '0', '0rbT8g7m', '/r
 INSERT INTO `cc_resource` VALUES ('5', '7', '系统设置', '0', '0rbT8g9m', null, 'larry-xitongshezhi1', '2', '0', '5', '配置系统菜单信息', 'admin', '2017-07-28 09:31:43', null, null);
 INSERT INTO `cc_resource` VALUES ('7', null, '系统管理', '0', '0rbT8g8m', null, 'larry-xitongshezhi1', '1', '0', '6', '配置系统菜单信息', 'admin', '2017-07-28 13:24:57', null, null);
 INSERT INTO `cc_resource` VALUES ('8', null, '微信公众', '0', '0rbT8g6m', null, 'larry-weixingongzhongpingtai', '1', '0', '7', '配置系统菜单信息', 'admin', '2017-07-28 13:26:50', null, null);
-INSERT INTO `cc_resource` VALUES ('9', '7', '我的面板', '0', '0rbT8g2m', null, 'larry-gerenxinxi5', '2', '0', '8', '配置系统菜单信息', 'admin', '2017-07-28 14:23:35', null, null);
-INSERT INTO `cc_resource` VALUES ('10', '9', '个人信息', '0', '0rbT8t2m', '/res.do', 'larry-gerenxinxi1', '3', '0', '9', '配置系统菜单信息', 'admin', '2017-07-28 17:07:55', null, null);
-INSERT INTO `cc_resource` VALUES ('11', '8', '测试菜单', '0', '0rbT8t2D', '/res.do', 'larry-gerenxinxi1', '2', '0', '9', '', 'admin', '2017-08-14 15:30:15', 'admin', '2017-08-16 14:32:46');
+INSERT INTO `cc_resource` VALUES ('9', '7', '消息中心', '0', '0rbT8g2m', '', 'larry-gerenxinxi5', '2', '0', '8', '配置系统菜单信息', 'admin', '2017-07-28 14:23:35', 'admin', '2017-08-28 19:50:48');
+INSERT INTO `cc_resource` VALUES ('10', '9', '公告管理', '0', '0rbT8t2m', '/announcement/announcement_list.do', 'larry-gonggaoguanli', '3', '0', '9', '配置系统菜单信息', 'admin', '2017-07-28 17:07:55', 'admin', '2017-09-04 11:07:18');
+INSERT INTO `cc_resource` VALUES ('11', '8', '测试菜单', '0', '0rbT8t2D', '/res.do', 'larry-gerenxinxi1', '2', '0', '9', '', 'admin', '2017-08-14 15:30:15', 'admin', '2017-08-28 19:49:56');
 INSERT INTO `cc_resource` VALUES ('12', '2', '用户新增', '0', '0rbT8t2P', '/user/user_add.do', 'larry-gerenxinxi1', '3', '1', '3', '', 'admin', '2017-08-14 16:47:12', 'admin', '2017-08-16 17:56:18');
 INSERT INTO `cc_resource` VALUES ('13', '11', '测试菜单', '0', 'OglvPpeA', '/test.do', 'tuichu1', '3', '0', '2', '备注', 'admin', '2017-08-15 09:59:53', 'admin', '2017-08-16 16:10:48');
 INSERT INTO `cc_resource` VALUES ('14', '11', '测试菜单2', '0', 'WEpcNYu3', '/test.do', 'larry-neirongguanli', '3', '0', null, '', 'admin', '2017-08-15 14:48:04', 'admin', '2017-08-22 14:37:47');
@@ -49,13 +49,18 @@ INSERT INTO `cc_resource` VALUES ('20', '3', '角色导出', '0', 'oCNcsKmk', '/
 INSERT INTO `cc_resource` VALUES ('21', '3', '角色新增', '0', 'nxRVZA5i', '/role/role_add.do', 'caidanguanli', '3', '1', null, '', 'admin', '2017-08-16 23:33:01', null, null);
 INSERT INTO `cc_resource` VALUES ('22', '3', '角色修改', '0', 'moHbdnjz', '/role/role_update.do', 'liuyan', '3', '1', null, '', 'admin', '2017-08-16 23:33:26', null, null);
 INSERT INTO `cc_resource` VALUES ('23', '3', '角色失效', '0', 'tkwJk34z', '/role/ajax_role_fail.do', 'caidanguanli', '3', '1', null, '', 'admin', '2017-08-16 23:33:46', null, null);
-INSERT INTO `cc_resource` VALUES ('24', '3', '批销失效', '0', 'qsieHTy4', '/role/ajax_role_batch_fail.do', 'liuyan', '3', '1', null, '', 'admin', '2017-08-16 23:34:04', null, null);
+INSERT INTO `cc_resource` VALUES ('24', '3', '批量失效', '0', 'qsieHTy4', '/role/ajax_role_batch_fail.do', 'liuyan', '3', '1', null, '', 'admin', '2017-08-16 23:34:04', 'admin', '2017-08-22 17:31:48');
 INSERT INTO `cc_resource` VALUES ('25', '3', '角色赋权', '0', 'bSG7LAmU', '/role/role_grant.do', 'caidanguanli', '3', '1', null, '', 'admin', '2017-08-16 23:34:28', null, null);
 INSERT INTO `cc_resource` VALUES ('26', '4', '菜单新增', '0', 'Mhtly5er', '/res/res_edit.do', 'larry-11', '3', '1', null, '', 'admin', '2017-08-22 13:41:27', null, null);
 INSERT INTO `cc_resource` VALUES ('27', '4', '菜单编辑', '0', 'KxCQVzRq', '/res/res_update.do', 'larry-bianji5', '3', '1', null, '', 'admin', '2017-08-22 13:42:30', null, null);
 INSERT INTO `cc_resource` VALUES ('28', '4', '菜单失效', '0', 'DK3uPfe7', '/res/ajax_res_fail.do', 'larry-shanchu8', '3', '1', null, '', 'admin', '2017-08-22 13:45:01', null, null);
 INSERT INTO `cc_resource` VALUES ('29', '4', '菜单导出', '0', 'wPUNDGgZ', '/res/excel_res_export.do', 'larry-wangzhanneirong', '3', '1', null, '', 'admin', '2017-08-22 13:46:43', null, null);
 INSERT INTO `cc_resource` VALUES ('30', '11', '测试菜单3', '0', '3T7k24R4', '/test.do', 'larry-nav', '3', '0', null, '', 'user_system', '2017-08-22 14:43:00', null, null);
+INSERT INTO `cc_resource` VALUES ('51', '7', '日志中心', '0', 'gYFTwbQb', '', 'larry-gongzuoneirong', '2', '0', null, '', 'admin', '2017-08-30 17:58:16', 'admin', '2017-08-30 18:01:42');
+INSERT INTO `cc_resource` VALUES ('52', '51', '日志管理', '0', 'oL6OcNAt', '/syslog/sys_log_list.do', 'larry-pingjiaguanli1', '3', '0', null, '', 'admin', '2017-08-30 18:03:00', 'admin', '2017-09-08 10:55:16');
+INSERT INTO `cc_resource` VALUES ('53', '9', '消息管理', '0', 'H70iVoxC', '/test.do', 'larry-liuyan', '3', '0', null, '', 'admin', '2017-08-31 12:34:52', null, null);
+INSERT INTO `cc_resource` VALUES ('54', '10', '新增公告', '0', '4JQVLmOd', '/announcement/announcement_add.do', 'larry-iconfontadd', '3', '1', null, '', 'admin', '2017-09-04 17:08:03', null, null);
+INSERT INTO `cc_resource` VALUES ('55', '10', '删除公告', '0', 'eTDnjGAM', '/announcement/ajax_del_announcement.do', 'larry-shanchu9', '3', '1', null, '', 'admin', '2017-09-04 17:08:27', null, null);
 
 -- ----------------------------
 -- Table structure for cc_role
