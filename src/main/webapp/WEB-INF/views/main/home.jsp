@@ -103,9 +103,9 @@
                 <div class="sysNotice col">
                     <div class="layui-collapse">
                         <div class="layui-colla-item">
-                            <h2 class="layui-colla-title" style="background-color: #ffffff;">网站访问情况统计</h2>
+                            <h2 class="layui-colla-title" style="background-color: #ffffff;">其他图表统计，待定</h2>
                             <div class="layui-colla-content layui-show" >
-                                <div id="container2" style="height: 300px; margin: 0 auto;width: 100%;"></div>
+
                             </div>
                         </div>
 
@@ -139,50 +139,51 @@
 
         //图表
         var psLineChar = echarts.init(document.getElementById('container'),'macarons');
-        var option = {
-            title : {
-                text: '网站访问量',
-                subtext: '纯属虚构'
-            },
-            tooltip : {
-                trigger: 'axis'
-            },
-            legend: {
-                data:['访问量']
-            },
-            toolbox: {
-                show : true,
-                feature : {
-                    magicType : {type: ['line', 'bar']}
-                }
-            },
-            calculable : true,
-            xAxis : [
-                {
-                    type : 'category',
-                    data : ['周一','周二','周三','周四','周五','周六','周日']
-                }
-            ],
-            yAxis : [
-                {
-                    type : 'value'
-                }
-            ],
-            series : [
-                {
-                    name:'访问量',
-                    type:'line',
-                    data:[2.0, 4.9, 7.0, 23.2, 25.6, 76.7, 0.2]
-                }
-            ]
-        };
-
 
         //查询
         function loadDrugs() {
             psLineChar.clear();
             psLineChar.showLoading({text: '正在努力的读取数据中...'});
-            psLineChar.setOption(option, true);
+            $.post("${ctx}/main/ajax_echarts_login_info.do", function(data) {
+                var option = {
+                    title : {
+                        text: '网站访问量',
+                        subtext: '7天访问情况统计'
+                    },
+                    tooltip : {
+                        trigger: 'axis'
+                    },
+                    legend: {
+                        data:['访问量']
+                    },
+                    toolbox: {
+                        show : true,
+                        feature : {
+                            magicType : {type: ['line', 'bar']}
+                        }
+                    },
+                    calculable : true,
+                    xAxis : [
+                        {
+                            type : 'category',
+                            data : data.xAxisData
+                        }
+                    ],
+                    yAxis : [
+                        {
+                            type : 'value'
+                        }
+                    ],
+                    series : [
+                        {
+                            name:'访问量',
+                            type:'line',
+                            data:data.seriesData
+                        }
+                    ]
+                };
+                psLineChar.setOption(option, true);
+            });
             psLineChar.hideLoading();
 
         }
@@ -191,65 +192,9 @@
         //载入图表
         loadDrugs();
 
-
-        //图表
-        var psLineChar2 = echarts.init(document.getElementById('container2'),'macarons');
-        var option = {
-            title : {
-                text: '网站访问量',
-                subtext: '纯属虚构'
-            },
-            tooltip : {
-                trigger: 'axis'
-            },
-            legend: {
-                data:['访问量']
-            },
-            toolbox: {
-                show : true,
-                feature : {
-                    magicType : {type: ['line', 'bar']}
-                }
-            },
-            calculable : true,
-            xAxis : [
-                {
-                    type : 'category',
-                    data : ['周一','周二','周三','周四','周五','周六','周日']
-                }
-            ],
-            yAxis : [
-                {
-                    type : 'value'
-                }
-            ],
-            series : [
-                {
-                    name:'访问量',
-                    type:'bar',
-                    data:[2.0, 4.9, 7.0, 23.2, 25.6, 76.7, 0.2]
-                }
-            ]
-        };
-
-
-        //查询
-        function loadDrugs2() {
-            psLineChar2.clear();
-            psLineChar2.showLoading({text: '正在努力的读取数据中...'});
-            psLineChar2.setOption(option, true);
-            psLineChar2.hideLoading();
-
-        }
-
-
-        //载入图表
-        loadDrugs2();
-
         //浏览器大小改变时重置大小
         window.onresize = function () {
             psLineChar.resize();
-            psLineChar2.resize();
 
         };
 

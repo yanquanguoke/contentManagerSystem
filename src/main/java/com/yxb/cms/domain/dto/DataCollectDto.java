@@ -30,50 +30,39 @@
  * - License: GNU Lesser General Public License (GPL)
  * - source code availability: http://git.oschina.net/yangxiaobing_175/contentManagerSystem
  */
-package com.yxb.cms.architect.task;
+package com.yxb.cms.domain.dto;
 
-import com.yxb.cms.architect.utils.ThreadPool;
-import com.yxb.cms.service.DataCleaningService;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.scheduling.annotation.Scheduled;
-import org.springframework.stereotype.Component;
+import java.io.Serializable;
+import java.util.List;
 
 /**
- * 后台管理系统定时任务执行类
+ * 数据汇总DTO
  * @author yangxiaobing
- * @date 2017/9/14
+ * @date 2017/9/18
  */
-@Component
-public class SystemScheduledTask {
 
-    private Log log = LogFactory.getLog(SystemScheduledTask.class);
+public class DataCollectDto implements Serializable {
 
-    @Autowired
-    private DataCleaningService dataCleaningService;
+    //汇总时间
+    private String dataTime;
+
+    // 汇总数量
+    private Integer dataCount;
 
 
-    /**
-     * 定时执行用户访问量，数据清洗，每天凌晨3点执行一次
-     */
-    //@Scheduled(cron = "0/10 * * * * ?") // 每10秒执行一次
-    @Scheduled(cron = "0 0 3 * * ?")   //  每天3点执行
-    public void executeDataCleanScheduler() {
-        log.info(">>>>>>>>>>>>> 定时执行用户访问量数据清洗... ... ");
-        ThreadPool.getPool().execute(new InsertDataClean());
+    public String getDataTime() {
+        return dataTime;
     }
 
+    public void setDataTime(String dataTime) {
+        this.dataTime = dataTime;
+    }
 
+    public Integer getDataCount() {
+        return dataCount;
+    }
 
-    private class InsertDataClean implements Runnable {
-        @Override
-        public void run() {
-            try {
-                dataCleaningService.insertDataCleanBatchByLogin();
-            } catch (Exception e) {
-                log.error("用户访问量数据清洗异常", e);
-            }
-        }
+    public void setDataCount(Integer dataCount) {
+        this.dataCount = dataCount;
     }
 }

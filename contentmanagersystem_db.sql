@@ -224,3 +224,17 @@ CREATE TABLE `cc_sys_log` (
   `log_elapsed_time` bigint(20) DEFAULT NULL COMMENT '请求耗时',
   PRIMARY KEY (`log_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1036 DEFAULT CHARSET=utf8;
+
+
+-- ----------------------------
+-- Table structure for cc_data_cleaning
+-- ----------------------------
+DROP TABLE IF EXISTS `cc_data_cleaning`;
+CREATE TABLE `cc_data_cleaning` (
+  `data_id` int(11) NOT NULL AUTO_INCREMENT,
+  `data_type` int(11) DEFAULT NULL COMMENT '数据类型',
+  `data_time` varchar(50) DEFAULT NULL COMMENT '数据时间',
+  `data_count` int(11) DEFAULT NULL COMMENT '数量',
+  PRIMARY KEY (`data_id`),
+  UNIQUE KEY `unique_data_type_time` (`data_type`,`data_time`) COMMENT '数据类型、日期唯一建索引'
+) ENGINE=InnoDB AUTO_INCREMENT=576 DEFAULT CHARSET=utf8;

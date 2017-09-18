@@ -33,8 +33,13 @@
 package com.yxb.cms.controller;
 
 import com.yxb.cms.architect.annotation.SystemControllerLog;
+import com.yxb.cms.service.DataCleaningService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+import java.util.Map;
 
 
 /**
@@ -46,6 +51,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 @RequestMapping("main")
 public class IndexController extends BasicController {
+
+    @Autowired
+    private DataCleaningService dataCleaningService;
 
 
     /**
@@ -74,6 +82,16 @@ public class IndexController extends BasicController {
     @RequestMapping("/unauthorized.do")
     public String toUnauthorizedPage() {
         return "error/unauthorized";
+    }
+
+    /**
+     * 网站访问量,图表展示
+     * @return
+     */
+    @RequestMapping("/ajax_echarts_login_info.do")
+    @ResponseBody
+    public Map<String, Object> ajaxEchartsByLoginInfo() {
+        return dataCleaningService.selectEchartsByLoginInfo();
     }
 
 

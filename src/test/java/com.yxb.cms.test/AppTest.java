@@ -3,16 +3,21 @@ package com.yxb.cms.test;
 import com.yxb.cms.Application;
 import com.yxb.cms.architect.properties.JdbcProperties;
 import com.yxb.cms.architect.utils.HttpUtil;
+import com.yxb.cms.dao.SystemLogMapper;
+import com.yxb.cms.domain.dto.DataCollectDto;
+import com.yxb.cms.service.DataCleaningService;
 import com.yxb.cms.service.ResourceService;
 import com.yxb.cms.service.UserService;
 import net.sf.json.JSONObject;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.nutz.json.Json;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -32,24 +37,18 @@ public class AppTest {
     private UserService userService;
 
     @Autowired
-    private ResourceService resourceService;
+    private SystemLogMapper systemLogMapper;
+
+    @Autowired
+    DataCleaningService dataCleaningService;
+
     @Test
     public void test() {}
 
     @Test
     public void test2() throws Exception{
-
-
-        String url = "http://ip.taobao.com/service/getIpInfo.php";
-        Map<String,Object> param = new HashMap<>();
-        param.put("ip","119.120.112.120");
-       String str =  HttpUtil.post(url,param);
-
-        JSONObject obj = JSONObject.fromObject(str);
-        JSONObject obj2 =  (JSONObject) obj.get("data");
-
-        System.out.println(obj2.get("region")+" " +obj2.get("city"));
-
+       Map<String,Object> map =  dataCleaningService.selectEchartsByLoginInfo();
+        System.out.println(Json.toJson(map));
 
     }
 

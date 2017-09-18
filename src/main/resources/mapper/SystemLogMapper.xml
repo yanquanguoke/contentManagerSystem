@@ -254,4 +254,33 @@
             </if>
         </where>
     </sql>
+
+    <!-- 根据登陆日志查询用户登录汇总数据-->
+    <select id="selectDataCollectListByLog" resultType="com.yxb.cms.domain.dto.DataCollectDto" >
+        <![CDATA[
+            SELECT
+                tt.days				AS dataTime,
+                count(tt.statTime)	AS dataCount
+            FROM
+                (SELECT * FROM (
+                    SELECT DATE_FORMAT(@cdate := date_add(@cdate, INTERVAL - 1 DAY),'%Y-%m-%d') days
+                      FROM ( SELECT @cdate := date_add(log_start_time,INTERVAL + 1 DAY) FROM cc_sys_log ) t1
+                    ) t2
+            LEFT JOIN (SELECT
+                            c.log_title,
+                            c.log_ip,
+                            DATE_FORMAT(c.log_start_time,'%Y-%m-%d') AS statTime,
+                            count(*)
+                        FROM cc_sys_log c
+                          WHERE c.log_title = '用户登陆'
+                          GROUP BY
+                            c.log_title,
+                            c.log_ip,
+                            DATE_FORMAT(c.log_start_time,'%Y-%m-%d')
+                      ) t3 ON t2.days = t3.statTime
+              ) tt
+            WHERE date(tt.days) >= curdate() - INTERVAL 7 DAY AND date(tt.days) < curdate()
+            GROUP BY tt.days
+        ]]>
+    </select>
 </mapper>

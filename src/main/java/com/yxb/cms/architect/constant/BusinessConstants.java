@@ -68,6 +68,9 @@ public enum BusinessConstants {
     ANNOUNCEMENT_TYPE_1(1,"系统公告"),
     ANNOUNCEMENT_TYPE_2(2,"活动公告"),
 
+    /**数据清洗类型*/
+    CLEAN_DATA_TYPE_1(1,"用户登陆"),
+
     ;
 	
 
