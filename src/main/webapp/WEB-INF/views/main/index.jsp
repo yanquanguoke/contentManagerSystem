@@ -42,7 +42,7 @@
                         <%--<li style="" class="layui-nav-item">--%>
                             <%--<a class="onFullScreen" id="FullScreen"><i class="larry-icon larry-quanping"></i>全屏</a>--%>
                         <%--</li>--%>
-                        <li style="" class="layui-nav-item">
+                        <li style="" class="layui-nav-item lockcms">
                             <a id="lock"><i class="larry-icon larry-diannao5"></i>锁屏</a>
                         </li>
                         <%--<li style="" class="layui-nav-item">--%>
@@ -157,6 +157,69 @@
             $("#userNameSpan").text($("#userNameSpan").text().substring(0,6) +"...");
 
         }
+
+        //锁屏
+        function lockPage(){
+            parent.layer.open({
+                title : false,
+                type : 1,
+                anim: 4,
+                content : '	<div class="admin-header-lock" id="lock-box">'+
+                '<div class="admin-header-lock-img"><img src="${ctx}/static/img/face.jpg"/></div>'+
+                '<div class="admin-header-lock-name" id="lockUserName">${LOGIN_NAME.userName}</div>'+
+                '<div class="input_btn">'+
+                '<input type="password" class="admin-header-lock-input layui-input" autocomplete="off" placeholder="请输入密码解锁.." name="lockPwd" id="lockPwd" />'+
+                '<button class="layui-btn" id="unlock">解锁</button>'+
+                '</div>'+
+                '</div>',
+                closeBtn : 0,
+                shade : 1
+
+            });
+            $(".layui-layer-shade").addClass("lockBg")
+            $(".admin-header-lock-input").focus();
+        }
+
+        $(".lockcms").on("click",function(){
+            window.sessionStorage.setItem("lockcms",true);
+            lockPage();
+        })
+        // 判断是否显示锁屏
+        if(window.sessionStorage.getItem("lockcms") == "true"){
+            lockPage();
+        }
+
+        // 解锁
+        $("body").on("click","#unlock",function(){
+            if($(this).siblings(".admin-header-lock-input").val() == ''){
+                layer.msg("请输入解锁密码！");
+                $(this).siblings(".admin-header-lock-input").focus();
+            }else{
+                if($(this).siblings(".admin-header-lock-input").val() == ${LOGIN_NAME.userPassword}){
+                    window.sessionStorage.setItem("lockcms",false);
+                    $(this).siblings(".admin-header-lock-input").val('');
+                    layer.closeAll("page");
+                }else{
+                    layer.msg("密码错误，请重新输入！");
+                    $(this).siblings(".admin-header-lock-input").val('').focus();
+                }
+            }
+        });
+
+        $('#lock').mouseover(function () {
+            layer.tips('请按Alt+L快速锁屏！', '#lock', {tips: [1, '#009688'], time: 2000})
+        });
+        $(document).keydown(function (e) {
+            if (e.altKey && e.which == 76) {
+                lockPage();
+            }
+        });
+        $(document).keyup(function(event){
+            if(event.keyCode ==13){
+                $("#unlock").click();
+            }
+        });
+
     });
 
 </script>

@@ -136,3 +136,8 @@
     border-bottom:0px;
     position: relative;
 }
+
+
+body .lockBg {
+    background: url(../img/lockBg.jpg) fixed center center;
+}
