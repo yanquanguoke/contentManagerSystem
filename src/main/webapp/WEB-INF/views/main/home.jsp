@@ -148,7 +148,7 @@
                 var option = {
                     title : {
                         text: '网站访问量',
-                        subtext: '7天访问情况统计'
+                        subtext: '10天访问情况统计'
                     },
                     tooltip : {
                         trigger: 'axis'
@@ -177,7 +177,7 @@
                     series : [
                         {
                             name:'访问量',
-                            type:'line',
+                            type:'bar',
                             data:data.seriesData
                         }
                     ]

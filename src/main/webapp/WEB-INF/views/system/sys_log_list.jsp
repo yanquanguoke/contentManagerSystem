@@ -29,23 +29,35 @@
                 <!-- 业务日志TAB -->
                 <div class="layui-tab-item layui-show">
                     <blockquote class="layui-elem-quote mylog-info-tit" style="border-bottom: 0px; margin: 10px 15px;">
-                        <div class="layui-inline">
+
+                        <div class="layui-form-item" style="margin-bottom: 0px;">
+                            <input type="hidden" id="currentDate" value="${currentDate}">
                             <form class="layui-form" id="sysSearchForm">
-                                <input type="hidden" name="logType" value="info">
-                                <div class="layui-input-inline" style="width:110px;">
-                                    <select name="searchTerm" >
-                                        <option value="logTitleTerm">日志标题</option>
-                                        <option value="logMethodTerm">请求方式</option>
-                                    </select>
+                                <div class="layui-inline" style="margin: 0px;">
+                                    <input type="hidden" name="logType" value="info">
+                                    <div class="layui-input-inline" style="width:110px;">
+                                        <select name="searchTerm">
+                                            <option value="logTitleTerm">日志标题</option>
+                                            <option value="logMethodTerm">请求方式</option>
+                                        </select>
+                                    </div>
+                                    <div class="layui-input-inline" style="width:145px;">
+                                        <input type="text" name="searchContent" value="" placeholder="请输入关键字" class="layui-input search_input">
+                                    </div>
                                 </div>
-                                <div class="layui-input-inline" style="width:145px;">
-                                    <input type="text" name="searchContent" value="" placeholder="请输入关键字" class="layui-input search_input">
+                                <div class="layui-inline" style="margin:0px;">
+                                    <label class="layui-form-label" style="width:auto;">请求时间</label>
+                                    <div class="layui-input-inline" style="width:145px;">
+                                        <input type="text" class="layui-input" id="beginTime" name="beginTime" placeholder="请选择" readonly>
+                                    </div>
                                 </div>
-                                <a class="layui-btn sysSearch_btn" lay-submit lay-filter="sysSearchFilter"><i class="layui-icon larry-icon larry-chaxun7"></i>查询</a>
+                                <div class="layui-inline" style="margin:0px;">
+                                    <a class="layui-btn sysSearch_btn" lay-submit lay-filter="sysSearchFilter"><i class="layui-icon larry-icon larry-chaxun7"></i>查询</a>
+                                </div>
+                                <div class="layui-inline" style="margin:0px;">
+                                    <a class="layui-btn layui-btn-normal excelSysLogExport_btn"  style="background-color:#5FB878"> <i class="layui-icon larry-icon larry-danye"></i>导出</a>
+                                </div>
                             </form>
-                        </div>
-                        <div class="layui-inline">
-                            <a class="layui-btn layui-btn-normal excelSysLogExport_btn"  style="background-color:#5FB878"> <i class="layui-icon larry-icon larry-danye"></i>导出</a>
                         </div>
                     </blockquote>
                     <div class="larry-separate"></div>
@@ -57,22 +69,33 @@
                 <!-- 异常日志TAB -->
                 <div class="layui-tab-item">
                     <blockquote class="layui-elem-quote mylog-info-tit" style="border-bottom: 0px; margin: 10px 15px;">
-                        <div class="layui-inline">
+                        <div class="layui-form-item" style="margin-bottom: 0px;">
+                            <input type="hidden" id="currentDate2" value="${currentDate}">
                             <form class="layui-form" id="sysExceptionForm">
-                                <input type="hidden" name="logType" value="error">
-                                <div class="layui-input-inline" style="width:110px;">
-                                    <select name="searchTerm" >
-                                        <option value="logTitleTerm">日志标题</option>
-                                    </select>
+                                <div class="layui-inline" style="margin: 0px;">
+                                    <input type="hidden" name="logType" value="error">
+                                    <div class="layui-input-inline" style="width:110px;">
+                                        <select name="searchTerm" >
+                                            <option value="logTitleTerm">日志标题</option>
+                                        </select>
+                                    </div>
+                                    <div class="layui-input-inline" style="width:145px;">
+                                        <input type="text" name="searchContent" value="" placeholder="请输入关键字" class="layui-input search_input">
+                                    </div>
                                 </div>
-                                <div class="layui-input-inline" style="width:145px;">
-                                    <input type="text" name="searchContent" value="" placeholder="请输入关键字" class="layui-input search_input">
+                                <div class="layui-inline" style="margin:0px;">
+                                    <label class="layui-form-label" style="width:auto;">请求时间</label>
+                                    <div class="layui-input-inline" style="width:145px;">
+                                        <input type="text" class="layui-input" id="beginTime2" name="beginTime2" placeholder="请选择" readonly>
+                                    </div>
                                 </div>
-                                <a class="layui-btn sysExceptionSearch_btn" lay-submit lay-filter="sysExceptionSearchFilter"><i class="layui-icon larry-icon larry-chaxun7"></i>查询</a>
+                                <div class="layui-inline" style="margin:0px;">
+                                    <a class="layui-btn sysExceptionSearch_btn" lay-submit lay-filter="sysExceptionSearchFilter"><i class="layui-icon larry-icon larry-chaxun7"></i>查询</a>
+                                </div>
+                                <div class="layui-inline" style="margin:0px;">
+                                    <a class="layui-btn layui-btn-normal excelSysExceptionLogExport_btn"  style="background-color:#5FB878"> <i class="layui-icon larry-icon larry-danye"></i>导出</a>
+                                </div>
                             </form>
-                        </div>
-                        <div class="layui-inline">
-                            <a class="layui-btn layui-btn-normal excelSysExceptionLogExport_btn"  style="background-color:#5FB878"> <i class="layui-icon larry-icon larry-danye"></i>导出</a>
                         </div>
                     </blockquote>
                     <div class="larry-separate"></div>
@@ -91,12 +114,27 @@
     var $,table;
     layui.config({
         base : "${ctx}/static/js/"
-    }).use(['form', 'table','common','element'], function () {
+    }).use(['form', 'table','common','element','laydate'], function () {
         $ =  layui.$;
         table = layui.table;
        var  form = layui.form,
         element = layui.element,
+        laydate = layui.laydate,
         common = layui.common;
+
+        /**请求时间*/
+        laydate.render({
+            elem: '#beginTime',
+            theme: 'molv',
+            value: new Date()
+        });
+        /**请求时间*/
+        laydate.render({
+            elem: '#beginTime2',
+            theme: 'molv',
+            value: new Date()
+        });
+
 
         //业务日志
         sysLogTable();
@@ -118,6 +156,7 @@
                     where: {
                         searchTerm:data.field.searchTerm,
                         searchContent:data.field.searchContent,
+                        beginTime:data.field.beginTime,
                         logType:'info'
                     },
                     height: 'full-183'
@@ -134,6 +173,7 @@
                     where: {
                         searchTerm:data.field.searchTerm,
                         searchContent:data.field.searchContent,
+                        beginTime:data.field.beginTime2,
                         logType:'error'
                     },
                     height: 'full-183'
@@ -158,6 +198,8 @@
             $("#sysExceptionForm").submit();
         });
 
+
+
     });
 
 
@@ -174,13 +216,14 @@
             size: 'sm',
             where: {
                 logType:'info',
+                beginTime:$("#currentDate").val(),
             },
             cols: [[
                 {field:'logTitle', title: '日志标题',width: 145 },
-                {field:'logType', title: '日志类型',align:'center',width: 80,templet: '#logTypeTpl'},
-                {field:'logUrl', title: '日志请求URL',width: 155},
+                {field:'logType', title: '日志类型',align:'center',width: 100,templet: '#logTypeTpl'},
+                {field:'logUrl', title: '日志请求URL',width: 145},
                 {field:'logMethod', title: '请求方式',align:'center',width: 80},
-                {field:'logParams', title: '请求参数',width: 150},
+                {field:'logParams', title: '请求参数',width: 140},
                 {field:'logUserName', title: '请求用户',width: 130},
                 {field:'logIp', title: '请求IP',width: 130},
                 {field:'logIpAddress', title: 'IP归属',width: 120},
@@ -207,12 +250,13 @@
             size: 'sm',
             where: {
                 logType:'error',
+                beginTime:$("#currentDate2").val(),
             },
             cols: [[
                 {field:'logTitle', title: '日志标题',width: 145 },
-                {field:'logType', title: '日志类型',align:'center',width: 80,templet: '#logTypeTpl'},
-                {field:'logUrl', title: '异常方法',align:'center',width: 150},
-                {field:'logParams', title: '请求参数',align:'center',width: 145},
+                {field:'logType', title: '日志类型',align:'center',width: 100,templet: '#logTypeTpl'},
+                {field:'logUrl', title: '异常方法',align:'center',width: 145},
+                {field:'logParams', title: '请求参数',align:'center',width: 140},
                 {field:'logException', title: '异常信息',align:'center',width: 145},
                 {field:'logUserName', title: '请求用户',align:'center',width: 85},
                 {field:'logIp', title: '请求IP',align:'center',width: 120},

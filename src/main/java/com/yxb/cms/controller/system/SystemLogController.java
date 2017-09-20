@@ -33,15 +33,19 @@
 package com.yxb.cms.controller.system;
 
 import com.yxb.cms.architect.utils.CommonHelper;
+import com.yxb.cms.architect.utils.DateUtil;
 import com.yxb.cms.controller.BasicController;
 import com.yxb.cms.domain.bo.ExcelExport;
 import com.yxb.cms.domain.vo.SystemLog;
 import com.yxb.cms.service.SystemLogService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
+
+import java.util.Date;
 
 
 /**
@@ -64,7 +68,9 @@ public class SystemLogController extends BasicController {
      * @return
      */
     @RequestMapping("/sys_log_list.do")
-    public String toSysLogPage() {
+    public String toSysLogPage(Model model) {
+        String currentDate = DateUtil.Date2Stirng(new Date());
+        model.addAttribute("currentDate",currentDate);
         return "system/sys_log_list";
     }
     /**

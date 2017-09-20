@@ -61,7 +61,6 @@ public class IndexController extends BasicController {
      * @return
      */
     @RequestMapping("/index.do")
-    @SystemControllerLog(description="用户登陆")
     public String toIndexPage() {
         return "main/index";
     }

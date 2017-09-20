@@ -252,6 +252,9 @@
             <if test="searchTerm != null and searchTerm != '' and searchContent != null and  searchContent != '' and  searchTerm == 'logMethodTerm' ">
                 AND  log_method LIKE CONCAT('%', #{searchContent,jdbcType=VARCHAR}, '%')
             </if>
+            <if test="beginTime != null and beginTime != '' ">
+                <![CDATA[AND date_format(log_start_time,'%Y-%m-%d') = #{beginTime,jdbcType=VARCHAR}]]>
+            </if>
         </where>
     </sql>
 

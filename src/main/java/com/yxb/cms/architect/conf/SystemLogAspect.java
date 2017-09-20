@@ -49,11 +49,14 @@ import org.nutz.json.JsonFormat;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.NamedThreadLocal;
 import org.springframework.stereotype.Component;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.lang.reflect.Method;
 import java.util.Date;
+import java.util.Map;
 
 
 /**
@@ -69,8 +72,6 @@ public class SystemLogAspect {
     private Log log = LogFactory.getLog(SystemLogAspect.class);
 
     private static final ThreadLocal<Date> beginTimeThreadLocal = new NamedThreadLocal<Date>("ThreadLocal beginTime");
-
-    private static final ThreadLocal<User> currentUser=new NamedThreadLocal<>("ThreadLocal user");
 
     @Autowired
     private SystemLogService systemLogService;
@@ -106,10 +107,7 @@ public class SystemLogAspect {
         Date beginTime=new Date();
         beginTimeThreadLocal.set(beginTime);
 
-        //读取session中的用户
-        HttpSession session = request.getSession();
-        User user = (User) session.getAttribute(Constants.SESSION_KEY_LOGIN_NAME);
-        currentUser.set(user);
+
     }
 
 
@@ -120,11 +118,11 @@ public class SystemLogAspect {
     @After("controllerAspect()")
     public void after(JoinPoint joinPoint){
         try {
-            User user = currentUser.get();
+            HttpSession session = request.getSession();
+            //读取session中的用户
+            User user = (User) session.getAttribute(Constants.SESSION_KEY_LOGIN_NAME);
 
             if (null != user) {
-
-                Object[] args = joinPoint.getArgs();
 
                 //日志标题
                 String logTitle = getControllerMethodDescription(joinPoint);
@@ -135,16 +133,11 @@ public class SystemLogAspect {
                 //请求方式
                 String logMethod = request.getMethod();
                 //请求参数
-                String logParams = null;
-                if(args != null && args.length > 0){
-                    logParams = Json.toJson(args, JsonFormat.compact());
-                }
+                Map<String,String[]> logParams=request.getParameterMap();
                 //请求用户
                 String logUserName = user.getUserLoginName();
                 //请求IP
                 String logIp = ClientIpUtil.getIpAddr(request);
-                //请求ip所在地
-                String logIpAddress = ClientIpUtil.getIpAddrSource(logIp);
                 //请求开始时间
                 Date logStartTime = beginTimeThreadLocal.get();
 
@@ -153,8 +146,9 @@ public class SystemLogAspect {
                 //请求耗时
                 Long logElapsedTime = endTime - beginTime;
 
-                SystemLog systemLog = new SystemLog(logTitle,logType,logUrl,logMethod,logParams,logUserName,logIp,logIpAddress,logStartTime,logElapsedTime);
-                ThreadPool.getPool().execute(new SaveSystemLogThread(systemLog,systemLogService));
+                SystemLog systemLog = new SystemLog(logTitle,logType,logUrl,logMethod,logUserName,logIp,logStartTime,logElapsedTime);
+                systemLog.setMapToParams(logParams);
+                ThreadPool.getPool().execute(new SaveSystemLogThread(systemLog,systemLogService,logIp));
 
 
             }
@@ -176,11 +170,10 @@ public class SystemLogAspect {
     public void doAfterThrowing(JoinPoint joinPoint, Throwable e) {
 
         try {
-            User user = currentUser.get();
-
+            HttpSession session = request.getSession();
+            //读取session中的用户
+            User user = (User) session.getAttribute(Constants.SESSION_KEY_LOGIN_NAME);
             if (null != user) {
-
-                Object[] args = joinPoint.getArgs();
 
                 //日志标题
                 String logTitle = getServiceMethodDescription(joinPoint);
@@ -191,16 +184,12 @@ public class SystemLogAspect {
                 //请求方式
                 String logMethod = request.getMethod();
                 //请求参数
-                String logParams = null;
-                if(args != null && args.length > 0){
-                    logParams = Json.toJson(args, JsonFormat.compact());
-                }
+                Map<String,String[]> logParams=request.getParameterMap();
+
                 //请求用户
                 String logUserName = user.getUserLoginName();
                 //请求IP
                 String logIp = ClientIpUtil.getIpAddr(request);
-                //请求ip所在地
-                String logIpAddress = ClientIpUtil.getIpAddrSource(logIp);
                 //请求开始时间
                 Date logStartTime = beginTimeThreadLocal.get();
 
@@ -211,8 +200,9 @@ public class SystemLogAspect {
                 //异常描述
                 String LogException = e.toString();
 
-                SystemLog systemLog = new SystemLog(logTitle,logType,logUrl,logMethod,logParams,LogException,logUserName,logIp,logIpAddress,logStartTime,logElapsedTime);
-                ThreadPool.getPool().execute(new SaveSystemLogThread(systemLog,systemLogService));
+                SystemLog systemLog = new SystemLog(logTitle,logType,logUrl,logMethod,LogException,logUserName,logIp,logStartTime,logElapsedTime);
+                systemLog.setMapToParams(logParams);
+                ThreadPool.getPool().execute(new SaveSystemLogThread(systemLog,systemLogService,logIp));
 
 
             }
@@ -230,14 +220,18 @@ public class SystemLogAspect {
     private static class SaveSystemLogThread implements Runnable {
         private SystemLog systemLog;
         private SystemLogService systemLogService;
+        private String logIp;
 
-        public SaveSystemLogThread(SystemLog systemLog, SystemLogService systemLogService) {
+        public SaveSystemLogThread(SystemLog systemLog, SystemLogService systemLogService,String logIp) {
             this.systemLog = systemLog;
             this.systemLogService = systemLogService;
+            this.logIp = logIp;
         }
 
         @Override
         public void run() {
+            String logIpAddress = ClientIpUtil.getIpAddrSource(logIp);
+            systemLog.setLogIpAddress(logIpAddress);
             systemLogService.insertSelective(systemLog);
         }
     }

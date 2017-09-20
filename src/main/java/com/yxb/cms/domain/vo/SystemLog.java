@@ -34,9 +34,14 @@ package com.yxb.cms.domain.vo;
 
 import com.yxb.cms.architect.utils.DateUtil;
 import com.yxb.cms.domain.dto.PageDto;
+import org.apache.commons.lang3.StringUtils;
+import org.nutz.json.Json;
+import org.nutz.json.JsonFormat;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * 系统日志vo
@@ -151,35 +156,31 @@ public class SystemLog extends PageDto implements Serializable {
      * 查询内容
      */
     private String searchContent;
-
+    private String beginTime;
 
 
 
     public SystemLog() {}
 
-    public SystemLog(String logTitle, String logType, String logUrl, String logMethod, String logParams, String logUserName, String logIp, String logIpAddress, Date logStartTime, Long logElapsedTime) {
+    public SystemLog(String logTitle, String logType, String logUrl, String logMethod, String logUserName, String logIp, Date logStartTime, Long logElapsedTime) {
         this.logTitle = logTitle;
         this.logType = logType;
         this.logUrl = logUrl;
         this.logMethod = logMethod;
-        this.logParams = logParams;
         this.logUserName = logUserName;
         this.logIp = logIp;
-        this.logIpAddress = logIpAddress;
         this.logStartTime = logStartTime;
         this.logElapsedTime = logElapsedTime;
     }
 
-    public SystemLog(String logTitle, String logType, String logUrl, String logMethod, String logParams, String logException, String logUserName, String logIp, String logIpAddress, Date logStartTime, Long logElapsedTime) {
+    public SystemLog(String logTitle, String logType, String logUrl, String logMethod, String logException, String logUserName, String logIp, Date logStartTime, Long logElapsedTime) {
         this.logTitle = logTitle;
         this.logType = logType;
         this.logUrl = logUrl;
         this.logMethod = logMethod;
-        this.logParams = logParams;
         this.logException = logException;
         this.logUserName = logUserName;
         this.logIp = logIp;
-        this.logIpAddress = logIpAddress;
         this.logStartTime = logStartTime;
         this.logElapsedTime = logElapsedTime;
     }
@@ -471,6 +472,34 @@ public class SystemLog extends PageDto implements Serializable {
 
     public void setSearchContent(String searchContent) {
         this.searchContent = searchContent;
+    }
+
+
+    public String getBeginTime() {
+        return beginTime;
+    }
+
+    public void setBeginTime(String beginTime) {
+        this.beginTime = beginTime;
+    }
+
+    /**
+     * 设置请求参数
+     * @param paramMap
+     */
+    public void setMapToParams(Map<String, String[]> paramMap) {
+        if (paramMap == null) {
+            return;
+        }
+        Map<String, Object> params = new HashMap<>();
+        for (Map.Entry<String, String[]> param : paramMap.entrySet()) {
+
+            String key = param.getKey();
+            String paramValue = (param.getValue() != null && param.getValue().length > 0 ? param.getValue()[0] : "");
+            String obj = StringUtils.endsWithIgnoreCase(param.getKey(), "password") ? "" : paramValue;
+            params.put(key,obj);
+        }
+        this.logParams = Json.toJson(params, JsonFormat.compact());
     }
 
     /**

@@ -148,7 +148,7 @@
                 FROM cc_data_cleaning c
                 WHERE c.data_type = 1
                 ORDER BY c.data_time DESC
-                LIMIT 7
+                LIMIT 10
             ) tt
         ORDER BY tt.dataTime
     </select>

@@ -32,7 +32,6 @@
  */
 package com.yxb.cms.architect.task;
 
-import com.yxb.cms.architect.utils.ThreadPool;
 import com.yxb.cms.service.DataCleaningService;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -61,19 +60,10 @@ public class SystemScheduledTask {
     @Scheduled(cron = "0 0 3 * * ?")   //  每天3点执行
     public void executeDataCleanScheduler() {
         log.info(">>>>>>>>>>>>> 定时执行用户访问量数据清洗... ... ");
-        ThreadPool.getPool().execute(new InsertDataClean());
-    }
-
-
-
-    private class InsertDataClean implements Runnable {
-        @Override
-        public void run() {
-            try {
-                dataCleaningService.insertDataCleanBatchByLogin();
-            } catch (Exception e) {
-                log.error("用户访问量数据清洗异常", e);
-            }
+        try {
+            dataCleaningService.insertDataCleanBatchByLogin();
+        } catch (Exception e) {
+            log.error("用户访问量数据清洗异常", e);
         }
     }
 }
