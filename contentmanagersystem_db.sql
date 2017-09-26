@@ -154,6 +154,8 @@ CREATE TABLE `cc_user` (
 -- ----------------------------
 INSERT INTO `cc_user` VALUES ('142', 'user_readonly', '只读用户', '123456', '0', 'admin', '2017-08-16 16:04:08', 'user_readonly', '2017-08-22 14:26:57');
 INSERT INTO `cc_user` VALUES ('155', 'user_system', '系统管理员', '123456', '0', 'admin', '2017-08-22 14:30:53', 'user_system', '2017-08-22 16:12:36');
+INSERT INTO `cc_user` VALUES ('8', 'admin', '超级管理员', '123456', '0', 'admin', '2017-08-22 14:30:53', 'admin', '2017-08-22 16:12:36');
+
 
 -- ----------------------------
 -- Table structure for cc_user_role
