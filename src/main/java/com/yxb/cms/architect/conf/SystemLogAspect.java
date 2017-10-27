@@ -40,17 +40,13 @@ import com.yxb.cms.architect.utils.ThreadPool;
 import com.yxb.cms.domain.vo.SystemLog;
 import com.yxb.cms.domain.vo.User;
 import com.yxb.cms.service.SystemLogService;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.*;
-import org.nutz.json.Json;
-import org.nutz.json.JsonFormat;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.NamedThreadLocal;
 import org.springframework.stereotype.Component;
-import org.springframework.web.context.request.RequestContextHolder;
-import org.springframework.web.context.request.ServletRequestAttributes;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -69,7 +65,7 @@ import java.util.Map;
 @Component
 public class SystemLogAspect {
 
-    private Log log = LogFactory.getLog(SystemLogAspect.class);
+    private Logger log = LogManager.getLogger(SystemLogAspect.class);
 
     private static final ThreadLocal<Date> beginTimeThreadLocal = new NamedThreadLocal<Date>("ThreadLocal beginTime");
 

@@ -43,8 +43,8 @@ import com.yxb.cms.domain.bo.Tree;
 import com.yxb.cms.domain.dto.ResourceChildrenMenuDto;
 import com.yxb.cms.domain.dto.ResourceMenuDto;
 import com.yxb.cms.domain.vo.Resource;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.nutz.json.Json;
 import org.nutz.json.JsonFormat;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -62,7 +62,7 @@ import java.util.*;
 @Service
 public class ResourceService {
 	
-	private  Log log = LogFactory.getLog(ResourceService.class);
+	private Logger log = LogManager.getLogger(ResourceService.class);
 	@Autowired
 	private ResourceMapper resourceMapper;
 

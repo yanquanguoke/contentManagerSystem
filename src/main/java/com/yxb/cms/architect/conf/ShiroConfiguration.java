@@ -35,8 +35,8 @@ package com.yxb.cms.architect.conf;
 import com.yxb.cms.architect.realm.ShiroDbRealm;
 import com.yxb.cms.dao.ResourceMapper;
 import com.yxb.cms.domain.vo.Resource;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.apache.shiro.cache.ehcache.EhCacheManager;
 import org.apache.shiro.mgt.SecurityManager;
 import org.apache.shiro.spring.LifecycleBeanPostProcessor;
@@ -61,7 +61,7 @@ import java.util.Map;
 @Configuration
 public class ShiroConfiguration {
 
-    private Log log = LogFactory.getLog(ShiroConfiguration.class);
+    private Logger log = LogManager.getLogger(ShiroConfiguration.class);
 
     /**
      * Shiro Web过滤器Factory

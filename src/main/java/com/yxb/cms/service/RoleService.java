@@ -34,7 +34,6 @@ package com.yxb.cms.service;
 
 import com.yxb.cms.architect.constant.BusinessConstants;
 import com.yxb.cms.architect.constant.BussinessCode;
-import com.yxb.cms.architect.realm.ShiroDbRealm;
 import com.yxb.cms.architect.utils.BussinessMsgUtil;
 import com.yxb.cms.architect.utils.ParseObjectUtils;
 import com.yxb.cms.dao.ResourceMapper;
@@ -47,10 +46,8 @@ import com.yxb.cms.domain.vo.Resource;
 import com.yxb.cms.domain.vo.Role;
 import com.yxb.cms.domain.vo.RoleResource;
 import org.apache.commons.lang3.StringUtils;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-import org.apache.shiro.SecurityUtils;
-import org.apache.shiro.mgt.RealmSecurityManager;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.nutz.json.Json;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -68,7 +65,7 @@ import java.util.*;
 @Service
 public class RoleService {
 
-    private Log log = LogFactory.getLog(RoleService.class);
+    private Logger log = LogManager.getLogger(RoleService.class);
 
 
     @Autowired

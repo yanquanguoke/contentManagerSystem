@@ -34,8 +34,8 @@ package com.yxb.cms.architect.conf;
 
 import com.yxb.cms.architect.interceptor.CommonInterceptor;
 import com.yxb.cms.architect.interceptor.ErrorInterceptor;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.boot.web.support.ErrorPageFilter;
 import org.springframework.context.annotation.Bean;
@@ -51,7 +51,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
  */
 @Configuration
 public class MyWebAppConfigurer extends WebMvcConfigurerAdapter {
-    private Log log = LogFactory.getLog(MyWebAppConfigurer.class);
+    private Logger log = LogManager.getLogger(MyWebAppConfigurer.class);
 
     @Bean
     public ErrorPageFilter errorPageFilter() {

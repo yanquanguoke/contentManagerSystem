@@ -39,8 +39,8 @@ import com.yxb.cms.dao.AnnouncementInfoUserMapper;
 import com.yxb.cms.domain.bo.BussinessMsg;
 import com.yxb.cms.domain.vo.AnnouncementInfo;
 import com.yxb.cms.domain.vo.AnnouncementInfoUser;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.nutz.json.Json;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -59,7 +59,7 @@ import java.util.*;
 @Service
 public class AnnouncementInfoService {
 
-    private Log log = LogFactory.getLog(AnnouncementInfoService.class);
+    private Logger log = LogManager.getLogger(AnnouncementInfoService.class);
 
 
     @Autowired

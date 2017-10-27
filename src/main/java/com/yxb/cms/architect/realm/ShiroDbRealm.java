@@ -37,8 +37,8 @@ import com.yxb.cms.domain.vo.User;
 import com.yxb.cms.service.ResourceService;
 import com.yxb.cms.service.UserService;
 import org.apache.commons.lang3.StringUtils;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.apache.shiro.authc.*;
 import org.apache.shiro.authz.AuthorizationException;
 import org.apache.shiro.authz.AuthorizationInfo;
@@ -62,7 +62,7 @@ import java.util.List;
 @Component
 public class ShiroDbRealm extends AuthorizingRealm {
 
-    private Log log = LogFactory.getLog(ShiroDbRealm.class);
+    private Logger log = LogManager.getLogger(ShiroDbRealm.class);
 
     @Autowired
     @Lazy

@@ -33,8 +33,8 @@
 package com.yxb.cms.architect.task;
 
 import com.yxb.cms.service.DataCleaningService;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
@@ -47,7 +47,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class SystemScheduledTask {
 
-    private Log log = LogFactory.getLog(SystemScheduledTask.class);
+    private Logger log = LogManager.getLogger(SystemScheduledTask.class);
 
     @Autowired
     private DataCleaningService dataCleaningService;

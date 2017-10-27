@@ -32,9 +32,8 @@
  */
 package com.yxb.cms.architect.filter;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-import org.springframework.stereotype.Component;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;
@@ -48,7 +47,7 @@ import java.io.IOException;
  */
 //@Component
 public class MyWebFilter implements Filter {
-    private Log log = LogFactory.getLog(MyWebFilter.class);
+    private Logger log = LogManager.getLogger(MyWebFilter.class);
 
 
     @Override

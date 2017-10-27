@@ -35,9 +35,9 @@ package com.yxb.cms.architect.conf;
 import com.alibaba.druid.pool.DruidDataSource;
 import com.yxb.cms.architect.properties.AppCommonMyBatisProperties;
 import com.yxb.cms.architect.properties.JdbcProperties;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.apache.ibatis.session.SqlSessionFactory;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.mybatis.spring.SqlSessionFactoryBean;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.aop.framework.autoproxy.BeanNameAutoProxyCreator;
@@ -72,7 +72,9 @@ import java.util.Properties;
 @MapperScan(basePackages = "com.yxb.cms.dao")
 public class MyBatisDataSourceConfig {
 
-    private Log log = LogFactory.getLog(MyBatisDataSourceConfig.class);
+
+    private static Logger log  = LogManager.getLogger(MyBatisDataSourceConfig.class);
+
 
     /**
      * 注册DataSource

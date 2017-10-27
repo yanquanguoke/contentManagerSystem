@@ -50,6 +50,8 @@ import org.apache.commons.httpclient.protocol.Protocol;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 
 /**
@@ -62,7 +64,7 @@ public class HttpUtil {
 
 
 
-	private static Log logger = LogFactory.getLog(HttpUtil.class);
+	private static Logger logger = LogManager.getLogger(HttpUtil.class);
 	private static final int HTTP_DEFAULT_TIMEOUT  = 15000;               //超时时间默认为15秒  
 	private static final int HTTP_SOCKET_TIMEOUT  =  30000;               //连接状态下没有收到数据的话强制断时间为30秒  
 	private static final int MAX_TOTAL_CONNECTIONS = 500;                 //最大连接数

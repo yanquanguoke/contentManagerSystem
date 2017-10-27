@@ -25,7 +25,7 @@
                 <!-- 数据库超过25000秒仍未响应则超时 -->  
         <setting name="defaultStatementTimeout" value="25000" /> 
         <setting name="callSettersOnNulls" value="true" /> 
-        <setting name="logImpl" value="LOG4J"/>
+        <setting name="logImpl" value="LOG4J2"/>
     </settings>  
         <!-- 全局别名设置，在映射文件中只需写别名，而不必写出整个类路径  -->  
 

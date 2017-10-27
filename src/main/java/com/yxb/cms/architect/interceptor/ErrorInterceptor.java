@@ -32,8 +32,8 @@
  */
 package com.yxb.cms.architect.interceptor;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
@@ -48,7 +48,7 @@ import javax.servlet.http.HttpServletResponse;
  */
 @Controller
 public class ErrorInterceptor implements HandlerInterceptor {
-    private Log log = LogFactory.getLog(ErrorInterceptor.class);
+    private Logger log = LogManager.getLogger(ErrorInterceptor.class);
 
 
     /**

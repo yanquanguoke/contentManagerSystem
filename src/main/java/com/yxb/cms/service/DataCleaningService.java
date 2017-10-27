@@ -35,14 +35,10 @@ package com.yxb.cms.service;
 import com.yxb.cms.architect.constant.BusinessConstants;
 import com.yxb.cms.dao.DataCleaningMapper;
 import com.yxb.cms.dao.SystemLogMapper;
-import com.yxb.cms.domain.bo.ExcelExport;
 import com.yxb.cms.domain.dto.DataCollectDto;
 import com.yxb.cms.domain.vo.DataCleaning;
-import com.yxb.cms.domain.vo.SystemLog;
-import org.apache.commons.collections.IterableMap;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-import org.nutz.json.Json;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -62,7 +58,7 @@ import java.util.Map;
 @Service
 public class DataCleaningService {
 
-    private Log log = LogFactory.getLog(DataCleaningService.class);
+    private Logger log = LogManager.getLogger(DataCleaningService.class);
 
     @Autowired
     private DataCleaningMapper dataCleaningMapper;

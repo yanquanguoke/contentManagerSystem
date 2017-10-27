@@ -45,8 +45,8 @@ import com.yxb.cms.domain.vo.Role;
 import com.yxb.cms.domain.vo.User;
 import com.yxb.cms.domain.vo.UserRole;
 import org.apache.commons.lang3.StringUtils;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.nutz.json.Json;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -64,7 +64,7 @@ import java.util.*;
 @Service
 public class UserService {
 
-    private Log log = LogFactory.getLog(UserService.class);
+    private Logger log = LogManager.getLogger(UserService.class);
 
     @Autowired
     private UserMapper userMapper;
