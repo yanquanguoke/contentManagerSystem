@@ -197,6 +197,7 @@
             psLineChar.resize();
 
         };
+        top.layer.closeAll();
 
 
     });

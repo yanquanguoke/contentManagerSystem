@@ -64,14 +64,17 @@
 </div>
 
 <script type="text/javascript">
+    var $;
     layui.config({
         base : "${ctx}/static/js/"
     }).use(['form', 'table', 'layer','common'], function () {
-        var $ =  layui.$,
-                form = layui.form,
+         $ =  layui.$;
+                var form = layui.form,
                 table = layui.table,
                 layer = layui.layer,
                 common = layui.common;
+
+        var loading = layer.load(0,{ shade: [0.3,'#000']});
         /**用户表格加载*/
         table.render({
             elem: '#userTableList',
@@ -83,24 +86,30 @@
             even:'true',
             size: 'sm',
             cols: [[
-                {checkbox: true,fixed:'left',},
+                {type:"numbers",width: 30},
+                {type:"checkbox",width: 30},
                 {field:'userLoginName', title: '登陆账号',width: 120 },
                 {field:'userName', title: '用户姓名',width: 100},
-                {field:'userStatus', title: '用户状态',width: 90,templet: '#userStatusTpl'},
-                {field:'roleNames', title: '拥有角色',width: 150},
-                {field:'creator', title: '创建人',width: 120},
+                {field:'userStatus', title: '用户状态',width: 85,templet: '#userStatusTpl'},
+                {field:'roleNames', title: '拥有角色',width: 100},
+                {field:'creator', title: '创建人',width: 110},
                 {field:'createTime', title: '创建时间',width: 150},
-                {field:'modifier', title: '修改人',width: 120},
+                {field:'modifier', title: '修改人',width: 110},
                 {field:'updateTime', title: '修改时间',width: 150},
-                {fixed:'right', title: '操作', align:'center',width: 195, toolbar: '#userBar'}
-
+                {title: '操作', align:'center',width: 195, toolbar: '#userBar'}
             ]],
             page: true,
-            limit: 10//默认显示10条
+            limit: 10,
+            done: function (res, curr, count) {
+                common.resizeGrid();
+                layer.close(loading);
+
+            }
         });
 
         /**查询*/
         $(".userSearchList_btn").click(function(){
+            var loading = layer.load(0,{ shade: [0.3,'#000']});
             //监听提交
             form.on('submit(userSearchFilter)', function (data) {
                 table.reload('userTableId',{
@@ -108,7 +117,12 @@
                             searchTerm:data.field.searchTerm,
                             searchContent:data.field.searchContent
                     },
-                    height: 'full-140'
+                    height: 'full-140',
+                    done: function (res, curr, count) {
+                        common.resizeGrid();
+                        layer.close(loading);
+
+                    }
                 });
 
             });
@@ -240,13 +254,13 @@
 <script type="text/html" id="userBar">
     <div class="layui-btn-group">
         <shiro:hasPermission name="fSv1B2kZ">
-            <a class="layui-btn layui-btn-mini user_edit" lay-event="user_edit"><i class="layui-icon larry-icon larry-bianji2"></i> 编辑</a>
+            <a class="layui-btn layui-btn-xs user_edit" lay-event="user_edit"><i class="layui-icon larry-icon larry-bianji2"></i> 编辑</a>
         </shiro:hasPermission>
         <shiro:hasPermission name="mScICO9G">
-            <a class="layui-btn layui-btn-mini layui-btn-warm  user_grant" lay-event="user_grant"><i class="layui-icon larry-icon larry-jiaoseguanli3"></i>角色</a>
+            <a class="layui-btn layui-btn-xs layui-btn-warm  user_grant" lay-event="user_grant"><i class="layui-icon larry-icon larry-jiaoseguanli3"></i>角色</a>
         </shiro:hasPermission>
         <shiro:hasPermission name="uBg9TdEr">
-            <a class="layui-btn layui-btn-mini layui-btn-danger user_fail" lay-event="user_fail"><i class="layui-icon larry-icon larry-ttpodicon"></i>失效</a>
+            <a class="layui-btn layui-btn-xs layui-btn-danger user_fail" lay-event="user_fail"><i class="layui-icon larry-icon larry-ttpodicon"></i>失效</a>
         </shiro:hasPermission>
     </div>
 </script>

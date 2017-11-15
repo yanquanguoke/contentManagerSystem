@@ -11,8 +11,7 @@ layui.define(["element","jquery"],function(exports){
 			}
 		};
 //弹出loading
-    var loginLoading = top.layer.msg('加载中，请稍候',{icon: 16,time:false,shade:0.8});
-
+    var loading = top.layer.load(0,{ shade: [0.3,'#000']});
     $.ajax({
         url : '/res/ajax_res_menu_top.do',
         type : 'post',
@@ -101,7 +100,7 @@ layui.define(["element","jquery"],function(exports){
                     $("#navBarId").empty();
                 }
 
-                top.layer.close(loginLoading);
+              
 
             }
         });

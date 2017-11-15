@@ -258,15 +258,15 @@
 <!--未读Table工具条 -->
 <script type="text/html" id="unReadannouncementBar">
     <div class="layui-btn-group">
-            <a class="layui-btn layui-btn-mini layui-btn-normal  announcement_detail" lay-event="announcement_detail"><i class="layui-icon larry-icon larry-chaxun2"></i>详情</a>
-            <a class="layui-btn layui-btn-mini announcement_read" lay-event="announcement_read"><i class="layui-icon larry-icon larry-fabu"></i>已读</a>
+            <a class="layui-btn layui-btn-xs layui-btn-normal  announcement_detail" lay-event="announcement_detail"><i class="layui-icon larry-icon larry-chaxun2"></i>详情</a>
+            <a class="layui-btn layui-btn-xs announcement_read" lay-event="announcement_read"><i class="layui-icon larry-icon larry-fabu"></i>已读</a>
     </div>
 </script>
 
 <!--工具条 -->
 <script type="text/html" id="announcementBar">
     <div class="layui-btn-group">
-        <a class="layui-btn layui-btn-mini layui-btn-normal  announcement_detail" lay-event="announcement_detail"><i class="layui-icon larry-icon larry-chaxun2"></i>详情</a>
+        <a class="layui-btn layui-btn-xs layui-btn-normal  announcement_detail" lay-event="announcement_detail"><i class="layui-icon larry-icon larry-chaxun2"></i>详情</a>
     </div>
 </script>
 

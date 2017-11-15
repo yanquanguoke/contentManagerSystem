@@ -94,6 +94,10 @@ layui.define(['layer'], function (exports) {
             }, function () {
                
             })
+        },
+        /**重置表格宽度*/
+        resizeGrid:function (){
+            $(".layui-table-view .layui-table").css("width", "100%");
         }
     };
     exports('common', CmsCommon)

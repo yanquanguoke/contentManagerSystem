@@ -189,10 +189,10 @@
 <script type="text/html" id="resBar">
     <div class="layui-btn-group">
         <shiro:hasPermission name="KxCQVzRq">
-            <a class="layui-btn layui-btn-mini res_edit" lay-event="res_edit"><i class="layui-icon larry-icon larry-bianji2"></i> 编辑</a>
+            <a class="layui-btn layui-btn-xs res_edit" lay-event="res_edit"><i class="layui-icon larry-icon larry-bianji2"></i> 编辑</a>
         </shiro:hasPermission>
         <shiro:hasPermission name="DK3uPfe7">
-            <a class="layui-btn layui-btn-mini layui-btn-danger res_fail" lay-event="res_fail"><i class="layui-icon larry-icon larry-ttpodicon"></i>失效</a>
+            <a class="layui-btn layui-btn-xs layui-btn-danger res_fail" lay-event="res_fail"><i class="layui-icon larry-icon larry-ttpodicon"></i>失效</a>
         </shiro:hasPermission>
     </div>
 </script>

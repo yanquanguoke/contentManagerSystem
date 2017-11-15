@@ -223,13 +223,13 @@
 <script type="text/html" id="roleBar">
     <div class="layui-btn-group">
         <shiro:hasPermission name="moHbdnjz">
-            <a class="layui-btn layui-btn-mini role_edit" lay-event="role_edit"><i class="layui-icon larry-icon larry-bianji2"></i> 编辑</a>
+            <a class="layui-btn layui-btn-xs role_edit" lay-event="role_edit"><i class="layui-icon larry-icon larry-bianji2"></i> 编辑</a>
         </shiro:hasPermission>
         <shiro:hasPermission name="bSG7LAmU">
-            <a class="layui-btn layui-btn-mini layui-btn-warm  role_grant" lay-event="role_grant"><i class="layui-icon larry-icon larry-jiaoseguanli3"></i>权限</a>
+            <a class="layui-btn layui-btn-xs layui-btn-warm  role_grant" lay-event="role_grant"><i class="layui-icon larry-icon larry-jiaoseguanli3"></i>权限</a>
         </shiro:hasPermission>
         <shiro:hasPermission name="tkwJk34z">
-            <a class="layui-btn layui-btn-mini layui-btn-danger role_fail" lay-event="role_fail"><i class="layui-icon larry-icon larry-ttpodicon"></i>失效</a>
+            <a class="layui-btn layui-btn-xs layui-btn-danger role_fail" lay-event="role_fail"><i class="layui-icon larry-icon larry-ttpodicon"></i>失效</a>
         </shiro:hasPermission>
     </div>
 </script>

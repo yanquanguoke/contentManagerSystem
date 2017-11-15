@@ -167,9 +167,9 @@
 <!--工具条 -->
 <script type="text/html" id="announcementBar">
     <div class="layui-btn-group">
-        <a class="layui-btn layui-btn-mini layui-btn-normal  announcement_detail" lay-event="announcement_detail"><i class="layui-icon larry-icon larry-chaxun2"></i>详情</a>
+        <a class="layui-btn layui-btn-xs layui-btn-normal  announcement_detail" lay-event="announcement_detail"><i class="layui-icon larry-icon larry-chaxun2"></i>详情</a>
         <shiro:hasPermission name="eTDnjGAM">
-            <a class="layui-btn layui-btn-mini layui-btn-danger announcement_delete" lay-event="announcement_delete"><i class="layui-icon larry-icon larry-ttpodicon"></i>删除</a>
+            <a class="layui-btn layui-btn-xs layui-btn-danger announcement_delete" lay-event="announcement_delete"><i class="layui-icon larry-icon larry-ttpodicon"></i>删除</a>
         </shiro:hasPermission>
     </div>
 </script>
