@@ -98,6 +98,10 @@ layui.define(['layer'], function (exports) {
         /**重置表格宽度*/
         resizeGrid:function (){
             $(".layui-table-view .layui-table").css("width", "100%");
+            $(window).resize(function(){
+                $(".layui-table-view .layui-table").css("width", "100%");
+
+            });
         }
     };
     exports('common', CmsCommon)
