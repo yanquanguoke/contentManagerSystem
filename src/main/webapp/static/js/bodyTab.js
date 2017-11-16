@@ -100,7 +100,7 @@ layui.define(["element","jquery"],function(exports){
                     $("#navBarId").empty();
                 }
 
-              
+                top.layer.closeAll();
 
             }
         });
