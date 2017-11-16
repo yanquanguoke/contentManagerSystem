@@ -128,7 +128,7 @@
                 element = layui.element,
                 common = layui.common;
 
-        var loading = top.layer.load(0,{ shade: [0.3,'#000']});
+        var loading = layer.load(0,{ shade: [0.3,'#000']});
 
         //天气插件
         $('#weather').leoweather({format:'，{时段}好！，<span id="colock">现在时间是：<strong>{年}年{月}月{日}日 星期{周} {时}:{分}:{秒}</strong>，</span> <b>{城市}天气</b> {天气} {夜间气温}℃ ~ {白天气温}℃ '});
@@ -200,7 +200,7 @@
             psLineChar.resize();
 
         };
-        top.layer.closeAll();
+        layer.close(loading);
 
 
     });
