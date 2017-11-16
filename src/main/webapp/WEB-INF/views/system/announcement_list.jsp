@@ -69,6 +69,8 @@
                 layer = layui.layer,
                 laydate = layui.laydate,
                 common = layui.common;
+        var loading = layer.load(0,{ shade: [0.3,'#000']});
+
         /**公告表格加载*/
         table.render({
             elem: '#announcementTableList',
@@ -80,19 +82,25 @@
             even:'true',
             size: 'sm',
             cols: [[
-                {field:'announcementTitle', title: '公告标题',width: 400 },
-                {field:'announcementType', title: '公告类型',align:'center',width: 200,templet: '#announcementTypeTpl'},
-                {field:'announcementAuthor', title: '发布人',align:'center',width: 220},
-                {field:'announcementTime', title: '发布时间',align:'center',width: 220},
-                {fixed:'right', title: '操作', align:'center',width: 200, toolbar: '#announcementBar'}
+                {type:"numbers"},
+                {field:'announcementTitle', title: '公告标题',align:'center' },
+                {field:'announcementType', title: '公告类型',align:'center',templet: '#announcementTypeTpl'},
+                {field:'announcementAuthor', title: '发布人',align:'center'},
+                {field:'announcementTime', title: '发布时间',align:'center'},
+                {title: '操作', align:'center',width: '17%', toolbar: '#announcementBar'}
 
             ]],
             page: true,
-            limit: 10//默认显示10条
+            done: function (res, curr, count) {
+                common.resizeGrid();
+                layer.close(loading);
+
+            }
         });
 
         /**查询*/
         $(".announcementSearchList_btn").click(function(){
+            var loading = layer.load(0,{ shade: [0.3,'#000']});
             //监听提交
             form.on('submit(announcementSearchFilter)', function (data) {
                 table.reload('announcementTableId',{
@@ -100,7 +108,13 @@
                         beginTime:data.field.beginTime,
                         endTime:data.field.endTime
                     },
-                    height: 'full-140'
+                    height: 'full-140',
+                    page: true,
+                    done: function (res, curr, count) {
+                        common.resizeGrid();
+                        layer.close(loading);
+
+                    }
                 });
 
             });

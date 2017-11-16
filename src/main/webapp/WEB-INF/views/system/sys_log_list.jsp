@@ -111,16 +111,18 @@
 </div>
 
 <script type="text/javascript">
-    var $,table;
+    var $,table,common;
     layui.config({
         base : "${ctx}/static/js/"
     }).use(['form', 'table','common','element','laydate'], function () {
         $ =  layui.$;
         table = layui.table;
+        common = layui.common;
+
        var  form = layui.form,
         element = layui.element,
-        laydate = layui.laydate,
-        common = layui.common;
+        laydate = layui.laydate;
+
 
         /**请求时间*/
         laydate.render({
@@ -150,6 +152,8 @@
 
         /**业务日志查询*/
         $(".sysSearch_btn").click(function(){
+            var loading = layer.load(0,{ shade: [0.3,'#000']});
+
             //监听提交
             form.on('submit(sysSearchFilter)', function (data) {
                 table.reload('sysLogTableId',{
@@ -159,7 +163,13 @@
                         beginTime:data.field.beginTime,
                         logType:'info'
                     },
-                    height: 'full-183'
+                    height: 'full-183',
+                    page: true,
+                    done: function (res, curr, count) {
+                        common.resizeGrid();
+                        layer.close(loading);
+
+                    }
                 });
 
             });
@@ -167,6 +177,8 @@
         });
         /**异常日志查询*/
         $(".sysExceptionSearch_btn").click(function(){
+            var loading = layer.load(0,{ shade: [0.3,'#000']});
+
             //监听提交
             form.on('submit(sysExceptionSearchFilter)', function (data) {
                 table.reload('sysLogExceptionTableId',{
@@ -176,7 +188,13 @@
                         beginTime:data.field.beginTime2,
                         logType:'error'
                     },
-                    height: 'full-183'
+                    height: 'full-183',
+                    page: true,
+                    done: function (res, curr, count) {
+                        common.resizeGrid();
+                        layer.close(loading);
+
+                    }
                 });
 
             });
@@ -205,6 +223,8 @@
 
     /**业务日志table*/
     function sysLogTable() {
+        var loading = layer.load(0,{ shade: [0.3,'#000']});
+
         table.render({
             elem: '#sysLogTableList',
             url: '${ctx}/syslog/ajax_sys_log_list.do',
@@ -219,26 +239,34 @@
                 beginTime:$("#currentDate").val(),
             },
             cols: [[
-                {field:'logTitle', title: '日志标题',width: 145 },
-                {field:'logType', title: '日志类型',align:'center',width: 100,templet: '#logTypeTpl'},
-                {field:'logUrl', title: '日志请求URL',width: 145},
-                {field:'logMethod', title: '请求方式',align:'center',width: 80},
-                {field:'logParams', title: '请求参数',width: 140},
-                {field:'logUserName', title: '请求用户',width: 130},
-                {field:'logIp', title: '请求IP',width: 130},
-                {field:'logIpAddress', title: 'IP归属',width: 120},
-                {field:'logStartTime', title: '请求时间',align:'center',width: 150},
-                {field:'logElapsedTime', title: '耗时(毫秒)',align:'center',width: 100}
+                {type:"numbers"},
+                {field:'logTitle', title: '日志标题',align:'center' },
+                {field:'logType', title: '日志类型',align:'center',templet: '#logTypeTpl'},
+                {field:'logUrl', title: '日志请求URL',align:'center'},
+                {field:'logMethod', title: '请求方式',align:'center'},
+                {field:'logParams', title: '请求参数',align:'center'},
+                {field:'logUserName', title: '请求用户',align:'center'},
+                {field:'logIp', title: '请求IP',align:'center',width: '10%'},
+                {field:'logIpAddress', title: 'IP归属',align:'center'},
+                {field:'logStartTime', title: '请求时间',align:'center',width: '12%'},
+                {field:'logElapsedTime', title: '耗时(毫秒)',align:'center'}
 
 
             ]],
             page: true,
-            limit: 10//默认显示10条
+            limit: 10,//默认显示10条
+            done: function (res, curr, count) {
+                common.resizeGrid();
+                layer.close(loading);
+
+            }
         });
 
     }
     /**异常日志table*/
     function sysLogExceptionTable() {
+        var loading = layer.load(0,{ shade: [0.3,'#000']});
+
         table.render({
             elem: '#sysLogExceptionTableList',
             url: '${ctx}/syslog/ajax_sys_log_list.do',
@@ -253,21 +281,26 @@
                 beginTime:$("#currentDate2").val(),
             },
             cols: [[
-                {field:'logTitle', title: '日志标题',width: 145 },
-                {field:'logType', title: '日志类型',align:'center',width: 100,templet: '#logTypeTpl'},
-                {field:'logUrl', title: '异常方法',align:'center',width: 145},
-                {field:'logParams', title: '请求参数',align:'center',width: 140},
-                {field:'logException', title: '异常信息',align:'center',width: 145},
-                {field:'logUserName', title: '请求用户',align:'center',width: 85},
-                {field:'logIp', title: '请求IP',align:'center',width: 120},
-                {field:'logIpAddress', title: 'IP归属',align:'center',width: 120},
-                {field:'logStartTime', title: '请求时间',align:'center',width: 150},
-                {field:'logElapsedTime', title: '耗时(毫秒)',align:'center',width: 100}
+                {field:'logTitle', title: '日志标题',align:'center' },
+                {field:'logType', title: '日志类型',align:'center',templet: '#logTypeTpl'},
+                {field:'logUrl', title: '异常方法',align:'center'},
+                {field:'logParams', title: '请求参数',align:'center'},
+                {field:'logException', title: '异常信息',align:'center'},
+                {field:'logUserName', title: '请求用户',align:'center'},
+                {field:'logIp', title: '请求IP',align:'center'},
+                {field:'logIpAddress', title: 'IP归属',align:'center',width: '10%'},
+                {field:'logStartTime', title: '请求时间',align:'center',width: '12%'},
+                {field:'logElapsedTime', title: '耗时(毫秒)',align:'center'}
 
 
             ]],
             page: true,
-            limit: 10//默认显示10条
+            limit: 10,//默认显示10条
+            done: function (res, curr, count) {
+                common.resizeGrid();
+                layer.close(loading);
+
+            }
         });
 
     }

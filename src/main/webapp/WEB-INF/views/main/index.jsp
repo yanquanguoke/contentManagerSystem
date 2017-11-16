@@ -206,19 +206,19 @@
             }
         });
 
-        $('#lock').mouseover(function () {
-            layer.tips('请按Alt+L快速锁屏！', '#lock', {tips: [1, '#009688'], time: 2000})
-        });
-        $(document).keydown(function (e) {
-            if (e.altKey && e.which == 76) {
-                lockPage();
-            }
-        });
-        $(document).keyup(function(event){
-            if(event.keyCode ==13){
-                $("#unlock").click();
-            }
-        });
+//        $('#lock').mouseover(function () {
+//            layer.tips('请按Alt+L快速锁屏！', '#lock', {tips: [1, '#009688'], time: 2000})
+//        });
+//        $(top.window).keydown(function (e) {
+//            if (e.altKey && e.which == 76) {
+//                lockPage();
+//            }
+//        });
+//        $(top.window).keyup(function(event){
+//            if(event.keyCode ==13){
+//                $("#unlock").click();
+//            }
+//        });
 
     });
 

@@ -28,7 +28,7 @@
             </ul>
             <div class="layui-tab-content">
                 <div class="layui-tab-item layui-show">
-                    <button class="layui-btn  layui-btn-mini allreadUserInfoBtn"><i class="layui-icon larry-icon larry-fabu"></i>已读</button>
+                    <button class="layui-btn  layui-btn-xs allreadUserInfoBtn"><i class="layui-icon larry-icon larry-fabu"></i>已读</button>
                     <!-- 未读公告列表 -->
                     <table id="unReadAnnInfoTableList" lay-filter="unReadAnnInfoTableId"></table>
                 </div>
@@ -48,15 +48,16 @@
 </div>
 
 <script type="text/javascript">
-    var $,table;
+    var $,table,common;
     layui.config({
         base : "${ctx}/static/js/"
     }).use(['form', 'table','common','element'], function () {
         $ =  layui.$;
         table = layui.table;
-       var  form = layui.form,
-        element = layui.element,
         common = layui.common;
+       var  form = layui.form,
+        element = layui.element
+
 
         //未读公告
         unReadAnnInfo();
@@ -175,6 +176,8 @@
     }
     /**加载未读公告Table*/
     function unReadAnnInfoTable() {
+        var loading = layer.load(0,{ shade: [0.3,'#000']});
+
         table.render({
             elem: '#unReadAnnInfoTableList',
             url: '${ctx}/announcement/ajax_unread_anninfo_list.do',
@@ -185,19 +188,27 @@
             even:'true',
             size: 'sm',
             cols: [[
-                {checkbox: true,fixed:'left'},
-                {field:'announcementTitle', title: '公告标题',width: 350 },
-                {field:'announcementType', title: '公告类型',align:'center',width: 200,templet: '#announcementTypeTpl'},
-                {field:'announcementAuthor', title: '发布人',align:'center',width: 220},
-                {field:'announcementTime', title: '发布时间',align:'center',width: 210},
-                {fixed:'right', title: '操作', align:'center',width: 200, toolbar: '#unReadannouncementBar'}
+                {type:"numbers"},
+                {type:"checkbox"},
+                {field:'announcementTitle', title: '公告标题',align:'center'},
+                {field:'announcementType', title: '公告类型',align:'center',templet: '#announcementTypeTpl'},
+                {field:'announcementAuthor', title: '发布人',align:'center'},
+                {field:'announcementTime', title: '发布时间',align:'center',width: '12%'},
+                {fixed:'right', title: '操作', align:'center',width: '17%', toolbar: '#unReadannouncementBar'}
 
-            ]]
+            ]],
+            done: function (res, curr, count) {
+                common.resizeGrid();
+                layer.close(loading);
+
+            }
         });
 
     }
     /**加载已读公告Table*/
     function readAnnInfoTable() {
+        var loading = layer.load(0,{ shade: [0.3,'#000']});
+
         table.render({
             elem: '#readAnnInfoTableList',
             url: '${ctx}/announcement/ajax_read_anninfo_list.do',
@@ -208,19 +219,26 @@
             even:'true',
             size: 'sm',
             cols: [[
-                {field:'announcementTitle', title: '公告标题',width: 400 },
-                {field:'announcementType', title: '公告类型',align:'center',width: 200,templet: '#announcementTypeTpl'},
-                {field:'announcementAuthor', title: '发布人',align:'center',width: 220},
-                {field:'announcementTime', title: '发布时间',align:'center',width: 220},
-                {fixed:'right', title: '操作', align:'center',width: 200, toolbar: '#announcementBar'}
+                {type:"numbers"},
+                {field:'announcementTitle', title: '公告标题',align:'center'},
+                {field:'announcementType', title: '公告类型',align:'center',templet: '#announcementTypeTpl'},
+                {field:'announcementAuthor', title: '发布人',align:'center'},
+                {field:'announcementTime', title: '发布时间',align:'center',width: '12%'},
+                {fixed:'right', title: '操作', align:'center',width: '17%', toolbar: '#announcementBar'}
 
-            ]]
+            ]],
+            done: function (res, curr, count) {
+                common.resizeGrid();
+                layer.close(loading);
+
+            }
         });
 
     }
 
     /**加载全部公告Table*/
     function allReadAnnInfoTable() {
+        var loading = layer.load(0,{ shade: [0.3,'#000']});
         table.render({
             elem: '#allReadAnnInfoTableList',
             url: '${ctx}/announcement/ajax_allread_anninfo_list.do',
@@ -231,13 +249,19 @@
             even:'true',
             size: 'sm',
             cols: [[
-                {field:'announcementTitle', title: '公告标题',width: 400 },
-                {field:'announcementType', title: '公告类型',align:'center',width: 200,templet: '#announcementTypeTpl'},
-                {field:'announcementAuthor', title: '发布人',align:'center',width: 220},
-                {field:'announcementTime', title: '发布时间',align:'center',width: 220},
-                {fixed:'right', title: '操作', align:'center',width: 200, toolbar: '#announcementBar'}
+                {type:"numbers"},
+                {field:'announcementTitle', title: '公告标题',align:'center'},
+                {field:'announcementType', title: '公告类型',align:'center',templet: '#announcementTypeTpl'},
+                {field:'announcementAuthor', title: '发布人',align:'center'},
+                {field:'announcementTime', title: '发布时间',align:'center',width: '12%'},
+                {fixed:'right', title: '操作', align:'center',width: '17%', toolbar: '#announcementBar'}
 
-            ]]
+            ]],
+            done: function (res, curr, count) {
+                common.resizeGrid();
+                layer.close(loading);
+
+            }
         });
         
     }

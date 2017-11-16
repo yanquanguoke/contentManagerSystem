@@ -73,6 +73,8 @@
                 layer = layui.layer,
                 common = layui.common;
 
+        var loading = layer.load(0,{ shade: [0.3,'#000']});
+
         /**角色表格加载*/
         table.render({
             elem: '#roleTableList',
@@ -84,24 +86,30 @@
             even:'true',
             size: 'sm',
             cols: [[
-                {checkbox: true,fixed:'left'},
-                {field:'roleName', title: '角色名称',width: 120 },
-                {field:'roleStatus', title: '角色状态',width: 90,templet: '#roleStatusTpl'},
-                {field:'resourceNames', title: '菜单资源',width: 130},
-                {field:'roleRemark', title: '角色说明',width: 120},
-                {field:'creator', title: '创建人',width: 120},
-                {field:'createTime', title: '创建时间',width: 150},
-                {field:'modifier', title: '修改人',width: 120},
-                {field:'modifierTime', title: '修改时间',width: 150},
-                {fixed:'right', title: '操作', align:'center',width: 195, toolbar: '#roleBar'}
+                {type:"numbers"},
+                {type:"checkbox"},
+                {field:'roleName', title: '角色名称',align:'center' },
+                {field:'roleStatus', title: '角色状态',align:'center',width: '6%',templet: '#roleStatusTpl'},
+                {field:'resourceNames', title: '菜单资源',align:'center'},
+                {field:'roleRemark', title: '角色说明',align:'center'},
+                {field:'creator', title: '创建人',align:'center'},
+                {field:'createTime', title: '创建时间',align:'center',width: '12%'},
+                {field:'modifier', title: '修改人',align:'center'},
+                {field:'modifierTime', title: '修改时间',align:'center',width: '12%'},
+                {title: '操作', align:'center', width: '17%',toolbar: '#roleBar'}
 
             ]],
             page: true,
-            limit: 10//默认显示10条
+            done: function (res, curr, count) {
+                common.resizeGrid();
+                layer.close(loading);
+
+            }
         });
 
         /**查询*/
         $(".roleSearchList_btn").click(function(){
+            var loading = layer.load(0,{ shade: [0.3,'#000']});
             //监听提交
             form.on('submit(roleSearchFilter)', function (data) {
                 table.reload('roleTableId',{
@@ -109,7 +117,13 @@
                         searchTerm:data.field.searchTerm,
                         searchContent:data.field.searchContent
                     },
-                    height: 'full-140'
+                    height: 'full-140',
+                    page: true,
+                    done: function (res, curr, count) {
+                        common.resizeGrid();
+                        layer.close(loading);
+
+                    }
                 });
             });
 

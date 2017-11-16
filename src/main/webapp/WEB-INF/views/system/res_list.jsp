@@ -73,6 +73,7 @@
                 layer = layui.layer,
                 common = layui.common;
 
+        var loading = layer.load(0,{ shade: [0.3,'#000']});
 
         /**用户表格加载*/
          table.render({
@@ -85,25 +86,31 @@
             even:'true',
             size: 'sm',
             cols: [[
-                {checkbox: true,fixed:'left',},
-                {field:'resName', title: '菜单名称',width: 100 },
-                {field:'resModelCode', title: '菜单编码',width: 100},
-                {field:'resStatus', title: '菜单状态',width: 85,templet: '#resStatusTpl'},
-                {field:'resLinkAddress', title: '菜单路径',width: 200},
-                {field:'resType', title: '菜单类型',width: 85,templet: '#resTypeTpl'},
-                {field:'resLevel', title: '菜单级别',width: 85,templet: '#resLevelTpl'},
-                {field:'parentname', title: '上级菜单',width: 100 },
-                {field:'createTime', title: '创建时间',width: 150},
-                {field:'modifyTime', title: '修改时间',width: 150},
-                {fixed:'right', title: '操作', align:'center',width: 140, toolbar: '#resBar'}
+                {type:"numbers"},
+                {type:"checkbox"},
+                {field:'resName', title: '菜单名称',align:'center'},
+                {field:'resModelCode', title: '菜单编码',align:'center'},
+                {field:'resStatus', title: '菜单状态',align:'center',width: '6%',templet: '#resStatusTpl'},
+                {field:'resLinkAddress', title: '菜单路径',align:'center'},
+                {field:'resType', title: '菜单类型',align:'center',templet: '#resTypeTpl'},
+                {field:'resLevel', title: '菜单级别',align:'center',templet: '#resLevelTpl'},
+                {field:'parentname', title: '上级菜单',align:'center'},
+                {field:'createTime', title: '创建时间',align:'center',width: '10%'},
+                {field:'modifyTime', title: '修改时间',align:'center',width: '10%'},
+                {title: '操作', align:'center',width: '17%', toolbar: '#resBar'}
 
             ]],
             page: true,
-            limit: 10//默认显示10条
+             done: function (res, curr, count) {
+                 common.resizeGrid();
+                 layer.close(loading);
+
+             }
         });
 
         /**查询*/
         $(".resSearchList_btn").click(function(){
+            var loading = layer.load(0,{ shade: [0.3,'#000']});
             //监听提交
             form.on('submit(resSearchFilter)', function (data) {
                 table.reload('resTableId',{
@@ -111,7 +118,13 @@
                         searchTerm:data.field.searchTerm,
                         searchContent:data.field.searchContent
                     },
-                    height:'full-140'
+                    height:'full-140',
+                    page: true,
+                    done: function (res, curr, count) {
+                        common.resizeGrid();
+                        layer.close(loading);
+
+                    }
                 });
 
             });

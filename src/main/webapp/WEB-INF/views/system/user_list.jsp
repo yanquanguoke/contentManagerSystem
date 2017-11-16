@@ -86,8 +86,8 @@
             even:'true',
             size: 'sm',
             cols: [[
-                {type:"numbers",width: '3%'},
-                {type:"checkbox",width: '3%'},
+                {type:"numbers"},
+                {type:"checkbox"},
                 {field:'userLoginName', title: '登陆账号',align:'center' },
                 {field:'userName', title: '用户姓名',align:'center'},
                 {field:'userStatus', title: '用户状态',align:'center',width: '6%',templet: '#userStatusTpl'},
@@ -95,11 +95,10 @@
                 {field:'creator', title: '创建人',align:'center'},
                 {field:'createTime', title: '创建时间',align:'center',width: '12%'},
                 {field:'modifier', title: '修改人',align:'center'},
-                {field:'updateTime', title: '修改时间',width: '12%'},
-                {title: '操作', align:'center', toolbar: '#userBar',width: '17%'}
+                {field:'updateTime', title: '修改时间',align:'center',width: '12%'},
+                {title: '操作', align:'center', width: '17%',toolbar: '#userBar'}
             ]],
             page: true,
-            limit: 10,
             done: function (res, curr, count) {
                 common.resizeGrid();
                 layer.close(loading);
@@ -118,6 +117,7 @@
                             searchContent:data.field.searchContent
                     },
                     height: 'full-140',
+                    page: true,
                     done: function (res, curr, count) {
                         common.resizeGrid();
                         layer.close(loading);
