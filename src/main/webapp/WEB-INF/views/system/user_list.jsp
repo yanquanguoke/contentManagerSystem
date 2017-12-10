@@ -56,8 +56,8 @@
             </blockquote>
             <div class="larry-separate"></div>
             <!-- 用户列表 -->
-            <div class="layui-tab-item layui-show" style="padding: 10px 15px;">
-                <table id="userTableList"  lay-filter="userTableId"></table>
+            <div class="layui-tab-item layui-show " style="padding: 10px 15px;">
+                <table id="userTableList"  lay-filter="userTableId" ></table>
             </div>
         </div>
     </div>
@@ -86,11 +86,10 @@
             even:'true',
             size: 'sm',
             cols: [[
-                {type:"numbers"},
                 {type:"checkbox"},
                 {field:'userLoginName', title: '登陆账号',align:'center' },
                 {field:'userName', title: '用户姓名',align:'center'},
-                {field:'userStatus', title: '用户状态',align:'center',width: '6%',templet: '#userStatusTpl'},
+                {field:'userStatus', title: '用户状态',align:'center',width: '8%',templet: '#userStatusTpl'},
                 {field:'roleNames', title: '拥有角色',align:'center'},
                 {field:'creator', title: '创建人',align:'center'},
                 {field:'createTime', title: '创建时间',align:'center',width: '12%'},
@@ -241,9 +240,10 @@
 <script type="text/html" id="userStatusTpl">
 
     {{# if(d.userStatus == 0){ }}
-    <span class="label label-success ">0-有效</span>
+    <span style="color:#5FB878;font-weight:bold"> 0-有效</span>
     {{# } else if(d.userStatus == 1){ }}
-    <span class="label label-danger ">1-失效</span>
+    <span style="color:#FF5722;font-weight:bold"> 1-失效</span>
+
     {{# } else { }}
     {{d.userStatus}}
     {{# }  }}
