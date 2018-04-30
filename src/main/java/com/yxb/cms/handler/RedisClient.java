@@ -1,22 +1,22 @@
 /**
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS HEADER.
- * <p>
+ *
  * Copyright 2017 © yangxiaobing, 873559947@qq.com
- * <p>
+ *
  * This file is part of contentManagerSystem.
  * contentManagerSystem is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
- * <p>
+ *
  * contentManagerSystem is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Lesser General Public License for more details.
- * <p>
+ *
  * You should have received a copy of the GNU Lesser General Public License
  * along with contentManagerSystem.  If not, see <http://www.gnu.org/licenses/>.
- * <p>
+ *
  * 这个文件是contentManagerSystem的一部分。
  * 您可以单独使用或分发这个文件，但请不要移除这个头部声明信息.
  * contentManagerSystem是一个自由软件，您可以自由分发、修改其中的源代码或者重新发布它，
@@ -24,31 +24,67 @@
  * 关于GPL协议的细则请参考COPYING文件，
  * 您可以在contentManagerSystem的相关目录中获得GPL协议的副本，
  * 如果没有找到，请连接到 http://www.gnu.org/licenses/ 查看。
- * <p>
+ *
  * - Author: yangxiaobing
  * - Contact: 873559947@qq.com
  * - License: GNU Lesser General Public License (GPL)
  * - source code availability: http://git.oschina.net/yangxiaobing_175/contentManagerSystem
  */
-package com.yxb.cms.architect.constant;
+package com.yxb.cms.handler;
 
+
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import redis.clients.jedis.Jedis;
+import redis.clients.jedis.JedisPool;
 
 /**
- * 系统管理平台公共常量定义
+ * 配置一些常用的 redis 的操作
  * @author yangxiaobing
- * @date 2016/8/15
- *
+ * @date 2018/4/30
  */
-public class Constants {
+public class RedisClient {
 
-    /**用户登录名称*/
-    public static final String SESSION_KEY_LOGIN_NAME = "LOGIN_NAME";
-    /**初始化密码*/
-    public static final String INIT_LOGIN_PWD = "123456";
-    /**ip来源apiUrl**/
-    public static final String IP_INFO_API_URL = "http://ip.taobao.com/service/getIpInfo.php";
+    private Logger log = LogManager.getLogger(RedisClient.class);
+
+    private JedisPool jedisPool;
 
 
-    /**echarts图表用户访问量*/
-    public static final String REDIS_KEY_ECHARTS_USER_PV = "user_pv_key";
+    public void set(String key, String value) {
+        Jedis jedis = null;
+        try {
+            jedis = jedisPool.getResource();
+            jedis.set(key, value);
+        }catch (Exception e){
+            log.error(e.getMessage(),e);
+            throw e;
+        }finally {
+            jedis.close();
+        }
+    }
+
+    public String get(String key) {
+
+        Jedis jedis = null;
+        try {
+            jedis = jedisPool.getResource();
+            return jedis.get(key);
+        } catch (Exception e){
+            log.error(e.getMessage(),e);
+            throw e;
+        }finally {
+            jedis.close();
+        }
+
+    }
+
+
+
+    public JedisPool getJedisPool() {
+        return jedisPool;
+    }
+
+    public void setJedisPool(JedisPool jedisPool) {
+        this.jedisPool = jedisPool;
+    }
 }

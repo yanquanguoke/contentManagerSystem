@@ -39,6 +39,7 @@ import com.yxb.cms.domain.dto.DataCollectDto;
 import com.yxb.cms.domain.vo.DataCleaning;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.nutz.json.Json;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -102,7 +103,7 @@ public class DataCleaningService {
      * 查询用户访问量,echart图表展示
      * @return
      */
-    public Map<String,Object>selectEchartsByLoginInfo(){
+    public String selectEchartsByLoginInfo(){
         Map<String,Object> map = new HashMap<>();
         List<DataCleaning> dataCleanings =  dataCleaningMapper.selectDataCleanListByLoginInfo();
         if(null != dataCleanings && !dataCleanings.isEmpty()){
@@ -115,7 +116,7 @@ public class DataCleaningService {
             map.put("xAxisData",xAxisDatas);
             map.put("seriesData",seriesDatas);
         }
-        return map;
+        return Json.toJson(map);
     }
 
 }

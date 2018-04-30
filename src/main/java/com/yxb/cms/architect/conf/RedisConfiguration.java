@@ -30,46 +30,52 @@
  * - License: GNU Lesser General Public License (GPL)
  * - source code availability: http://git.oschina.net/yangxiaobing_175/contentManagerSystem
  */
-package com.yxb.cms.architect.task;
+package com.yxb.cms.architect.conf;
 
-import com.yxb.cms.architect.constant.Constants;
+import com.yxb.cms.architect.properties.JedisProperties;
 import com.yxb.cms.handler.RedisClient;
-import com.yxb.cms.service.DataCleaningService;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.scheduling.annotation.Scheduled;
-import org.springframework.stereotype.Component;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import redis.clients.jedis.JedisPool;
+import redis.clients.jedis.JedisPoolConfig;
 
 /**
- * 后台管理系统定时任务执行类
+ * redis配置
  * @author yangxiaobing
- * @date 2017/9/14
+ * @date 2018/4/30
  */
-@Component
-public class SystemScheduledTask {
-
-    private Logger log = LogManager.getLogger(SystemScheduledTask.class);
-
-    @Autowired
-    private DataCleaningService dataCleaningService;
-
-    @Autowired
-    private RedisClient redisClient;
+@Configuration
+@ConditionalOnClass(RedisClient.class)//判断这个类是否在classpath中存在
+public class RedisConfiguration{
 
 
-    /**
-     * 定时执行用户访问量，数据清洗，每天凌晨3点执行一次
-     */
-    //@Scheduled(cron = "0/10 * * * * ?") // 每10秒执行一次
-    @Scheduled(cron = "0 0 3 * * ?")   //  每天23点执行
-    public void executeDataCleanScheduler() {
-        log.info(">>>>>>>>>>>>> 定时执行用户访问量数据清洗... ... ");
-        try {
-            dataCleaningService.insertDataCleanBatchByLogin();
-            redisClient.set(Constants.REDIS_KEY_ECHARTS_USER_PV,dataCleaningService.selectEchartsByLoginInfo());
-        } catch (Exception e) {
-            log.error("用户访问量数据清洗异常", e);
-        }
+    private Logger log = LogManager.getLogger(RedisConfiguration.class);
+
+
+    @Bean(name="jedisPool")
+    public JedisPool jedisPool() {
+        JedisPoolConfig config = new JedisPoolConfig();
+        config.setMaxTotal(JedisProperties.maxTotal);
+        config.setMaxIdle(JedisProperties.maxIdle);
+        config.setMaxWaitMillis(JedisProperties.maxWaitMillis);
+        return new JedisPool(config, JedisProperties.host, JedisProperties.port,JedisProperties.timeOut,JedisProperties.password);
     }
+
+
+    @Bean
+    @ConditionalOnMissingBean(RedisClient.class) //容器中如果没有RedisClient这个类,那么自动配置这个RedisClient
+    public RedisClient redisClient(@Qualifier("jedisPool") JedisPool pool) {
+        log.info("初始化……Redis Client==Host={},Port={}", JedisProperties.host, JedisProperties.port);
+        RedisClient redisClient = new RedisClient();
+        redisClient.setJedisPool(pool);
+        return redisClient;
+    }
+
+
+
 }

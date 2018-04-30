@@ -30,46 +30,68 @@
  * - License: GNU Lesser General Public License (GPL)
  * - source code availability: http://git.oschina.net/yangxiaobing_175/contentManagerSystem
  */
-package com.yxb.cms.architect.task;
+package com.yxb.cms.architect.properties;
 
-import com.yxb.cms.architect.constant.Constants;
-import com.yxb.cms.handler.RedisClient;
-import com.yxb.cms.service.DataCleaningService;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.scheduling.annotation.Scheduled;
+import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Component;
 
 /**
- * 后台管理系统定时任务执行类
+ * redis配置<br>
+ * 读取jedis.properties配置文件,配置不同环境的redis配置信息
+ *
  * @author yangxiaobing
- * @date 2017/9/14
+ * @date 2018/4/30
  */
 @Component
-public class SystemScheduledTask {
+@PropertySource("classpath:jedis.properties")
+@ConfigurationProperties(prefix = "redis-pool")
+public class JedisProperties {
 
-    private Logger log = LogManager.getLogger(SystemScheduledTask.class);
+    //Redis服务器地址
+    public static String host;
+    //Redis服务器端口
+    public static int port;
 
-    @Autowired
-    private DataCleaningService dataCleaningService;
+    //Redis服务器连接密码（默认为空）
+    public static String password;
+    //连接超时时间（毫秒）
+    public static int timeOut;
 
-    @Autowired
-    private RedisClient redisClient;
+    //连接池中的最大空闲连接
+    public static int maxIdle;
+    //连接池最大阻塞等待时间（使用负值表示没有限制）
+    public static int maxWaitMillis;
+
+    //连接池最大实例
+    public static int maxTotal;
 
 
-    /**
-     * 定时执行用户访问量，数据清洗，每天凌晨3点执行一次
-     */
-    //@Scheduled(cron = "0/10 * * * * ?") // 每10秒执行一次
-    @Scheduled(cron = "0 0 3 * * ?")   //  每天23点执行
-    public void executeDataCleanScheduler() {
-        log.info(">>>>>>>>>>>>> 定时执行用户访问量数据清洗... ... ");
-        try {
-            dataCleaningService.insertDataCleanBatchByLogin();
-            redisClient.set(Constants.REDIS_KEY_ECHARTS_USER_PV,dataCleaningService.selectEchartsByLoginInfo());
-        } catch (Exception e) {
-            log.error("用户访问量数据清洗异常", e);
-        }
+    public static void setHost(String host) {
+        JedisProperties.host = host;
+    }
+
+    public static void setPort(int port) {
+        JedisProperties.port = port;
+    }
+
+    public static void setPassword(String password) {
+        JedisProperties.password = password;
+    }
+
+    public static void setTimeOut(int timeOut) {
+        JedisProperties.timeOut = timeOut;
+    }
+
+    public static void setMaxIdle(int maxIdle) {
+        JedisProperties.maxIdle = maxIdle;
+    }
+
+    public static void setMaxWaitMillis(int maxWaitMillis) {
+        JedisProperties.maxWaitMillis = maxWaitMillis;
+    }
+
+    public static void setMaxTotal(int maxTotal) {
+        JedisProperties.maxTotal = maxTotal;
     }
 }

@@ -1,19 +1,12 @@
 package com.yxb.cms.test;
 
 import com.yxb.cms.Application;
-import com.yxb.cms.service.RedisService;
-import org.apache.commons.collections.map.HashedMap;
-import org.junit.Assert;
+import com.yxb.cms.handler.RedisClient;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.nutz.json.Json;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.data.redis.core.RedisTemplate;
-import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.test.context.junit4.SpringRunner;
-
-import java.util.Map;
 
 /**
  * Spring boot 测试
@@ -25,10 +18,9 @@ import java.util.Map;
 @SpringBootTest(classes = Application.class)
 public class AppTest {
 
+
     @Autowired
-    RedisService redisService;
-
-
+    RedisClient redisClient;
 
 
 
@@ -37,10 +29,11 @@ public class AppTest {
 
     @Test
     public void test2() throws Exception{
-        System.out.println();
+        redisClient.set("test","hello world2");
+        System.out.println(redisClient.get("test"));
 
 
-        System.out.println("---"+redisService.ping());
+
     }
 
 
