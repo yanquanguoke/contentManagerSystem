@@ -148,6 +148,8 @@
             psLineChar.clear();
             psLineChar.showLoading({text: '正在努力的读取数据中...'});
             $.post("${ctx}/main/ajax_echarts_login_info.do", function(data) {
+
+                var dataJson =  jQuery.parseJSON(data);
                 var option = {
                     title : {
                         text: '网站访问量',
@@ -169,7 +171,7 @@
                     xAxis : [
                         {
                             type : 'category',
-                            data : data.xAxisData
+                            data : dataJson.xAxisData
                         }
                     ],
                     yAxis : [
@@ -181,7 +183,7 @@
                         {
                             name:'访问量',
                             type:'bar',
-                            data:data.seriesData
+                            data:dataJson.seriesData
                         }
                     ]
                 };

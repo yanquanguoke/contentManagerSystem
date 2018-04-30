@@ -78,6 +78,20 @@ public class RedisClient {
 
     }
 
+    public Long del(String key) {
+
+        Jedis jedis = null;
+        try {
+            jedis = jedisPool.getResource();
+            return jedis.del(key);
+        } catch (Exception e){
+            log.error(e.getMessage(),e);
+            throw e;
+        }finally {
+            jedis.close();
+        }
+
+    }
 
 
     public JedisPool getJedisPool() {

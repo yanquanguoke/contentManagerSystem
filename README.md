@@ -22,7 +22,8 @@ PS:由于此项目完全是在业余时间写的,部分功能和代码可能会�
 * 导入项目根目录下:contentmanagersystem_db.sql文件到mysql数据库
 * 导入项目到Eclipse或Idea.
 * 修改数据库配置文件jdbc.properties中的账号密码.
-* 配置maven命令:spring-boot:run启动项目,管理员账号admin/密码123456
+* 配置maven命令:spring-boot:run启动项目,访问链接:http://localhost:8080/login.do
+* redis配置请参考https://blog.csdn.net/jinwufeiyang/article/details/52156817
 
 项目演示地址:
 -----------------------------------

@@ -97,7 +97,6 @@ public class IndexController extends BasicController {
 
         String userPv = redisClient.get(Constants.REDIS_KEY_ECHARTS_USER_PV);
         if(StringUtils.isNotEmpty(userPv)){
-            log.info("读取redis的值");
             return userPv;
         }
         log.info("redis值为空，查询数据库，并重新set到redis");
