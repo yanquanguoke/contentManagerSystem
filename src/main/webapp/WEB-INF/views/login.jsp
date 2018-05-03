@@ -6,7 +6,7 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     <title>后台管理系统登陆</title>
-    <link rel="shortcut icon" href="${ctx}/static/img/favicon.ico">
+    <link rel="shortcut icon" href="${ctx}/static/img/favicon.png">
     <link rel="stylesheet" href="${ctx}/static/layui_v2/css/layui.css">
     <link rel="stylesheet" href="${ctx}/static/css/login.css">
     <script type="text/javascript" src="${ctx}/static/layui_v2/layui.js"></script>
