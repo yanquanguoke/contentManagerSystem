@@ -38,7 +38,8 @@
             <ThresholdFilter level="error" onMatch="ACCEPT" onMismatch="DENY"/>
             <PatternLayout charset="UTF-8" pattern="[%d][%t][%p][%c:%L] %m%n"/>
         </File>
-         
+
+
     </Appenders>  
     
     <Loggers>  
