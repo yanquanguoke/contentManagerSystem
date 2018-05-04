@@ -1,4 +1,4 @@
-contentManagerSystem后台管理系统
+contentManagerSystem后台管理系统2.0
 ===============
 简介
 -----------------------------------
