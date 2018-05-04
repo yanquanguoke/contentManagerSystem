@@ -28,7 +28,7 @@ public class AppTest {
     public void test() {}
 
     @Test
-    public void test2() throws Exception{
+    public void test2() {
         redisClient.del("user_pv_key");
         System.out.println(redisClient.get("user_pv_key"));
 
